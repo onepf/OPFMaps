@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.amazon.geo.mapsv2.AmazonMap;
+import com.amazon.geo.mapsv2.AmazonMapOptions;
 import com.amazon.geo.mapsv2.CameraUpdateFactory;
 import com.amazon.geo.mapsv2.MapFragment;
 import com.amazon.geo.mapsv2.OnMapReadyCallback;
 import com.amazon.geo.mapsv2.model.BitmapDescriptorFactory;
 import com.amazon.geo.mapsv2.model.CircleOptions;
 import com.amazon.geo.mapsv2.model.LatLng;
+import com.amazon.geo.mapsv2.model.Marker;
 import com.amazon.geo.mapsv2.model.MarkerOptions;
 import com.amazon.geo.mapsv2.model.PolygonOptions;
 import com.amazon.geo.mapsv2.model.PolylineOptions;
@@ -47,7 +50,6 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     public static OPFAmazonFragment newInstance() {
-        OPFAmazonFragment opfAmazonFragment = new OPFAmazonFragment();
 //        GoogleMapOptions mapOptions;
 //        mapOptions.camera();
 //        mapOptions.compassEnabled();
@@ -60,6 +62,18 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
 //        mapOptions.mapToolbarEnabled();
 //        mapOptions.tiltGesturesEnabled();
 //        opfAmazonFragment.setArguments(options.toBundle());
+        AmazonMapOptions amazonMapOptions = new AmazonMapOptions();
+        amazonMapOptions.tiltGesturesEnabled(true);
+        amazonMapOptions.mapToolbarEnabled(true);
+        amazonMapOptions.compassEnabled(true);
+        amazonMapOptions.rotateGesturesEnabled(true);
+        amazonMapOptions.scrollGesturesEnabled(true);
+
+        OPFAmazonFragment opfAmazonFragment = new OPFAmazonFragment();
+
+        Bundle bundle = new Bundle(1);
+        bundle.putParcelable("MapOptions", amazonMapOptions);
+        opfAmazonFragment.setArguments(bundle);
         return opfAmazonFragment;
     }
 
@@ -174,6 +188,21 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
             public void onMapReady(AmazonMap amazonMap) {
                 if (amazonMap != null && getActivity() != null) {
                     OPFAmazonFragment.this.amazonMap = amazonMap;
+                    OPFAmazonFragment.this.amazonMap.setInfoWindowAdapter(new AmazonMap.InfoWindowAdapter() {
+                        @Override
+                        public View getInfoContents(Marker marker) {
+                            View inflate = LayoutInflater.from(OPFAmazonFragment.this.getActivity()).inflate(R.layout.infowindow_view, null);
+                            TextView textView = (TextView) inflate.findViewById(R.id.title);
+                            textView.setText(marker.getTitle());
+                            return inflate;
+                        }
+
+                        @Override
+                        public View getInfoWindow(Marker marker) {
+                            return null;
+                        }
+                    });
+
                     if (mapLoadedListener != null) {
                         mapLoadedListener.onMapLoad();
                     }
@@ -215,7 +244,7 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
             @Override
             public boolean onMarkerClick(com.amazon.geo.mapsv2.model.Marker marker) {
                 onMarkerClickListener.onMarkerClick(null);//todo
-                return true;
+                return false; //if true info window not showing
             }
         });
     }

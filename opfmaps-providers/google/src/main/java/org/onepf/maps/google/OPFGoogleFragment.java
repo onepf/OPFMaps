@@ -50,7 +50,7 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
 
     public static OPFGoogleFragment newInstance(OPFGoogleMapOptions options) {
         OPFGoogleFragment opfGoogleFragment = new OPFGoogleFragment();
-        GoogleMapOptions mapOptions;
+        GoogleMapOptions mapOptions = new GoogleMapOptions();
 //        mapOptions.camera();
 //        mapOptions.compassEnabled();
 //        mapOptions.liteMode();
@@ -61,7 +61,9 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
 //        mapOptions.rotateGesturesEnabled();
 //        mapOptions.mapToolbarEnabled();
 //        mapOptions.tiltGesturesEnabled();
-        opfGoogleFragment.setArguments(options.toBundle());
+        Bundle bundle = new Bundle(1);
+        bundle.putParcelable("MapOptions", mapOptions);
+        opfGoogleFragment.setArguments(bundle);
         return opfGoogleFragment;
     }
 
