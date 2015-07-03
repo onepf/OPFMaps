@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.onepf.maps.amazon.AmazonMapProvider;
 import org.onepf.maps.google.GoogleMapProvider;
 import org.onepf.opfmaps.OPFOnMapClickListener;
 import org.onepf.opfmaps.OPFOnMapConfigureListener;
@@ -33,6 +34,8 @@ public class MainActivity extends ActionBarActivity {
         map = (OPFMap) findViewById(R.id.map);
         List<OPFMapProvider> providers = new ArrayList<OPFMapProvider>();
         providers.add(new GoogleMapProvider());
+        providers.add(new AmazonMapProvider());
+        ;
         OPFMapSettings opfMapSettings = new OPFMapSettings(providers);
         map.init(getFragmentManager(), opfMapSettings, new OPFOnMapConfigureListener() {
             @Override
@@ -47,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
                     public void onMapLoad() {
                         map.setMyLocationEnabled(true);
                         map.setBuildingsEnabled(true);
-                        map.zoom((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2f);
+//                        map.zoom((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2f);
 
                         //markers
                         OPFMarker opfMarker1 = new OPFMarker(new OPFLatLng(37.773975, -122.40205),

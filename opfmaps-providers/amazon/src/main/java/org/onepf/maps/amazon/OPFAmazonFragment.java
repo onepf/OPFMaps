@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 
 import com.amazon.geo.mapsv2.AmazonMap;
 import com.amazon.geo.mapsv2.CameraUpdateFactory;
+import com.amazon.geo.mapsv2.MapFragment;
 import com.amazon.geo.mapsv2.OnMapReadyCallback;
-import com.amazon.geo.mapsv2.SupportMapFragment;
-import com.amazon.geo.mapsv2.UiSettings;
 import com.amazon.geo.mapsv2.model.BitmapDescriptorFactory;
 import com.amazon.geo.mapsv2.model.CircleOptions;
 import com.amazon.geo.mapsv2.model.LatLng;
@@ -38,7 +37,7 @@ import java.util.List;
 /**
  * Created by akarimova on 09.06.15.
  */
-public class OPFAmazonFragment extends SupportMapFragment implements OPFMapDelegate, OPFTBDInterface<PolylineOptions, PolygonOptions, CircleOptions, MarkerOptions, LatLng> {
+public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OPFTBDInterface<PolylineOptions, PolygonOptions, CircleOptions, MarkerOptions, LatLng> {
     private AmazonMap amazonMap;
     private boolean initialized;
 
@@ -175,9 +174,6 @@ public class OPFAmazonFragment extends SupportMapFragment implements OPFMapDeleg
             public void onMapReady(AmazonMap amazonMap) {
                 if (amazonMap != null && getActivity() != null) {
                     OPFAmazonFragment.this.amazonMap = amazonMap;
-//                    UiSettings settings = OPFAmazonFragment.this.amazonMap.getUiSettings();
-//                    setMyLocationEnabled(true);
-
                     if (mapLoadedListener != null) {
                         mapLoadedListener.onMapLoad();
                     }

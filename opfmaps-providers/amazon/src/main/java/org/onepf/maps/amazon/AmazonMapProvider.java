@@ -2,36 +2,64 @@ package org.onepf.maps.amazon;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.util.Log;
+
+import com.amazon.geo.mapsv2.util.AmazonMapsRuntimeUtil;
+import com.amazon.geo.mapsv2.util.ConnectionResult;
 
 import org.onepf.opfmaps.OPFAbstractMapProvider;
+import org.onepf.opfmaps.utils.PermissionChecker;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.ACCESS_NETWORK_STATE;
+import static android.Manifest.permission.INTERNET;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
  * Created by akarimova on 24.06.15.
  */
 public class AmazonMapProvider extends OPFAbstractMapProvider {
+    private static final String TAG = AmazonMapProvider.class.getSimpleName();
+
     @Override
     public boolean hasRequiredPermissions(Context context) {
-        return false;
+        return
+                PermissionChecker.permissionRequested(context, INTERNET) &&
+                        PermissionChecker.permissionRequested(context, ACCESS_NETWORK_STATE) &&
+                        PermissionChecker.permissionRequested(context, WRITE_EXTERNAL_STORAGE) &&
+                        PermissionChecker.permissionRequested(context, ACCESS_COARSE_LOCATION) &&
+                        PermissionChecker.permissionRequested(context, ACCESS_FINE_LOCATION);
     }
 
     @Override
     public boolean isAvailable(Context context) {
-        return false;
+        int amazonMapsRuntimeAvailable = AmazonMapsRuntimeUtil
+                .isAmazonMapsRuntimeAvailable(context);
+        if (amazonMapsRuntimeAvailable == ConnectionResult.SUCCESS) {
+            Log.d(TAG, "Amazon maps are available");
+            return true;
+        } else {
+            Log.w(TAG, "Connection result = " + amazonMapsRuntimeAvailable);
+            return false;
+        }
     }
 
     @Override
     public Fragment getFragment() {
-        return null;
+        return OPFAmazonFragment.newInstance();
     }
 
     @Override
     public boolean isKeyPresented(Context context) {
-        return false;
+        //always true
+        return true;
     }
 
     @Override
     public boolean hasRequestedFeatures(Context context) {
-        return false;
+        //always true
+        return true;
     }
 
 }
