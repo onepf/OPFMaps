@@ -53,27 +53,30 @@ public class MainActivity extends ActionBarActivity {
 //                        map.zoom((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2f);
 
                         //markers
-                        OPFMarker build = new OPFMarker.Builder().setVisible(true)
+                        OPFMarker marker1 = new OPFMarker.Builder().setVisible(true)
                                 .setLatLng(new OPFLatLng(37.773975, -122.40205))
                                 .setTitle("marker #1")
                                 .setSnippet("snippet #1")
                                 .setIcon(R.drawable.ic_plusone_tall_off_client)
                                 .setDraggable(true).build();
-                        map.addMarker(build);
-//
-//                        OPFMarker opfMarker2 = new OPFMarker(new OPFLatLng(55.752004, 37.617017),
-//                                R.drawable.ic_plusone_tall_off_client);
-//                        opfMarker2.title("marker #2");
-//                        opfMarker2.snippet("snippet #2");
-//                        map.addMarker(opfMarker2);
-//
-//                        //circles
-//                        OPFCircle circle = new OPFCircle();
-//                        circle.center(new OPFLatLng(55.752004, 37.617017));
-//                        circle.radius(1000000.0);
-//                        circle.fillColor(Color.LTGRAY);
-//                        circle.strokeColor(Color.BLUE);
-//                        map.addCircle(circle);
+                        map.addMarker(marker1);
+
+                        OPFMarker marker2 = new OPFMarker.Builder().setVisible(true)
+                                .setLatLng(new OPFLatLng(55.752004, 37.617017))
+                                .setTitle("marker #2")
+                                .setSnippet("snippet #2")
+                                .setIcon(R.drawable.ic_plusone_tall_off_client)
+                                .setDraggable(true).build();
+                        map.addMarker(marker2);
+
+                        //circle
+                        OPFCircle.Builder builder = new OPFCircle.Builder();
+                        builder.setCenter(new OPFLatLng(55.752004, 37.617017))
+                                .setRadius(1000000.0)
+                                .setFillColor(Color.CYAN)
+                                .setStrokeColor(Color.BLUE);
+                        OPFCircle circle = builder.build();
+                        map.addCircle(circle);
 
                         map.setOnMarkerDragListener(new OPFOnMarkerDragListener() {
                             @Override

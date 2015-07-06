@@ -58,7 +58,7 @@ public class OPFCircle extends OPFShape {
     public static class Builder implements org.onepf.opfmaps.model.Builder<OPFCircle> {
         private OPFCircle opfCircle;
 
-        private Builder() {
+        public Builder() {
             opfCircle = new OPFCircle();
         }
 
