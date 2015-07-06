@@ -2,6 +2,7 @@ package org.onepf.maps.amazon;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -191,10 +192,20 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
                     OPFAmazonFragment.this.amazonMap.setInfoWindowAdapter(new AmazonMap.InfoWindowAdapter() {
                         @Override
                         public View getInfoContents(Marker marker) {
-                            View inflate = LayoutInflater.from(OPFAmazonFragment.this.getActivity()).inflate(R.layout.infowindow_view, null);
-                            TextView textView = (TextView) inflate.findViewById(R.id.title);
-                            textView.setText(marker.getTitle());
-                            return inflate;
+                            String title = marker.getTitle();
+                            String snippet = marker.getSnippet();
+                            if (!TextUtils.isEmpty(title) || !TextUtils.isEmpty(snippet)) {
+                                View inflate = LayoutInflater.from(OPFAmazonFragment.this.getActivity()).inflate(R.layout.info_window_view, null);
+                                //title
+                                TextView titleView = (TextView) inflate.findViewById(R.id.info_window_title);
+                                titleView.setText(title);
+                                //snippet
+                                TextView snippetView = (TextView) inflate.findViewById(R.id.info_window_snippet);
+                                snippetView.setText(snippet);
+                                return inflate;
+                            } else {
+                                return null;
+                            }
                         }
 
                         @Override
