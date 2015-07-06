@@ -13,4 +13,26 @@ public class OPFShape extends OPFMapObject {
     public float getzIndex() {
         return zIndex;
     }
+
+    public static abstract class Builder<T extends OPFShape> implements org.onepf.opfmaps.model.Builder<T> {
+        private T shape;
+
+        public Builder() {
+            this.shape = createShape();
+        }
+
+        public Builder<T> setzIndex(float zIndex) {
+            shape.zIndex(zIndex);
+            return this;
+        }
+
+        protected abstract T createShape();
+
+        protected T getShape() {
+            if (shape == null) {
+                shape = createShape();
+            }
+            return shape;
+        }
+    }
 }
