@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 /**
  * Created by akarimova on 09.06.15.
  */
-public class OPFMarker extends OPFMapObject {
+public final class OPFMarker extends OPFMapObject {
     private OPFLatLng latLng;
     private String title;
     private String snippet;
@@ -17,9 +17,9 @@ public class OPFMarker extends OPFMapObject {
     private float rotation;
     private float u;
     private float v;
+    private String id;
 
-    //todo bitmapdescriptor
-    public OPFMarker(OPFLatLng latLng, int iconId) {
+    private OPFMarker() {
         latLng(latLng);
         iconId(iconId);
     }
@@ -48,7 +48,7 @@ public class OPFMarker extends OPFMapObject {
         this.latLng = latLng;
     }
 
-    public Bitmap getBitmap() {
+    private Bitmap getBitmap() {
         return bitmap;
     }
 
@@ -85,14 +85,6 @@ public class OPFMarker extends OPFMapObject {
         this.v = v;
     }
 
-    public float getAnchorU() {
-        return u;
-    }
-
-    public float getAnchorV() {
-        return v;
-    }
-
     public boolean isDraggable() {
         return draggable;
     }
@@ -108,4 +100,83 @@ public class OPFMarker extends OPFMapObject {
     public void flat(boolean flat) {
         this.flat = flat;
     }
+
+    public int getId() {
+        return iconId;
+    }
+
+    public static class Builder implements org.onepf.opfmaps.model.Builder<OPFMarker> {
+        private OPFMarker opfMarker;
+
+        public Builder() {
+            opfMarker = new OPFMarker();
+        }
+
+        public Builder setTitle(String title) {
+            opfMarker.title(title);
+            return this;
+        }
+
+        public Builder setSnippet(String snippet) {
+            opfMarker.snippet(snippet);
+            return this;
+        }
+
+        public Builder setLatLng(OPFLatLng opfLatLng) {
+            opfMarker.latLng(opfLatLng);
+            return this;
+        }
+
+        public Builder setBitmap(Bitmap bitmap) {
+            opfMarker.bitmap(bitmap);
+            return this;
+        }
+
+        public Builder setIcon(int iconId) {
+            opfMarker.iconId(iconId);
+            return this;
+        }
+
+        public Builder setAlpha(float alpha) {
+            opfMarker.alpha(alpha);
+            return this;
+        }
+
+        public Builder setRotation(float rotation) {
+            opfMarker.rotation(rotation);
+            return this;
+        }
+
+        public Builder setAnchor(float u, float v) {
+            opfMarker.anchor(u, v);
+            return this;
+        }
+
+        public Builder setDraggable(boolean draggable) {
+            opfMarker.draggable(draggable);
+            return this;
+        }
+
+        public Builder setFlat(boolean flat) {
+            opfMarker.flat(flat);
+            return this;
+        }
+
+        public Builder setVisible(boolean visible) {
+            opfMarker.visible(visible);
+            return this;
+        }
+
+        public OPFMarker build() {
+            if (opfMarker.getLatLng() == null) {
+                throw new IllegalStateException("OPFMarker: no coordinates!");
+            }
+            if (opfMarker.getIconId() <= 0 && opfMarker.getBitmap() == null) {
+                throw new IllegalStateException("OPFMarker: no icon!");
+            }
+            return opfMarker;
+        }
+
+    }
+
 }

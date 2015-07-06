@@ -223,19 +223,36 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
         amazonMap.setOnMarkerDragListener(new AmazonMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDrag(com.amazon.geo.mapsv2.model.Marker marker) {
-                onMarkerDragListener.onMarkerDragStart(null); //todo
+                OPFMarker opfMarker = makeOPFMarker(marker);
+                onMarkerDragListener.onMarkerDragStart(opfMarker);
             }
 
             @Override
             public void onMarkerDragEnd(com.amazon.geo.mapsv2.model.Marker marker) {
-                onMarkerDragListener.onMarkerDragEnd(null); //todo
+                OPFMarker opfMarker = makeOPFMarker(marker);
+                onMarkerDragListener.onMarkerDragEnd(opfMarker);
             }
 
             @Override
             public void onMarkerDragStart(com.amazon.geo.mapsv2.model.Marker marker) {
-                onMarkerDragListener.onMarkerDragStart(null); //todo
+                OPFMarker opfMarker = makeOPFMarker(marker);
+                onMarkerDragListener.onMarkerDragStart(opfMarker);
             }
         });
+    }
+
+    private static OPFMarker makeOPFMarker(Marker marker) {
+        OPFMarker.Builder markerBuilder = new OPFMarker.Builder();
+        markerBuilder.setLatLng(new OPFLatLng(marker.getPosition().latitude, marker.getPosition().longitude))
+                .setIcon(10000) //todo
+                .setAlpha(marker.getAlpha())
+                .setRotation(marker.getRotation())
+                .setTitle(marker.getTitle())
+                .setSnippet(marker.getSnippet())
+                .setDraggable(marker.isDraggable())
+                .setFlat(marker.isFlat())
+                .setVisible(marker.isVisible());
+        return markerBuilder.build();
     }
 
     @Override
@@ -243,7 +260,8 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
         amazonMap.setOnMarkerClickListener(new AmazonMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(com.amazon.geo.mapsv2.model.Marker marker) {
-                onMarkerClickListener.onMarkerClick(null);//todo
+                OPFMarker opfMarker = makeOPFMarker(marker);
+                onMarkerClickListener.onMarkerClick(opfMarker);//todo
                 return false; //if true info window not showing
             }
         });
@@ -331,25 +349,11 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
         markerOptions.draggable(opfMarker.isDraggable());
         markerOptions.alpha(opfMarker.getAlpha());
         markerOptions.rotation(opfMarker.getRotation());
-        markerOptions.anchor(opfMarker.getAnchorU(), opfMarker.getAnchorV());
+//        markerOptions.anchor(opfMarker.getAnchorU(), opfMarker.getAnchorV());
         markerOptions.flat(opfMarker.isFlat());
         return markerOptions;
     }
 
-    @Override
-    public OPFMarker opfMarker(MarkerOptions marker) {
-        //todo fix icon resId
-        OPFMarker opfMarker = new OPFMarker(new OPFLatLng(marker.getPosition().latitude, marker.getPosition().longitude), 1);
-        opfMarker.alpha(marker.getAlpha());
-        opfMarker.anchor(marker.getAnchorU(), marker.getAnchorV());
-        opfMarker.draggable(marker.isDraggable());
-        opfMarker.title(marker.getTitle());
-        opfMarker.snippet(marker.getSnippet());
-        opfMarker.flat(marker.isFlat());
-//        opfMarker.bitmap();
-//        opfMarker.iconId(marker.getIcon());
-        return opfMarker;
-    }
 
     @Override
     public LatLng latLng(OPFLatLng opfLatLng) {

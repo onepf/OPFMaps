@@ -14,13 +14,8 @@ public class OPFPolygon extends OPFMutiPointsShape {
     private float strokeWidth = 10.0f;
     private List<OPFLatLng> holes;
 
-    public OPFPolygon() {
+    private OPFPolygon() {
         holes = new ArrayList<>();
-    }
-
-    @Override
-    public void remove() {
-
     }
 
     public int getFillColor() {
@@ -55,5 +50,53 @@ public class OPFPolygon extends OPFMutiPointsShape {
         this.strokeWidth = strokeWidth;
     }
 
+
+    public static class Builder implements org.onepf.opfmaps.model.Builder<OPFPolygon> {
+        private OPFPolygon polygon;
+
+        public Builder() {
+            polygon = new OPFPolygon();
+        }
+
+        public Builder setFillColor(int fillColor) {
+            polygon.fillColor(fillColor);
+            return this;
+        }
+
+        public Builder setStrokeColor(int strokeColor) {
+            polygon.strokeColor(strokeColor);
+            return this;
+        }
+
+
+        public Builder addPoint(OPFLatLng point) {
+            polygon.add(point);
+            return this;
+        }
+
+        public Builder addPoints(OPFLatLng... points) {
+            polygon.add(points);
+            return this;
+        }
+
+        public Builder setGeodesic(boolean geodesic) {
+            polygon.geodesic(geodesic);
+            return this;
+        }
+
+        public Builder setzIndex(float zIndex) {
+            polygon.zIndex(zIndex);
+            return this;
+        }
+
+        @Override
+        public OPFPolygon build() {
+            if (polygon.getPoints().size() == 0) {
+                throw new IllegalStateException("OPFPolygon: no points were found");
+            }
+            return polygon;
+        }
+
+    }
 
 }

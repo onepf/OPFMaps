@@ -25,8 +25,6 @@ public interface OPFTBDInterface<PL, PG, C, M, LL> {
 
     M marker(OPFMarker opfMarker);
 
-    OPFMarker opfMarker(M marker);
-
     LL latLng(OPFLatLng opfLatLng);
 
     OPFLatLng opfLatLng(LL latLng);

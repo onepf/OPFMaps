@@ -13,9 +13,4 @@ public class OPFShape extends OPFMapObject {
     public float getzIndex() {
         return zIndex;
     }
-
-    //todo remove or not remove
-    public void remove() {
-
-    }
 }

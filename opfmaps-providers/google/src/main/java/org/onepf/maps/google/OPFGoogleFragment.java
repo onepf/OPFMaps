@@ -30,6 +30,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -202,29 +203,36 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
         googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(com.google.android.gms.maps.model.Marker marker) {
-                OPFMarker opfMarker = new OPFMarker(new OPFLatLng(marker.getPosition().latitude, marker.getPosition().longitude), -1);
-                opfMarker.alpha(marker.getAlpha());
-                opfMarker.rotation(marker.getRotation());
-                opfMarker.title(marker.getTitle());
-                opfMarker.snippet(marker.getSnippet());
-                opfMarker.visible(marker.isVisible());
-                opfMarker.draggable(marker.isDraggable());
-                opfMarker.flat(marker.isFlat());
-//                marker.getId();
-//                marker.isInfoWindowShown();//todo have to add
+                OPFMarker opfMarker = makeOPFMarker(marker);
                 onMarkerDragListener.onMarkerDragStart(opfMarker);
             }
 
             @Override
             public void onMarkerDrag(com.google.android.gms.maps.model.Marker marker) {
-                onMarkerDragListener.onMarkerDrag(null);
+                OPFMarker opfMarker = makeOPFMarker(marker);
+                onMarkerDragListener.onMarkerDrag(opfMarker);
             }
 
             @Override
             public void onMarkerDragEnd(com.google.android.gms.maps.model.Marker marker) {
-                onMarkerDragListener.onMarkerDragEnd(null);
+                OPFMarker opfMarker = makeOPFMarker(marker);
+                onMarkerDragListener.onMarkerDragEnd(opfMarker);
             }
         });
+    }
+
+    private static OPFMarker makeOPFMarker(Marker marker) {
+        OPFMarker.Builder markerBuilder = new OPFMarker.Builder();
+        markerBuilder.setLatLng(new OPFLatLng(marker.getPosition().latitude, marker.getPosition().longitude))
+                .setIcon(10000) //todo
+                .setAlpha(marker.getAlpha())
+                .setRotation(marker.getRotation())
+                .setTitle(marker.getTitle())
+                .setSnippet(marker.getSnippet())
+                .setDraggable(marker.isDraggable())
+                .setFlat(marker.isFlat())
+                .setVisible(marker.isVisible());
+        return markerBuilder.build();
     }
 
     @Override
@@ -232,8 +240,9 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
-                onMarkerClickListener.onMarkerClick(null);
-                return true; //todo check
+                OPFMarker opfMarker = makeOPFMarker(marker);
+                onMarkerClickListener.onMarkerClick(opfMarker);
+                return false; //todo check
             }
         });
     }
@@ -320,24 +329,9 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
         markerOptions.draggable(opfMarker.isDraggable());
         markerOptions.alpha(opfMarker.getAlpha());
         markerOptions.rotation(opfMarker.getRotation());
-        markerOptions.anchor(opfMarker.getAnchorU(), opfMarker.getAnchorV());
+//        markerOptions.anchor(opfMarker.getAnchorU(), opfMarker.getAnchorV());
         markerOptions.flat(opfMarker.isFlat());
         return markerOptions;
-    }
-
-    @Override
-    public OPFMarker opfMarker(MarkerOptions marker) {
-        //todo fix icon resId
-        OPFMarker opfMarker = new OPFMarker(new OPFLatLng(marker.getPosition().latitude, marker.getPosition().longitude), 1);
-        opfMarker.alpha(marker.getAlpha());
-        opfMarker.anchor(marker.getAnchorU(), marker.getAnchorV());
-        opfMarker.draggable(marker.isDraggable());
-        opfMarker.title(marker.getTitle());
-        opfMarker.snippet(marker.getSnippet());
-        opfMarker.flat(marker.isFlat());
-//        opfMarker.bitmap();
-//        opfMarker.iconId(marker.getIcon());
-        return opfMarker;
     }
 
     @Override

@@ -12,7 +12,7 @@ public class OPFCircle extends OPFShape {
     private int strokeColor = Color.BLACK;
     private float strokeWidth = 10f;
 
-    public OPFCircle() {
+    private OPFCircle() {
     }
 
     public OPFLatLng getCenter() {
@@ -55,8 +55,50 @@ public class OPFCircle extends OPFShape {
         this.strokeWidth = strokeWidth;
     }
 
-    @Override
-    public void remove() {
+    public static class Builder implements org.onepf.opfmaps.model.Builder<OPFCircle> {
+        private OPFCircle opfCircle;
+
+        private Builder() {
+            opfCircle = new OPFCircle();
+        }
+
+        public Builder setCenter(OPFLatLng opfLatLng) {
+            opfCircle.center(opfLatLng);
+            return this;
+        }
+
+        public Builder setRadius(double radius) {
+            opfCircle.radius(radius);
+            return this;
+        }
+
+        public Builder setFillColor(int fillColor) {
+            opfCircle.fillColor(fillColor);
+            return this;
+        }
+
+        public Builder setStrokeColor(int strokeColor) {
+            opfCircle.strokeColor(strokeColor);
+            return this;
+        }
+
+        public Builder setStrokeWidth(float strokeWidth) {
+            opfCircle.strokeWidth(strokeWidth);
+            return this;
+        }
+
+        public Builder setzIndex(float zIndex) {
+            opfCircle.zIndex(zIndex);
+            return this;
+        }
+
+        public OPFCircle build() {
+            if (opfCircle.center == null) {
+                throw new IllegalStateException("OPFCircle: center coordinates not set!");
+            }
+            return opfCircle;
+        }
 
     }
+
 }
