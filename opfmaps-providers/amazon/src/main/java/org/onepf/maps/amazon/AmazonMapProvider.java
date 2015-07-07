@@ -4,10 +4,12 @@ import android.app.Fragment;
 import android.content.Context;
 import android.util.Log;
 
+import com.amazon.geo.mapsv2.AmazonMapOptions;
 import com.amazon.geo.mapsv2.util.AmazonMapsRuntimeUtil;
 import com.amazon.geo.mapsv2.util.ConnectionResult;
 
 import org.onepf.opfmaps.OPFAbstractMapProvider;
+import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.utils.PermissionChecker;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -46,8 +48,8 @@ public class AmazonMapProvider extends OPFAbstractMapProvider {
     }
 
     @Override
-    public Fragment getFragment() {
-        return OPFAmazonFragment.newInstance();
+    public Fragment getFragment(OPFMapOptions opfMapOptions) {
+        return OPFAmazonFragment.newInstance(convert(opfMapOptions));
     }
 
     @Override
@@ -62,4 +64,12 @@ public class AmazonMapProvider extends OPFAbstractMapProvider {
         return true;
     }
 
+    private AmazonMapOptions convert(OPFMapOptions mapOptions) {
+        AmazonMapOptions amazonMapOptions = new AmazonMapOptions();
+        amazonMapOptions.rotateGesturesEnabled(mapOptions.isRotateGesturesEnabled())
+                .compassEnabled(mapOptions.isCompassEnabled())
+                .tiltGesturesEnabled(mapOptions.isTiltGesturesEnabled())
+                .zoomGesturesEnabled(mapOptions.isZoomGesturesEnabled());
+        return amazonMapOptions;
+    }
 }

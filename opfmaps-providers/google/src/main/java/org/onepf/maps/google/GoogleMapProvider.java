@@ -2,11 +2,14 @@ package org.onepf.maps.google;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.GoogleMapOptions;
 
 import org.onepf.opfmaps.OPFAbstractMapProvider;
+import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.utils.FeatureChecker;
 import org.onepf.opfmaps.utils.MetaDataChecker;
 import org.onepf.opfmaps.utils.PermissionChecker;
@@ -34,9 +37,19 @@ public class GoogleMapProvider extends OPFAbstractMapProvider {
         return googlePlayServicesAvailable == ConnectionResult.SUCCESS; //todo think about other codes
     }
 
+    @NonNull
     @Override
-    public Fragment getFragment() {
-        return OPFGoogleFragment.newInstance(new OPFGoogleMapOptions());
+    public Fragment getFragment(OPFMapOptions opfMapOptions) {
+        return OPFGoogleFragment.newInstance(getConvert(opfMapOptions));
+    }
+
+    private GoogleMapOptions getConvert(OPFMapOptions mapOptions) {
+        GoogleMapOptions googleMapOptions = new GoogleMapOptions();
+        googleMapOptions.rotateGesturesEnabled(mapOptions.isRotateGesturesEnabled())
+                .compassEnabled(mapOptions.isCompassEnabled())
+                .tiltGesturesEnabled(mapOptions.isTiltGesturesEnabled())
+                .zoomGesturesEnabled(mapOptions.isZoomGesturesEnabled());
+        return googleMapOptions;
     }
 
 

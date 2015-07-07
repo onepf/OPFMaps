@@ -41,6 +41,7 @@ import java.util.List;
  * Created by akarimova on 09.06.15.
  */
 public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OPFTBDInterface<PolylineOptions, PolygonOptions, CircleOptions, MarkerOptions, LatLng> {
+    private static final String EXTRA = "MapOptions";
     private GoogleMap googleMap;
     private boolean initialized;
 
@@ -49,21 +50,10 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
         return initialized;
     }
 
-    public static OPFGoogleFragment newInstance(OPFGoogleMapOptions options) {
+    public static OPFGoogleFragment newInstance(GoogleMapOptions options) {
         OPFGoogleFragment opfGoogleFragment = new OPFGoogleFragment();
-        GoogleMapOptions mapOptions = new GoogleMapOptions();
-//        mapOptions.camera();
-//        mapOptions.compassEnabled();
-//        mapOptions.liteMode();
-//        mapOptions.mapToolbarEnabled();
-//        mapOptions.zOrderOnTop();
-//        mapOptions.zoomGesturesEnabled();
-//        mapOptions.useViewLifecycleInFragment();
-//        mapOptions.rotateGesturesEnabled();
-//        mapOptions.mapToolbarEnabled();
-//        mapOptions.tiltGesturesEnabled();
         Bundle bundle = new Bundle(1);
-        bundle.putParcelable("MapOptions", mapOptions);
+        bundle.putParcelable(EXTRA, options);
         opfGoogleFragment.setArguments(bundle);
         return opfGoogleFragment;
     }

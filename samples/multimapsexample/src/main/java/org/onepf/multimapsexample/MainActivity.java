@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import org.onepf.maps.amazon.AmazonMapProvider;
 import org.onepf.maps.google.GoogleMapProvider;
+import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.OPFOnMapClickListener;
 import org.onepf.opfmaps.OPFOnMapConfigureListener;
 import org.onepf.opfmaps.OPFMapProvider;
@@ -35,8 +36,13 @@ public class MainActivity extends ActionBarActivity {
         List<OPFMapProvider> providers = new ArrayList<OPFMapProvider>();
         providers.add(new GoogleMapProvider());
         providers.add(new AmazonMapProvider());
-        ;
         OPFMapSettings opfMapSettings = new OPFMapSettings(providers);
+
+        OPFMapOptions options = new OPFMapOptions()
+                .tiltGesturesEnabled(true)
+                .zoomGesturesEnabled(true)
+                .compassEnabled(true)
+                .rotateGesturesEnabled(true);
         map.init(getFragmentManager(), opfMapSettings, new OPFOnMapConfigureListener() {
             @Override
             public void onError(int r) {
@@ -111,7 +117,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
             }
-        });
+        }, options);
     }
 
 

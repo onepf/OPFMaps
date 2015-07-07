@@ -54,7 +54,8 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
     }
 
 
-    public void init(android.app.FragmentManager fragmentManager, OPFMapSettings mapSettings, OPFOnMapConfigureListener listener) {
+    public void init(android.app.FragmentManager fragmentManager, OPFMapSettings mapSettings, OPFOnMapConfigureListener listener,
+                     OPFMapOptions opfMapOptions) {
         this.onMapConfigureListener = listener;
         List<OPFMapProvider> providers = mapSettings.getProviders();
         if (providers == null || providers.size() == 0) {
@@ -67,7 +68,7 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
         currentProvider = findBestProvider(getContext(), providers);
 
         if (currentProvider != null) {
-            android.app.Fragment fragment = currentProvider.getFragment();
+            android.app.Fragment fragment = currentProvider.getFragment(opfMapOptions);
             this.mapDelegate = (OPFMapDelegate) fragment;
             fragmentManager.beginTransaction()
                     .replace(getId(), (android.app.Fragment) this.mapDelegate)

@@ -42,6 +42,7 @@ import java.util.List;
  * Created by akarimova on 09.06.15.
  */
 public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OPFTBDInterface<PolylineOptions, PolygonOptions, CircleOptions, MarkerOptions, LatLng> {
+    private static final String EXTRA = "MapOptions";
     private AmazonMap amazonMap;
     private boolean initialized;
 
@@ -50,30 +51,10 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
         return initialized;
     }
 
-    public static OPFAmazonFragment newInstance() {
-//        GoogleMapOptions mapOptions;
-//        mapOptions.camera();
-//        mapOptions.compassEnabled();
-//        mapOptions.liteMode();
-//        mapOptions.mapToolbarEnabled();
-//        mapOptions.zOrderOnTop();
-//        mapOptions.zoomGesturesEnabled();
-//        mapOptions.useViewLifecycleInFragment();
-//        mapOptions.rotateGesturesEnabled();
-//        mapOptions.mapToolbarEnabled();
-//        mapOptions.tiltGesturesEnabled();
-//        opfAmazonFragment.setArguments(options.toBundle());
-        AmazonMapOptions amazonMapOptions = new AmazonMapOptions();
-        amazonMapOptions.tiltGesturesEnabled(true);
-        amazonMapOptions.mapToolbarEnabled(true);
-        amazonMapOptions.compassEnabled(true);
-        amazonMapOptions.rotateGesturesEnabled(true);
-        amazonMapOptions.scrollGesturesEnabled(true);
-
+    public static OPFAmazonFragment newInstance(AmazonMapOptions options) {
         OPFAmazonFragment opfAmazonFragment = new OPFAmazonFragment();
-
         Bundle bundle = new Bundle(1);
-        bundle.putParcelable("MapOptions", amazonMapOptions);
+        bundle.putParcelable(EXTRA, options);
         opfAmazonFragment.setArguments(bundle);
         return opfAmazonFragment;
     }
