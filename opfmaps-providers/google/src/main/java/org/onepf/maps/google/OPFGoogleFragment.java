@@ -144,9 +144,7 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
 
     @Override
     public void setIndoorEnabled(boolean enabled) {
-        if (isInitialized()) {
-            googleMap.setIndoorEnabled(enabled);
-        }
+        googleMap.setIndoorEnabled(enabled);
     }
 
     @Override
