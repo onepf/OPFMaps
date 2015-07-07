@@ -2,6 +2,7 @@ package org.onepf.maps.amazon;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.amazon.geo.mapsv2.AmazonMapOptions;
@@ -47,6 +48,7 @@ public class AmazonMapProvider extends OPFAbstractMapProvider {
         }
     }
 
+    @NonNull
     @Override
     public Fragment getFragment(OPFMapOptions opfMapOptions) {
         return OPFAmazonFragment.newInstance(convert(opfMapOptions));
