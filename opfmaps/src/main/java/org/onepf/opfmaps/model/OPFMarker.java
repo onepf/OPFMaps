@@ -171,9 +171,10 @@ public final class OPFMarker extends OPFMapObject {
             if (opfMarker.getLatLng() == null) {
                 throw new IllegalStateException("OPFMarker: no coordinates!");
             }
-            if (opfMarker.getIconId() <= 0 && opfMarker.getBitmap() == null) {
-                throw new IllegalStateException("OPFMarker: no icon!");
-            }
+            //todo
+//            if (opfMarker.getIconId() <= 0 && opfMarker.getBitmap() == null) {
+//                throw new IllegalStateException("OPFMarker: no icon!");
+//            }
             return opfMarker;
         }
 

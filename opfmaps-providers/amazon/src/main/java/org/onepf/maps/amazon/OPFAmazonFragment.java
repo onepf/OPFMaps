@@ -236,7 +236,6 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
     private static OPFMarker makeOPFMarker(Marker marker) {
         OPFMarker.Builder markerBuilder = new OPFMarker.Builder();
         markerBuilder.setLatLng(new OPFLatLng(marker.getPosition().latitude, marker.getPosition().longitude))
-                .setIcon(10000) //todo
                 .setAlpha(marker.getAlpha())
                 .setRotation(marker.getRotation())
                 .setTitle(marker.getTitle())

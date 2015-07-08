@@ -46,7 +46,7 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
 
     @Override
     public boolean isReady() {
-        return initialized != null & initialized;
+        return initialized != null && initialized;
     }
 
     public static OPFGoogleFragment newInstance(GoogleMapOptions options) {
@@ -208,7 +208,6 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
     private static OPFMarker makeOPFMarker(Marker marker) {
         OPFMarker.Builder markerBuilder = new OPFMarker.Builder();
         markerBuilder.setLatLng(new OPFLatLng(marker.getPosition().latitude, marker.getPosition().longitude))
-                .setIcon(10000) //todo
                 .setAlpha(marker.getAlpha())
                 .setRotation(marker.getRotation())
                 .setTitle(marker.getTitle())
