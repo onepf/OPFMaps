@@ -21,6 +21,7 @@ import com.amazon.geo.mapsv2.model.MarkerOptions;
 import com.amazon.geo.mapsv2.model.PolygonOptions;
 import com.amazon.geo.mapsv2.model.PolylineOptions;
 
+import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapDelegate;
 import org.onepf.opfmaps.OPFOnMapClickListener;
 import org.onepf.opfmaps.OPFOnMapLoadListener;
@@ -119,14 +120,51 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public void setMapType(int mapType) {
-
+    public void setMapType(OPFMap.MAP_TYPE mapType) {
+        int googleMapType;
+        switch (mapType) {
+            case NORMAL:
+                googleMapType = AmazonMap.MAP_TYPE_NORMAL;
+                break;
+            case HYBRID:
+                googleMapType = AmazonMap.MAP_TYPE_HYBRID;
+                break;
+            case SATELLITE:
+                googleMapType = AmazonMap.MAP_TYPE_SATELLITE;
+                break;
+            case TERRAIN:
+                googleMapType = AmazonMap.MAP_TYPE_TERRAIN;
+                break;
+            case NONE:
+                googleMapType = AmazonMap.MAP_TYPE_NONE;
+                break;
+            case UNKNOWN:
+                googleMapType = AmazonMap.MAP_TYPE_NONE;
+                break;
+            default:
+                throw new IllegalStateException("Unknown map type: " + mapType);
+        }
+        amazonMap.setMapType(googleMapType);
     }
 
     @Override
-    public int getMapType() {
-        return 0;
+    public OPFMap.MAP_TYPE getMapType() {
+        OPFMap.MAP_TYPE mapType = OPFMap.MAP_TYPE.UNKNOWN;
+        int googleMapType = amazonMap.getMapType();
+        if (googleMapType == AmazonMap.MAP_TYPE_NORMAL) {
+            mapType = OPFMap.MAP_TYPE.NORMAL;
+        } else if (googleMapType == AmazonMap.MAP_TYPE_HYBRID) {
+            mapType = OPFMap.MAP_TYPE.HYBRID;
+        } else if (googleMapType == AmazonMap.MAP_TYPE_SATELLITE) {
+            mapType = OPFMap.MAP_TYPE.SATELLITE;
+        } else if (googleMapType == AmazonMap.MAP_TYPE_TERRAIN) {
+            mapType = OPFMap.MAP_TYPE.TERRAIN;
+        } else if (googleMapType == AmazonMap.MAP_TYPE_NONE) {
+            mapType = OPFMap.MAP_TYPE.NONE;
+        }
+        return mapType;
     }
+
 
     @Override
     public Location getMyLocation() {

@@ -58,6 +58,7 @@ public class MainActivity extends ActionBarActivity {
                 map.load(new OPFOnMapLoadListener() {
                     @Override
                     public void onMapLoad() {
+                        map.setMapType(OPFMap.MAP_TYPE.HYBRID);
                         map.setMyLocationEnabled(true);
                         map.setBuildingsEnabled(true);
 //                        map.zoom((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2f);

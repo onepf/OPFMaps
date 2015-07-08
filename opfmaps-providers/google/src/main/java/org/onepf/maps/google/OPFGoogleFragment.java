@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapDelegate;
 import org.onepf.opfmaps.OPFOnMapClickListener;
 import org.onepf.opfmaps.OPFOnMapLoadListener;
@@ -115,13 +116,49 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public void setMapType(int mapType) {
-
+    public void setMapType(OPFMap.MAP_TYPE mapType) {
+        int googleMapType;
+        switch (mapType) {
+            case NORMAL:
+                googleMapType = GoogleMap.MAP_TYPE_NORMAL;
+                break;
+            case HYBRID:
+                googleMapType = GoogleMap.MAP_TYPE_HYBRID;
+                break;
+            case SATELLITE:
+                googleMapType = GoogleMap.MAP_TYPE_SATELLITE;
+                break;
+            case TERRAIN:
+                googleMapType = GoogleMap.MAP_TYPE_TERRAIN;
+                break;
+            case NONE:
+                googleMapType = GoogleMap.MAP_TYPE_NONE;
+                break;
+            case UNKNOWN:
+                googleMapType = GoogleMap.MAP_TYPE_NONE;
+                break;
+            default:
+                throw new IllegalStateException("Unknown map type: " + mapType);
+        }
+        googleMap.setMapType(googleMapType);
     }
 
     @Override
-    public int getMapType() {
-        return 0;
+    public OPFMap.MAP_TYPE getMapType() {
+        OPFMap.MAP_TYPE mapType = OPFMap.MAP_TYPE.UNKNOWN;
+        int googleMapType = googleMap.getMapType();
+        if (googleMapType == GoogleMap.MAP_TYPE_NORMAL) {
+            mapType = OPFMap.MAP_TYPE.NORMAL;
+        } else if (googleMapType == GoogleMap.MAP_TYPE_HYBRID) {
+            mapType = OPFMap.MAP_TYPE.HYBRID;
+        } else if (googleMapType == GoogleMap.MAP_TYPE_SATELLITE) {
+            mapType = OPFMap.MAP_TYPE.SATELLITE;
+        } else if (googleMapType == GoogleMap.MAP_TYPE_TERRAIN) {
+            mapType = OPFMap.MAP_TYPE.TERRAIN;
+        } else if (googleMapType == GoogleMap.MAP_TYPE_NONE) {
+            mapType = OPFMap.MAP_TYPE.NONE;
+        }
+        return mapType;
     }
 
     @Override

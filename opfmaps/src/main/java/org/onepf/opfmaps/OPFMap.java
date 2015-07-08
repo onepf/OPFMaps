@@ -21,6 +21,15 @@ import java.util.List;
  * Created by akarimova on 08.06.15.
  */
 public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadListener {
+    public enum MAP_TYPE {
+        HYBRID,
+        NONE,
+        NORMAL,
+        SATELLITE,
+        TERRAIN,
+        UNKNOWN
+    }
+
     public enum InitializationErrors {
         PROVIDER_LIST_EMPTY
     }
@@ -112,13 +121,13 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
     }
 
     @Override
-    public void setMapType(int mapType) {
+    public void setMapType(MAP_TYPE mapType) {
         checkInitialization();
         mapDelegate.setMapType(mapType);
     }
 
     @Override
-    public int getMapType() {
+    public MAP_TYPE getMapType() {
         checkInitialization();
         return mapDelegate.getMapType();
     }

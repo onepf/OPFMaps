@@ -36,9 +36,9 @@ public interface OPFMapDelegate {
 
     void clear();
 
-    void setMapType(int mapType);
+    void setMapType(OPFMap.MAP_TYPE mapType);
 
-    int getMapType();
+    OPFMap.MAP_TYPE getMapType();
 
     Location getMyLocation();
 
