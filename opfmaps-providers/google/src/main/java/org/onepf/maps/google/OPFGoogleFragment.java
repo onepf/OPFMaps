@@ -26,7 +26,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -43,11 +42,11 @@ import java.util.List;
 public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OPFTBDInterface<PolylineOptions, PolygonOptions, CircleOptions, MarkerOptions, LatLng> {
     private static final String EXTRA = "MapOptions";
     private GoogleMap googleMap;
-    private boolean initialized;
+    private Boolean initialized;
 
     @Override
-    public boolean isInitialized() {
-        return initialized;
+    public boolean isReady() {
+        return initialized != null & initialized;
     }
 
     public static OPFGoogleFragment newInstance(GoogleMapOptions options) {
@@ -169,18 +168,15 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
             public void onMapReady(GoogleMap googleMap) {
                 if (googleMap != null && getActivity() != null) {
                     OPFGoogleFragment.this.googleMap = googleMap;
-                    UiSettings settings = OPFGoogleFragment.this.googleMap.getUiSettings();
-
                     if (mapLoadedListener != null) {
                         mapLoadedListener.onMapLoad();
                     }
                     initialized = true;
-
                 } else {
                     if (mapLoadedListener != null) {
                         mapLoadedListener.onError();
-                        initialized = false;
                     }
+                    initialized = false;
                 }
             }
         });

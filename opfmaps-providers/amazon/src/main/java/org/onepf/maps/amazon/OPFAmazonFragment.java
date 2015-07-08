@@ -44,11 +44,11 @@ import java.util.List;
 public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OPFTBDInterface<PolylineOptions, PolygonOptions, CircleOptions, MarkerOptions, LatLng> {
     private static final String EXTRA = "MapOptions";
     private AmazonMap amazonMap;
-    private boolean initialized;
+    private Boolean initialized;
 
     @Override
-    public boolean isInitialized() {
-        return initialized;
+    public boolean isReady() {
+        return initialized != null && initialized;
     }
 
     public static OPFAmazonFragment newInstance(AmazonMapOptions options) {
@@ -203,8 +203,8 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
                 } else {
                     if (mapLoadedListener != null) {
                         mapLoadedListener.onError();
-                        initialized = false;
                     }
+                    initialized = false;
                 }
             }
         });

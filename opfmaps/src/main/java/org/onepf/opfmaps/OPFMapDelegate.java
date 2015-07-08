@@ -16,7 +16,7 @@ import org.onepf.opfmaps.model.OPFTileOverlay;
  */
 public interface OPFMapDelegate {
 
-    boolean isInitialized();
+    boolean isReady();
 
     void addMarker(OPFMarker opfMarker);
 

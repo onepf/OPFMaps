@@ -197,7 +197,7 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
     }
 
     @Override
-    public boolean isInitialized() {
+    public boolean isReady() {
         checkInitialization();
         //todo add conditions!!!
         return mapDelegate != null;
