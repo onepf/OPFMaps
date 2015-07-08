@@ -36,7 +36,7 @@ public class OPFPolyline extends OPFMutiPointsShape {
         }
 
 
-        public Builder setWidthr(float width) {
+        public Builder setWidth(float width) {
             getShape().width(width);
             return this;
         }
