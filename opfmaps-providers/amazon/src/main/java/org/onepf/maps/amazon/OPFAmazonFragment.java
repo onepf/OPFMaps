@@ -2,6 +2,7 @@ package org.onepf.maps.amazon;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,15 +88,20 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
         amazonMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
 
     @Override
-    public void setInfoWindowAdapter(OPFInfoWindowAdapter adapter) {
+    public void setInfoWindowAdapter(@NonNull final OPFInfoWindowAdapter adapter) {
+        amazonMap.setInfoWindowAdapter(new AmazonMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return adapter.getInfoWindow(makeOPFMarker(marker));
+            }
 
+            @Override
+            public View getInfoContents(Marker marker) {
+                return adapter.getInfoContents(makeOPFMarker(marker));
+            }
+        });
     }
 
     @Override

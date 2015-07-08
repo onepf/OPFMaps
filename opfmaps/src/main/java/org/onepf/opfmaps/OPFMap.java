@@ -234,6 +234,7 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
     @Override
     public void setInfoWindowAdapter(OPFInfoWindowAdapter adapter) {
         checkInitialization();
+        mapDelegate.setInfoWindowAdapter(adapter);
     }
 
     private void checkInitialization() {

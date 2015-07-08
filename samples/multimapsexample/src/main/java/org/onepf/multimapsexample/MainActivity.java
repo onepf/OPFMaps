@@ -3,8 +3,11 @@ package org.onepf.multimapsexample;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import org.onepf.maps.amazon.AmazonMapProvider;
 import org.onepf.maps.google.GoogleMapProvider;
@@ -18,6 +21,7 @@ import org.onepf.opfmaps.OPFOnMapLoadListener;
 import org.onepf.opfmaps.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.model.OPFCircle;
+import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFMarker;
 
@@ -107,6 +111,23 @@ public class MainActivity extends ActionBarActivity {
                         map.setOnMapClickListener(new OPFOnMapClickListener() {
                             @Override
                             public void onMapClick(OPFLatLng latLng) {
+                            }
+                        });
+
+                        map.setInfoWindowAdapter(new OPFInfoWindowAdapter() {
+                            @Override
+                            public View getInfoWindow(OPFMarker marker) {
+                                View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.info_window, null);
+                                TextView title = (TextView) inflate.findViewById(R.id.title);
+                                title.setText(marker.getTitle());
+                                TextView snippet = (TextView) inflate.findViewById(R.id.snippet);
+                                snippet.setText(marker.getSnippet());
+                                return inflate;
+                            }
+
+                            @Override
+                            public View getInfoContents(OPFMarker marker) {
+                                return null;
                             }
                         });
 

@@ -2,6 +2,7 @@ package org.onepf.maps.google;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,14 +87,18 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
+    public void setInfoWindowAdapter(@NonNull final OPFInfoWindowAdapter adapter) {
+        googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return adapter.getInfoWindow(makeOPFMarker(marker));
+            }
 
-    @Override
-    public void setInfoWindowAdapter(OPFInfoWindowAdapter adapter) {
-
+            @Override
+            public View getInfoContents(Marker marker) {
+                return adapter.getInfoContents(makeOPFMarker(marker));
+            }
+        });
     }
 
     @Override
