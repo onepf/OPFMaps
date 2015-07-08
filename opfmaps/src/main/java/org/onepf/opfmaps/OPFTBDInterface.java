@@ -13,19 +13,12 @@ import org.onepf.opfmaps.model.OPFPolyline;
 public interface OPFTBDInterface<PL, PG, C, M, LL> {
     PL polyline(OPFPolyline opfPolyline);
 
-    OPFPolyline opfPolyline(PL polyline);
-
     PG polygon(OPFPolygon opfPolygon);
 
-    OPFPolygon opfPolygon(PG polygon);
-
     C circle(OPFCircle opfCircle);
-
-    OPFCircle opfCircle(C circle);
 
     M marker(OPFMarker opfMarker);
 
     LL latLng(OPFLatLng opfLatLng);
 
-    OPFLatLng opfLatLng(LL latLng);
 }

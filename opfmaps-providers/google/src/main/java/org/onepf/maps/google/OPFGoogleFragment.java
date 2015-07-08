@@ -296,10 +296,6 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
         return polylineOptions;
     }
 
-    @Override
-    public OPFPolyline opfPolyline(PolylineOptions polyline) {
-        return null;
-    }
 
     @Override
     public PolygonOptions polygon(OPFPolygon polygon) {
@@ -317,11 +313,6 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public OPFPolygon opfPolygon(PolygonOptions polygon) {
-        return null;
-    }
-
-    @Override
     public CircleOptions circle(OPFCircle opfCircle) {
         CircleOptions circleOptions = new CircleOptions();
         OPFLatLng center = opfCircle.getCenter();
@@ -336,10 +327,6 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
         return circleOptions;
     }
 
-    @Override
-    public OPFCircle opfCircle(CircleOptions circle) {
-        return null;
-    }
 
     @Override
     public MarkerOptions marker(OPFMarker opfMarker) {
@@ -360,10 +347,5 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
     @Override
     public LatLng latLng(OPFLatLng opfLatLng) {
         return new LatLng(opfLatLng.getLatitude(), opfLatLng.getLongitude());
-    }
-
-    @Override
-    public OPFLatLng opfLatLng(LatLng latLng) {
-        return new OPFLatLng(latLng.latitude, latLng.longitude);
     }
 }

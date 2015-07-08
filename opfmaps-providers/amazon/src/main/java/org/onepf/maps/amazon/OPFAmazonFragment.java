@@ -328,11 +328,6 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public OPFPolyline opfPolyline(PolylineOptions polyline) {
-        return null;
-    }
-
-    @Override
     public PolygonOptions polygon(OPFPolygon polygon) {
         PolygonOptions polygonOptions = new PolygonOptions();
         polygonOptions.geodesic(polygon.isGeodesic());
@@ -348,11 +343,6 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public OPFPolygon opfPolygon(PolygonOptions polygon) {
-        return null;
-    }
-
-    @Override
     public CircleOptions circle(OPFCircle opfCircle) {
         CircleOptions circleOptions = new CircleOptions();
         OPFLatLng center = opfCircle.getCenter();
@@ -365,11 +355,6 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
         circleOptions.strokeWidth(opfCircle.getStrokeWidth());
         circleOptions.visible(opfCircle.isVisible());
         return circleOptions;
-    }
-
-    @Override
-    public OPFCircle opfCircle(CircleOptions circle) {
-        return null;
     }
 
     @Override
@@ -394,8 +379,4 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
         return new LatLng(opfLatLng.getLatitude(), opfLatLng.getLongitude());
     }
 
-    @Override
-    public OPFLatLng opfLatLng(LatLng latLng) {
-        return new OPFLatLng(latLng.latitude, latLng.longitude);
-    }
 }
