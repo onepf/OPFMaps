@@ -143,7 +143,7 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
     }
 
     @Override
-    public void addPadding(int bottom, int left, int top, int right) {
+    public void addPadding(int left, int top, int right, int bottom) {
         checkInitialization();
 
     }

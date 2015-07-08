@@ -46,7 +46,7 @@ public interface OPFMapDelegate {
 
     void addTileOverlay(OPFTileOverlay opfTileOverlay);
 
-    void addPadding(int bottom, int left, int top, int right);
+    void addPadding(int left, int top, int right, int bottom);
 
     void setIndoorEnabled(boolean enabled);
 

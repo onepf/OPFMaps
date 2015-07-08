@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amazon.geo.mapsv2.AmazonMap;
@@ -145,8 +144,8 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public void addPadding(int bottom, int left, int top, int right) {
-
+    public void addPadding(int left, int top, int right, int bottom) {
+        amazonMap.setPadding(left, top, right, bottom);
     }
 
     @Override

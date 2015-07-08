@@ -3,9 +3,7 @@ package org.onepf.maps.google;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import org.onepf.opfmaps.OPFMapDelegate;
 import org.onepf.opfmaps.OPFOnMapClickListener;
@@ -142,8 +140,8 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public void addPadding(int bottom, int left, int top, int right) {
-
+    public void addPadding(int left, int top, int right, int bottom) {
+        googleMap.setPadding(left, top, right, bottom);
     }
 
     @Override
