@@ -1,11 +1,14 @@
 package org.onepf.maps.yandex;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.location.Location;
+import android.os.Bundle;
 import android.util.Log;
 
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapDelegate;
+import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.OPFOnMapClickListener;
 import org.onepf.opfmaps.OPFOnMapLoadListener;
 import org.onepf.opfmaps.OPFOnMarkerClickListener;
@@ -26,6 +29,7 @@ import ru.yandex.yandexmapkit.MapView;
 import ru.yandex.yandexmapkit.OverlayManager;
 import ru.yandex.yandexmapkit.overlay.Overlay;
 import ru.yandex.yandexmapkit.overlay.OverlayItem;
+import ru.yandex.yandexmapkit.overlay.drag.DragAndDropItem;
 import ru.yandex.yandexmapkit.utils.GeoPoint;
 
 /**
@@ -34,19 +38,31 @@ import ru.yandex.yandexmapkit.utils.GeoPoint;
 public class OPFYandexFragment extends Fragment implements OPFMapDelegate, OPFTBDInterface<Object, Objects, Object, Overlay, GeoPoint> {
     private MapView yandexMap;
 
+    public static OPFYandexFragment newInstance(Context context, OPFMapOptions options) {
+        OPFYandexFragment opfYandexFragment = new OPFYandexFragment();
+        Bundle bundle = new Bundle(1);
+        opfYandexFragment.setArguments(bundle);
+        return opfYandexFragment;
+    }
+
     @Override
     public boolean isReady() {
-        return false;
+        return true;
     }
 
     @Override
     public void addMarker(OPFMarker opfMarker) {
         Overlay overlay = new Overlay(yandexMap.getMapController());
-        GeoPoint geoPoint = new GeoPoint(opfMarker.getLatLng().getLatitude(), opfMarker.getLatLng().getLongitude());
-        OverlayItem overlayItem = new OverlayItem(geoPoint, getResources().getDrawable(opfMarker.getIconId()));
-        overlay.addOverlayItem(overlayItem);
+        GeoPoint geoPoint = latLng(opfMarker.getLatLng());
         OverlayManager overlayManager = yandexMap.getMapController().getOverlayManager();
         overlayManager.addOverlay(overlay);
+        OverlayItem overlayItem;
+        if (opfMarker.isDraggable()) {
+            overlayItem = new DragAndDropItem(geoPoint, getResources().getDrawable(opfMarker.getIconId()));
+        } else {
+            overlayItem = new OverlayItem(geoPoint, getResources().getDrawable(opfMarker.getIconId()));
+        }
+        overlay.addOverlayItem(overlayItem);
     }
 
     @Override
