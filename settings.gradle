@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-include ':opfmaps', ':multimapsexample',
+include ':opfmaps',
         ':amazon',
         ':google',
         ':here',
         ':osmdroid',
         ':yandex',
         ':yandex-web',
-        ':amazon-maps-api-2.0',
-        ":multimapsexample"
+        ':multimapsexample'
 
 
 project(':amazon').projectDir = new File('opfmaps-providers/amazon')
