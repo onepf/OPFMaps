@@ -20,7 +20,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:appcompat-v7:22.2.1'
     compile project(':opfmaps')//todo remove later
-    compile project(':amazon-maps-api-2.0')
+
+    compile 'com.amazon:amazon-maps-api:2.0'
 }
