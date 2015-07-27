@@ -20,7 +20,7 @@ package org.onepf.opfmaps.model;
  * Created by akarimova on 15.06.15.
  */
 public class OPFShape extends OPFMapObject {
-    private float zIndex = 0.0f;
+    private float zIndex;
 
     public void zIndex(float zIndex) {
         this.zIndex = zIndex;
@@ -30,7 +30,7 @@ public class OPFShape extends OPFMapObject {
         return zIndex;
     }
 
-    public static abstract class Builder<T extends OPFShape> implements org.onepf.opfmaps.model.Builder<T> {
+    public abstract static class Builder<T extends OPFShape> implements org.onepf.opfmaps.model.Builder<T> {
         private T shape;
 
         public Builder() {

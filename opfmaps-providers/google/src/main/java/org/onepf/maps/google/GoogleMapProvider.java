@@ -19,18 +19,20 @@ package org.onepf.maps.google;
 import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMapOptions;
-
 import org.onepf.opfmaps.OPFAbstractMapProvider;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.utils.FeatureChecker;
 import org.onepf.opfmaps.utils.MetaDataChecker;
 import org.onepf.opfmaps.utils.PermissionChecker;
 
-import static android.Manifest.permission.*;
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.ACCESS_NETWORK_STATE;
+import static android.Manifest.permission.INTERNET;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
  * Created by akarimova on 24.06.15.
@@ -39,11 +41,11 @@ public class GoogleMapProvider extends OPFAbstractMapProvider {
     @Override
     public boolean hasRequiredPermissions(Context context) {
         return
-                PermissionChecker.permissionRequested(context, INTERNET) &&
-                        PermissionChecker.permissionRequested(context, ACCESS_NETWORK_STATE) &&
-                        PermissionChecker.permissionRequested(context, WRITE_EXTERNAL_STORAGE) &&
-                        (PermissionChecker.permissionRequested(context, ACCESS_COARSE_LOCATION)
-                                || PermissionChecker.permissionRequested(context, ACCESS_FINE_LOCATION));
+                PermissionChecker.permissionRequested(context, INTERNET)
+                        && PermissionChecker.permissionRequested(context, ACCESS_NETWORK_STATE)
+                        && PermissionChecker.permissionRequested(context, WRITE_EXTERNAL_STORAGE)
+                        && (PermissionChecker.permissionRequested(context, ACCESS_COARSE_LOCATION)
+                        || PermissionChecker.permissionRequested(context, ACCESS_FINE_LOCATION));
     }
 
     @Override
@@ -77,7 +79,9 @@ public class GoogleMapProvider extends OPFAbstractMapProvider {
 
     @Override
     public boolean hasRequestedFeatures(Context context) {
+        //CHECKSTYLE:OFF
         return FeatureChecker.hasRequestedFeature(context, "tbd", 0x00020000);
+        //CHECKSTYLE:ON
     }
 
 }

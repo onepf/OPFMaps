@@ -83,26 +83,27 @@ public class OPFYandexFragment extends Fragment implements OPFMapDelegate, OPFTB
 
     @Override
     public void addPolyline(OPFPolyline opfPolyline) {
-
+        //will be implemented later
     }
 
     @Override
     public void addCircle(OPFCircle opfCircle) {
-
+        //will be implemented later
     }
 
     @Override
     public void addPolygon(OPFPolygon opfPolygon) {
-
+        //will be implemented later
     }
 
     @Override
     public void zoom(float zoom) {
+        //will be implemented later
     }
 
     @Override
     public void setInfoWindowAdapter(OPFInfoWindowAdapter adapter) {
-
+        //will be implemented later
     }
 
     @Override
@@ -117,15 +118,16 @@ public class OPFYandexFragment extends Fragment implements OPFMapDelegate, OPFTB
 
     @Override
     public void clear() {
+        //will be implemented later
     }
 
     @Override
-    public void setMapType(OPFMap.MAP_TYPE mapType) {
-
+    public void setMapType(OPFMap.MapType mapType) {
+        //will be implemented later
     }
 
     @Override
-    public OPFMap.MAP_TYPE getMapType() {
+    public OPFMap.MapType getMapType() {
         return null;
     }
 
@@ -136,17 +138,17 @@ public class OPFYandexFragment extends Fragment implements OPFMapDelegate, OPFTB
 
     @Override
     public void addGroundOverlay(OPFGroundOverlay opfGroundOverlay) {
-
+        //will be implemented later
     }
 
     @Override
     public void addTileOverlay(OPFTileOverlay opfTileOverlay) {
-
+        //will be implemented later
     }
 
     @Override
     public void addPadding(int left, int top, int right, int bottom) {
-
+        //will be implemented later
     }
 
     @Override
@@ -156,7 +158,7 @@ public class OPFYandexFragment extends Fragment implements OPFMapDelegate, OPFTB
 
     @Override
     public void setBuildingsEnabled(boolean enabled) {
-
+        //will be implemented later
     }
 
     @Override
@@ -171,20 +173,22 @@ public class OPFYandexFragment extends Fragment implements OPFMapDelegate, OPFTB
 
     @Override
     public void load(OPFOnMapLoadListener mapLoadedListener) {
+        //will be implemented later
     }
 
     @Override
     public void setOnMarkerDragListener(OPFOnMarkerDragListener onMarkerDragListener) {
-
+        //will be implemented later
     }
 
     @Override
     public void setOnMarkerClickListener(OPFOnMarkerClickListener onMarkerClickListener) {
-
+        //will be implemented later
     }
 
     @Override
     public void setOnMapClickListener(OPFOnMapClickListener onMapClickListener) {
+        //will be implemented later
     }
 
     @Override

@@ -24,13 +24,15 @@ import java.util.List;
 /**
  * Created by akarimova on 15.06.15.
  */
-public class OPFPolygon extends OPFMutiPointsShape {
+@SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass") //TODO: fix this PMD issue
+public final class OPFPolygon extends OPFMultiPointsShape {
     private int fillColor = Color.TRANSPARENT;
     private int strokeColor = Color.BLACK;
     private float strokeWidth = 10.0f;
-    private List<OPFLatLng> holes;
+    private final List<OPFLatLng> holes;
 
     private OPFPolygon() {
+        super();
         holes = new ArrayList<>();
     }
 
@@ -67,7 +69,7 @@ public class OPFPolygon extends OPFMutiPointsShape {
     }
 
 
-    public static class Builder extends OPFMutiPointsShape.Builder<OPFPolygon> {
+    public static class Builder extends OPFMultiPointsShape.Builder<OPFPolygon> {
 
         public Builder setFillColor(int fillColor) {
             getShape().fillColor(fillColor);
@@ -92,6 +94,7 @@ public class OPFPolygon extends OPFMutiPointsShape {
             return getShape();
         }
 
+        @SuppressWarnings("PMD.AccessorClassGeneration")
         @Override
         protected OPFPolygon createShape() {
            return new OPFPolygon();

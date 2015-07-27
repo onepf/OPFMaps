@@ -21,13 +21,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * Created by akarimova on 26.06.15.
  */
-public class MetaDataChecker {
+public final class MetaDataChecker {
     private MetaDataChecker() {
-
     }
 
     public static boolean dataPresented(Context context, String key) {
@@ -35,6 +35,7 @@ public class MetaDataChecker {
     }
 
 
+    @SuppressWarnings("PMD.EmptyIfStmt") //TODO: remove after fixing
     //todo process the pattern
     private static boolean dataPresented(Context context, String key, String pattern) {
         if (TextUtils.isEmpty(key)) {
@@ -55,7 +56,8 @@ public class MetaDataChecker {
                     }
                 }
             }
-        } catch (PackageManager.NameNotFoundException ignored) {
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(MetaDataChecker.class.getName(), e.getMessage());
         }
         return false;
     }

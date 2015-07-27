@@ -20,13 +20,13 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * Created by akarimova on 02.07.15.
  */
-public class PermissionChecker {
+public final class PermissionChecker {
     private PermissionChecker() {
-
     }
 
     public static boolean permissionRequested(Context context, String permission) {
@@ -45,7 +45,8 @@ public class PermissionChecker {
                     }
                 }
             }
-        } catch (PackageManager.NameNotFoundException ignored) {
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(PermissionChecker.class.getName(), e.getMessage());
         }
         return false;
     }

@@ -21,11 +21,13 @@ import android.graphics.Color;
 /**
  * Created by akarimova on 09.06.15.
  */
-public class OPFPolyline extends OPFMutiPointsShape {
+@SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass") //TODO: fix this PMD issue
+public final class OPFPolyline extends OPFMultiPointsShape {
     private int color = Color.BLACK;
     private float width = 10.0f;
 
     private OPFPolyline() {
+        super();
     }
 
     public int getColor() {
@@ -44,7 +46,7 @@ public class OPFPolyline extends OPFMutiPointsShape {
         this.width = width;
     }
 
-    public static class Builder extends OPFMutiPointsShape.Builder<OPFPolyline> {
+    public static class Builder extends OPFMultiPointsShape.Builder<OPFPolyline> {
 
         public Builder setColor(int color) {
             getShape().color(color);
@@ -65,6 +67,7 @@ public class OPFPolyline extends OPFMutiPointsShape {
             return getShape();
         }
 
+        @SuppressWarnings("PMD.AccessorClassGeneration")
         @Override
         protected OPFPolyline createShape() {
             return new OPFPolyline();

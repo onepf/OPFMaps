@@ -37,7 +37,7 @@ import java.util.List;
  * Created by akarimova on 08.06.15.
  */
 public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadListener {
-    public enum MAP_TYPE {
+    public enum MapType {
         HYBRID,
         NONE,
         NORMAL,
@@ -55,6 +55,8 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
 
 
     private OPFOnMapLoadListener onMapLoadListener;
+
+    @SuppressWarnings("PMD.SingularField") //TODO: fix this PMD issue
     private OPFOnMapConfigureListener onMapConfigureListener;
 
     private Boolean isReady;
@@ -79,11 +81,13 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
     }
 
 
-    public void init(android.app.FragmentManager fragmentManager, OPFMapSettings mapSettings, OPFOnMapConfigureListener listener,
+    public void init(android.app.FragmentManager fragmentManager,
+                     OPFMapSettings mapSettings,
+                     OPFOnMapConfigureListener listener,
                      OPFMapOptions opfMapOptions) {
         this.onMapConfigureListener = listener;
         List<OPFMapProvider> providers = mapSettings.getProviders();
-        if (providers == null || providers.size() == 0) {
+        if (providers == null || providers.isEmpty()) {
             if (onMapConfigureListener != null) {
                 onMapConfigureListener.onError(0); //empty provider list
                 onMapConfigureListener = null;
@@ -137,13 +141,13 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
     }
 
     @Override
-    public void setMapType(MAP_TYPE mapType) {
+    public void setMapType(MapType mapType) {
         checkInitialization();
         mapDelegate.setMapType(mapType);
     }
 
     @Override
-    public MAP_TYPE getMapType() {
+    public MapType getMapType() {
         checkInitialization();
         return mapDelegate.getMapType();
     }

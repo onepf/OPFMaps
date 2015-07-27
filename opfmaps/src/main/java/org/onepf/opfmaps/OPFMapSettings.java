@@ -22,10 +22,10 @@ import java.util.List;
  * Created by akarimova on 11.06.15.
  */
 public class OPFMapSettings {
-    private List<OPFMapProvider> providers;
+    private final List<OPFMapProvider> providers;
 
     public OPFMapSettings(List<OPFMapProvider> providers) {
-        if (providers == null || providers.size() == 0) {
+        if (providers == null || providers.isEmpty()) {
             //todo throw an exception
             throw new IllegalStateException("");
         }

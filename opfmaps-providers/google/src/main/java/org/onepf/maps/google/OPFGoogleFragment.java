@@ -55,7 +55,10 @@ import java.util.List;
 /**
  * Created by akarimova on 09.06.15.
  */
-public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OPFTBDInterface<PolylineOptions, PolygonOptions, CircleOptions, MarkerOptions, LatLng> {
+@SuppressWarnings("PMD.GodClass")
+public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OPFTBDInterface<PolylineOptions,
+        PolygonOptions, CircleOptions, MarkerOptions, LatLng> {
+
     private static final String EXTRA = "MapOptions";
     private GoogleMap googleMap;
     private Boolean initialized;
@@ -132,7 +135,7 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public void setMapType(OPFMap.MAP_TYPE mapType) {
+    public void setMapType(OPFMap.MapType mapType) {
         int googleMapType;
         switch (mapType) {
             case NORMAL:
@@ -160,19 +163,19 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public OPFMap.MAP_TYPE getMapType() {
-        OPFMap.MAP_TYPE mapType = OPFMap.MAP_TYPE.UNKNOWN;
+    public OPFMap.MapType getMapType() {
+        OPFMap.MapType mapType = OPFMap.MapType.UNKNOWN;
         int googleMapType = googleMap.getMapType();
         if (googleMapType == GoogleMap.MAP_TYPE_NORMAL) {
-            mapType = OPFMap.MAP_TYPE.NORMAL;
+            mapType = OPFMap.MapType.NORMAL;
         } else if (googleMapType == GoogleMap.MAP_TYPE_HYBRID) {
-            mapType = OPFMap.MAP_TYPE.HYBRID;
+            mapType = OPFMap.MapType.HYBRID;
         } else if (googleMapType == GoogleMap.MAP_TYPE_SATELLITE) {
-            mapType = OPFMap.MAP_TYPE.SATELLITE;
+            mapType = OPFMap.MapType.SATELLITE;
         } else if (googleMapType == GoogleMap.MAP_TYPE_TERRAIN) {
-            mapType = OPFMap.MAP_TYPE.TERRAIN;
+            mapType = OPFMap.MapType.TERRAIN;
         } else if (googleMapType == GoogleMap.MAP_TYPE_NONE) {
-            mapType = OPFMap.MAP_TYPE.NONE;
+            mapType = OPFMap.MapType.NONE;
         }
         return mapType;
     }
@@ -184,12 +187,12 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
 
     @Override
     public void addGroundOverlay(OPFGroundOverlay opfGroundOverlay) {
-
+        //will be implemented later
     }
 
     @Override
     public void addTileOverlay(OPFTileOverlay opfTileOverlay) {
-
+        //will be implemented later
     }
 
     @Override
@@ -242,19 +245,19 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
     public void setOnMarkerDragListener(final OPFOnMarkerDragListener onMarkerDragListener) {
         googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
-            public void onMarkerDragStart(com.google.android.gms.maps.model.Marker marker) {
+            public void onMarkerDragStart(Marker marker) {
                 OPFMarker opfMarker = makeOPFMarker(marker);
                 onMarkerDragListener.onMarkerDragStart(opfMarker);
             }
 
             @Override
-            public void onMarkerDrag(com.google.android.gms.maps.model.Marker marker) {
+            public void onMarkerDrag(Marker marker) {
                 OPFMarker opfMarker = makeOPFMarker(marker);
                 onMarkerDragListener.onMarkerDrag(opfMarker);
             }
 
             @Override
-            public void onMarkerDragEnd(com.google.android.gms.maps.model.Marker marker) {
+            public void onMarkerDragEnd(Marker marker) {
                 OPFMarker opfMarker = makeOPFMarker(marker);
                 onMarkerDragListener.onMarkerDragEnd(opfMarker);
             }
@@ -278,7 +281,7 @@ public class OPFGoogleFragment extends MapFragment implements OPFMapDelegate, OP
     public void setOnMarkerClickListener(final OPFOnMarkerClickListener onMarkerClickListener) {
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
+            public boolean onMarkerClick(Marker marker) {
                 OPFMarker opfMarker = makeOPFMarker(marker);
                 onMarkerClickListener.onMarkerClick(opfMarker);
                 return false; //todo check

@@ -21,7 +21,9 @@ import android.graphics.Color;
 /**
  * Created by akarimova on 10.06.15.
  */
-public class OPFCircle extends OPFShape {
+//TODO: Remove setters. Make private constructor with all class members.
+public final class OPFCircle extends OPFShape {
+
     private OPFLatLng center;
     private double radius;
     private int fillColor = Color.TRANSPARENT;
@@ -29,6 +31,7 @@ public class OPFCircle extends OPFShape {
     private float strokeWidth = 10f;
 
     private OPFCircle() {
+        super();
     }
 
     public OPFLatLng getCenter() {
@@ -72,8 +75,9 @@ public class OPFCircle extends OPFShape {
     }
 
     public static class Builder implements org.onepf.opfmaps.model.Builder<OPFCircle> {
-        private OPFCircle opfCircle;
+        private final OPFCircle opfCircle;
 
+        @SuppressWarnings("PMD.AccessorClassGeneration")
         public Builder() {
             opfCircle = new OPFCircle();
         }

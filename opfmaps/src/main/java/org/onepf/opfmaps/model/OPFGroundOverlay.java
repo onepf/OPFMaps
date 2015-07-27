@@ -44,7 +44,7 @@ public class OPFGroundOverlay {
     }
 
 
-    public void anchor(float anchorU, float anchorV){
+    public void anchor(float anchorU, float anchorV) {
         this.anchorU = anchorU;
         this.anchorV = anchorV;
     }

@@ -44,11 +44,11 @@ public class AmazonMapProvider extends OPFAbstractMapProvider {
     @Override
     public boolean hasRequiredPermissions(Context context) {
         return
-                PermissionChecker.permissionRequested(context, INTERNET) &&
-                        PermissionChecker.permissionRequested(context, ACCESS_NETWORK_STATE) &&
-                        PermissionChecker.permissionRequested(context, WRITE_EXTERNAL_STORAGE) &&
-                        PermissionChecker.permissionRequested(context, ACCESS_COARSE_LOCATION) &&
-                        PermissionChecker.permissionRequested(context, ACCESS_FINE_LOCATION);
+                PermissionChecker.permissionRequested(context, INTERNET)
+                        && PermissionChecker.permissionRequested(context, ACCESS_NETWORK_STATE)
+                        && PermissionChecker.permissionRequested(context, WRITE_EXTERNAL_STORAGE)
+                        && PermissionChecker.permissionRequested(context, ACCESS_COARSE_LOCATION)
+                        && PermissionChecker.permissionRequested(context, ACCESS_FINE_LOCATION);
     }
 
     @Override

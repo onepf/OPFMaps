@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 /**
  * Created by akarimova on 09.06.15.
  */
+//TODO: Remove setters. Make private constructor with all class members.
 public final class OPFMarker extends OPFMapObject {
     private OPFLatLng latLng;
     private String title;
@@ -31,11 +32,21 @@ public final class OPFMarker extends OPFMapObject {
     private boolean flat;
     private float alpha = 1.0f;
     private float rotation;
+
+    //TODO: remove or make getter
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private float u;
+
+    //TODO: remove or make getter
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     private float v;
+
+    //TODO: remove if it is really unused
+    @SuppressWarnings("PMD.UnusedPrivateField")
     private String id;
 
     private OPFMarker() {
+        super();
         latLng(latLng);
         iconId(iconId);
     }
@@ -64,6 +75,8 @@ public final class OPFMarker extends OPFMapObject {
         this.latLng = latLng;
     }
 
+    //TODO make public or remove
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private Bitmap getBitmap() {
         return bitmap;
     }
@@ -122,8 +135,9 @@ public final class OPFMarker extends OPFMapObject {
     }
 
     public static class Builder implements org.onepf.opfmaps.model.Builder<OPFMarker> {
-        private OPFMarker opfMarker;
+        private final OPFMarker opfMarker;
 
+        @SuppressWarnings("PMD.AccessorClassGeneration")
         public Builder() {
             opfMarker = new OPFMarker();
         }

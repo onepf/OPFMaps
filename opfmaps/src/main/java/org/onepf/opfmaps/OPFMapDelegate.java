@@ -52,9 +52,9 @@ public interface OPFMapDelegate {
 
     void clear();
 
-    void setMapType(OPFMap.MAP_TYPE mapType);
+    void setMapType(OPFMap.MapType mapType);
 
-    OPFMap.MAP_TYPE getMapType();
+    OPFMap.MapType getMapType();
 
     Location getMyLocation();
 

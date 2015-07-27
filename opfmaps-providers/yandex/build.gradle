@@ -23,16 +23,6 @@ android {
         targetSdkVersion 22
         versionName "1.0"
     }
-
-    //todo remove
-    lintOptions {
-        abortOnError false
-    }
-}
-
-//todo remove
-check {
-    abortOnError false
 }
 
 dependencies {

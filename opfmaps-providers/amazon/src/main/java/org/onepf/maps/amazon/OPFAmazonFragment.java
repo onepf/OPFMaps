@@ -58,7 +58,10 @@ import java.util.List;
 /**
  * Created by akarimova on 09.06.15.
  */
-public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OPFTBDInterface<PolylineOptions, PolygonOptions, CircleOptions, MarkerOptions, LatLng> {
+@SuppressWarnings("PMD.GodClass")
+public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OPFTBDInterface<PolylineOptions,
+        PolygonOptions, CircleOptions, MarkerOptions, LatLng> {
+
     private static final String EXTRA = "MapOptions";
     private AmazonMap amazonMap;
     private Boolean initialized;
@@ -136,7 +139,7 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public void setMapType(OPFMap.MAP_TYPE mapType) {
+    public void setMapType(OPFMap.MapType mapType) {
         int googleMapType;
         switch (mapType) {
             case NORMAL:
@@ -164,19 +167,19 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
     }
 
     @Override
-    public OPFMap.MAP_TYPE getMapType() {
-        OPFMap.MAP_TYPE mapType = OPFMap.MAP_TYPE.UNKNOWN;
+    public OPFMap.MapType getMapType() {
+        OPFMap.MapType mapType = OPFMap.MapType.UNKNOWN;
         int googleMapType = amazonMap.getMapType();
         if (googleMapType == AmazonMap.MAP_TYPE_NORMAL) {
-            mapType = OPFMap.MAP_TYPE.NORMAL;
+            mapType = OPFMap.MapType.NORMAL;
         } else if (googleMapType == AmazonMap.MAP_TYPE_HYBRID) {
-            mapType = OPFMap.MAP_TYPE.HYBRID;
+            mapType = OPFMap.MapType.HYBRID;
         } else if (googleMapType == AmazonMap.MAP_TYPE_SATELLITE) {
-            mapType = OPFMap.MAP_TYPE.SATELLITE;
+            mapType = OPFMap.MapType.SATELLITE;
         } else if (googleMapType == AmazonMap.MAP_TYPE_TERRAIN) {
-            mapType = OPFMap.MAP_TYPE.TERRAIN;
+            mapType = OPFMap.MapType.TERRAIN;
         } else if (googleMapType == AmazonMap.MAP_TYPE_NONE) {
-            mapType = OPFMap.MAP_TYPE.NONE;
+            mapType = OPFMap.MapType.NONE;
         }
         return mapType;
     }
@@ -189,12 +192,12 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
 
     @Override
     public void addGroundOverlay(OPFGroundOverlay opfGroundOverlay) {
-
+        //will be implemented later
     }
 
     @Override
     public void addTileOverlay(OPFTileOverlay opfTileOverlay) {
-
+        //will be implemented later
     }
 
     @Override
@@ -235,6 +238,7 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
                             String title = marker.getTitle();
                             String snippet = marker.getSnippet();
                             if (!TextUtils.isEmpty(title) || !TextUtils.isEmpty(snippet)) {
+                                //noinspection InflateParams
                                 View inflate = LayoutInflater.from(OPFAmazonFragment.this.getActivity()).inflate(R.layout.info_window_view, null);
                                 //title
                                 TextView titleView = (TextView) inflate.findViewById(R.id.info_window_title);
@@ -273,19 +277,19 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
     public void setOnMarkerDragListener(final OPFOnMarkerDragListener onMarkerDragListener) {
         amazonMap.setOnMarkerDragListener(new AmazonMap.OnMarkerDragListener() {
             @Override
-            public void onMarkerDrag(com.amazon.geo.mapsv2.model.Marker marker) {
+            public void onMarkerDrag(Marker marker) {
                 OPFMarker opfMarker = makeOPFMarker(marker);
                 onMarkerDragListener.onMarkerDragStart(opfMarker);
             }
 
             @Override
-            public void onMarkerDragEnd(com.amazon.geo.mapsv2.model.Marker marker) {
+            public void onMarkerDragEnd(Marker marker) {
                 OPFMarker opfMarker = makeOPFMarker(marker);
                 onMarkerDragListener.onMarkerDragEnd(opfMarker);
             }
 
             @Override
-            public void onMarkerDragStart(com.amazon.geo.mapsv2.model.Marker marker) {
+            public void onMarkerDragStart(Marker marker) {
                 OPFMarker opfMarker = makeOPFMarker(marker);
                 onMarkerDragListener.onMarkerDragStart(opfMarker);
             }
@@ -309,9 +313,9 @@ public class OPFAmazonFragment extends MapFragment implements OPFMapDelegate, OP
     public void setOnMarkerClickListener(final OPFOnMarkerClickListener onMarkerClickListener) {
         amazonMap.setOnMarkerClickListener(new AmazonMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(com.amazon.geo.mapsv2.model.Marker marker) {
+            public boolean onMarkerClick(Marker marker) {
                 OPFMarker opfMarker = makeOPFMarker(marker);
-                onMarkerClickListener.onMarkerClick(opfMarker);//todo
+                onMarkerClickListener.onMarkerClick(opfMarker); //todo
                 return false; //if true info window not showing
             }
         });

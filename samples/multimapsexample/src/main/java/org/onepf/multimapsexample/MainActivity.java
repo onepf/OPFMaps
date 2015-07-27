@@ -48,6 +48,7 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
     private OPFMap map;
 
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
         map.init(getFragmentManager(), opfMapSettings, new OPFOnMapConfigureListener() {
             @Override
             public void onError(int r) {
-
+                //will be implemented later
             }
 
             @Override
@@ -74,11 +75,12 @@ public class MainActivity extends ActionBarActivity {
                 map.load(new OPFOnMapLoadListener() {
                     @Override
                     public void onMapLoad() {
-                        map.setMapType(OPFMap.MAP_TYPE.HYBRID);
+                        map.setMapType(OPFMap.MapType.HYBRID);
                         map.setMyLocationEnabled(true);
                         map.setBuildingsEnabled(true);
 //                        map.zoom((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2f);
 
+                        //CHECKSTYLE:OFF
                         //markers
                         OPFMarker marker1 = new OPFMarker.Builder().setVisible(true)
                                 .setLatLng(new OPFLatLng(37.773975, -122.40205))
@@ -102,38 +104,45 @@ public class MainActivity extends ActionBarActivity {
                                 .setRadius(1000000.0)
                                 .setFillColor(Color.CYAN)
                                 .setStrokeColor(Color.BLUE);
+                        //CHECKSTYLE:ON
                         OPFCircle circle = builder.build();
                         map.addCircle(circle);
 
                         map.setOnMarkerDragListener(new OPFOnMarkerDragListener() {
                             @Override
                             public void onMarkerDragStart(OPFMarker marker) {
+                                //ignore
                             }
 
                             @Override
                             public void onMarkerDrag(OPFMarker marker) {
+                                //ignore
                             }
 
                             @Override
                             public void onMarkerDragEnd(OPFMarker marker) {
+                                //ignore
                             }
                         });
 
                         map.setOnMarkerClickListener(new OPFOnMarkerClickListener() {
                             @Override
                             public void onMarkerClick(OPFMarker marker) {
+                                //ignore
                             }
                         });
 
                         map.setOnMapClickListener(new OPFOnMapClickListener() {
                             @Override
                             public void onMapClick(OPFLatLng latLng) {
+                                //ignore
                             }
                         });
 
                         map.setInfoWindowAdapter(new OPFInfoWindowAdapter() {
                             @Override
                             public View getInfoWindow(OPFMarker marker) {
+                                //noinspection InflateParams
                                 View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.info_window, null);
                                 TextView title = (TextView) inflate.findViewById(R.id.title);
                                 title.setText(marker.getTitle());
@@ -152,6 +161,7 @@ public class MainActivity extends ActionBarActivity {
 
                     @Override
                     public void onError() {
+                        //ignore
                     }
                 });
             }

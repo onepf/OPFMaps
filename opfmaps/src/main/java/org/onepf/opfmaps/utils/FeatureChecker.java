@@ -17,19 +17,12 @@
 package org.onepf.opfmaps.utils;
 
 import android.content.Context;
-import android.content.pm.FeatureGroupInfo;
-import android.content.pm.FeatureInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.text.TextUtils;
 
 /**
  * Created by akarimova on 02.07.15.
  */
-public class FeatureChecker {
+public final class FeatureChecker {
     private FeatureChecker() {
-
     }
 
     public static boolean hasRequestedFeature(Context context, String feature, int version) {

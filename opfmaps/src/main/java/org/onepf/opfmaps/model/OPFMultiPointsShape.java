@@ -23,11 +23,12 @@ import java.util.List;
 /**
  * Created by akarimova on 15.06.15.
  */
-public abstract class OPFMutiPointsShape extends OPFShape {
-    private List<OPFLatLng> points;
+public abstract class OPFMultiPointsShape extends OPFShape {
+    private final List<OPFLatLng> points;
     private boolean geodesic;
 
-    public OPFMutiPointsShape() {
+    public OPFMultiPointsShape() {
+        super();
         points = new ArrayList<>();
     }
 
@@ -58,23 +59,23 @@ public abstract class OPFMutiPointsShape extends OPFShape {
         this.geodesic = geodesic;
     }
 
-    public abstract static class Builder<T extends OPFMutiPointsShape> extends OPFShape.Builder<T>{
-        public Builder<T> addPoint(OPFLatLng point){
+    public abstract static class Builder<T extends OPFMultiPointsShape> extends OPFShape.Builder<T> {
+        public Builder<T> addPoint(OPFLatLng point) {
             getShape().add(point);
             return this;
         }
 
-        public Builder<T> addPoints(OPFLatLng... points){
+        public Builder<T> addPoints(OPFLatLng... points) {
             getShape().add(points);
             return this;
         }
 
-        public Builder<T> addAllPoints(Iterable<OPFLatLng> points){
+        public Builder<T> addAllPoints(Iterable<OPFLatLng> points) {
             getShape().addAll(points);
             return this;
         }
 
-        public Builder<T> setGeodesic(boolean geodesic){
+        public Builder<T> setGeodesic(boolean geodesic) {
             getShape().geodesic(geodesic);
             return this;
         }
