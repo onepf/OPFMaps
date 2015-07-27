@@ -30,6 +30,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig getOpfDebugSigningConfig()
+        }
+
         release {
             minifyEnabled true
             proguardFiles 'proguard-rules.pro'
