@@ -67,7 +67,7 @@ public class AmazonMapProvider extends OPFAbstractMapProvider {
     @NonNull
     @Override
     public Fragment getFragment(OPFMapOptions opfMapOptions) {
-        return OPFAmazonFragment.newInstance(convert(opfMapOptions));
+        return OPFAmazonFragment.newInstance(convert(opfMapOptions)); //TODO: New instance every time?
     }
 
     @Override

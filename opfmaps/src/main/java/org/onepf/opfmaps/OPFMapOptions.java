@@ -19,6 +19,7 @@ package org.onepf.opfmaps;
 /**
  * Created by akarimova on 02.07.15.
  */
+//TODO: add othe options form GoogleMapOptions
 public class OPFMapOptions {
     private boolean rotateGesturesEnabled;
     private boolean compassEnabled;

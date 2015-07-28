@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 /**
  * A placeholder fragment containing a simple view.
  */
+//TODO: remove
 public class MainActivityFragment extends Fragment {
 
     @Override

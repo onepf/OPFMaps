@@ -22,6 +22,7 @@ import android.graphics.Color;
  * Created by akarimova on 10.06.15.
  */
 //TODO: Remove setters. Make private constructor with all class members.
+//TODO: make options
 public final class OPFCircle extends OPFShape {
 
     private OPFLatLng center;

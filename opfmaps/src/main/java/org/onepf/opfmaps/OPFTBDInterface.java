@@ -26,7 +26,7 @@ import org.onepf.opfmaps.model.OPFPolyline;
 /**
  * Created by akarimova on 16.06.15.
  */
-public interface OPFTBDInterface<PL, PG, C, M, LL> {
+public interface OPFTBDInterface<PL, PG, C, M, LL> { //TODO: find better solution
     PL polyline(OPFPolyline opfPolyline);
 
     PG polygon(OPFPolygon opfPolygon);

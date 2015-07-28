@@ -25,7 +25,7 @@ public final class FeatureChecker {
     private FeatureChecker() {
     }
 
-    public static boolean hasRequestedFeature(Context context, String feature, int version) {
+    public static boolean hasRequestedFeature(Context context, String feature, int version) { //TODO: Implement
 //        if (TextUtils.isEmpty(feature)) {
 //            throw new IllegalArgumentException("Feature can't be null or empty.");
 //        }

@@ -83,13 +83,13 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
 
     public void init(android.app.FragmentManager fragmentManager,
                      OPFMapSettings mapSettings,
-                     OPFOnMapConfigureListener listener,
+                     OPFOnMapConfigureListener listener, //TODO: add @NonNull annotation
                      OPFMapOptions opfMapOptions) {
         this.onMapConfigureListener = listener;
         List<OPFMapProvider> providers = mapSettings.getProviders();
-        if (providers == null || providers.isEmpty()) {
+        if (providers == null || providers.isEmpty()) { //TODO: it's impossible case
             if (onMapConfigureListener != null) {
-                onMapConfigureListener.onError(0); //empty provider list
+                onMapConfigureListener.onError(0); //empty provider list //TODO: add enum or constants of errors
                 onMapConfigureListener = null;
             }
             return;
@@ -105,7 +105,7 @@ public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadL
             fragmentManager.executePendingTransactions();
             onMapConfigureListener.onConfigure(currentProvider);
         } else {
-            onMapConfigureListener.onError(1); //provider not found
+            onMapConfigureListener.onError(1); //provider not found //TODO: add enum or constants of errors
         }
     }
 

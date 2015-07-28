@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
  * Created by akarimova on 09.06.15.
  */
 //TODO: Remove setters. Make private constructor with all class members.
+//TODO: make options
 public final class OPFMarker extends OPFMapObject {
     private OPFLatLng latLng;
     private String title;

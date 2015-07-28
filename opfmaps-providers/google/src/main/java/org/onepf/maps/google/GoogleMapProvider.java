@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.model.Marker;
 import org.onepf.opfmaps.OPFAbstractMapProvider;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.utils.FeatureChecker;
@@ -58,7 +59,7 @@ public class GoogleMapProvider extends OPFAbstractMapProvider {
     @NonNull
     @Override
     public Fragment getFragment(OPFMapOptions opfMapOptions) {
-        return OPFGoogleFragment.newInstance(getConvert(opfMapOptions));
+        return OPFGoogleFragment.newInstance(getConvert(opfMapOptions)); //TODO: New instance every time?
     }
 
     private GoogleMapOptions getConvert(OPFMapOptions mapOptions) {
