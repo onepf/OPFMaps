@@ -42,9 +42,13 @@ android {
         }
     }
 
-    //todo remove
     lintOptions {
-        abortOnError false
+        abortOnError true
+        checkAllWarnings true
+        warningsAsErrors true
+        disable 'AllowBackup', 'ContentDescription', 'InvalidPackage', 'SelectableText', 'IconExpectedSize',
+                'IconDensities', 'AlwaysShowAction', 'RtlEnabled', 'Overdraw', 'UnusedIds', 'RtlHardcoded',
+                'GradleDynamicVersion', "NewerVersionAvailable"
     }
 }
 

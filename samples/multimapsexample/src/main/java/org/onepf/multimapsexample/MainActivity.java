@@ -52,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_main);
+        setContentView(R.layout.activity_main);
         map = (OPFMap) findViewById(R.id.map);
         List<OPFMapProvider> providers = new ArrayList<OPFMapProvider>();
         providers.add(new GoogleMapProvider());
