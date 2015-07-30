@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps.model;
+package org.onepf.opfmaps.listener;
+
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.model.OPFLatLng;
 
 /**
- * Created by akarimova on 09.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
-public class OPFInfoWindow {
+public interface OPFOnMapLongClickListener {
 
+    void onMapLongClick(@NonNull final OPFLatLng point);
 }

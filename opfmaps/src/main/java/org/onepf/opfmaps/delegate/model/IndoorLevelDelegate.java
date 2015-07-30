@@ -14,16 +14,21 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.delegate.model;
+
+import javax.annotation.Nullable;
 
 /**
- * Created by akarimova on 30.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
+public interface IndoorLevelDelegate {
 
-//todo remove
-public interface OPFOnMapLoadListener {
+    void activate();
 
-    void onMapLoad();
+    @Nullable
+    String getName();
 
-    void onError();
+    @Nullable
+    String getShortName();
 }

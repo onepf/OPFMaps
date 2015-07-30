@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.delegate.model;
 
-import org.onepf.opfmaps.model.OPFMarker;
+import org.onepf.opfmaps.model.OPFTileProvider;
+
+import java.net.URL;
 
 /**
- * Created by akarimova on 02.07.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
-public interface OPFOnMarkerClickListener {
-    void onMarkerClick(OPFMarker marker);
+public interface UrlTileProviderDelegate extends OPFTileProvider {
+
+    URL getTileUrl(final int x, final int y, final int zoom);
 }

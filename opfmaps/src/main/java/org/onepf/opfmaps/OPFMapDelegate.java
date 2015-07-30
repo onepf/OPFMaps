@@ -18,6 +18,9 @@ package org.onepf.opfmaps;
 
 import android.location.Location;
 
+import org.onepf.opfmaps.listener.OPFOnMapClickListener;
+import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
+import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.model.OPFCircle;
 import org.onepf.opfmaps.model.OPFGroundOverlay;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;

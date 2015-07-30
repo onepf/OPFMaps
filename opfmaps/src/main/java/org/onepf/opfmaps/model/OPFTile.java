@@ -18,35 +18,36 @@ package org.onepf.opfmaps.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import org.onepf.opfmaps.delegate.model.LatLngDelegate;
+import org.onepf.opfmaps.delegate.model.TileDelegate;
 
 /**
- * Created by akarimova on 09.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
-public final class OPFLatLng implements LatLngDelegate {
+public final class OPFTile implements TileDelegate {
 
-    public static final Creator<OPFLatLng> CREATOR = new Creator<OPFLatLng>() {
+    public static final Creator<OPFTile> CREATOR = new Creator<OPFTile>() {
         @Override
-        public OPFLatLng createFromParcel(final Parcel source) {
-            return new OPFLatLng(source);
+        public OPFTile createFromParcel(final Parcel source) {
+            return new OPFTile(source);
         }
 
         @Override
-        public OPFLatLng[] newArray(final int size) {
-            return new OPFLatLng[size];
+        public OPFTile[] newArray(final int size) {
+            return new OPFTile[size];
         }
     };
 
     @NonNull
-    private final LatLngDelegate delegate;
+    private final TileDelegate delegate;
 
-    //todo OPFLatLng(double latitude, double longitude)
+    //todo Tile(int width, int height, byte[] data)
 
-    public OPFLatLng(@NonNull final LatLngDelegate delegate) {
+    public OPFTile(@NonNull final TileDelegate delegate) {
         this.delegate = delegate;
     }
 
-    private OPFLatLng(@NonNull final Parcel parcel) {
+    private OPFTile(@NonNull final Parcel parcel) {
         try {
             this.delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
         } catch (ClassNotFoundException e) {
@@ -55,13 +56,19 @@ public final class OPFLatLng implements LatLngDelegate {
     }
 
     @Override
-    public double getLat() {
-        return delegate.getLat();
+    @NonNull
+    public byte[] getData() {
+        return delegate.getData();
     }
 
     @Override
-    public double getLng() {
-        return delegate.getLng();
+    public int getHeight() {
+        return delegate.getHeight();
+    }
+
+    @Override
+    public int getWidth() {
+        return delegate.getWidth();
     }
 
     @Override
@@ -76,6 +83,16 @@ public final class OPFLatLng implements LatLngDelegate {
     }
 
     @Override
+    public boolean equals(final Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        //noinspection SimplifiableIfStatement
+        if (!(other instanceof OPFTile)) return false;
+
+        return delegate.equals(((OPFTile) other).delegate);
+    }
+
+    @Override
     public int hashCode() {
         return delegate.hashCode();
     }
@@ -83,15 +100,5 @@ public final class OPFLatLng implements LatLngDelegate {
     @Override
     public String toString() {
         return delegate.toString();
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFLatLng)) return false;
-
-        return delegate.equals(((OPFLatLng) other).delegate);
     }
 }

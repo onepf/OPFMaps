@@ -16,110 +16,121 @@
 
 package org.onepf.opfmaps.model;
 
-import android.graphics.Color;
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.delegate.model.CircleDelegate;
 
 /**
- * Created by akarimova on 10.06.15.
+ * @author Roman Savin
+ * @since 29.07.2015
  */
-//TODO: Remove setters. Make private constructor with all class members.
-//TODO: make options
-public final class OPFCircle extends OPFShape {
+public final class OPFCircle implements CircleDelegate {
 
-    private OPFLatLng center;
-    private double radius;
-    private int fillColor = Color.TRANSPARENT;
-    private int strokeColor = Color.BLACK;
-    private float strokeWidth = 10f;
+    @NonNull
+    private final CircleDelegate delegate;
 
-    private OPFCircle() {
-        super();
+    public OPFCircle(@NonNull final CircleDelegate delegate) {
+        this.delegate = delegate;
     }
 
+    @NonNull
+    @Override
     public OPFLatLng getCenter() {
-        return center;
+        return delegate.getCenter();
     }
 
-    public void center(OPFLatLng center) {
-        this.center = center;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public void radius(double radius) {
-        this.radius = radius;
-    }
-
+    @Override
     public int getFillColor() {
-        return fillColor;
+        return delegate.getFillColor();
     }
 
-    public void fillColor(int fillColor) {
-        this.fillColor = fillColor;
+    @NonNull
+    @Override
+    public String getId() {
+        return delegate.getId();
     }
 
+    @Override
+    public double getRadius() {
+        return delegate.getRadius();
+    }
+
+    @Override
     public int getStrokeColor() {
-        return strokeColor;
+        return delegate.getStrokeColor();
     }
 
-    public void strokeColor(int strokeColor) {
-        this.strokeColor = strokeColor;
-    }
-
+    @Override
     public float getStrokeWidth() {
-        return strokeWidth;
+        return delegate.getStrokeWidth();
     }
 
-    public void strokeWidth(float strokeWidth) {
-        this.strokeWidth = strokeWidth;
+    @Override
+    public float getZIndex() {
+        return delegate.getZIndex();
     }
 
-    public static class Builder implements org.onepf.opfmaps.model.Builder<OPFCircle> {
-        private final OPFCircle opfCircle;
-
-        @SuppressWarnings("PMD.AccessorClassGeneration")
-        public Builder() {
-            opfCircle = new OPFCircle();
-        }
-
-        public Builder setCenter(OPFLatLng opfLatLng) {
-            opfCircle.center(opfLatLng);
-            return this;
-        }
-
-        public Builder setRadius(double radius) {
-            opfCircle.radius(radius);
-            return this;
-        }
-
-        public Builder setFillColor(int fillColor) {
-            opfCircle.fillColor(fillColor);
-            return this;
-        }
-
-        public Builder setStrokeColor(int strokeColor) {
-            opfCircle.strokeColor(strokeColor);
-            return this;
-        }
-
-        public Builder setStrokeWidth(float strokeWidth) {
-            opfCircle.strokeWidth(strokeWidth);
-            return this;
-        }
-
-        public Builder setzIndex(float zIndex) {
-            opfCircle.zIndex(zIndex);
-            return this;
-        }
-
-        public OPFCircle build() {
-            if (opfCircle.center == null) {
-                throw new IllegalStateException("OPFCircle: center coordinates not set!");
-            }
-            return opfCircle;
-        }
-
+    @Override
+    public boolean isVisible() {
+        return delegate.isVisible();
     }
 
+    @Override
+    public void remove() {
+        delegate.remove();
+    }
+
+    @Override
+    public void setCenter() {
+        delegate.setCenter();
+    }
+
+    @Override
+    public void setFillColor(final int color) {
+        delegate.setFillColor(color);
+    }
+
+    @Override
+    public void setRadius(final double radius) {
+        delegate.setRadius(radius);
+    }
+
+    @Override
+    public void setStrokeColor(final int color) {
+        delegate.setStrokeColor(color);
+    }
+
+    @Override
+    public void setStrokeWidth(final float width) {
+        delegate.setStrokeWidth(width);
+    }
+
+    @Override
+    public void setVisible(final boolean visible) {
+        delegate.setVisible(visible);
+    }
+
+    @Override
+    public void setZIndex(final float zIndex) {
+        delegate.setZIndex(zIndex);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        //noinspection SimplifiableIfStatement
+        if (!(other instanceof OPFCircle)) return false;
+
+        return delegate.equals(((OPFCircle) other).delegate);
+    }
+
+    @Override
+    public int hashCode() {
+        return delegate.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return delegate.toString();
+    }
 }

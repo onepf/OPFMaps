@@ -14,16 +14,25 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.delegate.model;
+
+import android.support.annotation.Nullable;
+import org.onepf.opfmaps.model.OPFIndoorLevel;
+
+import java.util.List;
 
 /**
- * Created by akarimova on 30.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
+public interface IndoorBuildingDelegate {
 
-//todo remove
-public interface OPFOnMapLoadListener {
+    int getActiveLevelIndex();
 
-    void onMapLoad();
+    int getDefaultLevelIndex();
 
-    void onError();
+    @Nullable
+    List<OPFIndoorLevel> getLevels();
+
+    boolean isUnderground();
 }

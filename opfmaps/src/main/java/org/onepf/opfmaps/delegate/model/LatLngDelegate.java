@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.delegate.model;
+
+import android.os.Parcelable;
 
 /**
- * Created by akarimova on 30.06.15.
+ * @author Roman Savin
+ * @since 29.07.2015
  */
+public interface LatLngDelegate extends Parcelable {
 
-//todo remove
-public interface OPFOnMapLoadListener {
+    double getLat();
 
-    void onMapLoad();
-
-    void onError();
+    double getLng();
 }

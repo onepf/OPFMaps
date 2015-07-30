@@ -39,10 +39,10 @@ import com.amazon.geo.mapsv2.model.PolylineOptions;
 
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapDelegate;
-import org.onepf.opfmaps.OPFOnMapClickListener;
+import org.onepf.opfmaps.listener.OPFOnMapClickListener;
 import org.onepf.opfmaps.OPFOnMapLoadListener;
-import org.onepf.opfmaps.OPFOnMarkerClickListener;
-import org.onepf.opfmaps.OPFOnMarkerDragListener;
+import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
+import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.OPFTBDInterface;
 import org.onepf.opfmaps.model.OPFCircle;
 import org.onepf.opfmaps.model.OPFGroundOverlay;

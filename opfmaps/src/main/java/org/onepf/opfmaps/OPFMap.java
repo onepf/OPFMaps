@@ -22,6 +22,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
+import org.onepf.opfmaps.listener.OPFOnMapClickListener;
+import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
+import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.model.OPFCircle;
 import org.onepf.opfmaps.model.OPFGroundOverlay;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
@@ -36,6 +39,8 @@ import java.util.List;
 /**
  * Created by akarimova on 08.06.15.
  */
+
+//todo remove
 public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadListener {
     public enum MapType {
         HYBRID,

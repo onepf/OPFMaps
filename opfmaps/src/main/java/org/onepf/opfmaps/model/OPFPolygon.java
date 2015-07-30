@@ -16,89 +16,134 @@
 
 package org.onepf.opfmaps.model;
 
-import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import org.onepf.opfmaps.delegate.model.PolygonDelegate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by akarimova on 15.06.15.
  */
-@SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass") //TODO: fix this PMD issue
-public final class OPFPolygon extends OPFMultiPointsShape {
-    private int fillColor = Color.TRANSPARENT;
-    private int strokeColor = Color.BLACK;
-    private float strokeWidth = 10.0f;
-    private final List<OPFLatLng> holes;
+public final class OPFPolygon implements PolygonDelegate {
 
-    private OPFPolygon() {
-        super();
-        holes = new ArrayList<>();
+    @NonNull
+    private final PolygonDelegate delegate;
+
+    public OPFPolygon(@NonNull final PolygonDelegate delegate) {
+        this.delegate = delegate;
     }
 
+    @Override
     public int getFillColor() {
-        return fillColor;
+        return delegate.getFillColor();
     }
 
-    public void fillColor(int fillColor) {
-        this.fillColor = fillColor;
+    @Nullable
+    @Override
+    public List<List<OPFLatLng>> getHoles() {
+        return delegate.getHoles();
     }
 
+    @NonNull
+    @Override
+    public String getId() {
+        return delegate.getId();
+    }
+
+    @NonNull
+    @Override
+    public List<OPFLatLng> getPoints() {
+        return delegate.getPoints();
+    }
+
+    @Override
     public int getStrokeColor() {
-        return strokeColor;
+        return delegate.getStrokeColor();
     }
 
-    public void strokeColor(int strokeColor) {
-        this.strokeColor = strokeColor;
-    }
-
-    public void addHole(Iterable<OPFLatLng> points) {
-        ArrayList<OPFLatLng> hole = new ArrayList<>();
-        for (OPFLatLng holePoint : points) {
-            hole.add(holePoint);
-        }
-        this.holes.addAll(hole);
-    }
-
+    @Override
     public float getStrokeWidth() {
-        return strokeWidth;
+        return delegate.getStrokeWidth();
     }
 
-    public void strokeWidth(float strokeWidth) {
-        this.strokeWidth = strokeWidth;
+    @Override
+    public float getZIndex() {
+        return delegate.getZIndex();
     }
 
-
-    public static class Builder extends OPFMultiPointsShape.Builder<OPFPolygon> {
-
-        public Builder setFillColor(int fillColor) {
-            getShape().fillColor(fillColor);
-            return this;
-        }
-
-        public Builder setStrokeColor(int strokeColor) {
-            getShape().strokeColor(strokeColor);
-            return this;
-        }
-
-        public Builder addHole(Iterable<OPFLatLng> points) {
-            getShape().addHole(points);
-            return this;
-        }
-
-        @Override
-        public OPFPolygon build() {
-            if (getShape().getPoints().size() == 0) {
-                throw new IllegalStateException("OPFPolygon: no points were found");
-            }
-            return getShape();
-        }
-
-        @SuppressWarnings("PMD.AccessorClassGeneration")
-        @Override
-        protected OPFPolygon createShape() {
-           return new OPFPolygon();
-        }
+    @Override
+    public boolean isGeodesic() {
+        return delegate.isGeodesic();
     }
 
+    @Override
+    public boolean isVisible() {
+        return delegate.isVisible();
+    }
+
+    @Override
+    public void remove() {
+        delegate.remove();
+    }
+
+    @Override
+    public void setFillColor(final int color) {
+        delegate.setFillColor(color);
+    }
+
+    @Override
+    public void setGeodesic(final boolean geodesic) {
+        delegate.setGeodesic(geodesic);
+    }
+
+    @Override
+    public void setHoles(@NonNull final List<? extends List<OPFLatLng>> holes) {
+        delegate.setHoles(holes);
+    }
+
+    @Override
+    public void setPoints(@NonNull final List<OPFLatLng> points) {
+        delegate.setPoints(points);
+    }
+
+    @Override
+    public void setStrokeColor(final int color) {
+        delegate.setStrokeColor(color);
+    }
+
+    @Override
+    public void setStrokeWidth(final float width) {
+        delegate.setStrokeWidth(width);
+    }
+
+    @Override
+    public void setVisible(final boolean visible) {
+        delegate.setVisible(visible);
+    }
+
+    @Override
+    public void setZIndex(final float zIndex) {
+        delegate.setZIndex(zIndex);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        //noinspection SimplifiableIfStatement
+        if (!(other instanceof OPFPolygon)) return false;
+
+        return delegate.equals(((OPFPolygon) other).delegate);
+    }
+
+    @Override
+    public int hashCode() {
+        return delegate.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return delegate.toString();
+    }
 }

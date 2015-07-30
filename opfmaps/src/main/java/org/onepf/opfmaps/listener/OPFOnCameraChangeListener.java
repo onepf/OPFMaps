@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.listener;
 
 /**
- * Created by akarimova on 30.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
+public interface OPFOnCameraChangeListener {
 
-//todo remove
-public interface OPFOnMapLoadListener {
-
-    void onMapLoad();
-
-    void onError();
+    //todo void onCameraChange(@NonNull OPFCameraPosition position);
 }

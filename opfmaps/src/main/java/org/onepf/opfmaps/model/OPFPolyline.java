@@ -16,62 +16,113 @@
 
 package org.onepf.opfmaps.model;
 
-import android.graphics.Color;
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.delegate.model.PolylineDelegate;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * Created by akarimova on 09.06.15.
  */
-@SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass") //TODO: fix this PMD issue
-public final class OPFPolyline extends OPFMultiPointsShape {
-    private int color = Color.BLACK;
-    private float width = 10.0f;
+public final class OPFPolyline implements PolylineDelegate {
 
-    private OPFPolyline() {
-        super();
+    @NonNull
+    private final PolylineDelegate delegate;
+
+    public OPFPolyline(@NonNull final PolylineDelegate delegate) {
+        this.delegate = delegate;
     }
 
+    @Override
     public int getColor() {
-        return color;
+        return delegate.getColor();
     }
 
-    public void color(int color) {
-        this.color = color;
+    @NonNull
+    @Override
+    public String getId() {
+        return delegate.getId();
     }
 
+    @Nullable
+    @Override
+    public List<OPFLatLng> getPoints() {
+        return delegate.getPoints();
+    }
+
+    @Override
     public float getWidth() {
-        return width;
+        return delegate.getWidth();
     }
 
-    public void width(float width) {
-        this.width = width;
+    @Override
+    public float getZIndex() {
+        return delegate.getZIndex();
     }
 
-    public static class Builder extends OPFMultiPointsShape.Builder<OPFPolyline> {
+    @Override
+    public boolean isGeodesic() {
+        return delegate.isGeodesic();
+    }
 
-        public Builder setColor(int color) {
-            getShape().color(color);
-            return this;
-        }
+    @Override
+    public boolean isVisible() {
+        return delegate.isVisible();
+    }
 
+    @Override
+    public void remove() {
+        delegate.remove();
+    }
 
-        public Builder setWidth(float width) {
-            getShape().width(width);
-            return this;
-        }
+    @Override
+    public void setColor(final int color) {
+        delegate.setColor(color);
+    }
 
-        @Override
-        public OPFPolyline build() {
-            if (getShape().getPoints().size() == 0) {
-                throw new IllegalStateException("OPFPolyline: no points were found");
-            }
-            return getShape();
-        }
+    @Override
+    public void setGeodesic(final boolean geodesic) {
+        delegate.setGeodesic(geodesic);
+    }
 
-        @SuppressWarnings("PMD.AccessorClassGeneration")
-        @Override
-        protected OPFPolyline createShape() {
-            return new OPFPolyline();
-        }
+    @Override
+    public void setPoints(@NonNull final List<OPFLatLng> points) {
+        delegate.setPoints(points);
+    }
 
+    @Override
+    public void setVisible(final boolean visible) {
+        delegate.setVisible(visible);
+    }
+
+    @Override
+    public void setWidth(final float width) {
+        delegate.setWidth(width);
+    }
+
+    @Override
+    public void setZIndex(final float zIndex) {
+        delegate.setZIndex(zIndex);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        //noinspection SimplifiableIfStatement
+        if (!(other instanceof OPFPolyline)) return false;
+
+        return delegate.equals(((OPFPolyline) other).delegate);
+    }
+
+    @Override
+    public int hashCode() {
+        return delegate.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return delegate.toString();
     }
 }

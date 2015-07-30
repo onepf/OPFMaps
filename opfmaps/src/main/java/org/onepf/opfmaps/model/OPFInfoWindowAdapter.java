@@ -16,13 +16,15 @@
 
 package org.onepf.opfmaps.model;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 
 /**
  * Created by akarimova on 15.06.15.
  */
 public interface OPFInfoWindowAdapter {
-    View getInfoWindow(OPFMarker marker);
 
-    View getInfoContents(OPFMarker marker);
+    View getInfoWindow(@NonNull final OPFMarker marker);
+
+    View getInfoContents(@NonNull final OPFMarker marker);
 }

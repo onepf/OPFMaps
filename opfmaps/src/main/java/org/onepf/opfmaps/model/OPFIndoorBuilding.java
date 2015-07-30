@@ -17,64 +17,43 @@
 package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
-import org.onepf.opfmaps.delegate.model.TileOverlayDelegate;
+import android.support.annotation.Nullable;
+import org.onepf.opfmaps.delegate.model.IndoorBuildingDelegate;
+
+import java.util.List;
 
 /**
- * Created by akarimova on 15.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
-public final class OPFTileOverlay implements TileOverlayDelegate {
+public final class OPFIndoorBuilding implements IndoorBuildingDelegate {
 
     @NonNull
-    private final TileOverlayDelegate delegate;
+    private final IndoorBuildingDelegate delegate;
 
-    public OPFTileOverlay(@NonNull final TileOverlayDelegate delegate) {
+    public OPFIndoorBuilding(@NonNull final IndoorBuildingDelegate delegate) {
         this.delegate = delegate;
     }
 
     @Override
-    public void clearTileCache() {
-        delegate.clearTileCache();
+    public int getActiveLevelIndex() {
+        return delegate.getActiveLevelIndex();
     }
 
     @Override
-    public boolean getFadeIn() {
-        return delegate.getFadeIn();
+    public int getDefaultLevelIndex() {
+        return delegate.getDefaultLevelIndex();
+    }
+
+    @Nullable
+    @Override
+    public List<OPFIndoorLevel> getLevels() {
+        return delegate.getLevels();
     }
 
     @Override
-    @NonNull
-    public String getId() {
-        return delegate.getId();
-    }
-
-    @Override
-    public float getZIndex() {
-        return delegate.getZIndex();
-    }
-
-    @Override
-    public boolean isVisible() {
-        return delegate.isVisible();
-    }
-
-    @Override
-    public void remove() {
-        delegate.remove();
-    }
-
-    @Override
-    public void setFadeIn(final boolean fadeIn) {
-        delegate.setFadeIn(fadeIn);
-    }
-
-    @Override
-    public void setVisible(final boolean visible) {
-        delegate.setVisible(visible);
-    }
-
-    @Override
-    public void setZIndex(final float zIndex) {
-        delegate.setZIndex(zIndex);
+    public boolean isUnderground() {
+        return delegate.isUnderground();
     }
 
     @Override
@@ -82,9 +61,9 @@ public final class OPFTileOverlay implements TileOverlayDelegate {
         if (other == null) return false;
         if (other == this) return true;
         //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFTileOverlay)) return false;
+        if (!(other instanceof OPFIndoorBuilding)) return false;
 
-        return delegate.equals(((OPFTileOverlay) other).delegate);
+        return delegate.equals(((OPFIndoorBuilding) other).delegate);
     }
 
     @Override

@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.listener;
+
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.model.OPFMarker;
 
 /**
- * Created by akarimova on 30.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
+public interface OPFOnInfoWindowClickListener {
 
-//todo remove
-public interface OPFOnMapLoadListener {
-
-    void onMapLoad();
-
-    void onError();
+    void onInfoWindowClick(@NonNull final OPFMarker marker);
 }

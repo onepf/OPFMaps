@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.listener;
+
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.model.OPFMarker;
 
 /**
- * Created by akarimova on 30.06.15.
+ * Created by akarimova on 02.07.15.
  */
+public interface OPFOnMarkerDragListener {
 
-//todo remove
-public interface OPFOnMapLoadListener {
+    void onMarkerDragStart(@NonNull final OPFMarker marker);
 
-    void onMapLoad();
+    void onMarkerDrag(@NonNull final OPFMarker marker);
 
-    void onError();
+    void onMarkerDragEnd(@NonNull final OPFMarker marker);
 }

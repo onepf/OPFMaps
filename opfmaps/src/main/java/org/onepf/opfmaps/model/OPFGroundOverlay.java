@@ -16,72 +16,136 @@
 
 package org.onepf.opfmaps.model;
 
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.delegate.model.GroundOverlayDelegate;
+
 /**
  * Created by akarimova on 15.06.15.
  */
-public class OPFGroundOverlay {
-    private float anchorU;
-    private float anchorV;
-    private float bearing;
-    private boolean visible;
-    private float transparency;
-    private float zIndex;
+public final class OPFGroundOverlay implements GroundOverlayDelegate {
 
+    @NonNull
+    private final GroundOverlayDelegate delegate;
 
-    public OPFGroundOverlay() {
-//        GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions();
-//        groundOverlayOptions.anchor(); //float u, float v
-//        groundOverlayOptions.bearing(); //float bearing
-//        groundOverlayOptions.image(); //bitmap descriptor
-//        groundOverlayOptions.position();
-//        groundOverlayOptions.visible(); //boolean
-//        groundOverlayOptions.transparency();//float
-//        groundOverlayOptions.zIndex();//float
+    public OPFGroundOverlay(@NonNull final GroundOverlayDelegate delegate) {
+        this.delegate = delegate;
     }
 
-    public float getAnchorU() {
-        return anchorU;
-    }
-
-
-    public void anchor(float anchorU, float anchorV) {
-        this.anchorU = anchorU;
-        this.anchorV = anchorV;
-    }
-
-    public float getAnchorV() {
-        return anchorV;
-    }
-
+    @Override
     public float getBearing() {
-        return bearing;
+        return delegate.getBearing();
     }
 
-    public void bearing(float bearing) {
-        this.bearing = bearing;
+    @NonNull
+    @Override
+    public OPFLatLngBounds getBounds() {
+        return delegate.getBounds();
     }
 
-    public boolean isVisible() {
-        return visible;
+    @Override
+    public float getHeight() {
+        return delegate.getHeight();
     }
 
-    public void visible(boolean visible) {
-        this.visible = visible;
+    @NonNull
+    @Override
+    public String getId() {
+        return delegate.getId();
     }
 
+    @NonNull
+    @Override
+    public OPFLatLng getPosition() {
+        return delegate.getPosition();
+    }
+
+    @Override
     public float getTransparency() {
-        return transparency;
+        return delegate.getTransparency();
     }
 
-    public void transparency(float transparency) {
-        this.transparency = transparency;
+    @Override
+    public float getWidth() {
+        return delegate.getWidth();
     }
 
-    public float getzIndex() {
-        return zIndex;
+    @Override
+    public float getZIndex() {
+        return delegate.getZIndex();
     }
 
-    public void zIndex(float zIndex) {
-        this.zIndex = zIndex;
+    @Override
+    public boolean isVisible() {
+        return delegate.isVisible();
+    }
+
+    @Override
+    public void remove() {
+        delegate.remove();
+    }
+
+    @Override
+    public void setBearing(final float bearing) {
+        delegate.setBearing(bearing);
+    }
+
+    @Override
+    public void setDimensions(final float width) {
+        delegate.setDimensions(width);
+    }
+
+    @Override
+    public void setDimensions(final float width, final float height) {
+        delegate.setDimensions(width, height);
+    }
+
+    @Override
+    public void setImage(@NonNull final OPFBitmapDescriptor image) {
+        delegate.setImage(image);
+    }
+
+    @Override
+    public void setPosition(@NonNull final OPFLatLng position) {
+        delegate.setPosition(position);
+    }
+
+    @Override
+    public void setPositionFromBounds(@NonNull final OPFLatLngBounds bounds) {
+        delegate.setPositionFromBounds(bounds);
+    }
+
+    @Override
+    public void setTransparency(final boolean transparency) {
+        delegate.setTransparency(transparency);
+    }
+
+    @Override
+    public void setVisible(final boolean visible) {
+        delegate.setVisible(visible);
+    }
+
+    @Override
+    public void setZIndex(final float zIndex) {
+        delegate.setZIndex(zIndex);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        //noinspection SimplifiableIfStatement
+        if (!(other instanceof OPFGroundOverlay)) return false;
+
+        return delegate.equals(((OPFGroundOverlay) other).delegate);
+    }
+
+    @Override
+    public int hashCode() {
+        return delegate.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return delegate.toString();
     }
 }

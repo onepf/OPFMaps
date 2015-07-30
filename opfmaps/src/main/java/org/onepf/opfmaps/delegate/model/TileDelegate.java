@@ -14,16 +14,21 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.delegate.model;
+
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 /**
- * Created by akarimova on 30.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
+public interface TileDelegate extends Parcelable {
 
-//todo remove
-public interface OPFOnMapLoadListener {
+    @NonNull
+    byte[] getData();
 
-    void onMapLoad();
+    int getHeight();
 
-    void onError();
+    int getWidth();
 }

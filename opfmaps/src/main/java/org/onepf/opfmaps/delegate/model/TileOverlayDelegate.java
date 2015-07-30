@@ -14,16 +14,32 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.delegate.model;
+
+import android.support.annotation.NonNull;
 
 /**
- * Created by akarimova on 30.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
+public interface TileOverlayDelegate {
 
-//todo remove
-public interface OPFOnMapLoadListener {
+    void clearTileCache();
 
-    void onMapLoad();
+    boolean getFadeIn();
 
-    void onError();
+    @NonNull
+    String getId();
+
+    float getZIndex();
+
+    boolean isVisible();
+
+    void remove();
+
+    void setFadeIn(final boolean fadeIn);
+
+    void setVisible(final boolean visible);
+
+    void setZIndex(final float zIndex);
 }

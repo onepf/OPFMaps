@@ -16,10 +16,14 @@
 
 package org.onepf.opfmaps.model;
 
-/**
- * Created by akarimova on 06.07.15.
- */
-interface Builder<T> {
+import android.support.annotation.NonNull;
 
-    T build();
+/**
+ * @author Roman Savin
+ * @since 30.07.2015
+ */
+public interface OPFTileProvider {
+
+    @NonNull
+    OPFTile getTile(final int x, final int y, final int zoom);
 }

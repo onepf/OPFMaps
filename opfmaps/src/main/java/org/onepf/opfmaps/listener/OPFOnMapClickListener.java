@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.listener;
 
+import android.support.annotation.NonNull;
 import org.onepf.opfmaps.model.OPFLatLng;
 
 /**
  * Created by akarimova on 02.07.15.
  */
 public interface OPFOnMapClickListener {
-    void onMapClick(OPFLatLng latLng);
+    void onMapClick(@NonNull final OPFLatLng latLng);
 }

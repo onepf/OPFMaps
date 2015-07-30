@@ -16,199 +16,162 @@
 
 package org.onepf.opfmaps.model;
 
-import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.delegate.model.MarkerDelegate;
 
 /**
  * Created by akarimova on 09.06.15.
  */
-//TODO: Remove setters. Make private constructor with all class members.
-//TODO: make options
-public final class OPFMarker extends OPFMapObject {
-    private OPFLatLng latLng;
-    private String title;
-    private String snippet;
-    private Bitmap bitmap;
-    private int iconId;
-    private boolean draggable;
-    private boolean flat;
-    private float alpha = 1.0f;
-    private float rotation;
+public final class OPFMarker implements MarkerDelegate {
 
-    //TODO: remove or make getter
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private float u;
+    @NonNull
+    private final MarkerDelegate delegate;
 
-    //TODO: remove or make getter
-    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-    private float v;
-
-    //TODO: remove if it is really unused
-    @SuppressWarnings("PMD.UnusedPrivateField")
-    private String id;
-
-    private OPFMarker() {
-        super();
-        latLng(latLng);
-        iconId(iconId);
+    public OPFMarker(@NonNull final MarkerDelegate delegate) {
+        this.delegate = delegate;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void title(String title) {
-        this.title = title;
-    }
-
-    public String getSnippet() {
-        return snippet;
-    }
-
-    public void snippet(String snippet) {
-        this.snippet = snippet;
-    }
-
-    public OPFLatLng getLatLng() {
-        return latLng;
-    }
-
-    public void latLng(OPFLatLng latLng) {
-        this.latLng = latLng;
-    }
-
-    //TODO make public or remove
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
-    private Bitmap getBitmap() {
-        return bitmap;
-    }
-
-    public void bitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
-    }
-
-    public int getIconId() {
-        return iconId;
-    }
-
-    public void iconId(int iconId) {
-        this.iconId = iconId;
-    }
-
+    @Override
     public float getAlpha() {
-        return alpha;
+        return delegate.getAlpha();
     }
 
-    public void alpha(float alpha) {
-        this.alpha = alpha;
+    @NonNull
+    @Override
+    public String getId() {
+        return delegate.getId();
     }
 
+    @NonNull
+    @Override
+    public OPFLatLng getPosition() {
+        return delegate.getPosition();
+    }
+
+    @Override
     public float getRotation() {
-        return rotation;
+        return delegate.getRotation();
     }
 
-    public void rotation(float rotation) {
-        this.rotation = rotation;
+    @NonNull
+    @Override
+    public String getSnippet() {
+        return delegate.getSnippet();
     }
 
-    public void anchor(float u, float v) {
-        this.u = u;
-        this.v = v;
+    @NonNull
+    @Override
+    public String getTitle() {
+        return delegate.getTitle();
     }
 
+    @Override
+    public void hideInfoWindow() {
+        delegate.hideInfoWindow();
+    }
+
+    @Override
     public boolean isDraggable() {
-        return draggable;
+        return delegate.isDraggable();
     }
 
-    public void draggable(boolean draggable) {
-        this.draggable = draggable;
-    }
-
+    @Override
     public boolean isFlat() {
-        return flat;
+        return delegate.isFlat();
     }
 
-    public void flat(boolean flat) {
-        this.flat = flat;
+    @Override
+    public boolean isInfoWindowShown() {
+        return delegate.isInfoWindowShown();
     }
 
-    public int getId() {
-        return iconId;
+    @Override
+    public boolean isVisible() {
+        return delegate.isVisible();
     }
 
-    public static class Builder implements org.onepf.opfmaps.model.Builder<OPFMarker> {
-        private final OPFMarker opfMarker;
-
-        @SuppressWarnings("PMD.AccessorClassGeneration")
-        public Builder() {
-            opfMarker = new OPFMarker();
-        }
-
-        public Builder setTitle(String title) {
-            opfMarker.title(title);
-            return this;
-        }
-
-        public Builder setSnippet(String snippet) {
-            opfMarker.snippet(snippet);
-            return this;
-        }
-
-        public Builder setLatLng(OPFLatLng opfLatLng) {
-            opfMarker.latLng(opfLatLng);
-            return this;
-        }
-
-        public Builder setBitmap(Bitmap bitmap) {
-            opfMarker.bitmap(bitmap);
-            return this;
-        }
-
-        public Builder setIcon(int iconId) {
-            opfMarker.iconId(iconId);
-            return this;
-        }
-
-        public Builder setAlpha(float alpha) {
-            opfMarker.alpha(alpha);
-            return this;
-        }
-
-        public Builder setRotation(float rotation) {
-            opfMarker.rotation(rotation);
-            return this;
-        }
-
-        public Builder setAnchor(float u, float v) {
-            opfMarker.anchor(u, v);
-            return this;
-        }
-
-        public Builder setDraggable(boolean draggable) {
-            opfMarker.draggable(draggable);
-            return this;
-        }
-
-        public Builder setFlat(boolean flat) {
-            opfMarker.flat(flat);
-            return this;
-        }
-
-        public Builder setVisible(boolean visible) {
-            opfMarker.visible(visible);
-            return this;
-        }
-
-        public OPFMarker build() {
-            if (opfMarker.getLatLng() == null) {
-                throw new IllegalStateException("OPFMarker: no coordinates!");
-            }
-            //todo
-//            if (opfMarker.getIconId() <= 0 && opfMarker.getBitmap() == null) {
-//                throw new IllegalStateException("OPFMarker: no icon!");
-//            }
-            return opfMarker;
-        }
-
+    @Override
+    public void remove() {
+        delegate.remove();
     }
 
+    @Override
+    public void setAlpha(final float alpha) {
+        delegate.setAlpha(alpha);
+    }
+
+    @Override
+    public void setAnchor(final float anchorU, final float anchorV) {
+        delegate.setAnchor(anchorU, anchorV);
+    }
+
+    @Override
+    public void setDraggable(final boolean draggable) {
+        delegate.setDraggable(draggable);
+    }
+
+    @Override
+    public void setFlat(final boolean flat) {
+        delegate.setFlat(flat);
+    }
+
+    @Override
+    public void setIcon(final OPFBitmapDescriptor icon) {
+        delegate.setIcon(icon);
+    }
+
+    @Override
+    public void setInfoWindowAnchor(final float anchorU, final float anchorV) {
+        delegate.setInfoWindowAnchor(anchorU, anchorV);
+    }
+
+    @Override
+    public void setPosition(@NonNull final OPFLatLng latLng) {
+        delegate.setPosition(latLng);
+    }
+
+    @Override
+    public void setRotation(final float rotation) {
+        delegate.setRotation(rotation);
+    }
+
+    @Override
+    public void setSnippet(@NonNull final String snippet) {
+        delegate.setSnippet(snippet);
+    }
+
+    @Override
+    public void setTitle(@NonNull final String title) {
+        delegate.setTitle(title);
+    }
+
+    @Override
+    public void setVisible(final boolean visible) {
+        delegate.setVisible(visible);
+    }
+
+    @Override
+    public void showInfoWindow() {
+        delegate.showInfoWindow();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        //noinspection SimplifiableIfStatement
+        if (!(other instanceof OPFMarker)) return false;
+
+        return delegate.equals(((OPFMarker) other).delegate);
+    }
+
+    @Override
+    public int hashCode() {
+        return delegate.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return delegate.toString();
+    }
 }

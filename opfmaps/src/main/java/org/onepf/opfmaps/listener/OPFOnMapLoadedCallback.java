@@ -14,17 +14,13 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
-
-import org.onepf.opfmaps.model.OPFMarker;
+package org.onepf.opfmaps.listener;
 
 /**
- * Created by akarimova on 02.07.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
-public interface OPFOnMarkerDragListener {
-    void onMarkerDragStart(OPFMarker marker);
+public interface OPFOnMapLoadedCallback {
 
-    void onMarkerDrag(OPFMarker marker);
-
-    void onMarkerDragEnd(OPFMarker marker);
+    void onMapLoaded();
 }
