@@ -48,6 +48,7 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createPolylineOptionsDelegate();
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private OPFPolylineOptions(@NonNull final Parcel parcel) {
         try {
             this.delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
@@ -154,6 +155,8 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
         dest.writeParcelable(delegate, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -163,6 +166,7 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
 
         return delegate.equals(((OPFPolylineOptions) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

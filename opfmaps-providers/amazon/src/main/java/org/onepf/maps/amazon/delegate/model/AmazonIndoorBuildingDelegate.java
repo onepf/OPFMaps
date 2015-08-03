@@ -75,6 +75,8 @@ public final class AmazonIndoorBuildingDelegate implements IndoorBuildingDelegat
         return indoorBuilding.hashCode();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -84,6 +86,7 @@ public final class AmazonIndoorBuildingDelegate implements IndoorBuildingDelegat
 
         return indoorBuilding.equals(((AmazonIndoorBuildingDelegate) other).indoorBuilding);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

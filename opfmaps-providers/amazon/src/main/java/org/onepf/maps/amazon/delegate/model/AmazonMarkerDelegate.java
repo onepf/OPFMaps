@@ -166,6 +166,8 @@ public final class AmazonMarkerDelegate implements MarkerDelegate {
         return marker.hashCode();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -175,6 +177,7 @@ public final class AmazonMarkerDelegate implements MarkerDelegate {
 
         return marker.equals(((AmazonMarkerDelegate) other).marker);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

@@ -175,6 +175,8 @@ public final class AmazonPolygonDelegate implements PolygonDelegate {
         return polygon.hashCode();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -184,4 +186,5 @@ public final class AmazonPolygonDelegate implements PolygonDelegate {
 
         return polygon.equals(((AmazonPolygonDelegate) other).polygon);
     }
+    //CHECKSTYLE:ON
 }

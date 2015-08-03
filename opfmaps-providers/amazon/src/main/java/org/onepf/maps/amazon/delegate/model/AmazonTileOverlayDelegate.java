@@ -38,6 +38,7 @@ public final class AmazonTileOverlayDelegate implements TileOverlayDelegate {
         tileOverlay.clearTileCache();
     }
 
+    @SuppressWarnings("PMD.BooleanGetMethodName")
     @Override
     public boolean getFadeIn() {
         return tileOverlay.getFadeIn();
@@ -84,6 +85,8 @@ public final class AmazonTileOverlayDelegate implements TileOverlayDelegate {
         return tileOverlay.hashCode();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -93,6 +96,7 @@ public final class AmazonTileOverlayDelegate implements TileOverlayDelegate {
 
         return tileOverlay.equals(((AmazonTileOverlayDelegate) other).tileOverlay);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

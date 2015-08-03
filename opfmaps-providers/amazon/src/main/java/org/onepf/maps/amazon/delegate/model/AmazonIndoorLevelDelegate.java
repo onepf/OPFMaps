@@ -56,6 +56,8 @@ public final class AmazonIndoorLevelDelegate implements IndoorLevelDelegate {
         return indoorLevel.hashCode();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -65,6 +67,7 @@ public final class AmazonIndoorLevelDelegate implements IndoorLevelDelegate {
 
         return indoorLevel.equals(((AmazonIndoorLevelDelegate) other).indoorLevel);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

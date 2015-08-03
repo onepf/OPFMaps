@@ -19,7 +19,6 @@ package org.onepf.opfmaps.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.MarkerOptionsDelegate;
 
@@ -48,6 +47,7 @@ public final class OPFMarkerOptions implements MarkerOptionsDelegate {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createMarkerOptionsDelegate();
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private OPFMarkerOptions(@NonNull final Parcel parcel) {
         try {
             this.delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
@@ -213,6 +213,8 @@ public final class OPFMarkerOptions implements MarkerOptionsDelegate {
         dest.writeParcelable(delegate, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -222,6 +224,7 @@ public final class OPFMarkerOptions implements MarkerOptionsDelegate {
 
         return delegate.equals(((OPFMarkerOptions) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

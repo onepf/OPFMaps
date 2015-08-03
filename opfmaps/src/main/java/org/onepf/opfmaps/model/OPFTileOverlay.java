@@ -36,6 +36,7 @@ public final class OPFTileOverlay implements TileOverlayDelegate {
         delegate.clearTileCache();
     }
 
+    @SuppressWarnings("PMD.BooleanGetMethodName")
     @Override
     public boolean getFadeIn() {
         return delegate.getFadeIn();
@@ -77,6 +78,8 @@ public final class OPFTileOverlay implements TileOverlayDelegate {
         delegate.setZIndex(zIndex);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -86,6 +89,7 @@ public final class OPFTileOverlay implements TileOverlayDelegate {
 
         return delegate.equals(((OPFTileOverlay) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

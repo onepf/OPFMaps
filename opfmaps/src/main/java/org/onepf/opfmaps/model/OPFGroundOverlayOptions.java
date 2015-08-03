@@ -47,6 +47,7 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createGroundOverlayOptionsDelegate();
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private OPFGroundOverlayOptions(@NonNull final Parcel parcel) {
         try {
             this.delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
@@ -185,6 +186,8 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         dest.writeParcelable(delegate, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -194,6 +197,7 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
 
         return delegate.equals(((OPFGroundOverlayOptions) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

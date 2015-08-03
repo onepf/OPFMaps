@@ -68,6 +68,7 @@ import org.onepf.opfutils.OPFLog;
  * @author Roman Savin
  * @since 31.07.2015
  */
+@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
 public class AmazonMapDelegate implements MapDelegate {
 
     @NonNull
@@ -331,5 +332,28 @@ public class AmazonMapDelegate implements MapDelegate {
     @Override
     public void stopAnimation() {
         map.stopAnimation();
+    }
+
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
+    @Override
+    public boolean equals(final Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        //noinspection SimplifiableIfStatement
+        if (!(other instanceof AmazonMapDelegate)) return false;
+
+        return map.equals(((AmazonMapDelegate) other).map);
+    }
+    //CHECKSTYLE:ON
+
+    @Override
+    public int hashCode() {
+        return map.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return map.toString();
     }
 }

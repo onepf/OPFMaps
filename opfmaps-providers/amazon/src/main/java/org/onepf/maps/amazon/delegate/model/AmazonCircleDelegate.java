@@ -117,6 +117,8 @@ public final class AmazonCircleDelegate implements CircleDelegate {
         circle.setZIndex(zIndex);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -126,6 +128,7 @@ public final class AmazonCircleDelegate implements CircleDelegate {
 
         return circle.equals(((AmazonCircleDelegate) other).circle);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

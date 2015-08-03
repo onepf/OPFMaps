@@ -47,6 +47,7 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createTileOverlayOptionDelegate();
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private OPFTileOverlayOptions(@NonNull final Parcel parcel) {
         try {
             this.delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
@@ -55,20 +56,21 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
         }
     }
 
-    @Override
     @NonNull
+    @Override
     public OPFTileOverlayOptions fadeIn(final boolean fadeIn) {
         delegate.fadeIn(fadeIn);
         return this;
     }
 
+    @SuppressWarnings("PMD.BooleanGetMethodName")
     @Override
     public boolean getFadeIn() {
         return delegate.getFadeIn();
     }
 
-    @Override
     @Nullable
+    @Override
     public OPFTileProvider getTileProvider() {
         return delegate.getTileProvider();
     }
@@ -83,22 +85,22 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
         return delegate.isVisible();
     }
 
-    @Override
     @NonNull
+    @Override
     public OPFTileOverlayOptions tileProvider(@NonNull final OPFTileProvider tileProvider) {
         delegate.tileProvider(tileProvider);
         return this;
     }
 
-    @Override
     @NonNull
+    @Override
     public OPFTileOverlayOptions visible(final boolean visible) {
         delegate.visible(visible);
         return this;
     }
 
-    @Override
     @NonNull
+    @Override
     public OPFTileOverlayOptions zIndex(final float zIndex) {
         delegate.zIndex(zIndex);
         return this;
@@ -115,6 +117,8 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
         dest.writeParcelable(delegate, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -124,6 +128,7 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
 
         return delegate.equals(((OPFTileOverlayOptions) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

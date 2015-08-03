@@ -114,6 +114,8 @@ public final class OPFCircle implements CircleDelegate {
         delegate.setZIndex(zIndex);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -123,6 +125,7 @@ public final class OPFCircle implements CircleDelegate {
 
         return delegate.equals(((OPFCircle) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

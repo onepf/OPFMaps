@@ -70,6 +70,8 @@ public final class AmazonLatLngDelegate implements LatLngDelegate {
         dest.writeParcelable(latLng, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -79,6 +81,7 @@ public final class AmazonLatLngDelegate implements LatLngDelegate {
 
         return latLng.equals(((AmazonLatLngDelegate) other).latLng);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

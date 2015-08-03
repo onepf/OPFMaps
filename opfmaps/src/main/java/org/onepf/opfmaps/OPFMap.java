@@ -220,6 +220,8 @@ public final class OPFMap implements MapDelegate {
         delegate.stopAnimation();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -229,6 +231,7 @@ public final class OPFMap implements MapDelegate {
 
         return delegate.equals(((OPFMap) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -153,6 +153,8 @@ public final class AmazonCircleOptionsDelegate implements CircleOptionsDelegate 
         return circleOptions.toString();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -162,6 +164,7 @@ public final class AmazonCircleOptionsDelegate implements CircleOptionsDelegate 
 
         return circleOptions.equals(((AmazonCircleOptionsDelegate) other).circleOptions);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -155,6 +155,8 @@ public final class OPFMarker implements MarkerDelegate {
         delegate.showInfoWindow();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -164,6 +166,7 @@ public final class OPFMarker implements MarkerDelegate {
 
         return delegate.equals(((OPFMarker) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -37,6 +37,8 @@ public final class OPFBitmapDescriptor {
         return delegate;
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -46,6 +48,7 @@ public final class OPFBitmapDescriptor {
 
         return delegate.equals(((OPFBitmapDescriptor) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

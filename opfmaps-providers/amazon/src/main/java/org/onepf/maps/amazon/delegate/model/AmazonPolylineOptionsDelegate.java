@@ -152,6 +152,8 @@ public final class AmazonPolylineOptionsDelegate implements PolylineOptionsDeleg
         return this;
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -161,6 +163,7 @@ public final class AmazonPolylineOptionsDelegate implements PolylineOptionsDeleg
 
         return polylineOptions.equals(((AmazonPolylineOptionsDelegate) other).polylineOptions);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

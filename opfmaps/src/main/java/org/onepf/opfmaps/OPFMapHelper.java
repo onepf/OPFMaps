@@ -34,6 +34,7 @@ import java.util.List;
 public final class OPFMapHelper {
 
     private static final class Holder {
+        @SuppressWarnings("PMD.AccessorClassGeneration")
         public static final OPFMapHelper INSTANCE = new OPFMapHelper();
     }
 
@@ -47,6 +48,7 @@ public final class OPFMapHelper {
         return Holder.INSTANCE;
     }
 
+    @SuppressWarnings("PMD.NPathComplexity")
     public void init(@NonNull final Context context,
                      @NonNull final OPFMapConfiguration configuration) {
         //todo call only from main thread
@@ -78,6 +80,7 @@ public final class OPFMapHelper {
         }
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes") //todo remove
     @NonNull
     public DelegatesAbstractFactory getDelegatesFactory() {
         if (currentProvider == null) {

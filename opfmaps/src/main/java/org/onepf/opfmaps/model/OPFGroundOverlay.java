@@ -129,6 +129,8 @@ public final class OPFGroundOverlay implements GroundOverlayDelegate {
         delegate.setZIndex(zIndex);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -138,6 +140,7 @@ public final class OPFGroundOverlay implements GroundOverlayDelegate {
 
         return delegate.equals(((OPFGroundOverlay) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

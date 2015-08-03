@@ -49,6 +49,7 @@ public final class OPFLatLng implements LatLngDelegate {
         this.delegate = delegate;
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private OPFLatLng(@NonNull final Parcel parcel) {
         try {
             this.delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
@@ -88,6 +89,8 @@ public final class OPFLatLng implements LatLngDelegate {
         return delegate.toString();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -97,4 +100,5 @@ public final class OPFLatLng implements LatLngDelegate {
 
         return delegate.equals(((OPFLatLng) other).delegate);
     }
+    //CHECKSTYLE:ON
 }

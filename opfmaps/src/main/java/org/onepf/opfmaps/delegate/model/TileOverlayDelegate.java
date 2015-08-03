@@ -26,6 +26,7 @@ public interface TileOverlayDelegate {
 
     void clearTileCache();
 
+    @SuppressWarnings("PMD.BooleanGetMethodName")
     boolean getFadeIn();
 
     @NonNull

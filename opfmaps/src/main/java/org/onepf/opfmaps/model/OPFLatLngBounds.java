@@ -44,7 +44,7 @@ public final class OPFLatLngBounds implements LatLngBoundsDelegate {
     }
 
     @NonNull
-    private LatLngBoundsDelegate delegate;
+    private final LatLngBoundsDelegate delegate;
 
     public OPFLatLngBounds(@NonNull final OPFLatLng southwest, @NonNull final OPFLatLng northeast) {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createLatLngBoundsDelegate(southwest, northeast);
@@ -54,6 +54,7 @@ public final class OPFLatLngBounds implements LatLngBoundsDelegate {
         this.delegate = delegate;
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private OPFLatLngBounds(@NonNull final Parcel parcel) {
         try {
             this.delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
@@ -99,6 +100,8 @@ public final class OPFLatLngBounds implements LatLngBoundsDelegate {
         dest.writeParcelable(delegate, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -108,6 +111,7 @@ public final class OPFLatLngBounds implements LatLngBoundsDelegate {
 
         return delegate.equals(((OPFLatLngBounds) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {
@@ -122,7 +126,7 @@ public final class OPFLatLngBounds implements LatLngBoundsDelegate {
     public static class Builder implements LatLngBoundsDelegate.Builder {
 
         @NonNull
-        private LatLngBoundsDelegate.Builder delegate;
+        private final LatLngBoundsDelegate.Builder delegate;
 
         public Builder(@NonNull final LatLngBoundsDelegate.Builder delegate) {
             this.delegate = delegate;

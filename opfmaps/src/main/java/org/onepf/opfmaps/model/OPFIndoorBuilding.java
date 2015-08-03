@@ -56,6 +56,8 @@ public final class OPFIndoorBuilding implements IndoorBuildingDelegate {
         return delegate.isUnderground();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -65,6 +67,7 @@ public final class OPFIndoorBuilding implements IndoorBuildingDelegate {
 
         return delegate.equals(((OPFIndoorBuilding) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

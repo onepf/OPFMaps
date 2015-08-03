@@ -30,6 +30,7 @@ public interface TileOverlayOptionsDelegate extends Parcelable {
     @NonNull
     TileOverlayOptionsDelegate fadeIn(final boolean fadeIn);
 
+    @SuppressWarnings("PMD.BooleanGetMethodName")
     boolean getFadeIn();
 
     @Nullable

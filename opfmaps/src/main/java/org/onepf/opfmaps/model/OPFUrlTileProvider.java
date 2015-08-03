@@ -45,6 +45,8 @@ public abstract class OPFUrlTileProvider implements UrlTileProviderDelegate {
     @NonNull
     public abstract URL getTileUrl(final int x, final int y, final int zoom);
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -54,6 +56,7 @@ public abstract class OPFUrlTileProvider implements UrlTileProviderDelegate {
 
         return delegate.equals(((OPFUrlTileProvider) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -47,6 +47,7 @@ public final class OPFCircleOptions implements CircleOptionsDelegate {
         delegate = OPFMapHelper.getInstance().getDelegatesFactory().createCircleOptionsDelegate();
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private OPFCircleOptions(@NonNull final Parcel parcel) {
         try {
             delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
@@ -141,6 +142,8 @@ public final class OPFCircleOptions implements CircleOptionsDelegate {
         return this;
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -150,6 +153,7 @@ public final class OPFCircleOptions implements CircleOptionsDelegate {
 
         return delegate.equals(((OPFCircleOptions) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

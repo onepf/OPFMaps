@@ -50,6 +50,7 @@ public final class OPFTile implements TileDelegate {
         this.delegate = delegate;
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private OPFTile(@NonNull final Parcel parcel) {
         try {
             this.delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
@@ -85,6 +86,8 @@ public final class OPFTile implements TileDelegate {
         dest.writeParcelable(delegate, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -94,6 +97,7 @@ public final class OPFTile implements TileDelegate {
 
         return delegate.equals(((OPFTile) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

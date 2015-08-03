@@ -50,6 +50,8 @@ public final class OPFIndoorLevel implements IndoorLevelDelegate {
         return delegate.getShortName();
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -59,6 +61,7 @@ public final class OPFIndoorLevel implements IndoorLevelDelegate {
 
         return delegate.equals(((OPFIndoorLevel) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

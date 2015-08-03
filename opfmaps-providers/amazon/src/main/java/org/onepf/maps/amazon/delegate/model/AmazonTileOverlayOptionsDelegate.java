@@ -55,6 +55,7 @@ public final class AmazonTileOverlayOptionsDelegate implements TileOverlayOption
         this.tileOverlayOptions = parcel.readParcelable(TileOverlayOptions.class.getClassLoader());
     }
 
+    @SuppressWarnings("PMD.BooleanGetMethodName")
     @Override
     public boolean getFadeIn() {
         return tileOverlayOptions.getFadeIn();
@@ -138,6 +139,8 @@ public final class AmazonTileOverlayOptionsDelegate implements TileOverlayOption
         dest.writeParcelable(tileOverlayOptions, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -147,6 +150,7 @@ public final class AmazonTileOverlayOptionsDelegate implements TileOverlayOption
 
         return tileOverlayOptions.equals(((AmazonTileOverlayOptionsDelegate) other).tileOverlayOptions);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

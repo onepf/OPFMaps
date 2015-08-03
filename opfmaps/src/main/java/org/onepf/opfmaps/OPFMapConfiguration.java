@@ -30,7 +30,8 @@ import java.util.Map;
 /**
  * Created by akarimova on 11.06.15.
  */
-public class OPFMapConfiguration {
+@SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
+public final class OPFMapConfiguration {
 
     @NonNull
     private final List<OPFMapProvider> providers;
@@ -90,6 +91,7 @@ public class OPFMapConfiguration {
             return this;
         }
 
+        @SuppressWarnings("PMD.AccessorClassGeneration")
         public OPFMapConfiguration build() {
             if (providersMap == null) {
                 throw new IllegalArgumentException("You must add at least one opfmap provider.");

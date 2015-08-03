@@ -18,7 +18,6 @@ package org.onepf.opfmaps.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.PolygonOptionsDelegate;
 
@@ -49,6 +48,7 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createPolygonOptionsDelegate();
     }
 
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private OPFPolygonOptions(@NonNull final Parcel parcel) {
         try {
             this.delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
@@ -180,6 +180,8 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         dest.writeParcelable(delegate, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -189,6 +191,7 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
 
         return delegate.equals(((OPFPolygonOptions) other).delegate);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

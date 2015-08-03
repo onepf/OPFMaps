@@ -18,7 +18,6 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.PolygonOptions;
 import org.onepf.opfmaps.delegate.model.PolygonOptionsDelegate;
@@ -202,6 +201,8 @@ public final class AmazonPolygonOptionsDelegate implements PolygonOptionsDelegat
         dest.writeParcelable(polygonOptions, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -211,6 +212,7 @@ public final class AmazonPolygonOptionsDelegate implements PolygonOptionsDelegat
 
         return polygonOptions.equals(((AmazonPolygonOptionsDelegate) other).polygonOptions);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

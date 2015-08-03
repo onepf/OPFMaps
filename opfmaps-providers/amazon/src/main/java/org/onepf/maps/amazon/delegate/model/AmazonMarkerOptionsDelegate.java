@@ -215,6 +215,8 @@ public final class AmazonMarkerOptionsDelegate implements MarkerOptionsDelegate 
         dest.writeParcelable(markerOptions, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -224,6 +226,7 @@ public final class AmazonMarkerOptionsDelegate implements MarkerOptionsDelegate 
 
         return markerOptions.equals(((AmazonMarkerOptionsDelegate) other).markerOptions);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

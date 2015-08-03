@@ -92,6 +92,8 @@ public final class AmazonLatLngBoundsDelegate implements LatLngBoundsDelegate {
         dest.writeParcelable(bounds, flags);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -101,6 +103,7 @@ public final class AmazonLatLngBoundsDelegate implements LatLngBoundsDelegate {
 
         return bounds.equals(((AmazonLatLngBoundsDelegate) other).bounds);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {
@@ -114,6 +117,7 @@ public final class AmazonLatLngBoundsDelegate implements LatLngBoundsDelegate {
 
     public static class Builder implements LatLngBoundsDelegate.Builder {
 
+        @SuppressWarnings("PMD.AvoidFieldNameMatchingTypeName")
         @NonNull
         private final LatLngBounds.Builder builder;
 
@@ -128,6 +132,7 @@ public final class AmazonLatLngBoundsDelegate implements LatLngBoundsDelegate {
             return this;
         }
 
+        @SuppressWarnings("PMD.AccessorClassGeneration")
         @NonNull
         @Override
         public OPFLatLngBounds build() {

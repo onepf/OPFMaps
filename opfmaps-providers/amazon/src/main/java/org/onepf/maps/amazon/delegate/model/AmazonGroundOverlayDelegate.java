@@ -140,6 +140,8 @@ public final class AmazonGroundOverlayDelegate implements GroundOverlayDelegate 
         groundOverlay.setZIndex(zIndex);
     }
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
         if (other == null) return false;
@@ -149,6 +151,7 @@ public final class AmazonGroundOverlayDelegate implements GroundOverlayDelegate 
 
         return groundOverlay.equals(((AmazonGroundOverlayDelegate) other).groundOverlay);
     }
+    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {
