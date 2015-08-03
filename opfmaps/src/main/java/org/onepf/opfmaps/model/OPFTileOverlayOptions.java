@@ -18,9 +18,9 @@ package org.onepf.opfmaps.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.TileOverlayOptionsDelegate;
-
-import javax.annotation.Nullable;
 
 /**
  * @author Roman Savin
@@ -43,10 +43,8 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
     @NonNull
     private final TileOverlayOptionsDelegate delegate;
 
-    //todo default constructor
-
-    public OPFTileOverlayOptions(@NonNull final TileOverlayOptionsDelegate delegate) {
-        this.delegate = delegate;
+    public OPFTileOverlayOptions() {
+        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createTileOverlayOptionDelegate();
     }
 
     private OPFTileOverlayOptions(@NonNull final Parcel parcel) {

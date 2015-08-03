@@ -17,9 +17,8 @@
 package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import org.onepf.opfmaps.delegate.model.IndoorLevelDelegate;
-
-import javax.annotation.Nullable;
 
 /**
  * @author Roman Savin

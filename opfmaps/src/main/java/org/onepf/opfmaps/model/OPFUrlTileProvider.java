@@ -17,7 +17,11 @@
 package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
+
+import java.net.URL;
 
 /**
  * @author Roman Savin
@@ -28,17 +32,18 @@ public abstract class OPFUrlTileProvider implements UrlTileProviderDelegate {
     @NonNull
     private final UrlTileProviderDelegate delegate;
 
-    //todo UrlTileProvider(int width, int height)
-
-    public OPFUrlTileProvider(@NonNull final UrlTileProviderDelegate delegate) {
-        this.delegate = delegate;
+    public OPFUrlTileProvider(final int width, final int height) {
+        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createUrlTileProviderDelegate(width, height);
     }
 
     @Override
-    @NonNull
+    @Nullable
     public OPFTile getTile(final int x, final int y, final int zoom) {
         return delegate.getTile(x, y, zoom);
     }
+
+    @NonNull
+    public abstract URL getTileUrl(final int x, final int y, final int zoom);
 
     @Override
     public boolean equals(final Object other) {

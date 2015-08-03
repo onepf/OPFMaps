@@ -17,6 +17,7 @@
 package org.onepf.multimapsexample;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,7 +32,7 @@ import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
 import org.onepf.opfmaps.OPFOnMapConfigureListener;
 import org.onepf.opfmaps.OPFMapProvider;
-import org.onepf.opfmaps.OPFMapSettings;
+import org.onepf.opfmaps.OPFMapConfiguration;
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFOnMapLoadListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
@@ -57,14 +58,14 @@ public class MainActivity extends ActionBarActivity {
         List<OPFMapProvider> providers = new ArrayList<OPFMapProvider>();
         providers.add(new GoogleMapProvider());
         providers.add(new AmazonMapProvider());
-        OPFMapSettings opfMapSettings = new OPFMapSettings(providers);
+        OPFMapConfiguration opfMapConfiguration = new OPFMapConfiguration(providers);
 
         OPFMapOptions options = new OPFMapOptions()
                 .tiltGesturesEnabled(true)
                 .zoomGesturesEnabled(true)
                 .compassEnabled(true)
                 .rotateGesturesEnabled(true);
-        map.init(getFragmentManager(), opfMapSettings, new OPFOnMapConfigureListener() {
+        map.init(getFragmentManager(), opfMapConfiguration, new OPFOnMapConfigureListener() {
             @Override
             public void onError(int r) {
                 //will be implemented later
@@ -110,25 +111,26 @@ public class MainActivity extends ActionBarActivity {
 
                         map.setOnMarkerDragListener(new OPFOnMarkerDragListener() {
                             @Override
-                            public void onMarkerDragStart(OPFMarker marker) {
+                            public void onMarkerDragStart(@NonNull OPFMarker marker) {
                                 //ignore
                             }
 
                             @Override
-                            public void onMarkerDrag(OPFMarker marker) {
+                            public void onMarkerDrag(@NonNull OPFMarker marker) {
                                 //ignore
                             }
 
                             @Override
-                            public void onMarkerDragEnd(OPFMarker marker) {
+                            public void onMarkerDragEnd(@NonNull OPFMarker marker) {
                                 //ignore
                             }
                         });
 
                         map.setOnMarkerClickListener(new OPFOnMarkerClickListener() {
                             @Override
-                            public void onMarkerClick(OPFMarker marker) {
+                            public boolean onMarkerClick(@NonNull OPFMarker marker) {
                                 //ignore
+                                return false;
                             }
                         });
 

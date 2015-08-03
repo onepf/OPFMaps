@@ -22,8 +22,7 @@ import android.support.annotation.NonNull;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.model.Marker;
-import org.onepf.opfmaps.OPFAbstractMapProvider;
+import org.onepf.opfmaps.BaseOPFMapProvider;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.utils.FeatureChecker;
 import org.onepf.opfmaps.utils.MetaDataChecker;
@@ -38,7 +37,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 /**
  * Created by akarimova on 24.06.15.
  */
-public class GoogleMapProvider extends OPFAbstractMapProvider {
+public class GoogleMapProvider extends BaseOPFMapProvider {
     @Override
     public boolean hasRequiredPermissions(Context context) {
         return

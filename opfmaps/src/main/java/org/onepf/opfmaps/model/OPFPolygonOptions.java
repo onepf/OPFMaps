@@ -18,9 +18,10 @@ package org.onepf.opfmaps.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.PolygonOptionsDelegate;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -44,10 +45,8 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
     @NonNull
     private final PolygonOptionsDelegate delegate;
 
-    //todo default constructor
-
-    public OPFPolygonOptions(@NonNull final PolygonOptionsDelegate delegate) {
-        this.delegate = delegate;
+    public OPFPolygonOptions() {
+        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createPolygonOptionsDelegate();
     }
 
     private OPFPolygonOptions(@NonNull final Parcel parcel) {
@@ -105,13 +104,13 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         return delegate.getFillColor();
     }
 
-    @Nullable
+    @NonNull
     @Override
     public List<List<OPFLatLng>> getHoles() {
         return delegate.getHoles();
     }
 
-    @Nullable
+    @NonNull
     @Override
     public List<OPFLatLng> getPoints() {
         return delegate.getPoints();

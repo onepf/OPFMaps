@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.delegate.model;
+
+import android.support.annotation.NonNull;
 
 /**
- * Created by akarimova on 30.06.15.
+ * @author Roman Savin
+ * @since 03.08.2015
  */
+public interface BitmapDescriptorDelegate<T> {
 
-//todo remove
-public interface OPFOnMapLoadListener {
-
-    void onMapLoad();
-
-    void onError();
+    @NonNull
+    T getBitmapDescriptor();
 }

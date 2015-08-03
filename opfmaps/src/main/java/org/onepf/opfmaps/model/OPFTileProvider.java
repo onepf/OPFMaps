@@ -16,7 +16,7 @@
 
 package org.onepf.opfmaps.model;
 
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * @author Roman Savin
@@ -24,6 +24,6 @@ import android.support.annotation.NonNull;
  */
 public interface OPFTileProvider {
 
-    @NonNull
+    @Nullable
     OPFTile getTile(final int x, final int y, final int zoom);
 }

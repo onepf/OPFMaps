@@ -19,6 +19,8 @@ package org.onepf.opfmaps.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import org.onepf.opfmaps.OPFMap;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.MarkerOptionsDelegate;
 
 /**
@@ -42,10 +44,8 @@ public final class OPFMarkerOptions implements MarkerOptionsDelegate {
     @NonNull
     private final MarkerOptionsDelegate delegate;
 
-    //todo default constructor
-
-    public OPFMarkerOptions(@NonNull final MarkerOptionsDelegate delegate) {
-        this.delegate = delegate;
+    public OPFMarkerOptions() {
+        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createMarkerOptionsDelegate();
     }
 
     private OPFMarkerOptions(@NonNull final Parcel parcel) {

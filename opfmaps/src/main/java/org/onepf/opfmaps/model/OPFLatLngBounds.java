@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.LatLngBoundsDelegate;
 
 /**
@@ -38,12 +39,16 @@ public final class OPFLatLngBounds implements LatLngBoundsDelegate {
         }
     };
 
-    //todo implement builder() method
-
-    //todo LatLngBounds(LatLng southwest, LatLng northeast)
+    public static Builder builder() {
+        return new Builder(OPFMapHelper.getInstance().getDelegatesFactory().createLatLngBoundsBuilderDelegate());
+    }
 
     @NonNull
     private LatLngBoundsDelegate delegate;
+
+    public OPFLatLngBounds(@NonNull final OPFLatLng southwest, @NonNull final OPFLatLng northeast) {
+        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createLatLngBoundsDelegate(southwest, northeast);
+    }
 
     public OPFLatLngBounds(@NonNull final LatLngBoundsDelegate delegate) {
         this.delegate = delegate;

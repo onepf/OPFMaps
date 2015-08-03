@@ -16,7 +16,7 @@
 
 package org.onepf.opfmaps.delegate.model;
 
-import javax.annotation.Nullable;
+import android.support.annotation.Nullable;
 
 /**
  * @author Roman Savin

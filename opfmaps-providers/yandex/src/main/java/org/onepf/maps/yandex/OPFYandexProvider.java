@@ -20,13 +20,13 @@ import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import org.onepf.opfmaps.OPFAbstractMapProvider;
+import org.onepf.opfmaps.BaseOPFMapProvider;
 import org.onepf.opfmaps.OPFMapOptions;
 
 /**
  * Created by akarimova on 09.07.15.
  */
-public class OPFYandexProvider extends OPFAbstractMapProvider {
+public class OPFYandexProvider extends BaseOPFMapProvider {
     @NonNull
     @Override
     public Fragment getFragment(OPFMapOptions opfMapOptions) {

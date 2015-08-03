@@ -80,8 +80,8 @@ public final class OPFCircle implements CircleDelegate {
     }
 
     @Override
-    public void setCenter() {
-        delegate.setCenter();
+    public void setCenter(@NonNull final OPFLatLng center) {
+        delegate.setCenter(center);
     }
 
     @Override

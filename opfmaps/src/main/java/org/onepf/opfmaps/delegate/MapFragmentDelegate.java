@@ -14,25 +14,16 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.delegate;
 
-import java.util.List;
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 
 /**
- * Created by akarimova on 11.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
-public class OPFMapSettings {
-    private final List<OPFMapProvider> providers;
+public interface MapFragmentDelegate {
 
-    public OPFMapSettings(List<OPFMapProvider> providers) {
-        if (providers == null || providers.isEmpty()) {
-            //todo throw an exception
-            throw new IllegalStateException("");
-        }
-        this.providers = providers;
-    }
-
-    public List<OPFMapProvider> getProviders() {
-        return providers;
-    }
+    void getMapAsync(@NonNull final OPFOnMapReadyCallback callback);
 }

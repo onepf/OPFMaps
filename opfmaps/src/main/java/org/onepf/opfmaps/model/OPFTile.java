@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.TileDelegate;
 
 /**
@@ -41,7 +42,9 @@ public final class OPFTile implements TileDelegate {
     @NonNull
     private final TileDelegate delegate;
 
-    //todo Tile(int width, int height, byte[] data)
+    public OPFTile(final int width, final int height, @NonNull final byte[] data) {
+        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createTileDelegate(width, height, data);
+    }
 
     public OPFTile(@NonNull final TileDelegate delegate) {
         this.delegate = delegate;

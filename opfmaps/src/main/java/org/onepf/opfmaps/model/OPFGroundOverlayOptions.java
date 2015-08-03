@@ -19,6 +19,7 @@ package org.onepf.opfmaps.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 
 /**
@@ -42,10 +43,8 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
     @NonNull
     private final GroundOverlayOptionsDelegate delegate;
 
-    //todo default constructor
-
-    public OPFGroundOverlayOptions(@NonNull final GroundOverlayOptionsDelegate delegate) {
-        this.delegate = delegate;
+    public OPFGroundOverlayOptions() {
+        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createGroundOverlayOptionsDelegate();
     }
 
     private OPFGroundOverlayOptions(@NonNull final Parcel parcel) {
@@ -170,7 +169,7 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
 
     @NonNull
     @Override
-    public GroundOverlayOptionsDelegate zIndex(final float zIndex) {
+    public OPFGroundOverlayOptions zIndex(final float zIndex) {
         delegate.zIndex(zIndex);
         return this;
     }

@@ -17,9 +17,9 @@
 package org.onepf.opfmaps.delegate.model;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import org.onepf.opfmaps.model.OPFLatLng;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**

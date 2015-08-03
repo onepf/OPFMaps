@@ -16,17 +16,15 @@
 
 package org.onepf.maps.amazon;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.amazon.geo.mapsv2.AmazonMapOptions;
 import com.amazon.geo.mapsv2.util.AmazonMapsRuntimeUtil;
 import com.amazon.geo.mapsv2.util.ConnectionResult;
 
-import org.onepf.opfmaps.OPFAbstractMapProvider;
-import org.onepf.opfmaps.OPFMapOptions;
+import org.onepf.opfmaps.BaseOPFMapProvider;
+import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 import org.onepf.opfmaps.utils.PermissionChecker;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -38,8 +36,21 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 /**
  * Created by akarimova on 24.06.15.
  */
-public class AmazonMapProvider extends OPFAbstractMapProvider {
+public class AmazonMapProvider extends BaseOPFMapProvider {
     private static final String TAG = AmazonMapProvider.class.getSimpleName();
+
+    @NonNull
+    @Override
+    public DelegatesAbstractFactory getDelegatesFactory() {
+        return new AmazonDelegatesFactory();
+    }
+
+    @NonNull
+    @Override
+    public String getHostAppPackage() {
+        //todo return host app package
+        return "";
+    }
 
     @Override
     public boolean hasRequiredPermissions(Context context) {
@@ -64,12 +75,6 @@ public class AmazonMapProvider extends OPFAbstractMapProvider {
         }
     }
 
-    @NonNull
-    @Override
-    public Fragment getFragment(OPFMapOptions opfMapOptions) {
-        return OPFAmazonFragment.newInstance(convert(opfMapOptions)); //TODO: New instance every time?
-    }
-
     @Override
     public boolean isKeyPresented(Context context) {
         //always true
@@ -80,14 +85,5 @@ public class AmazonMapProvider extends OPFAbstractMapProvider {
     public boolean hasRequestedFeatures(Context context) {
         //always true
         return true;
-    }
-
-    private AmazonMapOptions convert(OPFMapOptions mapOptions) {
-        AmazonMapOptions amazonMapOptions = new AmazonMapOptions();
-        amazonMapOptions.rotateGesturesEnabled(mapOptions.isRotateGesturesEnabled())
-                .compassEnabled(mapOptions.isCompassEnabled())
-                .tiltGesturesEnabled(mapOptions.isTiltGesturesEnabled())
-                .zoomGesturesEnabled(mapOptions.isZoomGesturesEnabled());
-        return amazonMapOptions;
     }
 }

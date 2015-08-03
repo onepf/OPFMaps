@@ -19,6 +19,7 @@ package org.onepf.opfmaps.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
 
 /**
@@ -42,10 +43,8 @@ public final class OPFCircleOptions implements CircleOptionsDelegate {
     @NonNull
     private final CircleOptionsDelegate delegate;
 
-    //todo default constructor
-
-    public OPFCircleOptions(@NonNull final CircleOptionsDelegate delegate) {
-        this.delegate = delegate;
+    public OPFCircleOptions() {
+        delegate = OPFMapHelper.getInstance().getDelegatesFactory().createCircleOptionsDelegate();
     }
 
     private OPFCircleOptions(@NonNull final Parcel parcel) {

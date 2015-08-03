@@ -16,285 +16,227 @@
 
 package org.onepf.opfmaps;
 
-import android.content.Context;
-import android.location.Location;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.widget.FrameLayout;
-
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.delegate.MapDelegate;
+import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
+import org.onepf.opfmaps.listener.OPFOnIndoorStateChangeListener;
+import org.onepf.opfmaps.listener.OPFOnInfoWindowClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
+import org.onepf.opfmaps.listener.OPFOnMapLoadedCallback;
+import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
+import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
 import org.onepf.opfmaps.model.OPFCircle;
+import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlay;
+import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFMarker;
+import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygon;
+import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolyline;
+import org.onepf.opfmaps.model.OPFPolylineOptions;
 import org.onepf.opfmaps.model.OPFTileOverlay;
-
-import java.util.List;
-
+import org.onepf.opfmaps.model.OPFTileOverlayOptions;
 
 /**
- * Created by akarimova on 08.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
+public final class OPFMap implements MapDelegate {
 
-//todo remove
-public class OPFMap extends FrameLayout implements OPFMapDelegate, OPFOnMapLoadListener {
-    public enum MapType {
-        HYBRID,
-        NONE,
-        NORMAL,
-        SATELLITE,
-        TERRAIN,
-        UNKNOWN
-    }
+    @NonNull
+    private final MapDelegate delegate;
 
-    public enum InitializationErrors {
-        PROVIDER_LIST_EMPTY
-    }
-
-    private OPFMapDelegate mapDelegate;
-    private OPFMapProvider currentProvider;
-
-
-    private OPFOnMapLoadListener onMapLoadListener;
-
-    @SuppressWarnings("PMD.SingularField") //TODO: fix this PMD issue
-    private OPFOnMapConfigureListener onMapConfigureListener;
-
-    private Boolean isReady;
-
-    public OPFMap(Context context) {
-        super(context);
-        setupView();
-    }
-
-    public OPFMap(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setupView();
-    }
-
-    public OPFMap(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        setupView();
-    }
-
-    private void setupView() {
-        LayoutInflater.from(getContext()).inflate(R.layout.map_view, this);
-    }
-
-
-    public void init(android.app.FragmentManager fragmentManager,
-                     OPFMapSettings mapSettings,
-                     OPFOnMapConfigureListener listener, //TODO: add @NonNull annotation
-                     OPFMapOptions opfMapOptions) {
-        this.onMapConfigureListener = listener;
-        List<OPFMapProvider> providers = mapSettings.getProviders();
-        if (providers == null || providers.isEmpty()) { //TODO: it's impossible case
-            if (onMapConfigureListener != null) {
-                onMapConfigureListener.onError(0); //empty provider list //TODO: add enum or constants of errors
-                onMapConfigureListener = null;
-            }
-            return;
-        }
-        currentProvider = findBestProvider(getContext(), providers);
-
-        if (currentProvider != null) {
-            android.app.Fragment fragment = currentProvider.getFragment(opfMapOptions);
-            this.mapDelegate = (OPFMapDelegate) fragment;
-            fragmentManager.beginTransaction()
-                    .replace(getId(), (android.app.Fragment) this.mapDelegate)
-                    .commit();
-            fragmentManager.executePendingTransactions();
-            onMapConfigureListener.onConfigure(currentProvider);
-        } else {
-            onMapConfigureListener.onError(1); //provider not found //TODO: add enum or constants of errors
-        }
-    }
-
-    private static OPFMapProvider findBestProvider(Context context, List<OPFMapProvider> providers) {
-        for (OPFMapProvider mapProvider : providers) {
-            if (mapProvider.isAvailable(context) && mapProvider.hasRequiredPermissions(context)
-                    && mapProvider.isKeyPresented(context) && mapProvider.hasRequestedFeatures(context)) {
-                return mapProvider;
-            }
-        }
-        return null;
-    }
-
-    public OPFMapProvider getCurrentProvider() {
-        return currentProvider;
-    }
-
-    public void setMyLocationEnabled(boolean enabled) {
-        checkInitialization();
-        mapDelegate.setMyLocationEnabled(enabled);
+    public OPFMap(@NonNull final MapDelegate delegate) {
+        this.delegate = delegate;
     }
 
     @Override
-    public void setTrafficEnabled(boolean enabled) {
-        checkInitialization();
-        mapDelegate.setMyLocationEnabled(enabled);
+    @NonNull
+    public OPFCircle addCircle(@NonNull final OPFCircleOptions options) {
+        return delegate.addCircle(options);
+    }
+
+    @Override
+    @NonNull
+    public OPFGroundOverlay addGroundOverlay(@NonNull final OPFGroundOverlayOptions options) {
+        return delegate.addGroundOverlay(options);
+    }
+
+    @Override
+    @NonNull
+    public OPFMarker addMarker(@NonNull final OPFMarkerOptions options) {
+        return delegate.addMarker(options);
+    }
+
+    @Override
+    @NonNull
+    public OPFPolygon addPolygon(@NonNull final OPFPolygonOptions options) {
+        return delegate.addPolygon(options);
+    }
+
+    @Override
+    @NonNull
+    public OPFPolyline addPolyline(@NonNull final OPFPolylineOptions options) {
+        return delegate.addPolyline(options);
+    }
+
+    @Override
+    @NonNull
+    public OPFTileOverlay addTileOverlay(@NonNull final OPFTileOverlayOptions options) {
+        return delegate.addTileOverlay(options);
     }
 
     @Override
     public void clear() {
-        checkInitialization();
-        mapDelegate.clear();
+        delegate.clear();
     }
 
     @Override
-    public void setMapType(MapType mapType) {
-        checkInitialization();
-        mapDelegate.setMapType(mapType);
-    }
-
-    @Override
-    public MapType getMapType() {
-        checkInitialization();
-        return mapDelegate.getMapType();
-    }
-
-    @Override
-    public Location getMyLocation() {
-        checkInitialization();
-        return mapDelegate.getMyLocation();
-    }
-
-
-    @Override
-    public void addGroundOverlay(OPFGroundOverlay opfGroundOverlay) {
-        checkInitialization();
-
-    }
-
-    @Override
-    public void addTileOverlay(OPFTileOverlay opfTileOverlay) {
-        checkInitialization();
-
-    }
-
-    @Override
-    public void addPadding(int left, int top, int right, int bottom) {
-        checkInitialization();
-
-    }
-
-    @Override
-    public void setIndoorEnabled(boolean enabled) {
-        checkInitialization();
-        mapDelegate.setIndoorEnabled(enabled);
-    }
-
-    @Override
-    public void setBuildingsEnabled(boolean enabled) {
-        checkInitialization();
-
+    public int getMapType() {
+        return delegate.getMapType();
     }
 
     @Override
     public float getMaxZoomLevel() {
-        checkInitialization();
-        return mapDelegate.getMaxZoomLevel();
+        return delegate.getMaxZoomLevel();
     }
 
     @Override
     public float getMinZoomLevel() {
-        checkInitialization();
-        return mapDelegate.getMinZoomLevel();
+        return delegate.getMinZoomLevel();
     }
 
     @Override
-    public void load(OPFOnMapLoadListener mapLoadedListener) {
-        this.onMapLoadListener = mapLoadedListener;
-        this.mapDelegate.load(this);
+    public boolean isBuildingsEnabled() {
+        return delegate.isBuildingsEnabled();
     }
 
     @Override
-    public void setOnMarkerDragListener(OPFOnMarkerDragListener onMarkerDragListener) {
-        checkInitialization();
-        this.mapDelegate.setOnMarkerDragListener(onMarkerDragListener);
+    public boolean isIndoorEnabled() {
+        return delegate.isIndoorEnabled();
     }
 
     @Override
-    public void setOnMarkerClickListener(OPFOnMarkerClickListener onMarkerClickListener) {
-        checkInitialization();
-        this.mapDelegate.setOnMarkerClickListener(onMarkerClickListener);
+    public boolean isMyLocationEnabled() {
+        return delegate.isMyLocationEnabled();
     }
 
     @Override
-    public void setOnMapClickListener(OPFOnMapClickListener onMapClickListener) {
-        checkInitialization();
-        this.mapDelegate.setOnMapClickListener(onMapClickListener);
+    public boolean isTrafficEnabled() {
+        return delegate.isTrafficEnabled();
     }
 
     @Override
-    public boolean isReady() {
-        checkInitialization();
-        //todo add conditions!!!
-        return mapDelegate != null;
-    }
-
-    public void addMarker(OPFMarker marker) {
-        checkInitialization();
-        mapDelegate.addMarker(marker);
+    public void setBuildingsEnabled(final boolean enabled) {
+        delegate.setBuildingsEnabled(enabled);
     }
 
     @Override
-    public void addPolyline(OPFPolyline opfPolyline) {
-        checkInitialization();
-        mapDelegate.addPolyline(opfPolyline);
-    }
-
-    public void addCircle(OPFCircle circle) {
-        checkInitialization();
-        mapDelegate.addCircle(circle);
+    public void setContentDescription(@NonNull final String description) {
+        delegate.setContentDescription(description);
     }
 
     @Override
-    public void addPolygon(OPFPolygon opfPolygon) {
-        checkInitialization();
-        mapDelegate.addPolygon(opfPolygon);
+    public boolean setIndoorEnabled(final boolean enabled) {
+        return delegate.setIndoorEnabled(enabled);
     }
 
     @Override
-    public void zoom(float zoom) {
-        checkInitialization();
-        mapDelegate.zoom(zoom);
+    public void setInfoWindowAdapter(@NonNull final OPFInfoWindowAdapter adapter) {
+        delegate.setInfoWindowAdapter(adapter);
     }
 
     @Override
-    public void setInfoWindowAdapter(OPFInfoWindowAdapter adapter) {
-        checkInitialization();
-        mapDelegate.setInfoWindowAdapter(adapter);
-    }
-
-    private void checkInitialization() {
-        if (isReady == null) {
-            throw new IllegalStateException("Was not initialized.");
-
-        } else if (!isReady) {
-            throw new IllegalStateException("Initialized with error.");
-        }
-    }
-
-
-    @Override
-    public void onMapLoad() {
-        isReady = true;
-        if (onMapLoadListener != null) {
-            onMapLoadListener.onMapLoad();
-        }
+    public void setMapType(final int type) {
+        delegate.setMapType(type);
     }
 
     @Override
-    public void onError() {
-        isReady = false;
-        if (onMapLoadListener != null) {
-            onMapLoadListener.onError();
-        }
+    public void setMyLocationEnabled(final boolean enabled) {
+        delegate.setMyLocationEnabled(enabled);
     }
 
+    @Override
+    public void setOnCameraChangeListener(@NonNull final OPFOnCameraChangeListener listener) {
+        delegate.setOnCameraChangeListener(listener);
+    }
+
+    @Override
+    public void setOnIndoorStateChangeListener(@NonNull final OPFOnIndoorStateChangeListener listener) {
+        delegate.setOnIndoorStateChangeListener(listener);
+    }
+
+    @Override
+    public void setOnInfoWindowClickListener(@NonNull final OPFOnInfoWindowClickListener listener) {
+        delegate.setOnInfoWindowClickListener(listener);
+    }
+
+    @Override
+    public void setOnMapClickListener(@NonNull final OPFOnMapClickListener listener) {
+        delegate.setOnMapClickListener(listener);
+    }
+
+    @Override
+    public void setOnMapLoadedCallback(@NonNull final OPFOnMapLoadedCallback callback) {
+        delegate.setOnMapLoadedCallback(callback);
+    }
+
+    @Override
+    public void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener listener) {
+        delegate.setOnMapLongClickListener(listener);
+    }
+
+    @Override
+    public void setOnMarkerClickListener(@NonNull final OPFOnMarkerClickListener listener) {
+        delegate.setOnMarkerClickListener(listener);
+    }
+
+    @Override
+    public void setOnMarkerDragListener(@NonNull final OPFOnMarkerDragListener listener) {
+        delegate.setOnMarkerDragListener(listener);
+    }
+
+    @Override
+    public void setOnMyLocationButtonClickListener(@NonNull final OPFOnMyLocationButtonClickListener listener) {
+        delegate.setOnMyLocationButtonClickListener(listener);
+    }
+
+    @Override
+    public void setPadding(final int left, final int top, final int right, final int bottom) {
+        delegate.setPadding(left, top, right, bottom);
+    }
+
+    @Override
+    public void setTrafficEnabled(final boolean enabled) {
+        delegate.setTrafficEnabled(enabled);
+    }
+
+    @Override
+    public void stopAnimation() {
+        delegate.stopAnimation();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        //noinspection SimplifiableIfStatement
+        if (!(other instanceof OPFMap)) return false;
+
+        return delegate.equals(((OPFMap) other).delegate);
+    }
+
+    @Override
+    public int hashCode() {
+        return delegate.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return delegate.toString();
+    }
 }

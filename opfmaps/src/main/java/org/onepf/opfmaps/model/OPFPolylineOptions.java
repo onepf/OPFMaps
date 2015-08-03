@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.PolylineOptionsDelegate;
 
 import java.util.List;
@@ -43,10 +44,8 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
     @NonNull
     private final PolylineOptionsDelegate delegate;
 
-    //todo default constructor
-
-    public OPFPolylineOptions(@NonNull final PolylineOptionsDelegate delegate) {
-        this.delegate = delegate;
+    public OPFPolylineOptions() {
+        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createPolylineOptionsDelegate();
     }
 
     private OPFPolylineOptions(@NonNull final Parcel parcel) {

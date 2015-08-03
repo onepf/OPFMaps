@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package org.onepf.opfmaps;
+package org.onepf.opfmaps.listener;
 
 import android.support.annotation.NonNull;
+import org.onepf.opfmaps.OPFMap;
 
 /**
- * Created by akarimova on 24.06.15.
+ * @author Roman Savin
+ * @since 30.07.2015
  */
-public abstract class OPFAbstractMapProvider implements OPFMapProvider {
+public interface OPFOnMapReadyCallback {
 
-    @NonNull
-    @Override
-    public String getName() {
-        return getClass().getSimpleName();
-    }
-
+    void onMapReady(@NonNull final OPFMap opfMap);
 }

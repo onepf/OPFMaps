@@ -18,9 +18,9 @@ package org.onepf.opfmaps.delegate.model;
 
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import org.onepf.opfmaps.model.OPFLatLng;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -49,10 +49,10 @@ public interface PolygonOptionsDelegate extends Parcelable {
 
     int getFillColor();
 
-    @Nullable
+    @NonNull
     List<List<OPFLatLng>> getHoles();
 
-    @Nullable
+    @NonNull
     List<OPFLatLng> getPoints();
 
     int getStrokeColor();

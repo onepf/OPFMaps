@@ -16,15 +16,17 @@
 
 package org.onepf.opfmaps.delegate.model;
 
+import android.support.annotation.NonNull;
 import org.onepf.opfmaps.model.OPFTileProvider;
 
 import java.net.URL;
 
 /**
  * @author Roman Savin
- * @since 30.07.2015
+ * @since 03.08.2015
  */
 public interface UrlTileProviderDelegate extends OPFTileProvider {
 
+    @NonNull
     URL getTileUrl(final int x, final int y, final int zoom);
 }

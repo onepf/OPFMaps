@@ -16,15 +16,17 @@
 
 package org.onepf.opfmaps;
 
+import android.support.annotation.NonNull;
+
 /**
- * Created by akarimova on 02.07.15.
+ * Created by akarimova on 24.06.15.
  */
-public interface OPFTBDMapOptions {
-    void rotateGesturesEnabled(boolean enabled);
+public abstract class BaseOPFMapProvider implements OPFMapProvider {
 
-    void compassEnabled(boolean enabled);
+    @NonNull
+    @Override
+    public String getName() {
+        return getClass().getSimpleName();
+    }
 
-    void tiltGesturesEnabled(boolean enabled);
-
-    void zoomGesturesEnabled(boolean enabled);
 }

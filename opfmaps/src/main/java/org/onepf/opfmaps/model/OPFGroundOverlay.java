@@ -115,7 +115,7 @@ public final class OPFGroundOverlay implements GroundOverlayDelegate {
     }
 
     @Override
-    public void setTransparency(final boolean transparency) {
+    public void setTransparency(final float transparency) {
         delegate.setTransparency(transparency);
     }
 

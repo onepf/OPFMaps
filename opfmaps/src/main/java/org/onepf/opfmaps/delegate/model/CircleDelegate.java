@@ -45,7 +45,7 @@ public interface CircleDelegate {
 
     void remove();
 
-    void setCenter();
+    void setCenter(@NonNull final OPFLatLng center);
 
     void setFillColor(final int color);
 

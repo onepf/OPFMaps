@@ -62,7 +62,7 @@ public interface GroundOverlayDelegate {
 
     void setPositionFromBounds(@NonNull final OPFLatLngBounds bounds);
 
-    void setTransparency(final boolean transparency);
+    void setTransparency(final float transparency);
 
     void setVisible(final boolean visible);
 

@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.LatLngDelegate;
 
 /**
@@ -40,7 +41,9 @@ public final class OPFLatLng implements LatLngDelegate {
     @NonNull
     private final LatLngDelegate delegate;
 
-    //todo OPFLatLng(double latitude, double longitude)
+    public OPFLatLng(final double latitude, final double longitude) {
+        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createLatLngDelegate(latitude, longitude);
+    }
 
     public OPFLatLng(@NonNull final LatLngDelegate delegate) {
         this.delegate = delegate;

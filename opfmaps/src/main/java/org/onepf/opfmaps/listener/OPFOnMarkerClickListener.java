@@ -24,5 +24,5 @@ import org.onepf.opfmaps.model.OPFMarker;
  */
 public interface OPFOnMarkerClickListener {
 
-    void onMarkerClick(@NonNull final OPFMarker marker);
+    boolean onMarkerClick(@NonNull final OPFMarker marker);
 }

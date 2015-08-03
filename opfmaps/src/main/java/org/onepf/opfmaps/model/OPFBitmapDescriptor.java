@@ -16,10 +16,44 @@
 
 package org.onepf.opfmaps.model;
 
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.delegate.model.BitmapDescriptorDelegate;
+
 /**
  * @author Roman Savin
  * @since 29.07.2015
  */
-public class OPFBitmapDescriptor {
-    //todo implement
+public final class OPFBitmapDescriptor {
+
+    @NonNull
+    private final BitmapDescriptorDelegate delegate;
+
+    public OPFBitmapDescriptor(@NonNull final BitmapDescriptorDelegate delegate) {
+        this.delegate = delegate;
+    }
+
+    @NonNull
+    public BitmapDescriptorDelegate getDelegate() {
+        return delegate;
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other == null) return false;
+        if (other == this) return true;
+        //noinspection SimplifiableIfStatement
+        if (!(other instanceof OPFBitmapDescriptor)) return false;
+
+        return delegate.equals(((OPFBitmapDescriptor) other).delegate);
+    }
+
+    @Override
+    public int hashCode() {
+        return delegate.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return delegate.toString();
+    }
 }

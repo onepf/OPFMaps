@@ -16,9 +16,9 @@
 
 package org.onepf.opfmaps;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 
 /**
  * Created by akarimova on 23.06.15.
@@ -28,7 +28,10 @@ public interface OPFMapProvider {
     String getName();
 
     @NonNull
-    Fragment getFragment(OPFMapOptions opfMapOptions);
+    DelegatesAbstractFactory getDelegatesFactory();
+
+    @NonNull
+    String getHostAppPackage();
 
     boolean hasRequiredPermissions(Context context);
 
