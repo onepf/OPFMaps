@@ -28,6 +28,7 @@ android {
 dependencies {
     compile project(':opfmaps') //todo remove later
 
+    provided 'org.onepf:opfutils:0.1.24'
     compile 'com.google.android.gms:play-services-maps:7.5.0'
-    provided 'com.android.support:support-annotations:19.1.0'
+    compile 'com.android.support:support-v4:22.2.1'
 }

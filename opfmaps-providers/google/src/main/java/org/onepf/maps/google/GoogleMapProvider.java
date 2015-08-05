@@ -16,14 +16,12 @@
 
 package org.onepf.maps.google;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.GoogleMapOptions;
 import org.onepf.opfmaps.BaseOPFMapProvider;
-import org.onepf.opfmaps.OPFMapOptions;
+import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 import org.onepf.opfmaps.utils.FeatureChecker;
 import org.onepf.opfmaps.utils.MetaDataChecker;
 import org.onepf.opfmaps.utils.PermissionChecker;
@@ -57,19 +55,16 @@ public class GoogleMapProvider extends BaseOPFMapProvider {
 
     @NonNull
     @Override
-    public Fragment getFragment(OPFMapOptions opfMapOptions) {
-        return OPFGoogleFragment.newInstance(getConvert(opfMapOptions)); //TODO: New instance every time?
+    public DelegatesAbstractFactory getDelegatesFactory() {
+        return new GoogleDelegatesFactory();
     }
 
-    private GoogleMapOptions getConvert(OPFMapOptions mapOptions) {
-        GoogleMapOptions googleMapOptions = new GoogleMapOptions();
-        googleMapOptions.rotateGesturesEnabled(mapOptions.isRotateGesturesEnabled())
-                .compassEnabled(mapOptions.isCompassEnabled())
-                .tiltGesturesEnabled(mapOptions.isTiltGesturesEnabled())
-                .zoomGesturesEnabled(mapOptions.isZoomGesturesEnabled());
-        return googleMapOptions;
+    @NonNull
+    @Override
+    public String getHostAppPackage() {
+        //todo return host app package
+        return "";
     }
-
 
     @Override
     public boolean isKeyPresented(Context context) {

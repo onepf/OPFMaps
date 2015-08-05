@@ -18,6 +18,7 @@ package org.onepf.multimapsexample;
 
 import android.app.Application;
 import org.onepf.maps.amazon.AmazonMapProvider;
+import org.onepf.maps.google.GoogleMapProvider;
 import org.onepf.opfmaps.OPFMapConfiguration;
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfutils.OPFLog;
@@ -34,7 +35,7 @@ public class MultimapsExampleApplication extends Application {
 
         OPFLog.setEnabled(BuildConfig.DEBUG, true);
         final OPFMapConfiguration configuration = new OPFMapConfiguration.Builder()
-                .addProviders(new AmazonMapProvider())
+                .addProviders(new AmazonMapProvider(), new GoogleMapProvider())
                 .setSelectSystemPreferred(true)
                 .build();
         OPFMapHelper.getInstance().init(this, configuration);
