@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package org.onepf.multimapsexample;
+package org.onepf.amazonexample;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
@@ -24,23 +23,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.onepf.opfmaps.OPFMap;
-import org.onepf.opfmaps.OPFMapFragment;
-import org.onepf.opfmaps.listener.OPFOnMapClickListener;
-import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
-import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
-import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
-import org.onepf.opfmaps.model.OPFBitmapDescriptorFactory;
-import org.onepf.opfmaps.model.OPFCircleOptions;
-import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
-import org.onepf.opfmaps.model.OPFLatLng;
-import org.onepf.opfmaps.model.OPFMapType;
-import org.onepf.opfmaps.model.OPFMarker;
-import org.onepf.opfmaps.model.OPFMarkerOptions;
+import com.amazon.geo.mapsv2.AmazonMap;
+import com.amazon.geo.mapsv2.OnMapReadyCallback;
+import com.amazon.geo.mapsv2.SupportMapFragment;
+import com.amazon.geo.mapsv2.model.BitmapDescriptorFactory;
+import com.amazon.geo.mapsv2.model.LatLng;
+import com.amazon.geo.mapsv2.model.Marker;
+import com.amazon.geo.mapsv2.model.MarkerOptions;
 import org.onepf.opfutils.OPFLog;
 
 
-public class MainActivity extends FragmentActivity implements OPFOnMapReadyCallback {
+public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -49,7 +42,7 @@ public class MainActivity extends FragmentActivity implements OPFOnMapReadyCallb
         setContentView(R.layout.activity_main);
         OPFLog.logMethod(savedInstanceState);
 
-        final OPFMapFragment mapFragment = (OPFMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        final SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -67,77 +60,70 @@ public class MainActivity extends FragmentActivity implements OPFOnMapReadyCallb
 
     //CHECKSTYLE:OFF
     @Override
-    public void onMapReady(@NonNull final OPFMap opfMap) {
-        OPFLog.logMethod(opfMap);
+    public void onMapReady(@NonNull final AmazonMap amazonMap) {
+        OPFLog.logMethod(amazonMap);
 
-        opfMap.setMapType(OPFMapType.HYBRID);
-        opfMap.setMyLocationEnabled(true);
-        opfMap.setBuildingsEnabled(true);
-        opfMap.setMyLocationEnabled(true);
+        amazonMap.setMapType(AmazonMap.MAP_TYPE_HYBRID);
+        amazonMap.setMyLocationEnabled(true);
+        amazonMap.setBuildingsEnabled(true);
+        amazonMap.setMyLocationEnabled(true);
         //map.zoom((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2f);
 
         //markers
-        opfMap.addMarker(new OPFMarkerOptions()
+        amazonMap.addMarker(new MarkerOptions()
                 .visible(true)
-                .position(new OPFLatLng(37.773975, -122.40205))
+                .position(new LatLng(37.773975, -122.40205))
                 .title("marker #1")
                 .snippet("snippet #1")
-                .icon(OPFBitmapDescriptorFactory.defaultMarker())
+                .icon(BitmapDescriptorFactory.defaultMarker())
                 .draggable(true));
 
 
-        opfMap.addMarker(new OPFMarkerOptions()
+        amazonMap.addMarker(new MarkerOptions()
                 .visible(true)
-                .position(new OPFLatLng(55.752004, 37.617017))
+                .position(new LatLng(55.752004, 37.617017))
                 .title("marker #2")
                 .snippet("snippet #2")
-                .icon(OPFBitmapDescriptorFactory.defaultMarker())
+                .icon(BitmapDescriptorFactory.defaultMarker())
                 .draggable(true));
 
-        //circle
-        opfMap.addCircle(new OPFCircleOptions()
-                .center(new OPFLatLng(55.752004, 37.617017))
-                .radius(1000000.0)
-                .fillColor(Color.CYAN)
-                .strokeColor(Color.BLUE));
-
-        opfMap.setOnMarkerDragListener(new OPFOnMarkerDragListener() {
+        amazonMap.setOnMarkerDragListener(new AmazonMap.OnMarkerDragListener() {
             @Override
-            public void onMarkerDragStart(@NonNull final OPFMarker marker) {
+            public void onMarkerDragStart(@NonNull final Marker marker) {
                 OPFLog.logMethod(marker);
             }
 
             @Override
-            public void onMarkerDrag(@NonNull final OPFMarker marker) {
+            public void onMarkerDrag(@NonNull final Marker marker) {
                 OPFLog.logMethod(marker);
             }
 
             @Override
-            public void onMarkerDragEnd(@NonNull final OPFMarker marker) {
+            public void onMarkerDragEnd(@NonNull final Marker marker) {
                 OPFLog.logMethod(marker);
             }
         });
 
-        opfMap.setOnMarkerClickListener(new OPFOnMarkerClickListener() {
+        amazonMap.setOnMarkerClickListener(new AmazonMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(@NonNull final OPFMarker marker) {
+            public boolean onMarkerClick(@NonNull final Marker marker) {
                 OPFLog.logMethod(marker);
                 Toast.makeText(MainActivity.this, "Marker click", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
 
-        opfMap.setOnMapClickListener(new OPFOnMapClickListener() {
+        amazonMap.setOnMapClickListener(new AmazonMap.OnMapClickListener() {
             @Override
-            public void onMapClick(@NonNull final OPFLatLng latLng) {
+            public void onMapClick(@NonNull final LatLng latLng) {
                 OPFLog.logMethod(latLng);
                 Toast.makeText(MainActivity.this, "Map click position : " + latLng, Toast.LENGTH_SHORT).show();
             }
         });
 
-        opfMap.setInfoWindowAdapter(new OPFInfoWindowAdapter() {
+        amazonMap.setInfoWindowAdapter(new AmazonMap.InfoWindowAdapter() {
             @Override
-            public View getInfoWindow(@NonNull final OPFMarker marker) {
+            public View getInfoWindow(@NonNull final Marker marker) {
                 //noinspection InflateParams
                 final View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.info_window, null);
                 final TextView title = (TextView) inflate.findViewById(R.id.title);
@@ -148,7 +134,7 @@ public class MainActivity extends FragmentActivity implements OPFOnMapReadyCallb
             }
 
             @Override
-            public View getInfoContents(@NonNull final OPFMarker marker) {
+            public View getInfoContents(@NonNull final Marker marker) {
                 return null;
             }
         });

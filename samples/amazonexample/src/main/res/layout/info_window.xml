@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2012-2015 One Platform Foundation
   ~
@@ -14,11 +15,18 @@
   ~ limitations under the License.
   -->
 
-<fragment
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/info_window_background"
+    android:padding="@dimen/info_window_padding">
+
+    <TextView android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:name="org.onepf.opfmaps.OPFMapFragment"/>
+        android:layout_height="wrap_content" />
+
+    <TextView android:id="@+id/snippet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

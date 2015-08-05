@@ -15,13 +15,14 @@
  */
 
 include ':opfmaps',
-        ':amazon'/*,
-        ':google',
+        ':amazon',
+        /*':google',
         ':here',
         ':osmdroid',
         ':yandex',
-        ':yandex-web',
-        ':multimapsexample'*/
+        ':yandex-web',*/
+        ':amazonexample',
+        ':multimapsexample'
 
 
 project(':amazon').projectDir = new File('opfmaps-providers/amazon')
@@ -30,5 +31,6 @@ project(':google').projectDir = new File('opfmaps-providers/google')
 project(':yandex').projectDir = new File('opfmaps-providers/yandex')
 project(':here').projectDir = new File('opfmaps-providers/here')
 project(':yandex-web').projectDir = new File('opfmaps-providers/yandex-web')
-project(':osmdroid').projectDir = new File('opfmaps-providers/osmdroid')
-project(':multimapsexample').projectDir = new File('samples/multimapsexample')*/
+project(':osmdroid').projectDir = new File('opfmaps-providers/osmdroid')*/
+project(':amazonexample').projectDir = new File('samples/amazonexample')
+project(':multimapsexample').projectDir = new File('samples/multimapsexample')
