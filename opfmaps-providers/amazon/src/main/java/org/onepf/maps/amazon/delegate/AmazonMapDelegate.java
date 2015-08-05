@@ -54,6 +54,7 @@ import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFIndoorBuilding;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygon;
@@ -126,8 +127,8 @@ public class AmazonMapDelegate implements MapDelegate {
     }
 
     @Override
-    public int getMapType() {
-        return map.getMapType();
+    public OPFMapType getMapType() {
+        return ConvertUtils.convertMapType(map.getMapType());
     }
 
     @Override
@@ -191,8 +192,8 @@ public class AmazonMapDelegate implements MapDelegate {
     }
 
     @Override
-    public void setMapType(final int type) {
-        map.setMapType(type);
+    public void setMapType(@NonNull final OPFMapType type) {
+        map.setMapType(ConvertUtils.convertMapType(type));
     }
 
     @Override

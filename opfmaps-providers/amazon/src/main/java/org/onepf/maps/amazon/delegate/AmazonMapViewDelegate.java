@@ -16,22 +16,37 @@
 
 package org.onepf.maps.amazon.delegate;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.AttributeSet;
 import com.amazon.geo.mapsv2.AmazonMap;
+import com.amazon.geo.mapsv2.AmazonMapOptions;
+import com.amazon.geo.mapsv2.MapView;
 import com.amazon.geo.mapsv2.OnMapReadyCallback;
-import com.amazon.geo.mapsv2.SupportMapFragment;
 import org.onepf.opfmaps.OPFMap;
-import org.onepf.opfmaps.delegate.MapFragmentDelegate;
+import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 
 /**
  * @author Roman Savin
- * @since 31.07.2015
+ * @since 04.08.2015
  */
-public class AmazonMapFragmentDelegate extends SupportMapFragment implements MapFragmentDelegate {
+public class AmazonMapViewDelegate extends MapView implements MapViewDelegate {
 
-    public static AmazonMapFragmentDelegate newInstance() {
-        return new AmazonMapFragmentDelegate();
+    public AmazonMapViewDelegate(final Context context) {
+        super(context);
+    }
+
+    public AmazonMapViewDelegate(final Context context, final AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public AmazonMapViewDelegate(final Context context, final AttributeSet attrs, final int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
+    public AmazonMapViewDelegate(final Context context, final AmazonMapOptions options) {
+        super(context, options);
     }
 
     @Override

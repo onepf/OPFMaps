@@ -31,6 +31,7 @@ import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlay;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
+import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygon;
@@ -74,7 +75,7 @@ public interface MapDelegate {
 
     //todo IndoorBuilding getFocusedBuilding()
 
-    int getMapType();
+    OPFMapType getMapType();
 
     float getMaxZoomLevel();
 
@@ -104,7 +105,7 @@ public interface MapDelegate {
 
     //todo void setLocationSource(LocationSource source)
 
-    void setMapType(final int type);
+    void setMapType(@NonNull final OPFMapType type);
 
     void setMyLocationEnabled(final boolean enabled);
 

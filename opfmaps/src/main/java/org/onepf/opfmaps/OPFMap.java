@@ -32,6 +32,7 @@ import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlay;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
+import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygon;
@@ -96,7 +97,7 @@ public final class OPFMap implements MapDelegate {
     }
 
     @Override
-    public int getMapType() {
+    public OPFMapType getMapType() {
         return delegate.getMapType();
     }
 
@@ -151,7 +152,7 @@ public final class OPFMap implements MapDelegate {
     }
 
     @Override
-    public void setMapType(final int type) {
+    public void setMapType(@NonNull final OPFMapType type) {
         delegate.setMapType(type);
     }
 

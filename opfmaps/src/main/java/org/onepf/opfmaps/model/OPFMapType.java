@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
-apply from: urlCache.get('https://raw.githubusercontent.com/onepf/OPF-mvn-repo/master/opf-commons.gradle')
+package org.onepf.opfmaps.model;
 
-android {
-    defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 22
-        versionName "1.0"
-    }
-}
-
-dependencies {
-    compile project(':opfmaps')//todo remove later
-
-    provided 'org.onepf:opfutils:0.1.24'
-    compile 'com.amazon:amazon-maps-api:2.0'
-    compile 'com.android.support:support-v4:22.2.1'
+/**
+ * @author Roman Savin
+ * @since 03.08.2015
+ */
+public enum OPFMapType {
+    HYBRID,
+    NONE,
+    NORMAL,
+    SATELLITE,
+    TERRAIN
 }

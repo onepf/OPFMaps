@@ -16,10 +16,12 @@
 
 package org.onepf.maps.amazon;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.LatLngBounds;
 import org.onepf.maps.amazon.delegate.AmazonMapFragmentDelegate;
+import org.onepf.maps.amazon.delegate.AmazonMapViewDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonBitmapDescriptorFactoryDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonCircleOptionsDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonGroundOverlayOptionsDelegate;
@@ -32,6 +34,7 @@ import org.onepf.maps.amazon.delegate.model.AmazonTileDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonTileOverlayOptionsDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonUrlTileProviderDelegate;
 import org.onepf.opfmaps.delegate.MapFragmentDelegate;
+import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.LatLngBoundsDelegate;
@@ -58,6 +61,12 @@ public final class AmazonDelegatesFactory extends DelegatesAbstractFactory {
     @Override
     public MapFragmentDelegate createMapFragmentDelegate() {
         return AmazonMapFragmentDelegate.newInstance();
+    }
+
+    @NonNull
+    @Override
+    public MapViewDelegate createMapViewDelegate(@NonNull final Context context) {
+        return new AmazonMapViewDelegate(context);
     }
 
     //todo create map fragment delegate from options

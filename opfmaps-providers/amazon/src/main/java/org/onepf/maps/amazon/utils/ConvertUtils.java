@@ -33,6 +33,7 @@ import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
+import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
@@ -42,6 +43,12 @@ import org.onepf.opfmaps.model.OPFTileProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.amazon.geo.mapsv2.AmazonMap.MAP_TYPE_HYBRID;
+import static com.amazon.geo.mapsv2.AmazonMap.MAP_TYPE_NONE;
+import static com.amazon.geo.mapsv2.AmazonMap.MAP_TYPE_NORMAL;
+import static com.amazon.geo.mapsv2.AmazonMap.MAP_TYPE_SATELLITE;
+import static com.amazon.geo.mapsv2.AmazonMap.MAP_TYPE_TERRAIN;
 
 /**
  * @author Roman Savin
@@ -201,5 +208,36 @@ public final class ConvertUtils {
         }
 
         return options;
+    }
+
+    public static int convertMapType(@NonNull final OPFMapType type) {
+        switch (type) {
+            case HYBRID:
+                return MAP_TYPE_HYBRID;
+            case NONE:
+                return MAP_TYPE_NONE;
+            case SATELLITE:
+                return MAP_TYPE_SATELLITE;
+            case TERRAIN:
+                return MAP_TYPE_TERRAIN;
+            default:
+                return MAP_TYPE_NORMAL;
+        }
+    }
+
+    @NonNull
+    public static OPFMapType convertMapType(final int type) {
+        switch (type) {
+            case MAP_TYPE_HYBRID:
+                return OPFMapType.HYBRID;
+            case MAP_TYPE_NONE:
+                return OPFMapType.NONE;
+            case MAP_TYPE_SATELLITE:
+                return OPFMapType.SATELLITE;
+            case MAP_TYPE_TERRAIN:
+                return OPFMapType.TERRAIN;
+            default:
+                return OPFMapType.NORMAL;
+        }
     }
 }

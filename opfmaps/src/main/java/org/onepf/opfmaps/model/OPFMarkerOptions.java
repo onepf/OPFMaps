@@ -197,7 +197,7 @@ public final class OPFMarkerOptions implements MarkerOptionsDelegate {
 
     @NonNull
     @Override
-    public MarkerOptionsDelegate visible(final boolean visible) {
+    public OPFMarkerOptions visible(final boolean visible) {
         delegate.visible(visible);
         return this;
     }

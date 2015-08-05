@@ -14,21 +14,30 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
-apply from: urlCache.get('https://raw.githubusercontent.com/onepf/OPF-mvn-repo/master/opf-commons.gradle')
+package org.onepf.opfmaps.delegate;
 
-android {
-    defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 22
-        versionName "1.0"
-    }
-}
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 
-dependencies {
-    compile project(':opfmaps')//todo remove later
+/**
+ * @author Roman Savin
+ * @since 04.08.2015
+ */
+public interface MapViewDelegate {
 
-    provided 'org.onepf:opfutils:0.1.24'
-    compile 'com.amazon:amazon-maps-api:2.0'
-    compile 'com.android.support:support-v4:22.2.1'
+    void getMapAsync(@NonNull final OPFOnMapReadyCallback callback);
+
+    void onCreate(@Nullable final Bundle savedInstanceState);
+
+    void onResume();
+
+    void onPause();
+
+    void onDestroy();
+
+    void onSaveInstanceState(@Nullable final Bundle outState);
+
+    void onLowMemory();
 }

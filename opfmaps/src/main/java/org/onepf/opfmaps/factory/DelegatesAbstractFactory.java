@@ -16,8 +16,10 @@
 
 package org.onepf.opfmaps.factory;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import org.onepf.opfmaps.delegate.MapFragmentDelegate;
+import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorFactoryDelegate;
 import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
@@ -39,6 +41,9 @@ public abstract class DelegatesAbstractFactory {
 
     @NonNull
     public abstract MapFragmentDelegate createMapFragmentDelegate();
+
+    @NonNull
+    public abstract MapViewDelegate createMapViewDelegate(@NonNull final Context context);
 
     @NonNull
     public abstract CircleOptionsDelegate createCircleOptionsDelegate();
