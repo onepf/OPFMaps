@@ -17,7 +17,9 @@
 package org.onepf.maps.google.utils;
 
 import android.support.annotation.NonNull;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -28,7 +30,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.Tile;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.maps.model.TileProvider;
+import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
+import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -58,6 +62,54 @@ public final class ConvertUtils {
 
     private ConvertUtils() {
         throw new UnsupportedOperationException();
+    }
+
+    public static GoogleMapOptions convertMapOptions(@NonNull final OPFMapOptions opfOptions) {
+        final GoogleMapOptions options = new GoogleMapOptions()
+                .mapType(convertMapType(opfOptions.getMapType()));
+
+        if (opfOptions.getCompassEnabled() != null) {
+            options.compassEnabled(opfOptions.getCompassEnabled());
+        }
+        if (opfOptions.getLiteMode() != null) {
+            options.liteMode(opfOptions.getLiteMode());
+        }
+        if (opfOptions.getMapToolbarEnabled() != null) {
+            options.mapToolbarEnabled(opfOptions.getMapToolbarEnabled());
+        }
+        if (opfOptions.getRotateGesturesEnabled() != null) {
+            options.rotateGesturesEnabled(opfOptions.getRotateGesturesEnabled());
+        }
+        if (opfOptions.getScrollGesturesEnabled() != null) {
+            options.scrollGesturesEnabled(opfOptions.getScrollGesturesEnabled());
+        }
+        if (opfOptions.getTiltGesturesEnabled() != null) {
+            options.tiltGesturesEnabled(opfOptions.getTiltGesturesEnabled());
+        }
+        if (opfOptions.getUseViewLifecycleInFragment() != null) {
+            options.useViewLifecycleInFragment(opfOptions.getUseViewLifecycleInFragment());
+        }
+        if (opfOptions.getZOrderOnTop() != null) {
+            options.zOrderOnTop(opfOptions.getZOrderOnTop());
+        }
+        if (opfOptions.getZoomControlsEnabled() != null) {
+            options.zoomControlsEnabled(opfOptions.getZoomControlsEnabled());
+        }
+        if (opfOptions.getZoomGesturesEnabled() != null) {
+            options.zoomGesturesEnabled(opfOptions.getZoomGesturesEnabled());
+        }
+
+        final OPFCameraPosition opfCameraPosition = opfOptions.getCamera();
+        if (opfCameraPosition != null) {
+            options.camera(new CameraPosition(
+                    new LatLng(opfCameraPosition.getTarget().getLat(), opfCameraPosition.getTarget().getLng()),
+                    opfCameraPosition.getZoom(),
+                    opfCameraPosition.getTilt(),
+                    opfCameraPosition.getBearing()
+            ));
+        }
+
+        return options;
     }
 
     public static CircleOptions convertCircleOptions(@NonNull final OPFCircleOptions opfOptions) {

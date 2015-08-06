@@ -40,6 +40,8 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  */
 public class OPFMapFragment extends Fragment implements MapFragmentDelegate {
 
+    private static final String MAP_OPTIONS_BUNDLE_KEY = "MAP_OPTIONS_BUNDLE_KEY";
+
     private MapViewDelegate mapViewDelegate;
 
     @NonNull
@@ -49,10 +51,24 @@ public class OPFMapFragment extends Fragment implements MapFragmentDelegate {
         return new OPFMapFragment();
     }
 
+    public static OPFMapFragment newInstance(@NonNull final OPFMapOptions options) {
+        final OPFMapFragment fragment = new OPFMapFragment();
+        final Bundle arguments = new Bundle();
+
+        arguments.putParcelable(MAP_OPTIONS_BUNDLE_KEY, options);
+        fragment.setArguments(arguments);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mapViewDelegate = OPFMapHelper.getInstance().getDelegatesFactory().createMapViewDelegate(getActivity());
+        final OPFMapOptions options = getMapOptions();
+        if (options != null) {
+            mapViewDelegate = OPFMapHelper.getInstance().getDelegatesFactory().createMapViewDelegate(getActivity(), options);
+        } else {
+            mapViewDelegate = OPFMapHelper.getInstance().getDelegatesFactory().createMapViewDelegate(getActivity());
+        }
         mapViewDelegate.onCreate(savedInstanceState);
     }
 
@@ -127,5 +143,15 @@ public class OPFMapFragment extends Fragment implements MapFragmentDelegate {
             }
             pendingCallbacks.clear();
         }
+    }
+
+    @Nullable
+    private OPFMapOptions getMapOptions() {
+        final Bundle arguments = getArguments();
+        if (arguments != null) {
+            return arguments.getParcelable(MAP_OPTIONS_BUNDLE_KEY);
+        }
+
+        return null;
     }
 }

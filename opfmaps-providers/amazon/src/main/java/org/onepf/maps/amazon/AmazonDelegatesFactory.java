@@ -19,9 +19,11 @@ package org.onepf.maps.amazon;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import com.amazon.geo.mapsv2.AmazonMapOptions;
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.LatLngBounds;
 import org.onepf.maps.amazon.delegate.AmazonMapFragmentDelegate;
+import org.onepf.maps.amazon.delegate.AmazonMapOptionsDelegate;
 import org.onepf.maps.amazon.delegate.AmazonMapViewDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonBitmapDescriptorFactoryDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonCameraPositionDelegate;
@@ -37,7 +39,10 @@ import org.onepf.maps.amazon.delegate.model.AmazonTileDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonTileOverlayOptionsDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonUrlTileProviderDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonVisibleRegionDelegate;
+import org.onepf.maps.amazon.utils.ConvertUtils;
+import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.delegate.MapFragmentDelegate;
+import org.onepf.opfmaps.delegate.MapOptionsDelegate;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
 import org.onepf.opfmaps.delegate.model.CameraUpdateFactoryDelegate;
@@ -64,6 +69,7 @@ import java.net.URL;
  * @author Roman Savin
  * @since 31.07.2015
  */
+@SuppressWarnings("PMD.CouplingBetweenObjects")
 public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
 
     @NonNull
@@ -78,7 +84,11 @@ public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
         return new AmazonMapViewDelegate(context);
     }
 
-    //todo create map fragment delegate from options
+    @NonNull
+    @Override
+    public MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final OPFMapOptions mapOptions) {
+        return new AmazonMapViewDelegate(context, ConvertUtils.convertMapOptions(mapOptions));
+    }
 
     @NonNull
     @Override
@@ -212,5 +222,17 @@ public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
                                                              @NonNull final OPFLatLng farRight,
                                                              @NonNull final OPFLatLngBounds latLngBounds) {
         return new AmazonVisibleRegionDelegate(nearLeft, nearRight, farLeft, farRight, latLngBounds);
+    }
+
+    @NonNull
+    @Override
+    public MapOptionsDelegate createMapOptionsDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs) {
+        return new AmazonMapOptionsDelegate(AmazonMapOptions.createFromAttributes(context, attrs));
+    }
+
+    @NonNull
+    @Override
+    public MapOptionsDelegate createMapOptionsDelegate() {
+        return new AmazonMapOptionsDelegate(new AmazonMapOptions());
     }
 }
