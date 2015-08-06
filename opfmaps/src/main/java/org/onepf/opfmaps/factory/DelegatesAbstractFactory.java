@@ -18,9 +18,12 @@ package org.onepf.opfmaps.factory;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.AttributeSet;
 import org.onepf.opfmaps.delegate.MapFragmentDelegate;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorFactoryDelegate;
+import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
+import org.onepf.opfmaps.delegate.model.CameraUpdateFactoryDelegate;
 import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.LatLngBoundsDelegate;
@@ -31,54 +34,86 @@ import org.onepf.opfmaps.delegate.model.PolylineOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.TileDelegate;
 import org.onepf.opfmaps.delegate.model.TileOverlayOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
+import org.onepf.opfmaps.delegate.model.VisibleRegionDelegate;
+import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfmaps.model.OPFLatLngBounds;
 
 /**
  * @author Roman Savin
  * @since 30.07.2015
  */
-public abstract class DelegatesAbstractFactory {
+public interface DelegatesAbstractFactory {
 
     @NonNull
-    public abstract MapFragmentDelegate createMapFragmentDelegate();
+    MapFragmentDelegate createMapFragmentDelegate();
 
     @NonNull
-    public abstract MapViewDelegate createMapViewDelegate(@NonNull final Context context);
+    MapViewDelegate createMapViewDelegate(@NonNull final Context context);
 
     @NonNull
-    public abstract CircleOptionsDelegate createCircleOptionsDelegate();
+    CircleOptionsDelegate createCircleOptionsDelegate();
 
     @NonNull
-    public abstract GroundOverlayOptionsDelegate createGroundOverlayOptionsDelegate();
+    GroundOverlayOptionsDelegate createGroundOverlayOptionsDelegate();
 
     @NonNull
-    public abstract LatLngDelegate createLatLngDelegate(final double latitude, final double longitude);
+    LatLngDelegate createLatLngDelegate(final double latitude, final double longitude);
 
     @NonNull
-    public abstract LatLngBoundsDelegate createLatLngBoundsDelegate(@NonNull final OPFLatLng southwest,
-                                                                    @NonNull final OPFLatLng northeast);
+    LatLngBoundsDelegate createLatLngBoundsDelegate(@NonNull final OPFLatLng southwest,
+                                                    @NonNull final OPFLatLng northeast);
 
     @NonNull
-    public abstract LatLngBoundsDelegate.Builder createLatLngBoundsBuilderDelegate();
+    LatLngBoundsDelegate.Builder createLatLngBoundsBuilderDelegate();
 
     @NonNull
-    public abstract MarkerOptionsDelegate createMarkerOptionsDelegate();
+    MarkerOptionsDelegate createMarkerOptionsDelegate();
 
     @NonNull
-    public abstract PolygonOptionsDelegate createPolygonOptionsDelegate();
+    PolygonOptionsDelegate createPolygonOptionsDelegate();
 
     @NonNull
-    public abstract PolylineOptionsDelegate createPolylineOptionsDelegate();
+    PolylineOptionsDelegate createPolylineOptionsDelegate();
 
     @NonNull
-    public abstract TileDelegate createTileDelegate(final int width, final int height, @NonNull final byte[] data);
+    TileDelegate createTileDelegate(final int width, final int height, @NonNull final byte[] data);
 
     @NonNull
-    public abstract TileOverlayOptionsDelegate createTileOverlayOptionDelegate();
+    TileOverlayOptionsDelegate createTileOverlayOptionDelegate();
 
     @NonNull
-    public abstract UrlTileProviderDelegate createUrlTileProviderDelegate(final int width, final int height);
+    UrlTileProviderDelegate createUrlTileProviderDelegate(final int width, final int height);
 
     @NonNull
-    public abstract BitmapDescriptorFactoryDelegate createBitmapDescriptorFactory();
+    BitmapDescriptorFactoryDelegate createBitmapDescriptorFactory();
+
+    @NonNull
+    CameraPositionDelegate createCameraPositionDelegate(@NonNull final Context context,
+                                                        @NonNull final AttributeSet attrs);
+
+    @NonNull
+    CameraPositionDelegate createCameraPositionDelegate(@NonNull final OPFLatLng target, float zoom);
+
+    @NonNull
+    CameraPositionDelegate createCameraPositionDelegate(@NonNull final OPFLatLng target,
+                                                        final float zoom,
+                                                        final float tilt,
+                                                        final float bearing);
+
+    @NonNull
+    CameraPositionDelegate.Builder createCameraPositionBuilderDelegate();
+
+    @NonNull
+    CameraPositionDelegate.Builder createCameraPositionBuilderDelegate(@NonNull final OPFCameraPosition camera);
+
+    @NonNull
+    CameraUpdateFactoryDelegate createCameraUpdateFactory();
+
+    @NonNull
+    VisibleRegionDelegate createVisibleRegionDelegate(@NonNull final OPFLatLng nearLeft,
+                                                      @NonNull final OPFLatLng nearRight,
+                                                      @NonNull final OPFLatLng farLeft,
+                                                      @NonNull final OPFLatLng farRight,
+                                                      @NonNull final OPFLatLngBounds latLngBounds);
 }

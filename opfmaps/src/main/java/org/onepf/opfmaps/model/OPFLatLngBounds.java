@@ -134,8 +134,9 @@ public final class OPFLatLngBounds implements LatLngBoundsDelegate {
 
         @NonNull
         @Override
-        public LatLngBoundsDelegate.Builder include(@NonNull final OPFLatLng latLng) {
-            return delegate.include(latLng);
+        public Builder include(@NonNull final OPFLatLng latLng) {
+            delegate.include(latLng);
+            return this;
         }
 
         @NonNull

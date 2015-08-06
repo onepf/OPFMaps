@@ -18,11 +18,14 @@ package org.onepf.maps.google;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.AttributeSet;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import org.onepf.maps.google.delegate.GoogleMapFragmentDelegate;
 import org.onepf.maps.google.delegate.GoogleMapViewDelegate;
 import org.onepf.maps.google.delegate.model.GoogleBitmapDescriptorFactoryDelegate;
+import org.onepf.maps.google.delegate.model.GoogleCameraPositionDelegate;
+import org.onepf.maps.google.delegate.model.GoogleCameraUpdateFactoryDelegate;
 import org.onepf.maps.google.delegate.model.GoogleCircleOptionsDelegate;
 import org.onepf.maps.google.delegate.model.GoogleGroundOverlayOptionsDelegate;
 import org.onepf.maps.google.delegate.model.GoogleLatLngBoundsDelegate;
@@ -33,9 +36,12 @@ import org.onepf.maps.google.delegate.model.GooglePolylineOptionsDelegate;
 import org.onepf.maps.google.delegate.model.GoogleTileDelegate;
 import org.onepf.maps.google.delegate.model.GoogleTileOverlayOptionsDelegate;
 import org.onepf.maps.google.delegate.model.GoogleUrlTileProviderDelegate;
+import org.onepf.maps.google.delegate.model.GoogleVisibleRegionDelegate;
 import org.onepf.opfmaps.delegate.MapFragmentDelegate;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorFactoryDelegate;
+import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
+import org.onepf.opfmaps.delegate.model.CameraUpdateFactoryDelegate;
 import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.LatLngBoundsDelegate;
@@ -46,8 +52,11 @@ import org.onepf.opfmaps.delegate.model.PolylineOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.TileDelegate;
 import org.onepf.opfmaps.delegate.model.TileOverlayOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
+import org.onepf.opfmaps.delegate.model.VisibleRegionDelegate;
 import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
+import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfmaps.model.OPFLatLngBounds;
 
 import java.net.URL;
 
@@ -55,7 +64,7 @@ import java.net.URL;
  * @author Roman Savin
  * @since 31.07.2015
  */
-public final class GoogleDelegatesFactory extends DelegatesAbstractFactory {
+public final class GoogleDelegatesFactory implements DelegatesAbstractFactory {
 
     @NonNull
     @Override
@@ -153,5 +162,55 @@ public final class GoogleDelegatesFactory extends DelegatesAbstractFactory {
     @Override
     public BitmapDescriptorFactoryDelegate createBitmapDescriptorFactory() {
         return new GoogleBitmapDescriptorFactoryDelegate();
+    }
+
+    @NonNull
+    @Override
+    public CameraPositionDelegate createCameraPositionDelegate(@NonNull final Context context,
+                                                               @NonNull final AttributeSet attrs) {
+        return new GoogleCameraPositionDelegate(context, attrs);
+    }
+
+    @NonNull
+    @Override
+    public CameraPositionDelegate createCameraPositionDelegate(@NonNull final OPFLatLng target, final float zoom) {
+        return new GoogleCameraPositionDelegate(target, zoom);
+    }
+
+    @NonNull
+    @Override
+    public CameraPositionDelegate createCameraPositionDelegate(@NonNull final OPFLatLng target,
+                                                               final float zoom,
+                                                               final float tilt,
+                                                               final float bearing) {
+        return new GoogleCameraPositionDelegate(target, zoom, tilt, bearing);
+    }
+
+    @NonNull
+    @Override
+    public CameraPositionDelegate.Builder createCameraPositionBuilderDelegate() {
+        return new GoogleCameraPositionDelegate.Builder();
+    }
+
+    @NonNull
+    @Override
+    public CameraPositionDelegate.Builder createCameraPositionBuilderDelegate(@NonNull final OPFCameraPosition camera) {
+        return new GoogleCameraPositionDelegate.Builder(camera);
+    }
+
+    @NonNull
+    @Override
+    public CameraUpdateFactoryDelegate createCameraUpdateFactory() {
+        return new GoogleCameraUpdateFactoryDelegate();
+    }
+
+    @NonNull
+    @Override
+    public VisibleRegionDelegate createVisibleRegionDelegate(@NonNull final OPFLatLng nearLeft,
+                                                             @NonNull final OPFLatLng nearRight,
+                                                             @NonNull final OPFLatLng farLeft,
+                                                             @NonNull final OPFLatLng farRight,
+                                                             @NonNull final OPFLatLngBounds latLngBounds) {
+        return new GoogleVisibleRegionDelegate(nearLeft, nearRight, farLeft, farRight, latLngBounds);
     }
 }

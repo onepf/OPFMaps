@@ -16,7 +16,9 @@
 
 package org.onepf.opfmaps.delegate;
 
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import org.onepf.opfmaps.listener.OPFCancelableCallback;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
 import org.onepf.opfmaps.listener.OPFOnIndoorStateChangeListener;
 import org.onepf.opfmaps.listener.OPFOnInfoWindowClickListener;
@@ -26,11 +28,16 @@ import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
+import org.onepf.opfmaps.listener.OPFSnapshotReadyCallback;
+import org.onepf.opfmaps.model.OPFCameraPosition;
+import org.onepf.opfmaps.model.OPFCameraUpdate;
 import org.onepf.opfmaps.model.OPFCircle;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlay;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
+import org.onepf.opfmaps.model.OPFIndoorBuilding;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
+import org.onepf.opfmaps.model.OPFLocationSource;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
@@ -38,8 +45,10 @@ import org.onepf.opfmaps.model.OPFPolygon;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolyline;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
+import org.onepf.opfmaps.model.OPFProjection;
 import org.onepf.opfmaps.model.OPFTileOverlay;
 import org.onepf.opfmaps.model.OPFTileOverlayOptions;
+import org.onepf.opfmaps.model.OPFUiSettings;
 
 /**
  * @author Roman Savin
@@ -65,25 +74,34 @@ public interface MapDelegate {
     @NonNull
     OPFTileOverlay addTileOverlay(@NonNull final OPFTileOverlayOptions options);
 
-    //todo void animateCamera(CameraUpdate update, int durationMs, GoogleMap.CancelableCallback callback)
-    //todo void animateCamera(CameraUpdate update, GoogleMap.CancelableCallback callback)
-    //todo void animateCamera(CameraUpdate update)
+    void animateCamera(@NonNull final OPFCameraUpdate update,
+                       final int durationMs,
+                       @NonNull final OPFCancelableCallback callback);
+
+    void animateCamera(@NonNull final OPFCameraUpdate update, @NonNull final OPFCancelableCallback callback);
+
+    void animateCamera(@NonNull final OPFCameraUpdate update);
 
     void clear();
 
-    //todo CameraPosition getCameraPosition()
+    @NonNull
+    OPFCameraPosition getCameraPosition();
 
-    //todo IndoorBuilding getFocusedBuilding()
+    @NonNull
+    OPFIndoorBuilding getFocusedBuilding();
 
+    @NonNull
     OPFMapType getMapType();
 
     float getMaxZoomLevel();
 
     float getMinZoomLevel();
 
-    //todo  Projection getProjection()
+    @NonNull
+    OPFProjection getProjection();
 
-    //todo UiSettings getUiSettings()
+    @NonNull
+    OPFUiSettings getUiSettings();
 
     boolean isBuildingsEnabled();
 
@@ -93,7 +111,7 @@ public interface MapDelegate {
 
     boolean isTrafficEnabled();
 
-    //todo  void moveCamera(CameraUpdate update)
+    void moveCamera(@NonNull final OPFCameraUpdate update);
 
     void setBuildingsEnabled(final boolean enabled);
 
@@ -103,7 +121,7 @@ public interface MapDelegate {
 
     void setInfoWindowAdapter(@NonNull OPFInfoWindowAdapter adapter);
 
-    //todo void setLocationSource(LocationSource source)
+    void setLocationSource(@NonNull final OPFLocationSource source);
 
     void setMapType(@NonNull final OPFMapType type);
 
@@ -131,9 +149,9 @@ public interface MapDelegate {
 
     void setTrafficEnabled(final boolean enabled);
 
-    //todo void snapshot(GoogleMap.SnapshotReadyCallback callback, Bitmap bitmap)
+    void snapshot(@NonNull final OPFSnapshotReadyCallback callback, @NonNull final Bitmap bitmap);
 
-    //todo void snapshot(GoogleMap.SnapshotReadyCallback callback)
+    void snapshot(@NonNull final OPFSnapshotReadyCallback callback);
 
     void stopAnimation();
 }

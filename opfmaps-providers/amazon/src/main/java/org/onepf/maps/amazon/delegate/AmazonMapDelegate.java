@@ -16,9 +16,13 @@
 
 package org.onepf.maps.amazon.delegate;
 
+import android.graphics.Bitmap;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.view.View;
 import com.amazon.geo.mapsv2.AmazonMap;
+import com.amazon.geo.mapsv2.CameraUpdate;
+import com.amazon.geo.mapsv2.LocationSource;
 import com.amazon.geo.mapsv2.model.CameraPosition;
 import com.amazon.geo.mapsv2.model.Circle;
 import com.amazon.geo.mapsv2.model.GroundOverlay;
@@ -28,6 +32,7 @@ import com.amazon.geo.mapsv2.model.Marker;
 import com.amazon.geo.mapsv2.model.Polygon;
 import com.amazon.geo.mapsv2.model.Polyline;
 import com.amazon.geo.mapsv2.model.TileOverlay;
+import org.onepf.maps.amazon.delegate.model.AmazonCameraPositionDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonCircleDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonGroundOverlayDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonIndoorBuildingDelegate;
@@ -35,18 +40,25 @@ import org.onepf.maps.amazon.delegate.model.AmazonLatLngDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonMarkerDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonPolygonDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonPolylineDelegate;
+import org.onepf.maps.amazon.delegate.model.AmazonProjectionDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonTileOverlayDelegate;
+import org.onepf.maps.amazon.delegate.model.AmazonUiSettingsDelegate;
 import org.onepf.maps.amazon.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapDelegate;
+import org.onepf.opfmaps.listener.OPFCancelableCallback;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
 import org.onepf.opfmaps.listener.OPFOnIndoorStateChangeListener;
 import org.onepf.opfmaps.listener.OPFOnInfoWindowClickListener;
+import org.onepf.opfmaps.listener.OPFOnLocationChangedListener;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapLoadedCallback;
 import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
+import org.onepf.opfmaps.listener.OPFSnapshotReadyCallback;
+import org.onepf.opfmaps.model.OPFCameraPosition;
+import org.onepf.opfmaps.model.OPFCameraUpdate;
 import org.onepf.opfmaps.model.OPFCircle;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlay;
@@ -54,6 +66,7 @@ import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFIndoorBuilding;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfmaps.model.OPFLocationSource;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
@@ -61,15 +74,17 @@ import org.onepf.opfmaps.model.OPFPolygon;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolyline;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
+import org.onepf.opfmaps.model.OPFProjection;
 import org.onepf.opfmaps.model.OPFTileOverlay;
 import org.onepf.opfmaps.model.OPFTileOverlayOptions;
+import org.onepf.opfmaps.model.OPFUiSettings;
 import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
  * @since 31.07.2015
  */
-@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
+@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount", "PMD.TooManyMethods"})
 public class AmazonMapDelegate implements MapDelegate {
 
     @NonNull
@@ -122,10 +137,67 @@ public class AmazonMapDelegate implements MapDelegate {
     }
 
     @Override
+    public void animateCamera(@NonNull final OPFCameraUpdate update,
+                              final int durationMs,
+                              @NonNull final OPFCancelableCallback callback) {
+        map.animateCamera(
+                (CameraUpdate) update.getDelegate().getCameraUpdate(),
+                durationMs,
+                new AmazonMap.CancelableCallback() {
+                    @Override
+                    public void onCancel() {
+                        callback.onCancel();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        callback.onFinish();
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void animateCamera(@NonNull final OPFCameraUpdate update, @NonNull final OPFCancelableCallback callback) {
+        map.animateCamera(
+                (CameraUpdate) update.getDelegate().getCameraUpdate(),
+                new AmazonMap.CancelableCallback() {
+                    @Override
+                    public void onCancel() {
+                        callback.onCancel();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        callback.onFinish();
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void animateCamera(@NonNull final OPFCameraUpdate update) {
+        map.animateCamera((CameraUpdate) update.getDelegate().getCameraUpdate());
+    }
+
+    @Override
     public void clear() {
         map.clear();
     }
 
+    @NonNull
+    @Override
+    public OPFCameraPosition getCameraPosition() {
+        return new OPFCameraPosition(new AmazonCameraPositionDelegate(map.getCameraPosition()));
+    }
+
+    @NonNull
+    @Override
+    public OPFIndoorBuilding getFocusedBuilding() {
+        return new OPFIndoorBuilding(new AmazonIndoorBuildingDelegate(map.getFocusedBuilding()));
+    }
+
+    @NonNull
     @Override
     public OPFMapType getMapType() {
         return ConvertUtils.convertMapType(map.getMapType());
@@ -139,6 +211,18 @@ public class AmazonMapDelegate implements MapDelegate {
     @Override
     public float getMinZoomLevel() {
         return map.getMinZoomLevel();
+    }
+
+    @NonNull
+    @Override
+    public OPFProjection getProjection() {
+        return new OPFProjection(new AmazonProjectionDelegate(map.getProjection()));
+    }
+
+    @NonNull
+    @Override
+    public OPFUiSettings getUiSettings() {
+        return new OPFUiSettings(new AmazonUiSettingsDelegate(map.getUiSettings()));
     }
 
     @Override
@@ -159,6 +243,11 @@ public class AmazonMapDelegate implements MapDelegate {
     @Override
     public boolean isTrafficEnabled() {
         return map.isTrafficEnabled();
+    }
+
+    @Override
+    public void moveCamera(@NonNull final OPFCameraUpdate update) {
+        map.moveCamera((CameraUpdate) update.getDelegate().getCameraUpdate());
     }
 
     @Override
@@ -187,6 +276,26 @@ public class AmazonMapDelegate implements MapDelegate {
             @Override
             public View getInfoWindow(final Marker marker) {
                 return adapter.getInfoWindow(new OPFMarker(new AmazonMarkerDelegate(marker)));
+            }
+        });
+    }
+
+    @Override
+    public void setLocationSource(@NonNull final OPFLocationSource source) {
+        map.setLocationSource(new LocationSource() {
+            @Override
+            public void activate(final OnLocationChangedListener onLocationChangedListener) {
+                source.activate(new OPFOnLocationChangedListener() {
+                    @Override
+                    public void onLocationChanged(@NonNull final Location location) {
+                        onLocationChangedListener.onLocationChanged(location);
+                    }
+                });
+            }
+
+            @Override
+            public void deactivate() {
+                source.deactivate();
             }
         });
     }
@@ -328,6 +437,31 @@ public class AmazonMapDelegate implements MapDelegate {
     @Override
     public void setTrafficEnabled(final boolean enabled) {
         map.setTrafficEnabled(enabled);
+    }
+
+    @Override
+    public void snapshot(@NonNull final OPFSnapshotReadyCallback callback, @NonNull final Bitmap bitmap) {
+        map.snapshot(
+                new AmazonMap.SnapshotReadyCallback() {
+                    @Override
+                    public void onSnapshotReady(final Bitmap bitmap) {
+                        callback.onSnapshotReady(bitmap);
+                    }
+                },
+                bitmap
+        );
+    }
+
+    @Override
+    public void snapshot(@NonNull final OPFSnapshotReadyCallback callback) {
+        map.snapshot(
+                new AmazonMap.SnapshotReadyCallback() {
+                    @Override
+                    public void onSnapshotReady(final Bitmap bitmap) {
+                        callback.onSnapshotReady(bitmap);
+                    }
+                }
+        );
     }
 
     @Override

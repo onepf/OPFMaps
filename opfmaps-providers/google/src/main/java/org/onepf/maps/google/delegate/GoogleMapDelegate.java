@@ -16,9 +16,13 @@
 
 package org.onepf.maps.google.delegate;
 
+import android.graphics.Bitmap;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.view.View;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.GroundOverlay;
@@ -28,6 +32,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.TileOverlay;
+import org.onepf.maps.google.delegate.model.GoogleCameraPositionDelegate;
 import org.onepf.maps.google.delegate.model.GoogleCircleDelegate;
 import org.onepf.maps.google.delegate.model.GoogleGroundOverlayDelegate;
 import org.onepf.maps.google.delegate.model.GoogleIndoorBuildingDelegate;
@@ -35,18 +40,25 @@ import org.onepf.maps.google.delegate.model.GoogleLatLngDelegate;
 import org.onepf.maps.google.delegate.model.GoogleMarkerDelegate;
 import org.onepf.maps.google.delegate.model.GooglePolygonDelegate;
 import org.onepf.maps.google.delegate.model.GooglePolylineDelegate;
+import org.onepf.maps.google.delegate.model.GoogleProjectionDelegate;
 import org.onepf.maps.google.delegate.model.GoogleTileOverlayDelegate;
+import org.onepf.maps.google.delegate.model.GoogleUiSettingsDelegate;
 import org.onepf.maps.google.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapDelegate;
+import org.onepf.opfmaps.listener.OPFCancelableCallback;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
 import org.onepf.opfmaps.listener.OPFOnIndoorStateChangeListener;
 import org.onepf.opfmaps.listener.OPFOnInfoWindowClickListener;
+import org.onepf.opfmaps.listener.OPFOnLocationChangedListener;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapLoadedCallback;
 import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
+import org.onepf.opfmaps.listener.OPFSnapshotReadyCallback;
+import org.onepf.opfmaps.model.OPFCameraPosition;
+import org.onepf.opfmaps.model.OPFCameraUpdate;
 import org.onepf.opfmaps.model.OPFCircle;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlay;
@@ -54,6 +66,7 @@ import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFIndoorBuilding;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfmaps.model.OPFLocationSource;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
@@ -61,15 +74,16 @@ import org.onepf.opfmaps.model.OPFPolygon;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolyline;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
+import org.onepf.opfmaps.model.OPFProjection;
 import org.onepf.opfmaps.model.OPFTileOverlay;
 import org.onepf.opfmaps.model.OPFTileOverlayOptions;
-import org.onepf.opfutils.OPFLog;
+import org.onepf.opfmaps.model.OPFUiSettings;
 
 /**
  * @author Roman Savin
  * @since 31.07.2015
  */
-@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
+@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount", "PMD.TooManyMethods"})
 public class GoogleMapDelegate implements MapDelegate {
 
     @NonNull
@@ -122,10 +136,67 @@ public class GoogleMapDelegate implements MapDelegate {
     }
 
     @Override
+    public void animateCamera(@NonNull final OPFCameraUpdate update,
+                              final int durationMs,
+                              @NonNull final OPFCancelableCallback callback) {
+        map.animateCamera(
+                (CameraUpdate) update.getDelegate().getCameraUpdate(),
+                durationMs,
+                new GoogleMap.CancelableCallback() {
+                    @Override
+                    public void onFinish() {
+                        callback.onFinish();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        callback.onCancel();
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void animateCamera(@NonNull final OPFCameraUpdate update, @NonNull final OPFCancelableCallback callback) {
+        map.animateCamera(
+                (CameraUpdate) update.getDelegate().getCameraUpdate(),
+                new GoogleMap.CancelableCallback() {
+                    @Override
+                    public void onFinish() {
+                        callback.onFinish();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        callback.onCancel();
+                    }
+                }
+        );
+    }
+
+    @Override
+    public void animateCamera(@NonNull final OPFCameraUpdate update) {
+        map.animateCamera((CameraUpdate) update.getDelegate().getCameraUpdate());
+    }
+
+    @Override
     public void clear() {
         map.clear();
     }
 
+    @NonNull
+    @Override
+    public OPFCameraPosition getCameraPosition() {
+        return new OPFCameraPosition(new GoogleCameraPositionDelegate(map.getCameraPosition()));
+    }
+
+    @NonNull
+    @Override
+    public OPFIndoorBuilding getFocusedBuilding() {
+        return new OPFIndoorBuilding(new GoogleIndoorBuildingDelegate(map.getFocusedBuilding()));
+    }
+
+    @NonNull
     @Override
     public OPFMapType getMapType() {
         return ConvertUtils.convertMapType(map.getMapType());
@@ -139,6 +210,18 @@ public class GoogleMapDelegate implements MapDelegate {
     @Override
     public float getMinZoomLevel() {
         return map.getMinZoomLevel();
+    }
+
+    @NonNull
+    @Override
+    public OPFProjection getProjection() {
+        return new OPFProjection(new GoogleProjectionDelegate(map.getProjection()));
+    }
+
+    @NonNull
+    @Override
+    public OPFUiSettings getUiSettings() {
+        return new OPFUiSettings(new GoogleUiSettingsDelegate(map.getUiSettings()));
     }
 
     @Override
@@ -159,6 +242,11 @@ public class GoogleMapDelegate implements MapDelegate {
     @Override
     public boolean isTrafficEnabled() {
         return map.isTrafficEnabled();
+    }
+
+    @Override
+    public void moveCamera(@NonNull final OPFCameraUpdate update) {
+        map.moveCamera((CameraUpdate) update.getDelegate().getCameraUpdate());
     }
 
     @Override
@@ -187,6 +275,26 @@ public class GoogleMapDelegate implements MapDelegate {
             @Override
             public View getInfoWindow(final Marker marker) {
                 return adapter.getInfoWindow(new OPFMarker(new GoogleMarkerDelegate(marker)));
+            }
+        });
+    }
+
+    @Override
+    public void setLocationSource(@NonNull final OPFLocationSource source) {
+        map.setLocationSource(new LocationSource() {
+            @Override
+            public void activate(final OnLocationChangedListener onLocationChangedListener) {
+                source.activate(new OPFOnLocationChangedListener() {
+                    @Override
+                    public void onLocationChanged(@NonNull final Location location) {
+                        onLocationChangedListener.onLocationChanged(location);
+                    }
+                });
+            }
+
+            @Override
+            public void deactivate() {
+                source.deactivate();
             }
         });
     }
@@ -329,6 +437,29 @@ public class GoogleMapDelegate implements MapDelegate {
     @Override
     public void setTrafficEnabled(final boolean enabled) {
         map.setTrafficEnabled(enabled);
+    }
+
+    @Override
+    public void snapshot(@NonNull final OPFSnapshotReadyCallback callback, @NonNull final Bitmap bitmap) {
+        map.snapshot(
+                new GoogleMap.SnapshotReadyCallback() {
+                    @Override
+                    public void onSnapshotReady(final Bitmap bitmap) {
+                        callback.onSnapshotReady(bitmap);
+                    }
+                },
+                bitmap
+        );
+    }
+
+    @Override
+    public void snapshot(@NonNull final OPFSnapshotReadyCallback callback) {
+        map.snapshot(new GoogleMap.SnapshotReadyCallback() {
+            @Override
+            public void onSnapshotReady(final Bitmap bitmap) {
+                callback.onSnapshotReady(bitmap);
+            }
+        });
     }
 
     @Override
