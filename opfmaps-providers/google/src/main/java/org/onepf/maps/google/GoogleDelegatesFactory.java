@@ -22,7 +22,6 @@ import android.util.AttributeSet;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import org.onepf.maps.google.delegate.GoogleMapFragmentDelegate;
 import org.onepf.maps.google.delegate.GoogleMapOptionsDelegate;
 import org.onepf.maps.google.delegate.GoogleMapViewDelegate;
 import org.onepf.maps.google.delegate.model.GoogleBitmapDescriptorFactoryDelegate;
@@ -41,7 +40,7 @@ import org.onepf.maps.google.delegate.model.GoogleUrlTileProviderDelegate;
 import org.onepf.maps.google.delegate.model.GoogleVisibleRegionDelegate;
 import org.onepf.maps.google.utils.ConvertUtils;
 import org.onepf.opfmaps.OPFMapOptions;
-import org.onepf.opfmaps.delegate.MapFragmentDelegate;
+import org.onepf.opfmaps.delegate.MapOptionsDelegate;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorFactoryDelegate;
 import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
@@ -50,7 +49,6 @@ import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.LatLngBoundsDelegate;
 import org.onepf.opfmaps.delegate.model.LatLngDelegate;
-import org.onepf.opfmaps.delegate.MapOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.MarkerOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.PolygonOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.PolylineOptionsDelegate;
@@ -71,12 +69,6 @@ import java.net.URL;
  */
 @SuppressWarnings("PMD.CouplingBetweenObjects")
 public final class GoogleDelegatesFactory implements DelegatesAbstractFactory {
-
-    @NonNull
-    @Override
-    public MapFragmentDelegate createMapFragmentDelegate() {
-        return GoogleMapFragmentDelegate.newInstance();
-    }
 
     @NonNull
     @Override

@@ -20,7 +20,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import org.onepf.opfmaps.OPFMapOptions;
-import org.onepf.opfmaps.delegate.MapFragmentDelegate;
+import org.onepf.opfmaps.delegate.MapOptionsDelegate;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorFactoryDelegate;
 import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
@@ -29,7 +29,6 @@ import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.LatLngBoundsDelegate;
 import org.onepf.opfmaps.delegate.model.LatLngDelegate;
-import org.onepf.opfmaps.delegate.MapOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.MarkerOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.PolygonOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.PolylineOptionsDelegate;
@@ -46,9 +45,6 @@ import org.onepf.opfmaps.model.OPFLatLngBounds;
  * @since 30.07.2015
  */
 public interface DelegatesAbstractFactory {
-
-    @NonNull
-    MapFragmentDelegate createMapFragmentDelegate();
 
     @NonNull
     MapViewDelegate createMapViewDelegate(@NonNull final Context context);

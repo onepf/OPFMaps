@@ -22,7 +22,6 @@ import android.util.AttributeSet;
 import com.amazon.geo.mapsv2.AmazonMapOptions;
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.LatLngBounds;
-import org.onepf.maps.amazon.delegate.AmazonMapFragmentDelegate;
 import org.onepf.maps.amazon.delegate.AmazonMapOptionsDelegate;
 import org.onepf.maps.amazon.delegate.AmazonMapViewDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonBitmapDescriptorFactoryDelegate;
@@ -41,9 +40,9 @@ import org.onepf.maps.amazon.delegate.model.AmazonUrlTileProviderDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonVisibleRegionDelegate;
 import org.onepf.maps.amazon.utils.ConvertUtils;
 import org.onepf.opfmaps.OPFMapOptions;
-import org.onepf.opfmaps.delegate.MapFragmentDelegate;
 import org.onepf.opfmaps.delegate.MapOptionsDelegate;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
+import org.onepf.opfmaps.delegate.model.BitmapDescriptorFactoryDelegate;
 import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
 import org.onepf.opfmaps.delegate.model.CameraUpdateFactoryDelegate;
 import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
@@ -56,7 +55,6 @@ import org.onepf.opfmaps.delegate.model.PolylineOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.TileDelegate;
 import org.onepf.opfmaps.delegate.model.TileOverlayOptionsDelegate;
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
-import org.onepf.opfmaps.delegate.model.BitmapDescriptorFactoryDelegate;
 import org.onepf.opfmaps.delegate.model.VisibleRegionDelegate;
 import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 import org.onepf.opfmaps.model.OPFCameraPosition;
@@ -71,12 +69,6 @@ import java.net.URL;
  */
 @SuppressWarnings("PMD.CouplingBetweenObjects")
 public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
-
-    @NonNull
-    @Override
-    public MapFragmentDelegate createMapFragmentDelegate() {
-        return AmazonMapFragmentDelegate.newInstance();
-    }
 
     @NonNull
     @Override
