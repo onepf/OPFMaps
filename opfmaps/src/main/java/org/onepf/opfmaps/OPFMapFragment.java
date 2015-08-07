@@ -60,9 +60,10 @@ public class OPFMapFragment extends Fragment implements MapFragmentDelegate {
         return fragment;
     }
 
+    @Nullable
     @Override
-    public void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.map_layout, container, false);
         final OPFMapOptions options = getMapOptions();
         if (options != null) {
             mapViewDelegate = OPFMapHelper.getInstance().getDelegatesFactory().createMapViewDelegate(getActivity(), options);
@@ -70,12 +71,7 @@ public class OPFMapFragment extends Fragment implements MapFragmentDelegate {
             mapViewDelegate = OPFMapHelper.getInstance().getDelegatesFactory().createMapViewDelegate(getActivity());
         }
         mapViewDelegate.onCreate(savedInstanceState);
-    }
 
-    @Nullable
-    @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.map_layout, container, false);
         ((FrameLayout) view.findViewById(R.id.map_frame)).addView((View) mapViewDelegate, MATCH_PARENT, MATCH_PARENT);
 
         return view;
@@ -101,6 +97,7 @@ public class OPFMapFragment extends Fragment implements MapFragmentDelegate {
     @Override
     public void onDestroyView() {
         pendingCallbacks.clear();
+        mapViewDelegate.onDestroy();
         super.onDestroyView();
     }
 
@@ -108,12 +105,6 @@ public class OPFMapFragment extends Fragment implements MapFragmentDelegate {
     public void onSaveInstanceState(final Bundle outState) {
         mapViewDelegate.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onDestroy() {
-        mapViewDelegate.onDestroy();
-        super.onDestroy();
     }
 
     @Override
