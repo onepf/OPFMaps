@@ -70,7 +70,11 @@ public final class GoogleCircleOptionsDelegate implements CircleOptionsDelegate 
     @Nullable
     @Override
     public OPFLatLng getCenter() {
-        return new OPFLatLng(new GoogleLatLngDelegate(circleOptions.getCenter()));
+        final LatLng center = circleOptions.getCenter();
+        if (center != null) {
+            return new OPFLatLng(new GoogleLatLngDelegate(center));
+        }
+        return null;
     }
 
     @Override

@@ -167,8 +167,9 @@ public final class AmazonMapOptionsDelegate implements MapOptionsDelegate {
     @Nullable
     @Override
     public OPFCameraPosition getCamera() {
-        if (mapOptions.getCamera() != null) {
-            return new OPFCameraPosition(new AmazonCameraPositionDelegate(mapOptions.getCamera()));
+        final CameraPosition cameraPosition = mapOptions.getCamera();
+        if (cameraPosition != null) {
+            return new OPFCameraPosition(new AmazonCameraPositionDelegate(cameraPosition));
         }
         return null;
     }

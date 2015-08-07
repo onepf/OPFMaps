@@ -102,10 +102,10 @@ public final class AmazonMarkerOptionsDelegate implements MarkerOptionsDelegate 
     @Override
     public OPFBitmapDescriptor getIcon() {
         final BitmapDescriptor icon = markerOptions.getIcon();
-        if (icon == null) {
-            return null;
+        if (icon != null) {
+            return new OPFBitmapDescriptor(new AmazonBitmapDescriptorDelegate(icon));
         }
-        return new OPFBitmapDescriptor(new AmazonBitmapDescriptorDelegate(icon));
+        return null;
     }
 
     @Override
@@ -121,7 +121,11 @@ public final class AmazonMarkerOptionsDelegate implements MarkerOptionsDelegate 
     @Nullable
     @Override
     public OPFLatLng getPosition() {
-        return new OPFLatLng(new AmazonLatLngDelegate(markerOptions.getPosition()));
+        final LatLng position = markerOptions.getPosition();
+        if (position != null) {
+            return new OPFLatLng(new AmazonLatLngDelegate(position));
+        }
+        return null;
     }
 
     @Override

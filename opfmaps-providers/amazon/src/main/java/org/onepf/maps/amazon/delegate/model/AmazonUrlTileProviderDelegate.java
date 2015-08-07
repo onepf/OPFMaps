@@ -18,6 +18,7 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.amazon.geo.mapsv2.model.Tile;
 import com.amazon.geo.mapsv2.model.UrlTileProvider;
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
 import org.onepf.opfmaps.model.OPFTile;
@@ -51,7 +52,11 @@ public abstract class AmazonUrlTileProviderDelegate implements UrlTileProviderDe
     @Nullable
     @Override
     public OPFTile getTile(final int x, final int y, final int zoom) {
-        return new OPFTile(new AmazonTileDelegate(urlTileProvider.getTile(x, y, zoom)));
+        final Tile tile = urlTileProvider.getTile(x, y, zoom);
+        if (tile != null) {
+            return new OPFTile(new AmazonTileDelegate(tile));
+        }
+        return null;
     }
 
     //CHECKSTYLE:OFF

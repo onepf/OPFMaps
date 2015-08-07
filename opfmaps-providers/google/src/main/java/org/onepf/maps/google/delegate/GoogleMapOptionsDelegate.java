@@ -167,8 +167,9 @@ public final class GoogleMapOptionsDelegate implements MapOptionsDelegate {
     @Nullable
     @Override
     public OPFCameraPosition getCamera() {
-        if (mapOptions.getCamera() != null) {
-            return new OPFCameraPosition(new GoogleCameraPositionDelegate(mapOptions.getCamera()));
+        final CameraPosition cameraPosition = mapOptions.getCamera();
+        if (cameraPosition != null) {
+            return new OPFCameraPosition(new GoogleCameraPositionDelegate(cameraPosition));
         }
         return null;
     }

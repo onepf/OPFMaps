@@ -18,6 +18,7 @@ package org.onepf.maps.google.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.google.android.gms.maps.model.Tile;
 import com.google.android.gms.maps.model.UrlTileProvider;
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
 import org.onepf.opfmaps.model.OPFTile;
@@ -51,7 +52,11 @@ public abstract class GoogleUrlTileProviderDelegate implements UrlTileProviderDe
     @Nullable
     @Override
     public OPFTile getTile(final int x, final int y, final int zoom) {
-        return new OPFTile(new GoogleTileDelegate(urlTileProvider.getTile(x, y, zoom)));
+        final Tile tile = urlTileProvider.getTile(x, y, zoom);
+        if (tile != null) {
+            return new OPFTile(new GoogleTileDelegate(tile));
+        }
+        return null;
     }
 
     //CHECKSTYLE:OFF

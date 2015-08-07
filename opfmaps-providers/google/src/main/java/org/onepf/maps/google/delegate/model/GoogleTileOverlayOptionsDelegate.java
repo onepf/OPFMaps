@@ -64,14 +64,14 @@ public final class GoogleTileOverlayOptionsDelegate implements TileOverlayOption
     @Nullable
     @Override
     public OPFTileProvider getTileProvider() {
+        final TileProvider tileProvider = tileOverlayOptions.getTileProvider();
+        if (tileProvider == null) {
+            return null;
+        }
         return new OPFTileProvider() {
             @Nullable
             @Override
             public OPFTile getTile(final int x, final int y, final int zoom) {
-                final TileProvider tileProvider = tileOverlayOptions.getTileProvider();
-                if (tileProvider == null) {
-                    return null;
-                }
                 final Tile tile = tileProvider.getTile(x, y, zoom);
                 if (tile == null) {
                     return null;

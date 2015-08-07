@@ -70,7 +70,11 @@ public final class AmazonCircleOptionsDelegate implements CircleOptionsDelegate 
     @Nullable
     @Override
     public OPFLatLng getCenter() {
-        return new OPFLatLng(new AmazonLatLngDelegate(circleOptions.getCenter()));
+        final LatLng center = circleOptions.getCenter();
+        if (center != null) {
+            return new OPFLatLng(new AmazonLatLngDelegate(center));
+        }
+        return null;
     }
 
     @Override

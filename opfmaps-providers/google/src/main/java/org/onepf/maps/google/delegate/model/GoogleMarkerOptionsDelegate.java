@@ -103,9 +103,9 @@ public final class GoogleMarkerOptionsDelegate implements MarkerOptionsDelegate 
     public OPFBitmapDescriptor getIcon() {
         final BitmapDescriptor icon = markerOptions.getIcon();
         if (icon == null) {
-            return null;
+            return new OPFBitmapDescriptor(new GoogleBitmapDescriptorDelegate(icon));
         }
-        return new OPFBitmapDescriptor(new GoogleBitmapDescriptorDelegate(icon));
+        return null;
     }
 
     @Override
@@ -121,7 +121,11 @@ public final class GoogleMarkerOptionsDelegate implements MarkerOptionsDelegate 
     @Nullable
     @Override
     public OPFLatLng getPosition() {
-        return new OPFLatLng(new GoogleLatLngDelegate(markerOptions.getPosition()));
+        final LatLng position = markerOptions.getPosition();
+        if (position != null) {
+            return new OPFLatLng(new GoogleLatLngDelegate(position));
+        }
+        return null;
     }
 
     @Override

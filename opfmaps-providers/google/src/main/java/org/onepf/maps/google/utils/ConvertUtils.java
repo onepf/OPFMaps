@@ -58,6 +58,7 @@ import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN;
  * @author Roman Savin
  * @since 31.07.2015
  */
+@SuppressWarnings({"PMD.GodClass", "PMD.NPathComplexity"})
 public final class ConvertUtils {
 
     private ConvertUtils() {

@@ -89,7 +89,11 @@ public final class GoogleGroundOverlayOptionsDelegate implements GroundOverlayOp
     @Nullable
     @Override
     public OPFLatLngBounds getBounds() {
-        return new OPFLatLngBounds(new GoogleLatLngBoundsDelegate(groundOverlayOptions.getBounds()));
+        final LatLngBounds bounds = groundOverlayOptions.getBounds();
+        if (bounds != null) {
+            return new OPFLatLngBounds(new GoogleLatLngBoundsDelegate(bounds));
+        }
+        return null;
     }
 
     @Override
@@ -100,13 +104,21 @@ public final class GoogleGroundOverlayOptionsDelegate implements GroundOverlayOp
     @Nullable
     @Override
     public OPFBitmapDescriptor getImage() {
-        return new OPFBitmapDescriptor(new GoogleBitmapDescriptorDelegate(groundOverlayOptions.getImage()));
+        final BitmapDescriptor image = groundOverlayOptions.getImage();
+        if (image != null) {
+            return new OPFBitmapDescriptor(new GoogleBitmapDescriptorDelegate(image));
+        }
+        return null;
     }
 
     @Nullable
     @Override
     public OPFLatLng getLocation() {
-        return new OPFLatLng(new GoogleLatLngDelegate(groundOverlayOptions.getLocation()));
+        final LatLng location = groundOverlayOptions.getLocation();
+        if (location != null) {
+            return new OPFLatLng(new GoogleLatLngDelegate(location));
+        }
+        return null;
     }
 
     @Override
