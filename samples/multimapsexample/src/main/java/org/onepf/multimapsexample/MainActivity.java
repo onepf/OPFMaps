@@ -16,10 +16,10 @@
 
 package org.onepf.multimapsexample;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -40,7 +40,7 @@ import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfutils.OPFLog;
 
 
-public class MainActivity extends FragmentActivity implements OPFOnMapReadyCallback {
+public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -49,7 +49,7 @@ public class MainActivity extends FragmentActivity implements OPFOnMapReadyCallb
         setContentView(R.layout.activity_main);
         OPFLog.logMethod(savedInstanceState);
 
-        final OPFMapFragment mapFragment = (OPFMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        final OPFMapFragment mapFragment = (OPFMapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 

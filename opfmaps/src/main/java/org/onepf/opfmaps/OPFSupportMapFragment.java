@@ -16,10 +16,10 @@
 
 package org.onepf.opfmaps;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +38,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * @author Roman Savin
  * @since 30.07.2015
  */
-public class OPFMapFragment extends Fragment implements MapFragmentDelegate {
+public class OPFSupportMapFragment extends Fragment implements MapFragmentDelegate {
 
     private static final String MAP_OPTIONS_BUNDLE_KEY = "MAP_OPTIONS_BUNDLE_KEY";
 
