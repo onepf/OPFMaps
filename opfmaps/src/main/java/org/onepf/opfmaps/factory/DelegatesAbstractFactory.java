@@ -53,6 +53,14 @@ public interface DelegatesAbstractFactory {
     MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final OPFMapOptions mapOptions);
 
     @NonNull
+    MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs);
+
+    @NonNull
+    MapViewDelegate createMapViewDelegate(@NonNull final Context context,
+                                          @NonNull final AttributeSet attrs,
+                                          final int defStyleAttr);
+
+    @NonNull
     CircleOptionsDelegate createCircleOptionsDelegate();
 
     @NonNull

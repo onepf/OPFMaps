@@ -84,6 +84,20 @@ public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
 
     @NonNull
     @Override
+    public MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs) {
+        return new AmazonMapViewDelegate(context, attrs);
+    }
+
+    @NonNull
+    @Override
+    public MapViewDelegate createMapViewDelegate(@NonNull final Context context,
+                                                 @NonNull final AttributeSet attrs,
+                                                 final int defStyleAttr) {
+        return new AmazonMapViewDelegate(context, attrs, defStyleAttr);
+    }
+
+    @NonNull
+    @Override
     public CircleOptionsDelegate createCircleOptionsDelegate() {
         return new AmazonCircleOptionsDelegate();
     }

@@ -84,6 +84,20 @@ public final class GoogleDelegatesFactory implements DelegatesAbstractFactory {
 
     @NonNull
     @Override
+    public MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs) {
+        return new GoogleMapViewDelegate(context, attrs);
+    }
+
+    @NonNull
+    @Override
+    public MapViewDelegate createMapViewDelegate(@NonNull final Context context,
+                                                 @NonNull final AttributeSet attrs,
+                                                 final int defStyleAttr) {
+        return new GoogleMapViewDelegate(context, attrs, defStyleAttr);
+    }
+
+    @NonNull
+    @Override
     public CircleOptionsDelegate createCircleOptionsDelegate() {
         return new GoogleCircleOptionsDelegate();
     }
