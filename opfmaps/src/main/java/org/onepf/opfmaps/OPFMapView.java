@@ -24,6 +24,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
+import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -45,17 +46,17 @@ public class OPFMapView extends FrameLayout implements MapViewDelegate {
 
     public OPFMapView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
-        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createMapViewDelegate(context, attrs);
+        this.delegate = createDelegateFromAttributes(context, attrs);
         addView((View) delegate, MATCH_PARENT, MATCH_PARENT);
     }
 
     public OPFMapView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createMapViewDelegate(context, attrs, defStyleAttr);
+        this.delegate = createDelegateFromAttributes(context, attrs);
         addView((View) delegate, MATCH_PARENT, MATCH_PARENT);
     }
 
-    public OPFMapView(final Context context, final OPFMapOptions options) {
+    public OPFMapView(@NonNull final Context context, @NonNull final OPFMapOptions options) {
         super(context);
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createMapViewDelegate(context, options);
         addView((View) delegate, MATCH_PARENT, MATCH_PARENT);
@@ -94,5 +95,15 @@ public class OPFMapView extends FrameLayout implements MapViewDelegate {
     @Override
     public void onLowMemory() {
         delegate.onLowMemory();
+    }
+
+    @NonNull
+    private MapViewDelegate createDelegateFromAttributes(final Context context, final AttributeSet attrs) {
+        final DelegatesAbstractFactory factory = OPFMapHelper.getInstance().getDelegatesFactory();
+        final OPFMapOptions options = OPFMapOptions.createFromAttributes(context, attrs);
+        if (options != null) {
+            return factory.createMapViewDelegate(context, options);
+        }
+        return factory.createMapViewDelegate(context);
     }
 }

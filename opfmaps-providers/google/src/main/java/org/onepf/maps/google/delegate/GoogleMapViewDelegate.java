@@ -18,7 +18,6 @@ package org.onepf.maps.google.delegate;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.AttributeSet;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
@@ -35,14 +34,6 @@ public class GoogleMapViewDelegate extends MapView implements MapViewDelegate {
 
     public GoogleMapViewDelegate(final Context context) {
         super(context);
-    }
-
-    public GoogleMapViewDelegate(final Context context, final AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public GoogleMapViewDelegate(final Context context, final AttributeSet attrs, final int defStyle) {
-        super(context, attrs, defStyle);
     }
 
     public GoogleMapViewDelegate(final Context context, final GoogleMapOptions options) {

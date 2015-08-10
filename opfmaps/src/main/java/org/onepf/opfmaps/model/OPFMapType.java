@@ -16,14 +16,47 @@
 
 package org.onepf.opfmaps.model;
 
+import android.support.annotation.NonNull;
+
 /**
  * @author Roman Savin
  * @since 03.08.2015
  */
 public enum OPFMapType {
-    HYBRID,
-    NONE,
-    NORMAL,
-    SATELLITE,
-    TERRAIN
+
+    NONE(0),
+    NORMAL(1),
+    SATELLITE(2),
+    TERRAIN(3),
+    HYBRID(4);
+
+    private final int id;
+
+    OPFMapType(final int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    //CHECKSTYLE:OFF
+    @NonNull
+    public static OPFMapType fromId(final int id) {
+        switch (id) {
+            case 0:
+                return NONE;
+            case 1:
+                return NORMAL;
+            case 2:
+                return SATELLITE;
+            case 3:
+                return TERRAIN;
+            case 4:
+                return HYBRID;
+            default:
+                throw new IllegalArgumentException("Wrong map type");
+        }
+    }
+    //CHECKSTYLE:ON
 }

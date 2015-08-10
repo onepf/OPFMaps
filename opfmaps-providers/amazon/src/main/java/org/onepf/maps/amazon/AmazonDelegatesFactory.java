@@ -18,7 +18,6 @@ package org.onepf.maps.amazon;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.AttributeSet;
 import com.amazon.geo.mapsv2.AmazonMapOptions;
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.LatLngBounds;
@@ -80,20 +79,6 @@ public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
     @Override
     public MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final OPFMapOptions mapOptions) {
         return new AmazonMapViewDelegate(context, ConvertUtils.convertMapOptions(mapOptions));
-    }
-
-    @NonNull
-    @Override
-    public MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs) {
-        return new AmazonMapViewDelegate(context, attrs);
-    }
-
-    @NonNull
-    @Override
-    public MapViewDelegate createMapViewDelegate(@NonNull final Context context,
-                                                 @NonNull final AttributeSet attrs,
-                                                 final int defStyleAttr) {
-        return new AmazonMapViewDelegate(context, attrs, defStyleAttr);
     }
 
     @NonNull
@@ -182,13 +167,6 @@ public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
 
     @NonNull
     @Override
-    public CameraPositionDelegate createCameraPositionDelegate(@NonNull final Context context,
-                                                               @NonNull final AttributeSet attrs) {
-        return new AmazonCameraPositionDelegate(context, attrs);
-    }
-
-    @NonNull
-    @Override
     public CameraPositionDelegate createCameraPositionDelegate(@NonNull final OPFLatLng target, final float zoom) {
         return new AmazonCameraPositionDelegate(target, zoom);
     }
@@ -228,12 +206,6 @@ public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
                                                              @NonNull final OPFLatLng farRight,
                                                              @NonNull final OPFLatLngBounds latLngBounds) {
         return new AmazonVisibleRegionDelegate(nearLeft, nearRight, farLeft, farRight, latLngBounds);
-    }
-
-    @NonNull
-    @Override
-    public MapOptionsDelegate createMapOptionsDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs) {
-        return new AmazonMapOptionsDelegate(AmazonMapOptions.createFromAttributes(context, attrs));
     }
 
     @NonNull

@@ -18,7 +18,6 @@ package org.onepf.maps.google;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.AttributeSet;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -80,20 +79,6 @@ public final class GoogleDelegatesFactory implements DelegatesAbstractFactory {
     @Override
     public MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final OPFMapOptions mapOptions) {
         return new GoogleMapViewDelegate(context, ConvertUtils.convertMapOptions(mapOptions));
-    }
-
-    @NonNull
-    @Override
-    public MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs) {
-        return new GoogleMapViewDelegate(context, attrs);
-    }
-
-    @NonNull
-    @Override
-    public MapViewDelegate createMapViewDelegate(@NonNull final Context context,
-                                                 @NonNull final AttributeSet attrs,
-                                                 final int defStyleAttr) {
-        return new GoogleMapViewDelegate(context, attrs, defStyleAttr);
     }
 
     @NonNull
@@ -182,13 +167,6 @@ public final class GoogleDelegatesFactory implements DelegatesAbstractFactory {
 
     @NonNull
     @Override
-    public CameraPositionDelegate createCameraPositionDelegate(@NonNull final Context context,
-                                                               @NonNull final AttributeSet attrs) {
-        return new GoogleCameraPositionDelegate(context, attrs);
-    }
-
-    @NonNull
-    @Override
     public CameraPositionDelegate createCameraPositionDelegate(@NonNull final OPFLatLng target, final float zoom) {
         return new GoogleCameraPositionDelegate(target, zoom);
     }
@@ -228,12 +206,6 @@ public final class GoogleDelegatesFactory implements DelegatesAbstractFactory {
                                                              @NonNull final OPFLatLng farRight,
                                                              @NonNull final OPFLatLngBounds latLngBounds) {
         return new GoogleVisibleRegionDelegate(nearLeft, nearRight, farLeft, farRight, latLngBounds);
-    }
-
-    @NonNull
-    @Override
-    public MapOptionsDelegate createMapOptionsDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs) {
-        return new GoogleMapOptionsDelegate(GoogleMapOptions.createFromAttributes(context, attrs));
     }
 
     @NonNull

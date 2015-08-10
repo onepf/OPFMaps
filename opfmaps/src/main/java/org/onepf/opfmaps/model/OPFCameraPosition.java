@@ -17,10 +17,13 @@
 package org.onepf.opfmaps.model;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import org.onepf.opfmaps.OPFMapHelper;
+import org.onepf.opfmaps.R;
 import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
 
 /**
@@ -51,11 +54,41 @@ public final class OPFCameraPosition implements CameraPositionDelegate {
         return new Builder(camera);
     }
 
-    @NonNull
+    @Nullable
     public static OPFCameraPosition createFromAttributes(@NonNull final Context context,
-                                                         @NonNull final AttributeSet attrs) {
-        return new OPFCameraPosition(OPFMapHelper.getInstance().getDelegatesFactory()
-                .createCameraPositionDelegate(context, attrs));
+                                                         @Nullable final AttributeSet attrs) {
+        if (attrs == null) {
+            return null;
+        }
+
+        final TypedArray typedArray = context.getResources().obtainAttributes(attrs, R.styleable.OPFMapAttrs);
+
+        float latitude = 0.0F;
+        float longitude = 0.0F;
+
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_cameraTargetLat)) {
+            latitude = typedArray.getFloat(R.styleable.OPFMapAttrs_opf_cameraTargetLat, 0.0F);
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_cameraTargetLng)) {
+            longitude = typedArray.getFloat(R.styleable.OPFMapAttrs_opf_cameraTargetLng, 0.0F);
+        }
+
+        final OPFLatLng target = new OPFLatLng((double) latitude, (double) longitude);
+        final OPFCameraPosition.Builder builder = builder();
+
+        builder.target(target);
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_cameraZoom)) {
+            builder.zoom(typedArray.getFloat(R.styleable.OPFMapAttrs_opf_cameraZoom, 0.0F));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_cameraBearing)) {
+            builder.bearing(typedArray.getFloat(R.styleable.OPFMapAttrs_opf_cameraBearing, 0.0F));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_cameraTilt)) {
+            builder.tilt(typedArray.getFloat(R.styleable.OPFMapAttrs_opf_cameraTilt, 0.0F));
+        }
+
+        typedArray.recycle();
+        return builder.build();
     }
 
     @NonNull

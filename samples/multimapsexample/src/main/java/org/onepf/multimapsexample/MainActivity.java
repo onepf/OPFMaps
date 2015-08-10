@@ -34,13 +34,14 @@ import org.onepf.opfmaps.model.OPFBitmapDescriptorFactory;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
-import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfutils.OPFLog;
 
 
 public class MainActivity extends Activity implements OPFOnMapReadyCallback {
+
+    //private OPFMapView mapView;
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -49,6 +50,9 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         setContentView(R.layout.activity_main);
         OPFLog.logMethod(savedInstanceState);
 
+        /*mapView = (OPFMapView) findViewById(R.id.map_view);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);*/
         final OPFMapFragment mapFragment = (OPFMapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
@@ -63,18 +67,41 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
     protected void onResume() {
         super.onResume();
         OPFLog.logMethod();
+        //mapView.onResume();
     }
+
+    /*@Override
+    protected void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }*/
 
     //CHECKSTYLE:OFF
     @Override
     public void onMapReady(@NonNull final OPFMap opfMap) {
         OPFLog.logMethod(opfMap);
 
-        opfMap.setMapType(OPFMapType.HYBRID);
         opfMap.setMyLocationEnabled(true);
         opfMap.setBuildingsEnabled(true);
         opfMap.setMyLocationEnabled(true);
-        //map.zoom((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2f);
 
         //markers
         opfMap.addMarker(new OPFMarkerOptions()

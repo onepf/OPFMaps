@@ -17,6 +17,7 @@
 package org.onepf.opfmaps;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,6 +30,7 @@ import org.onepf.opfmaps.model.OPFMapType;
  * @author Roman Savin
  * @since 06.08.2015
  */
+@SuppressWarnings({"PMD.GodClass", "PMD.NPathComplexity"})
 public final class OPFMapOptions implements MapOptionsDelegate {
 
     public static final Creator<OPFMapOptions> CREATOR = new Creator<OPFMapOptions>() {
@@ -43,9 +45,54 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         }
     };
 
+    @Nullable
     public static OPFMapOptions createFromAttributes(@NonNull final Context context,
-                                                     @NonNull final AttributeSet attrs) {
-        return new OPFMapOptions(OPFMapHelper.getInstance().getDelegatesFactory().createMapOptionsDelegate(context, attrs));
+                                                     @Nullable final AttributeSet attrs) {
+
+        final OPFMapOptions options = new OPFMapOptions();
+        final TypedArray typedArray = context.getResources().obtainAttributes(attrs, R.styleable.OPFMapAttrs);
+
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_mapType)) {
+            options.mapType(OPFMapType.fromId(typedArray.getInt(R.styleable.OPFMapAttrs_opf_mapType, -1)));
+        }
+
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_liteMode)) {
+            options.liteMode(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_liteMode, false));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_uiCompass)) {
+            options.compassEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiCompass, true));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_uiRotateGestures)) {
+            options.rotateGesturesEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiRotateGestures, true));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_uiScrollGestures)) {
+            options.scrollGesturesEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiScrollGestures, true));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_uiTiltGestures)) {
+            options.tiltGesturesEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiTiltGestures, true));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_uiZoomControls)) {
+            options.zoomControlsEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiZoomControls, true));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_uiZoomGestures)) {
+            options.zoomGesturesEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiZoomGestures, true));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_useViewLifecycle)) {
+            options.useViewLifecycleInFragment(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_useViewLifecycle, false));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_zOrderOnTop)) {
+            options.zOrderOnTop(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_zOrderOnTop, false));
+        }
+        if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_uiMapToolbar)) {
+            options.mapToolbarEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiMapToolbar, true));
+        }
+        final OPFCameraPosition cameraPosition = OPFCameraPosition.createFromAttributes(context, attrs);
+        if (cameraPosition != null) {
+            options.camera(cameraPosition);
+        }
+
+        typedArray.recycle();
+        return options;
     }
 
     @NonNull

@@ -18,7 +18,6 @@ package org.onepf.maps.amazon.delegate;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.AttributeSet;
 import com.amazon.geo.mapsv2.AmazonMap;
 import com.amazon.geo.mapsv2.AmazonMapOptions;
 import com.amazon.geo.mapsv2.MapView;
@@ -35,14 +34,6 @@ public class AmazonMapViewDelegate extends MapView implements MapViewDelegate {
 
     public AmazonMapViewDelegate(final Context context) {
         super(context);
-    }
-
-    public AmazonMapViewDelegate(final Context context, final AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public AmazonMapViewDelegate(final Context context, final AttributeSet attrs, final int defStyle) {
-        super(context, attrs, defStyle);
     }
 
     public AmazonMapViewDelegate(final Context context, final AmazonMapOptions options) {

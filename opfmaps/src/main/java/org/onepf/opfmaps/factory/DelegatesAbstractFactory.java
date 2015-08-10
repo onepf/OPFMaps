@@ -18,7 +18,6 @@ package org.onepf.opfmaps.factory;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.AttributeSet;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.delegate.MapOptionsDelegate;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
@@ -51,14 +50,6 @@ public interface DelegatesAbstractFactory {
 
     @NonNull
     MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final OPFMapOptions mapOptions);
-
-    @NonNull
-    MapViewDelegate createMapViewDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs);
-
-    @NonNull
-    MapViewDelegate createMapViewDelegate(@NonNull final Context context,
-                                          @NonNull final AttributeSet attrs,
-                                          final int defStyleAttr);
 
     @NonNull
     CircleOptionsDelegate createCircleOptionsDelegate();
@@ -98,10 +89,6 @@ public interface DelegatesAbstractFactory {
     BitmapDescriptorFactoryDelegate createBitmapDescriptorFactory();
 
     @NonNull
-    CameraPositionDelegate createCameraPositionDelegate(@NonNull final Context context,
-                                                        @NonNull final AttributeSet attrs);
-
-    @NonNull
     CameraPositionDelegate createCameraPositionDelegate(@NonNull final OPFLatLng target, float zoom);
 
     @NonNull
@@ -125,9 +112,6 @@ public interface DelegatesAbstractFactory {
                                                       @NonNull final OPFLatLng farLeft,
                                                       @NonNull final OPFLatLng farRight,
                                                       @NonNull final OPFLatLngBounds latLngBounds);
-
-    @NonNull
-    MapOptionsDelegate createMapOptionsDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs);
 
     @NonNull
     MapOptionsDelegate createMapOptionsDelegate();
