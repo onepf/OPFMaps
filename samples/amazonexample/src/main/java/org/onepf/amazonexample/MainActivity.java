@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.amazon.geo.mapsv2.AmazonMap;
+import com.amazon.geo.mapsv2.CameraUpdate;
 import com.amazon.geo.mapsv2.OnMapReadyCallback;
 import com.amazon.geo.mapsv2.SupportMapFragment;
 import com.amazon.geo.mapsv2.model.BitmapDescriptorFactory;
