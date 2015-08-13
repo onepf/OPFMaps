@@ -72,22 +72,22 @@ public final class GooglePolygonOptionsDelegate implements PolygonOptionsDelegat
     @NonNull
     @Override
     public PolygonOptionsDelegate addAll(@NonNull final Iterable<OPFLatLng> points) {
-        final List<LatLng> amazonPoints = new ArrayList<>();
+        final List<LatLng> googlePoints = new ArrayList<>();
         for (OPFLatLng point : points) {
-            amazonPoints.add(new LatLng(point.getLat(), point.getLng()));
+            googlePoints.add(new LatLng(point.getLat(), point.getLng()));
         }
-        polygonOptions.addAll(amazonPoints);
+        polygonOptions.addAll(googlePoints);
         return this;
     }
 
     @NonNull
     @Override
     public PolygonOptionsDelegate addHole(@NonNull final Iterable<OPFLatLng> points) {
-        final List<LatLng> amazonPoints = new ArrayList<>();
+        final List<LatLng> googlePoints = new ArrayList<>();
         for (OPFLatLng point : points) {
-            amazonPoints.add(new LatLng(point.getLat(), point.getLng()));
+            googlePoints.add(new LatLng(point.getLat(), point.getLng()));
         }
-        polygonOptions.addHole(amazonPoints);
+        polygonOptions.addHole(googlePoints);
         return this;
     }
 

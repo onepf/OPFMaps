@@ -53,14 +53,14 @@ public final class GooglePolylineDelegate implements PolylineDelegate {
     @Nullable
     @Override
     public List<OPFLatLng> getPoints() {
-        final List<LatLng> amazonPoints = polyline.getPoints();
-        if (amazonPoints == null) {
+        final List<LatLng> googlePoints = polyline.getPoints();
+        if (googlePoints == null) {
             return null;
         }
 
-        final List<OPFLatLng> points = new ArrayList<>(amazonPoints.size());
-        for (LatLng amazonPoint : amazonPoints) {
-            points.add(new OPFLatLng(new GoogleLatLngDelegate(amazonPoint)));
+        final List<OPFLatLng> points = new ArrayList<>(googlePoints.size());
+        for (LatLng googlePoint : googlePoints) {
+            points.add(new OPFLatLng(new GoogleLatLngDelegate(googlePoint)));
         }
 
         return points;
@@ -103,12 +103,12 @@ public final class GooglePolylineDelegate implements PolylineDelegate {
 
     @Override
     public void setPoints(@NonNull final List<OPFLatLng> points) {
-        final List<LatLng> amazonPoints = new ArrayList<>(points.size());
+        final List<LatLng> googlePoints = new ArrayList<>(points.size());
         for (OPFLatLng point : points) {
-            amazonPoints.add(new LatLng(point.getLat(), point.getLng()));
+            googlePoints.add(new LatLng(point.getLat(), point.getLng()));
         }
 
-        polyline.setPoints(amazonPoints);
+        polyline.setPoints(googlePoints);
     }
 
     @Override

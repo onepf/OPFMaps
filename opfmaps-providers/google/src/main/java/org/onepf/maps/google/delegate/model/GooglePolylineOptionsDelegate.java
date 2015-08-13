@@ -72,11 +72,11 @@ public final class GooglePolylineOptionsDelegate implements PolylineOptionsDeleg
     @NonNull
     @Override
     public GooglePolylineOptionsDelegate addAll(@NonNull final Iterable<OPFLatLng> points) {
-        final List<LatLng> amazonPoints = new ArrayList<>();
+        final List<LatLng> googlePoints = new ArrayList<>();
         for (OPFLatLng point : points) {
-            amazonPoints.add(new LatLng(point.getLat(), point.getLng()));
+            googlePoints.add(new LatLng(point.getLat(), point.getLng()));
         }
-        polylineOptions.addAll(amazonPoints);
+        polylineOptions.addAll(googlePoints);
         return this;
     }
 

@@ -52,14 +52,14 @@ public final class GoogleIndoorBuildingDelegate implements IndoorBuildingDelegat
     @Nullable
     @Override
     public List<OPFIndoorLevel> getLevels() {
-        final List<IndoorLevel> amazonIndoorLevels = indoorBuilding.getLevels();
-        if (amazonIndoorLevels == null) {
+        final List<IndoorLevel> googleIndoorLevels = indoorBuilding.getLevels();
+        if (googleIndoorLevels == null) {
             return null;
         }
 
-        final List<OPFIndoorLevel> indoorLevels = new ArrayList<>(amazonIndoorLevels.size());
-        for (IndoorLevel amazonLevel : amazonIndoorLevels) {
-            indoorLevels.add(new OPFIndoorLevel(new GoogleIndoorLevelDelegate(amazonLevel)));
+        final List<OPFIndoorLevel> indoorLevels = new ArrayList<>(googleIndoorLevels.size());
+        for (IndoorLevel googleLevel : googleIndoorLevels) {
+            indoorLevels.add(new OPFIndoorLevel(new GoogleIndoorLevelDelegate(googleLevel)));
         }
 
         return indoorLevels;

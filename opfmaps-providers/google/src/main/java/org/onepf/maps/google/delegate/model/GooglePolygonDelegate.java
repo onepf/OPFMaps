@@ -123,26 +123,26 @@ public final class GooglePolygonDelegate implements PolygonDelegate {
 
     @Override
     public void setHoles(@NonNull final List<? extends List<OPFLatLng>> holes) {
-        final List<List<LatLng>> amazonHoles = new ArrayList<>(holes.size());
+        final List<List<LatLng>> googleHoles = new ArrayList<>(holes.size());
         for (List<OPFLatLng> hole : holes) {
-            final List<LatLng> amazonHole = new ArrayList<>(hole.size());
+            final List<LatLng> googleHole = new ArrayList<>(hole.size());
             for (OPFLatLng point : hole) {
-                amazonHole.add(new LatLng(point.getLat(), point.getLng()));
+                googleHole.add(new LatLng(point.getLat(), point.getLng()));
             }
-            amazonHoles.add(amazonHole);
+            googleHoles.add(googleHole);
         }
 
-        polygon.setHoles(amazonHoles);
+        polygon.setHoles(googleHoles);
     }
 
     @Override
     public void setPoints(@NonNull final List<OPFLatLng> points) {
-        final List<LatLng> amazonPoints = new ArrayList<>(points.size());
+        final List<LatLng> googlePoints = new ArrayList<>(points.size());
         for (OPFLatLng point : points) {
-            amazonPoints.add(new LatLng(point.getLat(), point.getLng()));
+            googlePoints.add(new LatLng(point.getLat(), point.getLng()));
         }
 
-        polygon.setPoints(amazonPoints);
+        polygon.setPoints(googlePoints);
     }
 
     @Override
