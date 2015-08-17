@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import org.onepf.opfmaps.delegate.model.PolygonDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfutils.OPFLog;
 import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -132,7 +133,7 @@ public final class OsmdroidPolygonDelegate implements PolygonDelegate {
 
     @Override
     public void setGeodesic(final boolean geodesic) {
-        //todo OPFLog.logMethodStub(geodesic)
+        OPFLog.logStubCall(geodesic);
     }
 
     @Override
@@ -176,7 +177,7 @@ public final class OsmdroidPolygonDelegate implements PolygonDelegate {
 
     @Override
     public void setZIndex(final float zIndex) {
-        //todo OPFLog.logMethodStub(zIndex)
+        OPFLog.logStubCall(zIndex);
     }
 
     @Override

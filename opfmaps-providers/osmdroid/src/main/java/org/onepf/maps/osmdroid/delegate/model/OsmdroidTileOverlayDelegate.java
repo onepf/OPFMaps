@@ -19,6 +19,7 @@ package org.onepf.maps.osmdroid.delegate.model;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import org.onepf.opfmaps.delegate.model.TileOverlayDelegate;
+import org.onepf.opfutils.OPFLog;
 import org.osmdroid.tileprovider.MapTileProviderBase;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.TilesOverlay;
@@ -92,7 +93,7 @@ public final class OsmdroidTileOverlayDelegate implements TileOverlayDelegate {
 
     @Override
     public void setFadeIn(final boolean fadeIn) {
-        //todo OPFLog.logMethodStub(fadeIn);
+        OPFLog.logStubCall(fadeIn);
     }
 
     @Override
@@ -102,7 +103,7 @@ public final class OsmdroidTileOverlayDelegate implements TileOverlayDelegate {
 
     @Override
     public void setZIndex(final float zIndex) {
-        //todo OPFLog.logMethodStub(zIndex)
+        OPFLog.logStubCall(zIndex);
     }
 
     @Override

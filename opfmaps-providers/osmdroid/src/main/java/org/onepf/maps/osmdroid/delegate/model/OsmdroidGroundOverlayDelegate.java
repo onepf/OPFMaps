@@ -23,6 +23,7 @@ import org.onepf.opfmaps.delegate.model.GroundOverlayDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
+import org.onepf.opfutils.OPFLog;
 import org.osmdroid.bonuspack.overlays.GroundOverlay;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -148,7 +149,7 @@ public final class OsmdroidGroundOverlayDelegate implements GroundOverlayDelegat
 
     @Override
     public void setZIndex(final float zIndex) {
-        //todo OPFLog.logMethodStub(zIndex)
+        OPFLog.logStubCall(zIndex);
     }
 
     //CHECKSTYLE:OFF

@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import org.onepf.opfmaps.delegate.model.PolylineDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfutils.OPFLog;
 import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -137,7 +138,7 @@ public final class OsmdroidPolylineDelegate implements PolylineDelegate {
 
     @Override
     public void setZIndex(final float zIndex) {
-        //todo OPFLog.logMethodStub(zIndex)
+        OPFLog.logStubCall(zIndex);
     }
 
     @Override

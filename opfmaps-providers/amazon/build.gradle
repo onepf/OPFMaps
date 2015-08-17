@@ -28,7 +28,7 @@ android {
 dependencies {
     compile project(':opfmaps')//todo remove later
 
-    provided 'org.onepf:opfutils:0.1.24'
+    provided 'org.onepf:opfutils:0.1.25'
     compile 'com.amazon:amazon-maps-api:2.0'
     compile 'com.android.support:support-v4:22.2.1'
 }

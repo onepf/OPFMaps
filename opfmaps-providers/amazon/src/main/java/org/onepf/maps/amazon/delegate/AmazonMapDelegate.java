@@ -257,7 +257,7 @@ public class AmazonMapDelegate implements MapDelegate {
 
     @Override
     public void setContentDescription(@NonNull final String description) {
-        OPFLog.i("Stub setContentDescription()");
+        OPFLog.logStubCall(description);
     }
 
     @Override

@@ -61,6 +61,7 @@ import org.onepf.opfmaps.model.OPFProjection;
 import org.onepf.opfmaps.model.OPFTileOverlay;
 import org.onepf.opfmaps.model.OPFTileOverlayOptions;
 import org.onepf.opfmaps.model.OPFUiSettings;
+import org.onepf.opfutils.OPFLog;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMap;
 import org.osmdroid.api.IMapController;
@@ -171,6 +172,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFIndoorBuilding getFocusedBuilding() {
+        OPFLog.logStubCall();
         //todo implement stub
         return null;
     }
@@ -234,7 +236,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setBuildingsEnabled(final boolean enabled) {
-        //todo OPFLog.logMethodStub(enabled)
+        OPFLog.logStubCall(enabled);
     }
 
     @Override
@@ -244,13 +246,13 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public boolean setIndoorEnabled(final boolean enabled) {
-        //todo OPFLog.logMethodStub(enabled)
+        OPFLog.logStubCall(enabled);
         return false;
     }
 
     @Override
     public void setInfoWindowAdapter(@NonNull final OPFInfoWindowAdapter adapter) {
-        //todo OPFLog.logMethodStub(adapter)
+        OPFLog.logStubCall(adapter);
     }
 
     @Override

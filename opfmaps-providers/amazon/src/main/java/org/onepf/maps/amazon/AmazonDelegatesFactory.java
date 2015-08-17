@@ -59,6 +59,7 @@ import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
+import org.onepf.opfutils.OPFLog;
 
 import java.net.URL;
 
@@ -152,7 +153,7 @@ public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
             @NonNull
             @Override
             public URL getTileUrl(final int x, final int y, final int zoom) {
-                //stub
+                OPFLog.logStubCall(x, y, zoom);
                 //noinspection ConstantConditions
                 return null;
             }

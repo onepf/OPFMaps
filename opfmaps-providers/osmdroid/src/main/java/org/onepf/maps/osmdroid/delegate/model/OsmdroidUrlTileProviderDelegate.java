@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.Tile;
 import com.google.android.gms.maps.model.UrlTileProvider;
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
 import org.onepf.opfmaps.model.OPFTile;
+import org.onepf.opfutils.OPFLog;
 
 import java.net.URL;
 
@@ -39,7 +40,7 @@ public abstract class OsmdroidUrlTileProviderDelegate implements UrlTileProvider
 
             @Override
             public URL getTileUrl(final int i, final int i1, final int i2) {
-                //stub
+                OPFLog.logStubCall(i, i1, i2);
                 return null;
             }
         };
