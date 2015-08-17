@@ -17,14 +17,13 @@
 package org.onepf.maps.osmdroid.delegate;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import org.onepf.opfmaps.OPFMap;
+import android.support.annotation.Nullable;
+import org.onepf.maps.osmdroid.model.OsmdroidMapOptions;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
+import org.osmdroid.views.MapView;
 
 /**
  * @author Roman Savin
@@ -33,20 +32,52 @@ import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate {
 
     public OsmdroidMapViewDelegate(final Context context) {
-        super(context);
+        super(context, 256);
     }
 
-    public OsmdroidMapViewDelegate(final Context context, final GoogleMapOptions options) {
-        super(context, options);
+    public OsmdroidMapViewDelegate(final Context context, final OsmdroidMapOptions options) {
+        super(context, 256);
+        //todo set options
     }
 
     @Override
     public void getMapAsync(@NonNull final OPFOnMapReadyCallback callback) {
-        getMapAsync(new OnMapReadyCallback() {
+        //todo implement
+        /*getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(final GoogleMap googleMap) {
                 callback.onMapReady(new OPFMap(new OsmdroidMapDelegate(googleMap)));
             }
-        });
+        });*/
+    }
+
+    @Override
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
+        //todo implement
+    }
+
+    @Override
+    public void onResume() {
+        //todo implement
+    }
+
+    @Override
+    public void onPause() {
+        //todo implement
+    }
+
+    @Override
+    public void onDestroy() {
+        //todo implement
+    }
+
+    @Override
+    public void onSaveInstanceState(@Nullable final Bundle outState) {
+        //todo implement
+    }
+
+    @Override
+    public void onLowMemory() {
+        //todo implement
     }
 }

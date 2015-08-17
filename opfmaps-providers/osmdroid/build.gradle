@@ -23,10 +23,20 @@ android {
         targetSdkVersion 22
         versionName "1.0"
     }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+check {
+    abortOnError false
 }
 
 dependencies {
     compile project(':opfmaps') //todo remove later
+
+    provided 'org.onepf:opfutils:0.1.25'
 
     compile 'org.osmdroid:osmdroid-android:4.3'
     compile 'org.osmdroid:bonuspack:5.3'

@@ -20,13 +20,14 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidCircleDelegate;
+import org.onepf.maps.osmdroid.model.OsmdroidMapOptions;
+import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.delegate.model.TileOverlayDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
-import org.onepf.opfmaps.model.OPFPolygon;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
 import org.onepf.opfmaps.model.OPFTileOverlayOptions;
@@ -35,9 +36,6 @@ import org.osmdroid.bonuspack.overlays.GroundOverlay;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.bonuspack.overlays.Polyline;
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.MapTileProviderBase;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
@@ -52,6 +50,12 @@ public final class ConvertUtils {
 
     private ConvertUtils() {
         throw new UnsupportedOperationException();
+    }
+
+    @NonNull
+    public static OsmdroidMapOptions convertMapOptions(@NonNull final OPFMapOptions options) {
+        //todo implement
+        return new OsmdroidMapOptions();
     }
 
     @NonNull

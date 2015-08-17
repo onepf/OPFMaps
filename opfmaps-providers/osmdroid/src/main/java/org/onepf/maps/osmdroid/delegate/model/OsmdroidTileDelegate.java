@@ -18,7 +18,7 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import com.google.android.gms.maps.model.Tile;
+import org.onepf.maps.osmdroid.model.Tile;
 import org.onepf.opfmaps.delegate.model.TileDelegate;
 
 /**

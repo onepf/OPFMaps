@@ -28,6 +28,8 @@ import org.onepf.opfmaps.model.OPFLatLngBounds;
  */
 public final class OsmdroidVisibleRegionDelegate implements VisibleRegionDelegate {
 
+    //todo implement
+
     public static final Creator<OsmdroidVisibleRegionDelegate> CREATOR = new Creator<OsmdroidVisibleRegionDelegate>() {
         @Override
         public OsmdroidVisibleRegionDelegate createFromParcel(final Parcel source) {
@@ -40,15 +42,15 @@ public final class OsmdroidVisibleRegionDelegate implements VisibleRegionDelegat
         }
     };
 
-    @NonNull
-    private final VisibleRegion visibleRegion;
+    /*@NonNull
+    private final VisibleRegion visibleRegion;*/
 
     public OsmdroidVisibleRegionDelegate(@NonNull final OPFLatLng nearLeft,
                                          @NonNull final OPFLatLng nearRight,
                                          @NonNull final OPFLatLng farLeft,
                                          @NonNull final OPFLatLng farRight,
                                          @NonNull final OPFLatLngBounds latLngBounds) {
-        this.visibleRegion = new VisibleRegion(
+        /*this.visibleRegion = new VisibleRegion(
                 new LatLng(nearLeft.getLat(), nearLeft.getLng()),
                 new LatLng(nearRight.getLat(), nearRight.getLng()),
                 new LatLng(farLeft.getLat(), farLeft.getLng()),
@@ -57,60 +59,73 @@ public final class OsmdroidVisibleRegionDelegate implements VisibleRegionDelegat
                         new LatLng(latLngBounds.getSouthwest().getLat(), latLngBounds.getNortheast().getLng()),
                         new LatLng(latLngBounds.getNortheast().getLat(), latLngBounds.getNortheast().getLng())
                 )
-        );
+        );*/
     }
 
-    public OsmdroidVisibleRegionDelegate(@NonNull final VisibleRegion visibleRegion) {
+    /*public OsmdroidVisibleRegionDelegate(@NonNull final VisibleRegion visibleRegion) {
         this.visibleRegion = visibleRegion;
     }
-
+*/
     private OsmdroidVisibleRegionDelegate(@NonNull final Parcel parcel) {
-        this.visibleRegion = parcel.readParcelable(VisibleRegion.class.getClassLoader());
+       /* this.visibleRegion = parcel.readParcelable(VisibleRegion.class.getClassLoader());*/
     }
 
     @NonNull
     @Override
     public OPFLatLng getFarLeft() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.farLeft));
+        //todo implement
+        return null;
+        /*return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.farLeft));*/
     }
 
     @NonNull
     @Override
     public OPFLatLng getFarRight() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.farRight));
+        //todo implement
+        return null;
+        /*return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.farRight));*/
     }
 
     @NonNull
     @Override
     public OPFLatLngBounds getLatLngBounds() {
-        return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(
+        //todo implement
+        return null;
+        /*return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(
                 new LatLngBounds(visibleRegion.latLngBounds.southwest, visibleRegion.latLngBounds.northeast)
-        ));
+        ));*/
     }
 
     @NonNull
     @Override
     public OPFLatLng getNearLeft() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.nearLeft));
+        //todo implement
+        return null;
+        /*return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.nearLeft));*/
     }
 
     @NonNull
     @Override
     public OPFLatLng getNearRight() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.nearRight));
+        //todo implement
+        return null;
+        /*return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.nearRight));*/
     }
 
     @Override
     public int describeContents() {
-        return visibleRegion.describeContents();
+        //todo implement
+        return 0;
+        /*return visibleRegion.describeContents();*/
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(visibleRegion, flags);
+        //todo implement
+        /*dest.writeParcelable(visibleRegion, flags);*/
     }
 
-    //CHECKSTYLE:OFF
+    /*//CHECKSTYLE:OFF
     @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
@@ -131,5 +146,5 @@ public final class OsmdroidVisibleRegionDelegate implements VisibleRegionDelegat
     @Override
     public String toString() {
         return visibleRegion.toString();
-    }
+    }*/
 }

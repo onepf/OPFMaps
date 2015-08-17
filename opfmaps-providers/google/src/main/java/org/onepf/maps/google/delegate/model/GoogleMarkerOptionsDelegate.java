@@ -102,7 +102,7 @@ public final class GoogleMarkerOptionsDelegate implements MarkerOptionsDelegate 
     @Override
     public OPFBitmapDescriptor getIcon() {
         final BitmapDescriptor icon = markerOptions.getIcon();
-        if (icon == null) {
+        if (icon != null) {
             return new OPFBitmapDescriptor(new GoogleBitmapDescriptorDelegate(icon));
         }
         return null;

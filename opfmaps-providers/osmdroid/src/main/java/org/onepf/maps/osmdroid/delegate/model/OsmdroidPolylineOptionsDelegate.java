@@ -18,10 +18,10 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.PolylineOptions;
+import org.onepf.maps.osmdroid.model.PolylineOptions;
 import org.onepf.opfmaps.delegate.model.PolylineOptionsDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +59,7 @@ public final class OsmdroidPolylineOptionsDelegate implements PolylineOptionsDel
     @NonNull
     @Override
     public OsmdroidPolylineOptionsDelegate add(@NonNull final OPFLatLng point) {
-        polylineOptions.add(new LatLng(point.getLat(), point.getLng()));
+        polylineOptions.add(new GeoPoint(point.getLat(), point.getLng()));
         return this;
     }
 
@@ -72,11 +72,11 @@ public final class OsmdroidPolylineOptionsDelegate implements PolylineOptionsDel
     @NonNull
     @Override
     public OsmdroidPolylineOptionsDelegate addAll(@NonNull final Iterable<OPFLatLng> points) {
-        final List<LatLng> amazonPoints = new ArrayList<>();
+        final List<GeoPoint> osmdroidPoints = new ArrayList<>();
         for (OPFLatLng point : points) {
-            amazonPoints.add(new LatLng(point.getLat(), point.getLng()));
+            osmdroidPoints.add(new GeoPoint(point.getLat(), point.getLng()));
         }
-        polylineOptions.addAll(amazonPoints);
+        polylineOptions.addAll(osmdroidPoints);
         return this;
     }
 
@@ -102,9 +102,9 @@ public final class OsmdroidPolylineOptionsDelegate implements PolylineOptionsDel
     @NonNull
     @Override
     public List<OPFLatLng> getPoints() {
-        final List<LatLng> points = polylineOptions.getPoints();
+        final List<GeoPoint> points = polylineOptions.getPoints();
         final List<OPFLatLng> opfPoints = new ArrayList<>(points.size());
-        for (LatLng point : points) {
+        for (GeoPoint point : points) {
             opfPoints.add(new OPFLatLng(new OsmdroidLatLngDelegate(point)));
         }
 

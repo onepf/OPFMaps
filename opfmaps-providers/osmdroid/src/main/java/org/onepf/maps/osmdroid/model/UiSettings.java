@@ -1,0 +1,91 @@
+/*
+ * Copyright 2012-2015 One Platform Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.onepf.maps.osmdroid.model;
+
+/**
+ * @author Roman Savin
+ * @since 17.08.2015
+ */
+public final class UiSettings {
+    //todo implement
+
+    public boolean isCompassEnabled() {
+        return false;
+    }
+
+    public boolean isIndoorLevelPickerEnabled() {
+        return false;
+    }
+
+    public boolean isMapToolbarEnabled() {
+        return false;
+    }
+
+    public boolean isMyLocationButtonEnabled() {
+        return false;
+    }
+
+    public boolean isRotateGesturesEnabled() {
+        return false;
+    }
+
+    public boolean isScrollGesturesEnabled() {
+        return false;
+    }
+
+    public boolean isTiltGesturesEnabled() {
+        return false;
+    }
+
+    public boolean isZoomControlsEnabled() {
+        return false;
+    }
+
+    public boolean isZoomGesturesEnabled() {
+        return false;
+    }
+
+    public void setAllGesturesEnabled(final boolean enabled) {
+    }
+
+    public void setCompassEnabled(final boolean enabled) {
+    }
+
+    public void setIndoorLevelPickerEnabled(final boolean enabled) {
+    }
+
+    public void setMapToolbarEnabled(final boolean enabled) {
+    }
+
+    public void setMyLocationButtonEnabled(final boolean enabled) {
+    }
+
+    public void setRotateGesturesEnabled(final boolean enabled) {
+    }
+
+    public void setScrollGesturesEnabled(final boolean enabled) {
+    }
+
+    public void setTiltGesturesEnabled(final boolean enabled) {
+    }
+
+    public void setZoomControlsEnabled(final boolean enabled) {
+    }
+
+    public void setZoomGesturesEnabled(final boolean enabled) {
+    }
+}

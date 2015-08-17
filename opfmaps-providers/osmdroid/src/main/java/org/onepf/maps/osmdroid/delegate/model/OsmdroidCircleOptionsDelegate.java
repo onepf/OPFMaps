@@ -19,10 +19,10 @@ package org.onepf.maps.osmdroid.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.LatLng;
+import org.onepf.maps.osmdroid.model.CircleOptions;
 import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.osmdroid.util.GeoPoint;
 
 /**
  * @author Roman Savin
@@ -56,7 +56,7 @@ public final class OsmdroidCircleOptionsDelegate implements CircleOptionsDelegat
     @NonNull
     @Override
     public OsmdroidCircleOptionsDelegate center(@NonNull final OPFLatLng center) {
-        circleOptions.center(new LatLng(center.getLat(), center.getLng()));
+        circleOptions.center(new GeoPoint(center.getLat(), center.getLng()));
         return this;
     }
 
@@ -70,7 +70,7 @@ public final class OsmdroidCircleOptionsDelegate implements CircleOptionsDelegat
     @Nullable
     @Override
     public OPFLatLng getCenter() {
-        final LatLng center = circleOptions.getCenter();
+        final GeoPoint center = circleOptions.getCenter();
         if (center != null) {
             return new OPFLatLng(new OsmdroidLatLngDelegate(center));
         }

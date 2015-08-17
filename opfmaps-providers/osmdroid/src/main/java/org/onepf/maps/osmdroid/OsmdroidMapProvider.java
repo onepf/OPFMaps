@@ -16,9 +16,51 @@
 
 package org.onepf.maps.osmdroid;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+import org.onepf.opfmaps.BaseOPFMapProvider;
+import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
+
 /**
  * @author Roman Savin
  * @since 12.08.2015
  */
-public class OsmdroidMapProvider {
+public final class OsmdroidMapProvider extends BaseOPFMapProvider {
+
+    @NonNull
+    @Override
+    public DelegatesAbstractFactory getDelegatesFactory() {
+        return new OsmdroidDelegatesFactory();
+    }
+
+    @NonNull
+    @Override
+    public String getHostAppPackage() {
+        //todo return package
+        return "";
+    }
+
+    @Override
+    public boolean hasRequiredPermissions(final Context context) {
+        //todo add checks
+        return true;
+    }
+
+    @Override
+    public boolean isAvailable(final Context context) {
+        //todo add checks
+        return true;
+    }
+
+    @Override
+    public boolean isKeyPresented(final Context context) {
+        //todo add checks
+        return true;
+    }
+
+    @Override
+    public boolean hasRequestedFeatures(final Context context) {
+        //todo add checks
+        return true;
+    }
 }

@@ -19,12 +19,12 @@ package org.onepf.maps.osmdroid.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import org.onepf.maps.osmdroid.model.BitmapDescriptor;
+import org.onepf.maps.osmdroid.model.MarkerOptions;
 import org.onepf.opfmaps.delegate.model.MarkerOptionsDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.osmdroid.util.GeoPoint;
 
 /**
  * @author Roman Savin
@@ -102,7 +102,7 @@ public final class OsmdroidMarkerOptionsDelegate implements MarkerOptionsDelegat
     @Override
     public OPFBitmapDescriptor getIcon() {
         final BitmapDescriptor icon = markerOptions.getIcon();
-        if (icon == null) {
+        if (icon != null) {
             return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(icon));
         }
         return null;
@@ -121,7 +121,7 @@ public final class OsmdroidMarkerOptionsDelegate implements MarkerOptionsDelegat
     @Nullable
     @Override
     public OPFLatLng getPosition() {
-        final LatLng position = markerOptions.getPosition();
+        final GeoPoint position = markerOptions.getPosition();
         if (position != null) {
             return new OPFLatLng(new OsmdroidLatLngDelegate(position));
         }
@@ -177,7 +177,7 @@ public final class OsmdroidMarkerOptionsDelegate implements MarkerOptionsDelegat
     @NonNull
     @Override
     public OsmdroidMarkerOptionsDelegate position(@NonNull final OPFLatLng position) {
-        markerOptions.position(new LatLng(position.getLat(), position.getLng()));
+        markerOptions.position(new GeoPoint(position.getLat(), position.getLng()));
         return this;
     }
 

@@ -18,10 +18,6 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.graphics.Point;
 import android.support.annotation.NonNull;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import org.onepf.opfmaps.delegate.model.CameraUpdateFactoryDelegate;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCameraUpdate;
@@ -37,34 +33,40 @@ public final class OsmdroidCameraUpdateFactoryDelegate implements CameraUpdateFa
     @NonNull
     @Override
     public OPFCameraUpdate newCameraPosition(@NonNull final OPFCameraPosition cameraPosition) {
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newCameraPosition(
+        //todo implement
+        return null;
+        /*return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newCameraPosition(
                 new CameraPosition(
                         new LatLng(cameraPosition.getTarget().getLat(), cameraPosition.getTarget().getLng()),
                         cameraPosition.getZoom(),
                         cameraPosition.getTilt(),
                         cameraPosition.getBearing()
                 )
-        )));
+        )));*/
     }
 
     @NonNull
     @Override
     public OPFCameraUpdate newLatLng(@NonNull final OPFLatLng latLng) {
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newLatLng(
+        //todo implement
+        return null;
+        /*return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newLatLng(
                 new LatLng(latLng.getLat(), latLng.getLng())
-        )));
+        )));*/
     }
 
     @NonNull
     @Override
     public OPFCameraUpdate newLatLngBounds(@NonNull final OPFLatLngBounds bounds, final int padding) {
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newLatLngBounds(
+        //todo implement
+        return null;
+        /*return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newLatLngBounds(
                 new LatLngBounds(
                         new LatLng(bounds.getSouthwest().getLat(), bounds.getSouthwest().getLng()),
                         new LatLng(bounds.getNortheast().getLat(), bounds.getNortheast().getLng())
                 ),
                 padding
-        )));
+        )));*/
     }
 
     @NonNull
@@ -73,8 +75,9 @@ public final class OsmdroidCameraUpdateFactoryDelegate implements CameraUpdateFa
                                            final int width,
                                            final int height,
                                            final int padding) {
-
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newLatLngBounds(
+        //todo implement
+        return null;
+        /*return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newLatLngBounds(
                 new LatLngBounds(
                         new LatLng(bounds.getSouthwest().getLat(), bounds.getSouthwest().getLng()),
                         new LatLng(bounds.getNortheast().getLat(), bounds.getNortheast().getLng())
@@ -82,51 +85,65 @@ public final class OsmdroidCameraUpdateFactoryDelegate implements CameraUpdateFa
                 width,
                 height,
                 padding
-        )));
+        )));*/
     }
 
     @NonNull
     @Override
     public OPFCameraUpdate newLatLngZoom(@NonNull final OPFLatLng latLng, final float zoom) {
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newLatLngZoom(
+        //todo implement
+        return null;
+        /*return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(latLng.getLat(), latLng.getLng()),
                 zoom
-        )));
+        )));*/
     }
 
     @NonNull
     @Override
     public OPFCameraUpdate scrollBy(final float xPixel, final float yPixel) {
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.scrollBy(xPixel, yPixel)));
+        //todo implement
+        return null;
+        //return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.scrollBy(xPixel, yPixel)));
     }
 
     @NonNull
     @Override
     public OPFCameraUpdate zoomBy(final float amount, @NonNull final Point focus) {
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.zoomBy(amount, focus)));
+        //todo implement
+        return null;
+        //return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.zoomBy(amount, focus)));
     }
 
     @NonNull
     @Override
     public OPFCameraUpdate zoomBy(final float amount) {
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.zoomBy(amount)));
+        //todo implement
+        return null;
+        //return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.zoomBy(amount)));
     }
 
     @NonNull
     @Override
     public OPFCameraUpdate zoomIn() {
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.zoomIn()));
+        //todo implement
+        return null;
+        //return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.zoomIn()));
     }
 
     @NonNull
     @Override
     public OPFCameraUpdate zoomOut() {
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.zoomOut()));
+        //todo implement
+        return null;
+        //return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.zoomOut()));
     }
 
     @NonNull
     @Override
     public OPFCameraUpdate zoomTo(final float zoom) {
-        return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.zoomTo(zoom)));
+        //todo implement
+        return null;
+        //return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.zoomTo(zoom)));
     }
 }

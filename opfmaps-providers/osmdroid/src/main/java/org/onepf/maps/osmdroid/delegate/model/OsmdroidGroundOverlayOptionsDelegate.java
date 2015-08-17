@@ -19,14 +19,14 @@ package org.onepf.maps.osmdroid.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
+import org.onepf.maps.osmdroid.model.BitmapDescriptor;
+import org.onepf.maps.osmdroid.model.GroundOverlayOptions;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
+import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.GeoPoint;
 
 /**
  * @author Roman Savin
@@ -89,7 +89,7 @@ public final class OsmdroidGroundOverlayOptionsDelegate implements GroundOverlay
     @Nullable
     @Override
     public OPFLatLngBounds getBounds() {
-        final LatLngBounds bounds = groundOverlayOptions.getBounds();
+        final BoundingBoxE6 bounds = groundOverlayOptions.getBounds();
         if (bounds != null) {
             return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(bounds));
         }
@@ -114,7 +114,7 @@ public final class OsmdroidGroundOverlayOptionsDelegate implements GroundOverlay
     @Nullable
     @Override
     public OPFLatLng getLocation() {
-        final LatLng location = groundOverlayOptions.getLocation();
+        final GeoPoint location = groundOverlayOptions.getLocation();
         if (location != null) {
             return new OPFLatLng(new OsmdroidLatLngDelegate(location));
         }
@@ -153,23 +153,25 @@ public final class OsmdroidGroundOverlayOptionsDelegate implements GroundOverlay
     public OsmdroidGroundOverlayOptionsDelegate position(@NonNull final OPFLatLng location,
                                                        final float width,
                                                        final float height) {
-        groundOverlayOptions.position(new LatLng(location.getLat(), location.getLng()), width, height);
+        groundOverlayOptions.position(new GeoPoint(location.getLat(), location.getLng()), width, height);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidGroundOverlayOptionsDelegate position(@NonNull final OPFLatLng location, final float width) {
-        groundOverlayOptions.position(new LatLng(location.getLat(), location.getLng()), width);
+        groundOverlayOptions.position(new GeoPoint(location.getLat(), location.getLng()), width);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidGroundOverlayOptionsDelegate positionFromBounds(@NonNull final OPFLatLngBounds bounds) {
-        groundOverlayOptions.positionFromBounds(new LatLngBounds(
-                new LatLng(bounds.getSouthwest().getLat(), bounds.getNortheast().getLng()),
-                new LatLng(bounds.getNortheast().getLat(), bounds.getNortheast().getLng())
+        groundOverlayOptions.positionFromBounds(new BoundingBoxE6(
+                bounds.getNortheast().getLat(),
+                bounds.getNortheast().getLng(),
+                bounds.getSouthwest().getLat(),
+                bounds.getSouthwest().getLng()
         ));
         return this;
     }

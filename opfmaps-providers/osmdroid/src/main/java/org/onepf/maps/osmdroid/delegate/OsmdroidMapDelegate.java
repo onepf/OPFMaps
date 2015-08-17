@@ -17,9 +17,7 @@
 package org.onepf.maps.osmdroid.delegate;
 
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.support.annotation.NonNull;
-import android.view.View;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidCircleDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidGroundOverlayDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidMarkerDelegate;
@@ -32,7 +30,6 @@ import org.onepf.opfmaps.listener.OPFCancelableCallback;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
 import org.onepf.opfmaps.listener.OPFOnIndoorStateChangeListener;
 import org.onepf.opfmaps.listener.OPFOnInfoWindowClickListener;
-import org.onepf.opfmaps.listener.OPFOnLocationChangedListener;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapLoadedCallback;
 import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
@@ -63,14 +60,11 @@ import org.onepf.opfmaps.model.OPFTileOverlayOptions;
 import org.onepf.opfmaps.model.OPFUiSettings;
 import org.onepf.opfutils.OPFLog;
 import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.api.IMap;
-import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.GroundOverlay;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.TilesOverlay;
 
 /**
  * @author Roman Savin
@@ -257,7 +251,8 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setLocationSource(@NonNull final OPFLocationSource source) {
-        map.setLocationSource(new LocationSource() {
+        //todo implment
+        /*map.setLocationSource(new LocationSource() {
             @Override
             public void activate(final OnLocationChangedListener onLocationChangedListener) {
                 source.activate(new OPFOnLocationChangedListener() {
@@ -272,32 +267,35 @@ public class OsmdroidMapDelegate implements MapDelegate {
             public void deactivate() {
                 source.deactivate();
             }
-        });
+        });*/
     }
 
     @Override
     public void setMapType(@NonNull final OPFMapType type) {
-        map.setMapType(ConvertUtils.convertMapType(type));
+        OPFLog.logStubCall(type);
+        //todo check is there any types in osmdroid
     }
 
     @Override
     public void setMyLocationEnabled(final boolean enabled) {
-        map.setMyLocationEnabled(enabled);
+        //todo implement
+        /*map.setMyLocationEnabled(enabled);*/
     }
 
     @Override
     public void setOnCameraChangeListener(@NonNull final OPFOnCameraChangeListener listener) {
-        map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+        /*map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(final CameraPosition cameraPosition) {
                 //todo implement
             }
-        });
+        });*/
     }
 
     @Override
     public void setOnIndoorStateChangeListener(@NonNull final OPFOnIndoorStateChangeListener listener) {
-        map.setOnIndoorStateChangeListener(new GoogleMap.OnIndoorStateChangeListener() {
+        //todo implement
+        /*map.setOnIndoorStateChangeListener(new GoogleMap.OnIndoorStateChangeListener() {
 
             @Override
             public void onIndoorBuildingFocused() {
@@ -308,62 +306,68 @@ public class OsmdroidMapDelegate implements MapDelegate {
             public void onIndoorLevelActivated(final IndoorBuilding indoorBuilding) {
                 listener.onIndoorLevelActivated(new OPFIndoorBuilding(new GoogleIndoorBuildingDelegate(indoorBuilding)));
             }
-        });
+        });*/
     }
 
     @Override
     public void setOnInfoWindowClickListener(@NonNull final OPFOnInfoWindowClickListener listener) {
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        //todo implement
+        /*map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(final Marker marker) {
                 listener.onInfoWindowClick(new OPFMarker(new GoogleMarkerDelegate(marker)));
             }
-        });
+        });*/
     }
 
     @Override
     public void setOnMapClickListener(@NonNull final OPFOnMapClickListener listener) {
-        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        //todo implement
+       /* map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(final LatLng latLng) {
                 listener.onMapClick(new OPFLatLng(new GoogleLatLngDelegate(latLng)));
             }
-        });
+        });*/
     }
 
     @Override
     public void setOnMapLoadedCallback(@NonNull final OPFOnMapLoadedCallback callback) {
-        map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+        //todo implement
+        /*map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
                 callback.onMapLoaded();
             }
-        });
+        });*/
     }
 
     @Override
     public void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener listener) {
-        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+        //todo implement
+        /*map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(final LatLng latLng) {
                 listener.onMapLongClick(new OPFLatLng(new GoogleLatLngDelegate(latLng)));
             }
-        });
+        });*/
     }
 
     @Override
     public void setOnMarkerClickListener(@NonNull final OPFOnMarkerClickListener listener) {
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        //todo implement
+        /*map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(final Marker marker) {
                 return listener.onMarkerClick(new OPFMarker(new GoogleMarkerDelegate(marker)));
             }
-        });
+        });*/
     }
 
     @Override
     public void setOnMarkerDragListener(@NonNull final OPFOnMarkerDragListener listener) {
-        map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+        //todo implement
+        /*map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
 
             private OPFMarker opfMarker;
 
@@ -392,17 +396,18 @@ public class OsmdroidMapDelegate implements MapDelegate {
                     opfMarker.setPosition(new OPFLatLng(new GoogleLatLngDelegate(marker.getPosition())));
                 }
             }
-        });
+        });*/
     }
 
     @Override
     public void setOnMyLocationButtonClickListener(@NonNull final OPFOnMyLocationButtonClickListener listener) {
-        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+        //todo implement
+        /*map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
                 return listener.onMyLocationButtonClick();
             }
-        });
+        });*/
     }
 
     @Override
@@ -412,12 +417,14 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setTrafficEnabled(final boolean enabled) {
-        map.setTrafficEnabled(enabled);
+        //todo implement
+        /*map.setTrafficEnabled(enabled);*/
     }
 
     @Override
     public void snapshot(@NonNull final OPFSnapshotReadyCallback callback, @NonNull final Bitmap bitmap) {
-        map.snapshot(
+        //todo implement
+        /*map.snapshot(
                 new GoogleMap.SnapshotReadyCallback() {
                     @Override
                     public void onSnapshotReady(final Bitmap bitmap) {
@@ -425,22 +432,24 @@ public class OsmdroidMapDelegate implements MapDelegate {
                     }
                 },
                 bitmap
-        );
+        );*/
     }
 
     @Override
     public void snapshot(@NonNull final OPFSnapshotReadyCallback callback) {
-        map.snapshot(new GoogleMap.SnapshotReadyCallback() {
+        //todo implement
+        /*map.snapshot(new GoogleMap.SnapshotReadyCallback() {
             @Override
             public void onSnapshotReady(final Bitmap bitmap) {
                 callback.onSnapshotReady(bitmap);
             }
-        });
+        });*/
     }
 
     @Override
     public void stopAnimation() {
-        map.stopAnimation();
+        //todo implement
+        /*map.stopAnimation();*/
     }
 
     //CHECKSTYLE:OFF

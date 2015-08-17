@@ -18,7 +18,6 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorFactoryDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 
@@ -31,42 +30,56 @@ public final class OsmdroidBitmapDescriptorFactoryDelegate implements BitmapDesc
     @NonNull
     @Override
     public OPFBitmapDescriptor defaultMarker() {
-        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.defaultMarker()));
+        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(null));
+        //todo implement
+        //return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.defaultMarker()));
     }
 
     @NonNull
     @Override
     public OPFBitmapDescriptor defaultMarker(final float hue) {
-        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.defaultMarker(hue)));
+        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(null));
+        //todo implement
+        //return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.defaultMarker(hue)));
     }
 
     @NonNull
     @Override
     public OPFBitmapDescriptor fromAsset(@NonNull final String assetName) {
-        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.fromAsset(assetName)));
+        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(null));
+        //todo implement
+        //return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.fromAsset(assetName)));
     }
 
     @NonNull
     @Override
     public OPFBitmapDescriptor fromBitmap(@NonNull final Bitmap image) {
-        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.fromBitmap(image)));
+        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(null));
+        //todo implement
+        //return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.fromBitmap(image)));
     }
 
     @NonNull
     @Override
     public OPFBitmapDescriptor fromFile(@NonNull final String fileName) {
-        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.fromFile(fileName)));
+        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(null));
+        //todo implement
+        //return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.fromFile(fileName)));
     }
 
     @NonNull
     @Override
     public OPFBitmapDescriptor fromPath(@NonNull final String absolutePath) {
-        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.fromPath(absolutePath)));
+        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(null));
+        //todo implement
+        //return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.fromPath(absolutePath)));
     }
 
     @NonNull
     @Override
     public OPFBitmapDescriptor fromResource(final int resourceId) {
-        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.fromResource(resourceId)));
+        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(null));
+        //todo implement
+        //return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(BitmapDescriptorFactory.fromResource(resourceId)));
     }
 }

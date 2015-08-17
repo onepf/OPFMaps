@@ -18,8 +18,8 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.google.android.gms.maps.model.IndoorBuilding;
-import com.google.android.gms.maps.model.IndoorLevel;
+import org.onepf.maps.osmdroid.model.IndoorBuilding;
+import org.onepf.maps.osmdroid.model.IndoorLevel;
 import org.onepf.opfmaps.delegate.model.IndoorBuildingDelegate;
 import org.onepf.opfmaps.model.OPFIndoorLevel;
 
@@ -52,14 +52,14 @@ public final class OsmdroidIndoorBuildingDelegate implements IndoorBuildingDeleg
     @Nullable
     @Override
     public List<OPFIndoorLevel> getLevels() {
-        final List<IndoorLevel> amazonIndoorLevels = indoorBuilding.getLevels();
-        if (amazonIndoorLevels == null) {
+        final List<IndoorLevel> osmdroidIndoorLevels = indoorBuilding.getLevels();
+        if (osmdroidIndoorLevels == null) {
             return null;
         }
 
-        final List<OPFIndoorLevel> indoorLevels = new ArrayList<>(amazonIndoorLevels.size());
-        for (IndoorLevel amazonLevel : amazonIndoorLevels) {
-            indoorLevels.add(new OPFIndoorLevel(new OsmdroidIndoorLevelDelegate(amazonLevel)));
+        final List<OPFIndoorLevel> indoorLevels = new ArrayList<>(osmdroidIndoorLevels.size());
+        for (IndoorLevel osmdroidLevel : osmdroidIndoorLevels) {
+            indoorLevels.add(new OPFIndoorLevel(new OsmdroidIndoorLevelDelegate(osmdroidLevel)));
         }
 
         return indoorLevels;

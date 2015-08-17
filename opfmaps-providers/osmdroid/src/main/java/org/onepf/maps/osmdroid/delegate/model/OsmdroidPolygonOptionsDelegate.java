@@ -18,10 +18,10 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.PolygonOptions;
+import org.onepf.maps.osmdroid.model.PolygonOptions;
 import org.onepf.opfmaps.delegate.model.PolygonOptionsDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +59,7 @@ public final class OsmdroidPolygonOptionsDelegate implements PolygonOptionsDeleg
     @NonNull
     @Override
     public PolygonOptionsDelegate add(@NonNull final OPFLatLng point) {
-        polygonOptions.add(new LatLng(point.getLat(), point.getLng()));
+        polygonOptions.add(new GeoPoint(point.getLat(), point.getLng()));
         return this;
     }
 
@@ -72,22 +72,22 @@ public final class OsmdroidPolygonOptionsDelegate implements PolygonOptionsDeleg
     @NonNull
     @Override
     public PolygonOptionsDelegate addAll(@NonNull final Iterable<OPFLatLng> points) {
-        final List<LatLng> amazonPoints = new ArrayList<>();
+        final List<GeoPoint> osmdroidPoints = new ArrayList<>();
         for (OPFLatLng point : points) {
-            amazonPoints.add(new LatLng(point.getLat(), point.getLng()));
+            osmdroidPoints.add(new GeoPoint(point.getLat(), point.getLng()));
         }
-        polygonOptions.addAll(amazonPoints);
+        polygonOptions.addAll(osmdroidPoints);
         return this;
     }
 
     @NonNull
     @Override
     public PolygonOptionsDelegate addHole(@NonNull final Iterable<OPFLatLng> points) {
-        final List<LatLng> amazonPoints = new ArrayList<>();
+        final List<GeoPoint> osmdroidPoints = new ArrayList<>();
         for (OPFLatLng point : points) {
-            amazonPoints.add(new LatLng(point.getLat(), point.getLng()));
+            osmdroidPoints.add(new GeoPoint(point.getLat(), point.getLng()));
         }
-        polygonOptions.addHole(amazonPoints);
+        polygonOptions.addHole(osmdroidPoints);
         return this;
     }
 
@@ -113,11 +113,11 @@ public final class OsmdroidPolygonOptionsDelegate implements PolygonOptionsDeleg
     @NonNull
     @Override
     public List<List<OPFLatLng>> getHoles() {
-        final List<List<LatLng>> holes = polygonOptions.getHoles();
+        final List<List<GeoPoint>> holes = polygonOptions.getHoles();
         final List<List<OPFLatLng>> opfHoles = new ArrayList<>(holes.size());
-        for (List<LatLng> hole : holes) {
+        for (List<GeoPoint> hole : holes) {
             final List<OPFLatLng> opfHole = new ArrayList<>(hole.size());
-            for (LatLng point : hole) {
+            for (GeoPoint point : hole) {
                 opfHole.add(new OPFLatLng(new OsmdroidLatLngDelegate(point)));
             }
             opfHoles.add(opfHole);
@@ -129,9 +129,9 @@ public final class OsmdroidPolygonOptionsDelegate implements PolygonOptionsDeleg
     @NonNull
     @Override
     public List<OPFLatLng> getPoints() {
-        final List<LatLng> points = polygonOptions.getPoints();
+        final List<GeoPoint> points = polygonOptions.getPoints();
         final List<OPFLatLng> opfPoints = new ArrayList<>(points.size());
-        for (LatLng point : points) {
+        for (GeoPoint point : points) {
             opfPoints.add(new OPFLatLng(new OsmdroidLatLngDelegate(point)));
         }
 

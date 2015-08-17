@@ -18,8 +18,8 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.google.android.gms.maps.model.Tile;
-import com.google.android.gms.maps.model.UrlTileProvider;
+import org.onepf.maps.osmdroid.model.Tile;
+import org.onepf.maps.osmdroid.model.UrlTileProvider;
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
 import org.onepf.opfmaps.model.OPFTile;
 import org.onepf.opfutils.OPFLog;

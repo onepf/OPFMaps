@@ -17,7 +17,7 @@
 package org.onepf.maps.osmdroid.delegate.model;
 
 import android.support.annotation.NonNull;
-import com.google.android.gms.maps.UiSettings;
+import org.onepf.maps.osmdroid.model.UiSettings;
 import org.onepf.opfmaps.delegate.model.UiSettingsDelegate;
 
 /**

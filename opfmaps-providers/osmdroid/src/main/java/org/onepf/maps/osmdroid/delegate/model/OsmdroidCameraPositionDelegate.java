@@ -20,8 +20,7 @@ import android.content.Context;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
+import org.onepf.maps.osmdroid.model.CameraPosition;
 import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -48,18 +47,24 @@ public final class OsmdroidCameraPositionDelegate implements CameraPositionDeleg
     private final CameraPosition cameraPosition;
 
     public OsmdroidCameraPositionDelegate(@NonNull final Context context, @NonNull final AttributeSet attrs) {
-        this.cameraPosition = CameraPosition.createFromAttributes(context, attrs);
+        //todo implement
+        this.cameraPosition = new CameraPosition();
+        //this.cameraPosition = CameraPosition.createFromAttributes(context, attrs);
     }
 
     public OsmdroidCameraPositionDelegate(@NonNull final OPFLatLng target, final float zoom) {
-        this.cameraPosition = CameraPosition.fromLatLngZoom(new LatLng(target.getLat(), target.getLng()), zoom);
+        //todo implement
+        this.cameraPosition = new CameraPosition();
+        //this.cameraPosition = CameraPosition.fromLatLngZoom(new LatLng(target.getLat(), target.getLng()), zoom);
     }
 
     public OsmdroidCameraPositionDelegate(@NonNull final OPFLatLng target,
                                           final float zoom,
                                           final float tilt,
                                           final float bearing) {
-        this.cameraPosition = new CameraPosition(new LatLng(target.getLat(), target.getLng()), zoom, tilt, bearing);
+        //todo implement
+        this.cameraPosition = new CameraPosition();
+        //this.cameraPosition = new CameraPosition(new LatLng(target.getLat(), target.getLng()), zoom, tilt, bearing);
     }
 
     public OsmdroidCameraPositionDelegate(@NonNull final CameraPosition cameraPosition) {
@@ -72,23 +77,31 @@ public final class OsmdroidCameraPositionDelegate implements CameraPositionDeleg
 
     @Override
     public float getBearing() {
-        return cameraPosition.bearing;
+        //todo implement
+        return 0;
+        //return cameraPosition.bearing;
     }
 
     @NonNull
     @Override
     public OPFLatLng getTarget() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(cameraPosition.target));
+        //todo implement
+        return null;
+        //return new OPFLatLng(new OsmdroidLatLngDelegate(cameraPosition.target));
     }
 
     @Override
     public float getTilt() {
-        return cameraPosition.tilt;
+        //todo implement
+        return 0;
+        //return cameraPosition.tilt;
     }
 
     @Override
     public float getZoom() {
-        return cameraPosition.zoom;
+        //todo implement
+        return 0;
+        //return cameraPosition.zoom;
     }
 
     //CHECKSTYLE:OFF
@@ -126,47 +139,48 @@ public final class OsmdroidCameraPositionDelegate implements CameraPositionDeleg
 
     public static class Builder implements CameraPositionDelegate.Builder {
 
-        @NonNull
-        private final CameraPosition.Builder delegate;
+        //todo implement
+        /*@NonNull
+        private final CameraPosition.Builder delegate;*/
 
         public Builder() {
-            this.delegate = CameraPosition.builder();
+            //this.delegate = CameraPosition.builder();
         }
 
         public Builder(@NonNull final OPFCameraPosition cameraPosition) {
-            this.delegate = CameraPosition.builder(new CameraPosition(
+            /*this.delegate = CameraPosition.builder(new CameraPosition(
                     new LatLng(cameraPosition.getTarget().getLat(), cameraPosition.getTarget().getLng()),
                     cameraPosition.getZoom(),
                     cameraPosition.getTilt(),
                     cameraPosition.getBearing()
-            ));
+            ));*/
         }
 
         @NonNull
         @Override
         public CameraPositionDelegate.Builder bearing(final float bearing) {
-            delegate.bearing(bearing);
+            /*delegate.bearing(bearing);*/
             return this;
         }
 
         @NonNull
         @Override
         public CameraPositionDelegate.Builder target(@NonNull final OPFLatLng target) {
-            delegate.target(new LatLng(target.getLat(), target.getLng()));
+            /*delegate.target(new LatLng(target.getLat(), target.getLng()));*/
             return this;
         }
 
         @NonNull
         @Override
         public CameraPositionDelegate.Builder tilt(final float tilt) {
-            delegate.tilt(tilt);
+            /*delegate.tilt(tilt);*/
             return this;
         }
 
         @NonNull
         @Override
         public CameraPositionDelegate.Builder zoom(final float zoom) {
-            delegate.zoom(zoom);
+            /*delegate.zoom(zoom);*/
             return this;
         }
 
@@ -174,7 +188,8 @@ public final class OsmdroidCameraPositionDelegate implements CameraPositionDeleg
         @NonNull
         @Override
         public OPFCameraPosition build() {
-            return new OPFCameraPosition(new OsmdroidCameraPositionDelegate(delegate.build()));
+            return null;
+            //return new OPFCameraPosition(new OsmdroidCameraPositionDelegate(delegate.build()));
         }
     }
 }
