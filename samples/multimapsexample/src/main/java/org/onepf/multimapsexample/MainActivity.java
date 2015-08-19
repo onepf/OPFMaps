@@ -31,7 +31,6 @@ import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.model.OPFBitmapDescriptorFactory;
-import org.onepf.opfmaps.model.OPFCameraUpdate;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;

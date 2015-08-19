@@ -19,11 +19,14 @@ package org.onepf.maps.osmdroid.delegate;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import org.onepf.maps.osmdroid.delegate.model.OsmdroidCameraPositionDelegate;
+import org.onepf.maps.osmdroid.model.CameraPosition;
 import org.onepf.maps.osmdroid.model.OsmdroidMapOptions;
 import org.onepf.opfmaps.delegate.MapOptionsDelegate;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfutils.OPFLog;
+import org.osmdroid.util.GeoPoint;
 
 /**
  * @author Roman Savin
@@ -65,192 +68,159 @@ public final class OsmdroidMapOptionsDelegate implements MapOptionsDelegate {
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate useViewLifecycleInFragment(final boolean useViewLifecycleInFragment) {
-        //todo implement
-        /*mapOptions.useViewLifecycleInFragment(useViewLifecycleInFragment);*/
+        mapOptions.useViewLifecycleInFragment(useViewLifecycleInFragment);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate mapType(@NonNull final OPFMapType mapType) {
-        //todo implement
-        /*mapOptions.mapType(ConvertUtils.convertMapType(mapType));*/
+        mapOptions.mapType(mapType);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate camera(@NonNull final OPFCameraPosition camera) {
-        //todo implement
-        /*mapOptions.camera(new CameraPosition(
-                new LatLng(camera.getTarget().getLat(), camera.getTarget().getLng()),
+        mapOptions.camera(new CameraPosition(
+                new GeoPoint(camera.getTarget().getLat(), camera.getTarget().getLng()),
                 camera.getZoom(),
                 camera.getTilt(),
                 camera.getBearing()
-        ));*/
+        ));
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate zoomControlsEnabled(final boolean enabled) {
-        //todo implement
-        /*mapOptions.zoomControlsEnabled(enabled);*/
+        mapOptions.zoomControlsEnabled(enabled);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate compassEnabled(final boolean enabled) {
-        //todo implement
-        /*mapOptions.compassEnabled(enabled);*/
+        mapOptions.compassEnabled(enabled);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate scrollGesturesEnabled(final boolean enabled) {
-        //todo implement
-        /*mapOptions.scrollGesturesEnabled(enabled);*/
+        mapOptions.scrollGesturesEnabled(enabled);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate zoomGesturesEnabled(final boolean enabled) {
-        //todo implement
-        /*mapOptions.zoomGesturesEnabled(enabled);*/
+        mapOptions.zoomGesturesEnabled(enabled);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate tiltGesturesEnabled(final boolean enabled) {
-        //todo imeplement
-        /*mapOptions.tiltGesturesEnabled(enabled);*/
+        mapOptions.tiltGesturesEnabled(enabled);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate rotateGesturesEnabled(final boolean enabled) {
-        //todo implement
-        /*mapOptions.rotateGesturesEnabled(enabled);*/
+        mapOptions.rotateGesturesEnabled(enabled);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate liteMode(final boolean enabled) {
-        //todo implement
-        /*mapOptions.liteMode(enabled);*/
+        mapOptions.liteMode(enabled);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidMapOptionsDelegate mapToolbarEnabled(final boolean enabled) {
-        //todo implement
-        /*mapOptions.mapToolbarEnabled(enabled);*/
+        mapOptions.mapToolbarEnabled(enabled);
         return this;
     }
 
     @Nullable
     @Override
     public Boolean getZOrderOnTop() {
-        //todo implement
-        return null;
-        /*return mapOptions.getZOrderOnTop();*/
+        return mapOptions.getZOrderOnTop();
     }
 
     @Nullable
     @Override
     public Boolean getUseViewLifecycleInFragment() {
-        //todo implement
-        return null;
-        /*return mapOptions.getUseViewLifecycleInFragment();*/
+        return mapOptions.getUseViewLifecycleInFragment();
     }
 
     @NonNull
     @Override
     public OPFMapType getMapType() {
-        //todo check other types in osmdroid
         return OPFMapType.NORMAL;
     }
 
     @Nullable
     @Override
     public OPFCameraPosition getCamera() {
-        //todo implement
-        /*final CameraPosition cameraPosition = mapOptions.getCamera();
+        final CameraPosition cameraPosition = mapOptions.getCamera();
         if (cameraPosition != null) {
-            return new OPFCameraPosition(new GoogleCameraPositionDelegate(cameraPosition));
-        }*/
+            return new OPFCameraPosition(new OsmdroidCameraPositionDelegate(cameraPosition));
+        }
         return null;
     }
 
     @Nullable
     @Override
     public Boolean getZoomControlsEnabled() {
-        //todo implement
-        return null;
-        /*return mapOptions.getZoomControlsEnabled();*/
+        return mapOptions.getZoomControlsEnabled();
     }
 
     @Nullable
     @Override
     public Boolean getCompassEnabled() {
-        //todo implement
-        return null;
-        /*return mapOptions.getCompassEnabled();*/
+        return mapOptions.getCompassEnabled();
     }
 
     @Nullable
     @Override
     public Boolean getScrollGesturesEnabled() {
-        //todo implement
-        return null;
-        /*return mapOptions.getScrollGesturesEnabled();*/
+        return mapOptions.getScrollGesturesEnabled();
     }
 
     @Nullable
     @Override
     public Boolean getZoomGesturesEnabled() {
-        //todo implement
-        return null;
-        /*return mapOptions.getZoomGesturesEnabled();*/
+        return mapOptions.getZoomGesturesEnabled();
     }
 
     @Nullable
     @Override
     public Boolean getTiltGesturesEnabled() {
-        //todo implement
-        return null;
-        /*return mapOptions.getTiltGesturesEnabled();*/
+        return mapOptions.getTiltGesturesEnabled();
     }
 
     @Nullable
     @Override
     public Boolean getRotateGesturesEnabled() {
-        //todo implement
-        return null;
-        /*return mapOptions.getRotateGesturesEnabled();*/
+        return mapOptions.getRotateGesturesEnabled();
     }
 
     @Nullable
     @Override
     public Boolean getLiteMode() {
-        //todo implement
-        return null;
-        /*return mapOptions.getLiteMode();*/
+        return mapOptions.getLiteMode();
     }
 
     @Nullable
     @Override
     public Boolean getMapToolbarEnabled() {
-        //todo implement
-        return null;
-        /*return mapOptions.getMapToolbarEnabled();*/
+        return mapOptions.getMapToolbarEnabled();
     }
 
     @Override

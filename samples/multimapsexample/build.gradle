@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId "org.onepf.multimapsexample"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -59,6 +59,7 @@ dependencies {
     compile project(':opfmaps') //todo remove later
     compile project(':google') //todo remove later
     compile project(':amazon') //todo remove later
+    compile project(':osmdroid')
 
     compile 'org.onepf:opfutils:0.1.25'
 }
