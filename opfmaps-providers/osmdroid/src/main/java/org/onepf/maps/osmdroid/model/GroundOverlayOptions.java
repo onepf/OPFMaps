@@ -47,8 +47,8 @@ public final class GroundOverlayOptions implements Parcelable {
     private BoundingBoxE6 bounds = null;
     @Nullable
     private GeoPoint location = null;
-    @Nullable
-    private BitmapDescriptor image = null;
+    @NonNull
+    private BitmapDescriptor image = BitmapDescriptorFactory.defaultMarker();
     private float anchorU = 0.0F;
     private float anchorV = 0.0F;
     private float bearing = 0.0F;
@@ -116,7 +116,7 @@ public final class GroundOverlayOptions implements Parcelable {
         return this.height;
     }
 
-    @Nullable
+    @NonNull
     public BitmapDescriptor getImage() {
         return this.image;
     }
@@ -261,7 +261,7 @@ public final class GroundOverlayOptions implements Parcelable {
     public int hashCode() {
         int result = bounds != null ? bounds.hashCode() : 0;
         result = 31 * result + (location != null ? location.hashCode() : 0);
-        result = 31 * result + (image != null ? image.hashCode() : 0);
+        result = 31 * result + image.hashCode();
         result = 31 * result + (anchorU != +0.0f ? Float.floatToIntBits(anchorU) : 0);
         result = 31 * result + (anchorV != +0.0f ? Float.floatToIntBits(anchorV) : 0);
         result = 31 * result + (bearing != +0.0f ? Float.floatToIntBits(bearing) : 0);

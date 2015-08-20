@@ -38,7 +38,6 @@ import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfutils.OPFLog;
 
-
 public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
     //private OPFMapView mapView;
@@ -109,16 +108,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 .position(new OPFLatLng(37.773975, -122.40205))
                 .title("marker #1")
                 .snippet("snippet #1")
-                .icon(OPFBitmapDescriptorFactory.defaultMarker())
-                .draggable(true));
-
-
-        opfMap.addMarker(new OPFMarkerOptions()
-                .visible(true)
-                .position(new OPFLatLng(55.752004, 37.617017))
-                .title("marker #2")
-                .snippet("snippet #2")
-                .icon(OPFBitmapDescriptorFactory.defaultMarker())
+                .icon(OPFBitmapDescriptorFactory.defaultMarker(OPFBitmapDescriptorFactory.HUE_AZURE))
                 .draggable(true));
 
         //circle
@@ -127,6 +117,14 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 .radius(1000000.0)
                 .fillColor(Color.CYAN)
                 .strokeColor(Color.BLUE));
+
+        opfMap.addMarker(new OPFMarkerOptions()
+                .visible(true)
+                .position(new OPFLatLng(55.752004, 37.617017))
+                .title("marker #2")
+                .snippet("snippet #2")
+                .icon(OPFBitmapDescriptorFactory.defaultMarker())
+                .draggable(true));
 
         opfMap.setOnMarkerDragListener(new OPFOnMarkerDragListener() {
             @Override

@@ -46,8 +46,8 @@ public final class MarkerOptions implements Parcelable {
     private GeoPoint position = null;
     @Nullable
     private String title = null;
-    @Nullable
-    private BitmapDescriptor icon = null;
+    @NonNull
+    private BitmapDescriptor icon = BitmapDescriptorFactory.defaultMarker();
     @Nullable
     private String snippet = null;
     private float alpha = 1.0F;
@@ -116,7 +116,7 @@ public final class MarkerOptions implements Parcelable {
         return this.anchorV;
     }
 
-    @Nullable
+    @NonNull
     public BitmapDescriptor getIcon() {
         return this.icon;
     }
@@ -254,7 +254,7 @@ public final class MarkerOptions implements Parcelable {
     public int hashCode() {
         int result = position != null ? position.hashCode() : 0;
         result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (icon != null ? icon.hashCode() : 0);
+        result = 31 * result + icon.hashCode();
         result = 31 * result + (snippet != null ? snippet.hashCode() : 0);
         result = 31 * result + (alpha != +0.0f ? Float.floatToIntBits(alpha) : 0);
         result = 31 * result + (anchorU != +0.0f ? Float.floatToIntBits(anchorU) : 0);

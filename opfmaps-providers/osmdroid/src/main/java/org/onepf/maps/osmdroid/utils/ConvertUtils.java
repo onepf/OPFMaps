@@ -19,7 +19,9 @@ package org.onepf.maps.osmdroid.utils;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidCircleDelegate;
+import org.onepf.maps.osmdroid.model.BitmapDescriptor;
 import org.onepf.maps.osmdroid.model.CameraPosition;
 import org.onepf.maps.osmdroid.model.OsmdroidMapOptions;
 import org.onepf.opfmaps.OPFMapOptions;
@@ -135,7 +137,8 @@ public final class ConvertUtils {
 
         final OPFBitmapDescriptor opfBitmapDescriptor = options.getImage();
         if (opfBitmapDescriptor != null) {
-            groundOverlay.setImage((Drawable) opfBitmapDescriptor.getDelegate().getBitmapDescriptor());
+            groundOverlay.setImage(((BitmapDescriptor) options.getImage()
+                    .getDelegate().getBitmapDescriptor()).createDrawable(context));
         }
 
         final OPFLatLng location = options.getLocation();
@@ -161,7 +164,8 @@ public final class ConvertUtils {
 
         final OPFBitmapDescriptor opfBitmapDescriptor = options.getIcon();
         if (opfBitmapDescriptor != null) {
-            marker.setIcon((Drawable) options.getIcon().getDelegate().getBitmapDescriptor());
+            marker.setIcon(((BitmapDescriptor) options.getIcon()
+                    .getDelegate().getBitmapDescriptor()).createDrawable(map.getContext()));
         }
 
         final OPFLatLng position = options.getPosition();
