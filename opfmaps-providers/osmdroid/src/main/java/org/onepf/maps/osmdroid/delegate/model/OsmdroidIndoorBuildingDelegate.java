@@ -33,11 +33,7 @@ import java.util.List;
 public final class OsmdroidIndoorBuildingDelegate implements IndoorBuildingDelegate {
 
     @NonNull
-    private final IndoorBuilding indoorBuilding;
-
-    public OsmdroidIndoorBuildingDelegate(@NonNull final IndoorBuilding indoorBuilding) {
-        this.indoorBuilding = indoorBuilding;
-    }
+    private final IndoorBuilding indoorBuilding = new IndoorBuilding();
 
     @Override
     public int getActiveLevelIndex() {

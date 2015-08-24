@@ -17,13 +17,17 @@
 package org.onepf.maps.osmdroid.delegate;
 
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
+
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidCircleDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidGroundOverlayDelegate;
+import org.onepf.maps.osmdroid.delegate.model.OsmdroidIndoorBuildingDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidMarkerDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidPolygonDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidPolylineDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidProjectionDelegate;
+import org.onepf.maps.osmdroid.model.CameraUpdate;
 import org.onepf.maps.osmdroid.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapDelegate;
 import org.onepf.opfmaps.listener.OPFCancelableCallback;
@@ -60,6 +64,7 @@ import org.onepf.opfmaps.model.OPFTileOverlayOptions;
 import org.onepf.opfmaps.model.OPFUiSettings;
 import org.onepf.opfutils.OPFLog;
 import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.GroundOverlay;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polygon;
@@ -136,17 +141,55 @@ public class OsmdroidMapDelegate implements MapDelegate {
     public void animateCamera(@NonNull final OPFCameraUpdate update,
                               final int durationMs,
                               @NonNull final OPFCancelableCallback callback) {
-        //todo implement
+        animateCamera(update);
     }
 
     @Override
     public void animateCamera(@NonNull final OPFCameraUpdate update, @NonNull final OPFCancelableCallback callback) {
-        //todo implement
+        animateCamera(update);
     }
 
     @Override
     public void animateCamera(@NonNull final OPFCameraUpdate update) {
-        //todo implement
+        final IMapController controller = map.getController();
+        final CameraUpdate cameraUpdate = (CameraUpdate) update.getDelegate().getCameraUpdate();
+
+        switch (cameraUpdate.getCameraUpdateSource()) {
+            case CAMERA_POSITION:
+                controller.animateTo(cameraUpdate.getCenter());
+                map.setMapOrientation(cameraUpdate.getBearing());
+                break;
+            case GEOPOINT:
+                controller.animateTo(cameraUpdate.getCenter());
+                break;
+            case BOUNDS_PADDING:
+            case BOUNDS_WIDTH_HEIGHT_PADDING:
+                //noinspection ConstantConditions
+                controller.animateTo(cameraUpdate.getBounds().getCenter());
+                break;
+            case GEOPOINT_ZOOM:
+                controller.animateTo(cameraUpdate.getCenter());
+                controller.setZoom((int) cameraUpdate.getZoom());
+                break;
+            case SCROLL_BY:
+                controller.scrollBy((int) cameraUpdate.getXPixel(), (int) cameraUpdate.getYPixel());
+                break;
+            case ZOOM_BY_FOCUS:
+                zoomByFocus(cameraUpdate);
+                break;
+            case ZOOM_BY:
+                zoomBy(cameraUpdate);
+                break;
+            case ZOOM_IN:
+                controller.zoomIn();
+                break;
+            case ZOOM_OUT:
+                controller.zoomOut();
+                break;
+            case ZOOM_TO:
+                controller.setZoom((int) cameraUpdate.getZoom());
+                break;
+        }
     }
 
     @Override
@@ -167,8 +210,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
     @Override
     public OPFIndoorBuilding getFocusedBuilding() {
         OPFLog.logStubCall();
-        //todo implement stub
-        return null;
+        return new OPFIndoorBuilding(new OsmdroidIndoorBuildingDelegate());
     }
 
     @NonNull
@@ -202,7 +244,6 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public boolean isBuildingsEnabled() {
-        //todo check
         return false;
     }
 
@@ -219,13 +260,50 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public boolean isTrafficEnabled() {
-        //todo check
         return false;
     }
 
     @Override
     public void moveCamera(@NonNull final OPFCameraUpdate update) {
-        //todo implement
+        final IMapController controller = map.getController();
+        final CameraUpdate cameraUpdate = (CameraUpdate) update.getDelegate().getCameraUpdate();
+
+        switch (cameraUpdate.getCameraUpdateSource()) {
+            case CAMERA_POSITION:
+                controller.setCenter(cameraUpdate.getCenter());
+                map.setMapOrientation(cameraUpdate.getBearing());
+                break;
+            case GEOPOINT:
+                controller.setCenter(cameraUpdate.getCenter());
+                break;
+            case BOUNDS_PADDING:
+            case BOUNDS_WIDTH_HEIGHT_PADDING:
+                //noinspection ConstantConditions
+                controller.setCenter(cameraUpdate.getBounds().getCenter());
+                break;
+            case GEOPOINT_ZOOM:
+                controller.setCenter(cameraUpdate.getCenter());
+                controller.setZoom((int) cameraUpdate.getZoom());
+                break;
+            case SCROLL_BY:
+                controller.scrollBy((int) cameraUpdate.getXPixel(), (int) cameraUpdate.getYPixel());
+                break;
+            case ZOOM_BY_FOCUS:
+                zoomByFocus(cameraUpdate);
+                break;
+            case ZOOM_BY:
+                zoomBy(cameraUpdate);
+                break;
+            case ZOOM_IN:
+                controller.zoomIn();
+                break;
+            case ZOOM_OUT:
+                controller.zoomOut();
+                break;
+            case ZOOM_TO:
+                controller.setZoom((int) cameraUpdate.getZoom());
+                break;
+        }
     }
 
     @Override
@@ -251,7 +329,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setLocationSource(@NonNull final OPFLocationSource source) {
-        //todo implment
+        //todo implement
         /*map.setLocationSource(new LocationSource() {
             @Override
             public void activate(final OnLocationChangedListener onLocationChangedListener) {
@@ -448,8 +526,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void stopAnimation() {
-        //todo implement
-        /*map.stopAnimation();*/
+        map.getController().stopAnimation(false);
     }
 
     //CHECKSTYLE:OFF
@@ -473,5 +550,34 @@ public class OsmdroidMapDelegate implements MapDelegate {
     @Override
     public String toString() {
         return map.toString();
+    }
+
+    private void zoomByFocus(@NonNull final CameraUpdate cameraUpdate) {
+        final Point focus = cameraUpdate.getFocus();
+        if (focus == null) {
+            return;
+        }
+
+        final IMapController controller = map.getController();
+        final int zoomAmount = Math.abs((int) cameraUpdate.getZoom());
+        final boolean isZoomIn = cameraUpdate.getZoom() > 0;
+
+        //noinspection ConstantConditions
+        final int x = focus.x;
+        final int y = focus.y;
+        for (int i = 0; i < zoomAmount; ++i) {
+            if (isZoomIn) {
+                controller.zoomInFixing(x, y);
+            } else {
+                controller.zoomOutFixing(x, y);
+            }
+        }
+    }
+
+    private void zoomBy(@NonNull final CameraUpdate cameraUpdate) {
+        final IMapController controller = map.getController();
+        final int currentZoomLevel = map.getZoomLevel();
+        final int zoomAmount = (int) cameraUpdate.getZoom();
+        controller.setZoom(currentZoomLevel + zoomAmount);
     }
 }
