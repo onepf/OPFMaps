@@ -71,6 +71,7 @@ public final class OPFMapHelper {
             if (provider.isAvailable(context) && provider.hasRequiredPermissions(context)
                     && provider.isKeyPresented(context) && provider.hasRequestedFeatures(context)) {
                 currentProvider = provider;
+                break;
             }
         }
 

@@ -27,7 +27,9 @@ import org.onepf.maps.osmdroid.delegate.model.OsmdroidMarkerDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidPolygonDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidPolylineDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidProjectionDelegate;
+import org.onepf.maps.osmdroid.delegate.model.OsmdroidUiSettingsDelegate;
 import org.onepf.maps.osmdroid.model.CameraUpdate;
+import org.onepf.maps.osmdroid.model.UiSettings;
 import org.onepf.maps.osmdroid.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapDelegate;
 import org.onepf.opfmaps.listener.OPFCancelableCallback;
@@ -69,7 +71,6 @@ import org.osmdroid.bonuspack.overlays.GroundOverlay;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.bonuspack.overlays.Polyline;
-import org.osmdroid.views.MapView;
 
 /**
  * @author Roman Savin
@@ -79,9 +80,9 @@ import org.osmdroid.views.MapView;
 public class OsmdroidMapDelegate implements MapDelegate {
 
     @NonNull
-    private final MapView map; //todo check for leak
+    private final OsmdroidMapViewDelegate map; //todo check for leak
 
-    public OsmdroidMapDelegate(@NonNull final MapView map) {
+    public OsmdroidMapDelegate(@NonNull final OsmdroidMapViewDelegate map) {
         this.map = map;
     }
 
@@ -238,8 +239,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFUiSettings getUiSettings() {
-        //todo implemnt
-        return null;
+        return new OPFUiSettings(new OsmdroidUiSettingsDelegate(new UiSettings(map)));
     }
 
     @Override
@@ -254,8 +254,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public boolean isMyLocationEnabled() {
-        //todo check
-        return true;
+        return map.isMyLocationEnabled();
     }
 
     @Override
@@ -329,35 +328,19 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setLocationSource(@NonNull final OPFLocationSource source) {
-        //todo implement
-        /*map.setLocationSource(new LocationSource() {
-            @Override
-            public void activate(final OnLocationChangedListener onLocationChangedListener) {
-                source.activate(new OPFOnLocationChangedListener() {
-                    @Override
-                    public void onLocationChanged(@NonNull final Location location) {
-                        onLocationChangedListener.onLocationChanged(location);
-                    }
-                });
-            }
-
-            @Override
-            public void deactivate() {
-                source.deactivate();
-            }
-        });*/
+        OPFLog.logStubCall(source);
     }
 
     @Override
     public void setMapType(@NonNull final OPFMapType type) {
         OPFLog.logStubCall(type);
         //todo check is there any types in osmdroid
+        //todo check TileSource
     }
 
     @Override
     public void setMyLocationEnabled(final boolean enabled) {
-        //todo implement
-        /*map.setMyLocationEnabled(enabled);*/
+        map.setMyLocationEnabled(enabled);
     }
 
     @Override

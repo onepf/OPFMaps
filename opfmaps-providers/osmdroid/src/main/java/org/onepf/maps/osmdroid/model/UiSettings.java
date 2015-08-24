@@ -16,15 +16,26 @@
 
 package org.onepf.maps.osmdroid.model;
 
+import android.support.annotation.NonNull;
+
+import org.onepf.maps.osmdroid.delegate.OsmdroidMapViewDelegate;
+import org.onepf.opfutils.OPFLog;
+
 /**
  * @author Roman Savin
  * @since 17.08.2015
  */
 public final class UiSettings {
-    //todo implement
+
+    @NonNull
+    private final OsmdroidMapViewDelegate mapView;
+
+    public UiSettings(@NonNull final OsmdroidMapViewDelegate mapView) {
+        this.mapView = mapView;
+    }
 
     public boolean isCompassEnabled() {
-        return false;
+        return mapView.isCompassEnabled();
     }
 
     public boolean isIndoorLevelPickerEnabled() {
@@ -36,15 +47,17 @@ public final class UiSettings {
     }
 
     public boolean isMyLocationButtonEnabled() {
+        //todo implement my location button
         return false;
     }
 
     public boolean isRotateGesturesEnabled() {
-        return false;
+        return mapView.isRotateGesturesEnabled();
     }
 
     public boolean isScrollGesturesEnabled() {
-        return false;
+        //todo implement for disable
+        return true;
     }
 
     public boolean isTiltGesturesEnabled() {
@@ -52,40 +65,51 @@ public final class UiSettings {
     }
 
     public boolean isZoomControlsEnabled() {
-        return false;
+        return mapView.isZoomControlsEnabled();
     }
 
     public boolean isZoomGesturesEnabled() {
-        return false;
+        return mapView.isZoomGesturesEnabled();
     }
 
     public void setAllGesturesEnabled(final boolean enabled) {
+        mapView.setRotateGesturesEnabled(enabled);
+        mapView.setMultiTouchControls(enabled);
     }
 
     public void setCompassEnabled(final boolean enabled) {
+        mapView.setCompassEnabled(enabled);
     }
 
     public void setIndoorLevelPickerEnabled(final boolean enabled) {
+        OPFLog.logStubCall(enabled);
     }
 
     public void setMapToolbarEnabled(final boolean enabled) {
+        OPFLog.logStubCall(enabled);
     }
 
     public void setMyLocationButtonEnabled(final boolean enabled) {
+        //todo implement
     }
 
     public void setRotateGesturesEnabled(final boolean enabled) {
+        mapView.setRotateGesturesEnabled(enabled);
     }
 
     public void setScrollGesturesEnabled(final boolean enabled) {
+        //todo implement
     }
 
     public void setTiltGesturesEnabled(final boolean enabled) {
+        OPFLog.logStubCall(enabled);
     }
 
     public void setZoomControlsEnabled(final boolean enabled) {
+        mapView.setBuiltInZoomControls(enabled);
     }
 
     public void setZoomGesturesEnabled(final boolean enabled) {
+        mapView.setMultiTouchControls(enabled);
     }
 }
