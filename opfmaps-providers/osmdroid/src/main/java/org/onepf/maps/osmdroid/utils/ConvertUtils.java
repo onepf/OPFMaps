@@ -175,7 +175,6 @@ public final class ConvertUtils {
             marker.setPosition(new GeoPoint(position.getLat(), position.getLng()));
         }
 
-        //todo set click listeners
         return marker;
     }
 

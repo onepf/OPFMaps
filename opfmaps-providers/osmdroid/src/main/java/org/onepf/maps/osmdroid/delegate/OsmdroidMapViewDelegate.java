@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import org.onepf.maps.osmdroid.R;
 import org.onepf.maps.osmdroid.model.CameraPosition;
 import org.onepf.maps.osmdroid.model.OsmdroidMapOptions;
+import org.onepf.maps.osmdroid.overlay.ClickListenerOverlay;
 import org.onepf.maps.osmdroid.overlay.ClickableCompassOverlay;
 import org.onepf.maps.osmdroid.overlay.RotationGestureOverlay;
 import org.onepf.maps.osmdroid.overlay.compass.CompassRotationOrientationProvider;
@@ -31,6 +32,8 @@ import org.onepf.maps.osmdroid.overlay.listener.RotationObserver;
 import org.onepf.maps.osmdroid.utils.ConvertUtils;
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
+import org.onepf.opfmaps.listener.OPFOnMapClickListener;
+import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfutils.OPFLog;
@@ -67,6 +70,8 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     private ClickableCompassOverlay compassOverlay;
     @Nullable
     private RotationGestureOverlay rotationGestureOverlay;
+    @Nullable
+    private ClickListenerOverlay clickListenerOverlay;
     @Nullable
     private MyLocationNewOverlay myLocationOverlay;
 
@@ -167,6 +172,22 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         }
     }
 
+    public void setOnMapClickListener(@NonNull final OPFOnMapClickListener onMapClickListener) {
+        if (clickListenerOverlay == null) {
+            return;
+        }
+
+        clickListenerOverlay.setOnMapClickListener(onMapClickListener);
+    }
+
+    public void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener onMapLongClickListener) {
+        if (clickListenerOverlay == null) {
+            return;
+        }
+
+        clickListenerOverlay.setOnMapLongClickListener(onMapLongClickListener);
+    }
+
     public void setMyLocationEnabled(final boolean isMyLocationEnabled) {
         if (myLocationOverlay == null) {
             return;
@@ -208,6 +229,10 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
 
     private void initOverlays() {
         final Context context = getContext();
+
+        //Click listener
+        clickListenerOverlay = new ClickListenerOverlay(context);
+        getOverlays().add(clickListenerOverlay);
 
         //Compass
         final CompassRotationOrientationProvider compassProvider = new CompassRotationOrientationProvider(context);

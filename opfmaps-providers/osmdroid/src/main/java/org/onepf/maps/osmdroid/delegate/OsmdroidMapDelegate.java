@@ -19,6 +19,7 @@ package org.onepf.maps.osmdroid.delegate;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidCircleDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidGroundOverlayDelegate;
@@ -71,6 +72,7 @@ import org.osmdroid.bonuspack.overlays.GroundOverlay;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.bonuspack.overlays.Polyline;
+import org.osmdroid.views.MapView;
 
 /**
  * @author Roman Savin
@@ -81,6 +83,11 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @NonNull
     private final OsmdroidMapViewDelegate map; //todo check for leak
+
+    @Nullable
+    private OPFOnMarkerClickListener opfOnMarkerClickListener;
+    @Nullable
+    private OPFOnMarkerDragListener opfOnMarkerDragListener;
 
     public OsmdroidMapDelegate(@NonNull final OsmdroidMapViewDelegate map) {
         this.map = map;
@@ -110,7 +117,44 @@ public class OsmdroidMapDelegate implements MapDelegate {
         final Marker marker = ConvertUtils.convertMarkerOptions(map, options);
         map.getOverlays().add(marker);
         map.invalidate();
-        return new OPFMarker(new OsmdroidMarkerDelegate(map, marker));
+
+        final OPFMarker opfMarker = new OPFMarker(new OsmdroidMarkerDelegate(map, marker));
+        marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker, final MapView mapView) {
+                marker.showInfoWindow();
+                mapView.getController().animateTo(marker.getPosition());
+
+                if (opfOnMarkerClickListener != null) {
+                    opfOnMarkerClickListener.onMarkerClick(opfMarker);
+                }
+                return true;
+            }
+        });
+        marker.setOnMarkerDragListener(new Marker.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDrag(final Marker marker) {
+                if (opfOnMarkerDragListener != null) {
+                    opfOnMarkerDragListener.onMarkerDrag(opfMarker);
+                }
+            }
+
+            @Override
+            public void onMarkerDragEnd(final Marker marker) {
+                if (opfOnMarkerDragListener != null) {
+                    opfOnMarkerDragListener.onMarkerDragEnd(opfMarker);
+                }
+            }
+
+            @Override
+            public void onMarkerDragStart(final Marker marker) {
+                if (opfOnMarkerDragListener != null) {
+                    opfOnMarkerDragListener.onMarkerDragStart(opfMarker);
+                }
+            }
+        });
+
+        return opfMarker;
     }
 
     @NonNull
@@ -353,19 +397,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setOnIndoorStateChangeListener(@NonNull final OPFOnIndoorStateChangeListener listener) {
-        //todo implement
-        /*map.setOnIndoorStateChangeListener(new GoogleMap.OnIndoorStateChangeListener() {
-
-            @Override
-            public void onIndoorBuildingFocused() {
-                listener.onIndoorBuildingFocused();
-            }
-
-            @Override
-            public void onIndoorLevelActivated(final IndoorBuilding indoorBuilding) {
-                listener.onIndoorLevelActivated(new OPFIndoorBuilding(new GoogleIndoorBuildingDelegate(indoorBuilding)));
-            }
-        });*/
+        OPFLog.logStubCall(listener);
     }
 
     @Override
@@ -381,81 +413,27 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setOnMapClickListener(@NonNull final OPFOnMapClickListener listener) {
-        //todo implement
-       /* map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(final LatLng latLng) {
-                listener.onMapClick(new OPFLatLng(new GoogleLatLngDelegate(latLng)));
-            }
-        });*/
+        map.setOnMapClickListener(listener);
     }
 
     @Override
     public void setOnMapLoadedCallback(@NonNull final OPFOnMapLoadedCallback callback) {
-        //todo implement
-        /*map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                callback.onMapLoaded();
-            }
-        });*/
+        callback.onMapLoaded();
     }
 
     @Override
     public void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener listener) {
-        //todo implement
-        /*map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(final LatLng latLng) {
-                listener.onMapLongClick(new OPFLatLng(new GoogleLatLngDelegate(latLng)));
-            }
-        });*/
+        map.setOnMapLongClickListener(listener);
     }
 
     @Override
     public void setOnMarkerClickListener(@NonNull final OPFOnMarkerClickListener listener) {
-        //todo implement
-        /*map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(final Marker marker) {
-                return listener.onMarkerClick(new OPFMarker(new GoogleMarkerDelegate(marker)));
-            }
-        });*/
+        this.opfOnMarkerClickListener = listener;
     }
 
     @Override
     public void setOnMarkerDragListener(@NonNull final OPFOnMarkerDragListener listener) {
-        //todo implement
-        /*map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-
-            private OPFMarker opfMarker;
-
-            @Override
-            public void onMarkerDrag(final Marker marker) {
-                updateOPFMarker(marker);
-                listener.onMarkerDrag(opfMarker);
-            }
-
-            @Override
-            public void onMarkerDragEnd(final Marker marker) {
-                updateOPFMarker(marker);
-                listener.onMarkerDragEnd(opfMarker);
-            }
-
-            @Override
-            public void onMarkerDragStart(final Marker marker) {
-                updateOPFMarker(marker);
-                listener.onMarkerDragStart(opfMarker);
-            }
-
-            private void updateOPFMarker(@NonNull final Marker marker) {
-                if (opfMarker == null) {
-                    opfMarker = new OPFMarker(new GoogleMarkerDelegate(marker));
-                } else {
-                    opfMarker.setPosition(new OPFLatLng(new GoogleLatLngDelegate(marker.getPosition())));
-                }
-            }
-        });*/
+        this.opfOnMarkerDragListener = listener;
     }
 
     @Override

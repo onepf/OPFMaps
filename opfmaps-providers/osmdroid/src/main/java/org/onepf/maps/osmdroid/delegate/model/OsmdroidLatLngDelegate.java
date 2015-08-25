@@ -90,6 +90,6 @@ public final class OsmdroidLatLngDelegate implements LatLngDelegate {
 
     @Override
     public String toString() {
-        return latLng.toString();
+        return "lat/lng: (" + latLng.getLatitude() + "," + latLng.getLongitude() + ")";
     }
 }

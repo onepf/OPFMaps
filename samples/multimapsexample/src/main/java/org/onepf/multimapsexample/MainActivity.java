@@ -27,6 +27,7 @@ import android.widget.Toast;
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapFragment;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
+import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
@@ -157,6 +158,14 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             public void onMapClick(@NonNull final OPFLatLng latLng) {
                 OPFLog.logMethod(latLng);
                 Toast.makeText(MainActivity.this, "Map click position : " + latLng, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        opfMap.setOnMapLongClickListener(new OPFOnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(@NonNull final OPFLatLng latLng) {
+                OPFLog.logMethod(latLng);
+                Toast.makeText(MainActivity.this, "Map long click position : " + latLng, Toast.LENGTH_SHORT).show();
             }
         });
 
