@@ -233,7 +233,7 @@ public final class ConvertUtils {
     }
 
     @NonNull
-    public static TileOverlayDelegate convertTileOvetlayOptions(@NonNull final MapView mapView,
+    public static TileOverlayDelegate convertTileOverlayOptions(@NonNull final MapView mapView,
                                                                 @NonNull final OPFTileOverlayOptions options) {
         final OPFTileProvider opfTileProvider = options.getTileProvider();
         if (opfTileProvider == null) {

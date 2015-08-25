@@ -314,7 +314,7 @@ public class GoogleMapDelegate implements MapDelegate {
         map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(final CameraPosition cameraPosition) {
-                //todo implement
+                listener.onCameraChange(new OPFCameraPosition(new GoogleCameraPositionDelegate(cameraPosition)));
             }
         });
     }

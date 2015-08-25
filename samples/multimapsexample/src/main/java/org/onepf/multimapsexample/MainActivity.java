@@ -24,14 +24,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapFragment;
+import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.model.OPFBitmapDescriptorFactory;
+import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -184,6 +187,13 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             @Override
             public View getInfoContents(@NonNull final OPFMarker marker) {
                 return null;
+            }
+        });
+
+        opfMap.setOnCameraChangeListener(new OPFOnCameraChangeListener() {
+            @Override
+            public void onCameraChange(@NonNull final OPFCameraPosition position) {
+                OPFLog.logMethod(position);
             }
         });
     }

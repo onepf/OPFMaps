@@ -387,12 +387,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setOnCameraChangeListener(@NonNull final OPFOnCameraChangeListener listener) {
-        /*map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(final CameraPosition cameraPosition) {
-                //todo implement
-            }
-        });*/
+        OPFLog.logStubCall(listener);
     }
 
     @Override
@@ -454,33 +449,17 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setTrafficEnabled(final boolean enabled) {
-        //todo implement
-        /*map.setTrafficEnabled(enabled);*/
+        OPFLog.logStubCall(enabled);
     }
 
     @Override
     public void snapshot(@NonNull final OPFSnapshotReadyCallback callback, @NonNull final Bitmap bitmap) {
-        //todo implement
-        /*map.snapshot(
-                new GoogleMap.SnapshotReadyCallback() {
-                    @Override
-                    public void onSnapshotReady(final Bitmap bitmap) {
-                        callback.onSnapshotReady(bitmap);
-                    }
-                },
-                bitmap
-        );*/
+        OPFLog.logStubCall(callback, bitmap);
     }
 
     @Override
     public void snapshot(@NonNull final OPFSnapshotReadyCallback callback) {
-        //todo implement
-        /*map.snapshot(new GoogleMap.SnapshotReadyCallback() {
-            @Override
-            public void onSnapshotReady(final Bitmap bitmap) {
-                callback.onSnapshotReady(bitmap);
-            }
-        });*/
+        OPFLog.logStubCall(callback);
     }
 
     @Override

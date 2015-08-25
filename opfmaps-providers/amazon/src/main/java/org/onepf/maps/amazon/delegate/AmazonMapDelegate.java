@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.view.View;
+
 import com.amazon.geo.mapsv2.AmazonMap;
 import com.amazon.geo.mapsv2.CameraUpdate;
 import com.amazon.geo.mapsv2.LocationSource;
@@ -32,6 +33,7 @@ import com.amazon.geo.mapsv2.model.Marker;
 import com.amazon.geo.mapsv2.model.Polygon;
 import com.amazon.geo.mapsv2.model.Polyline;
 import com.amazon.geo.mapsv2.model.TileOverlay;
+
 import org.onepf.maps.amazon.delegate.model.AmazonCameraPositionDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonCircleDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonGroundOverlayDelegate;
@@ -315,7 +317,7 @@ public class AmazonMapDelegate implements MapDelegate {
         map.setOnCameraChangeListener(new AmazonMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(final CameraPosition cameraPosition) {
-                //todo implement
+                listener.onCameraChange(new OPFCameraPosition(new AmazonCameraPositionDelegate(cameraPosition)));
             }
         });
     }
