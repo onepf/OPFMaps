@@ -28,9 +28,11 @@ import org.onepf.maps.osmdroid.overlay.ClickableCompassOverlay;
 import org.onepf.maps.osmdroid.overlay.RotationGestureOverlay;
 import org.onepf.maps.osmdroid.overlay.compass.CompassRotationOrientationProvider;
 import org.onepf.maps.osmdroid.overlay.listener.RotationObserver;
+import org.onepf.maps.osmdroid.utils.ConvertUtils;
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
+import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfutils.OPFLog;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.views.MapView;
@@ -59,6 +61,8 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     private boolean isZoomGesturesEnabled;
     private boolean isMyLocationEnabled;
 
+    @NonNull
+    private OPFMapType mapType = OPFMapType.NORMAL;
     @Nullable
     private ClickableCompassOverlay compassOverlay;
     @Nullable
@@ -132,6 +136,11 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         this.isZoomGesturesEnabled = enabled;
     }
 
+    public void setMapType(@NonNull final OPFMapType mapType) {
+        this.mapType = mapType;
+        setTileSource(ConvertUtils.convertMapTypeToTileSource(mapType));
+    }
+
     public void setCompassEnabled(final boolean isCompassEnabled) {
         if (compassOverlay == null) {
             return;
@@ -169,6 +178,11 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         } else {
             myLocationOverlay.disableMyLocation();
         }
+    }
+
+    @NonNull
+    public OPFMapType getMapType() {
+        return mapType;
     }
 
     public boolean isZoomControlsEnabled() {
@@ -229,6 +243,8 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
             controller.setZoom((int) cameraPosition.zoom);
             setMapOrientation(cameraPosition.bearing);
         }
+
+        setMapType(options.getMapType());
 
         setCompassEnabled(options.getCompassEnabled() == null ? true : options.getCompassEnabled());
         setRotateGesturesEnabled(options.getRotateGesturesEnabled() == null ? true : options.getRotateGesturesEnabled());

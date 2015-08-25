@@ -217,7 +217,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFMapType getMapType() {
-        return OPFMapType.NORMAL;
+        return map.getMapType();
     }
 
     @Override
@@ -333,9 +333,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setMapType(@NonNull final OPFMapType type) {
-        OPFLog.logStubCall(type);
-        //todo check is there any types in osmdroid
-        //todo check TileSource
+        map.setMapType(type);
     }
 
     @Override

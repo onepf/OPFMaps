@@ -184,8 +184,7 @@ public final class OsmdroidMapOptions implements Parcelable {
 
     @NonNull
     public OsmdroidMapOptions mapType(@NonNull final OPFMapType mapType) {
-        //todo check other types
-        OPFLog.logStubCall(mapType);
+        this.mapType = mapType;
         return this;
     }
 

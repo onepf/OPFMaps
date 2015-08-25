@@ -162,7 +162,7 @@ public final class OsmdroidMapOptionsDelegate implements MapOptionsDelegate {
     @NonNull
     @Override
     public OPFMapType getMapType() {
-        return OPFMapType.NORMAL;
+        return mapOptions.getMapType();
     }
 
     @Nullable

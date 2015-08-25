@@ -17,7 +17,6 @@
 package org.onepf.maps.osmdroid.utils;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidCircleDelegate;
@@ -31,6 +30,7 @@ import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
@@ -40,6 +40,8 @@ import org.osmdroid.bonuspack.overlays.GroundOverlay;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.bonuspack.overlays.Polyline;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
@@ -241,5 +243,20 @@ public final class ConvertUtils {
 
         //todo implement
         return null;
+    }
+
+    @NonNull
+    public static ITileSource convertMapTypeToTileSource(@NonNull final OPFMapType type) {
+        switch (type) {
+            case NORMAL:
+                return TileSourceFactory.MAPNIK;
+            case SATELLITE:
+                return TileSourceFactory.MAPQUESTAERIAL;
+            case TERRAIN:
+            case HYBRID:
+                return TileSourceFactory.MAPQUESTOSM;
+            default:
+                return TileSourceFactory.MAPNIK;
+        }
     }
 }
