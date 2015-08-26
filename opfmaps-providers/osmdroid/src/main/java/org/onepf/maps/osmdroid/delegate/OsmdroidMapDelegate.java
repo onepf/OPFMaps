@@ -228,8 +228,8 @@ public class OsmdroidMapDelegate implements MapDelegate {
                 controller.animateTo(cameraUpdate.getBounds().getCenter());
                 break;
             case GEOPOINT_ZOOM:
-                controller.animateTo(cameraUpdate.getCenter());
                 controller.setZoom((int) cameraUpdate.getZoom());
+                controller.animateTo(cameraUpdate.getCenter());
                 break;
             case SCROLL_BY:
                 controller.scrollBy((int) cameraUpdate.getXPixel(), (int) cameraUpdate.getYPixel());
@@ -340,8 +340,8 @@ public class OsmdroidMapDelegate implements MapDelegate {
                 controller.setCenter(cameraUpdate.getBounds().getCenter());
                 break;
             case GEOPOINT_ZOOM:
-                controller.setCenter(cameraUpdate.getCenter());
                 controller.setZoom((int) cameraUpdate.getZoom());
+                controller.setCenter(cameraUpdate.getCenter());
                 break;
             case SCROLL_BY:
                 controller.scrollBy((int) cameraUpdate.getXPixel(), (int) cameraUpdate.getYPixel());
