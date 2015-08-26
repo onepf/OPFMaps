@@ -26,6 +26,7 @@ import org.onepf.maps.osmdroid.model.CameraPosition;
 import org.onepf.maps.osmdroid.model.OsmdroidMapOptions;
 import org.onepf.maps.osmdroid.overlay.ClickListenerOverlay;
 import org.onepf.maps.osmdroid.overlay.ClickableCompassOverlay;
+import org.onepf.maps.osmdroid.overlay.ClickableMyLocationOverlay;
 import org.onepf.maps.osmdroid.overlay.RotationGestureOverlay;
 import org.onepf.maps.osmdroid.overlay.compass.CompassRotationOrientationProvider;
 import org.onepf.maps.osmdroid.overlay.listener.RotationObserver;
@@ -40,7 +41,6 @@ import org.onepf.opfutils.OPFLog;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.TileSystem;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     @Nullable
     private ClickListenerOverlay clickListenerOverlay;
     @Nullable
-    private MyLocationNewOverlay myLocationOverlay;
+    private ClickableMyLocationOverlay myLocationOverlay;
 
     public OsmdroidMapViewDelegate(final Context context) {
         this(context, null);
@@ -264,7 +264,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         rotationGestureOverlay = new RotationGestureOverlay(context, this);
 
         //My Location
-        myLocationOverlay = new MyLocationNewOverlay(context, this);
+        myLocationOverlay = new ClickableMyLocationOverlay(context, this);
         getOverlays().add(myLocationOverlay);
     }
 

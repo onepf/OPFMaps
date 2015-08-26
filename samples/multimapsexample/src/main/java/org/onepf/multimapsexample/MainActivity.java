@@ -110,7 +110,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         //circle
         opfMap.addCircle(new OPFCircleOptions()
                 .center(new OPFLatLng(55.752004, 37.617017))
-                .radius(1000000.0)
+                .radius(100000.0)
                 .fillColor(Color.CYAN)
                 .strokeColor(Color.BLUE));
 
