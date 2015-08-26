@@ -20,6 +20,8 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.MotionEvent;
+import android.view.View;
 
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidCircleDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidGroundOverlayDelegate;
@@ -31,6 +33,7 @@ import org.onepf.maps.osmdroid.delegate.model.OsmdroidProjectionDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidUiSettingsDelegate;
 import org.onepf.maps.osmdroid.model.CameraUpdate;
 import org.onepf.maps.osmdroid.model.UiSettings;
+import org.onepf.maps.osmdroid.overlay.MarkerInfoWindow;
 import org.onepf.maps.osmdroid.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapDelegate;
 import org.onepf.opfmaps.listener.OPFCancelableCallback;
@@ -69,10 +72,14 @@ import org.onepf.opfutils.OPFLog;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.GroundOverlay;
+import org.osmdroid.bonuspack.overlays.InfoWindow;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Overlay;
+
+import java.util.List;
 
 /**
  * @author Roman Savin
@@ -88,6 +95,10 @@ public class OsmdroidMapDelegate implements MapDelegate {
     private OPFOnMarkerClickListener opfOnMarkerClickListener;
     @Nullable
     private OPFOnMarkerDragListener opfOnMarkerDragListener;
+    @Nullable
+    private OPFInfoWindowAdapter opfInfoWindowAdapter;
+    @Nullable
+    private OPFOnInfoWindowClickListener opfOnInfoWindowClickListener;
 
     public OsmdroidMapDelegate(@NonNull final OsmdroidMapViewDelegate map) {
         this.map = map;
@@ -119,6 +130,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
         map.invalidate();
 
         final OPFMarker opfMarker = new OPFMarker(new OsmdroidMarkerDelegate(map, marker));
+
         marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(final Marker marker, final MapView mapView) {
@@ -131,6 +143,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
                 return true;
             }
         });
+
         marker.setOnMarkerDragListener(new Marker.OnMarkerDragListener() {
             @Override
             public void onMarkerDrag(final Marker marker) {
@@ -153,6 +166,8 @@ public class OsmdroidMapDelegate implements MapDelegate {
                 }
             }
         });
+
+        initMarkerInfoWindows(marker, opfMarker);
 
         return opfMarker;
     }
@@ -367,7 +382,15 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setInfoWindowAdapter(@NonNull final OPFInfoWindowAdapter adapter) {
-        OPFLog.logStubCall(adapter);
+        this.opfInfoWindowAdapter = adapter;
+
+        final List<Overlay> overlayList = map.getOverlays();
+        for (Overlay overlay : overlayList) {
+            if (overlay instanceof Marker) {
+                final Marker marker = (Marker) overlay;
+                initMarkerInfoWindows(marker, new OPFMarker(new OsmdroidMarkerDelegate(map, marker)));
+            }
+        }
     }
 
     @Override
@@ -397,13 +420,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setOnInfoWindowClickListener(@NonNull final OPFOnInfoWindowClickListener listener) {
-        //todo implement
-        /*map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(final Marker marker) {
-                listener.onInfoWindowClick(new OPFMarker(new GoogleMarkerDelegate(marker)));
-            }
-        });*/
+        this.opfOnInfoWindowClickListener = listener;
     }
 
     @Override
@@ -517,5 +534,34 @@ public class OsmdroidMapDelegate implements MapDelegate {
         final int currentZoomLevel = map.getZoomLevel();
         final int zoomAmount = (int) cameraUpdate.getZoom();
         controller.setZoom(currentZoomLevel + zoomAmount);
+    }
+
+    private void initMarkerInfoWindows(@NonNull final Marker marker, @NonNull final OPFMarker opfMarker) {
+        //Set custom info window
+        if (opfInfoWindowAdapter != null) {
+            final View infoWindowView = opfInfoWindowAdapter.getInfoWindow(opfMarker);
+            final View infoContentsView = opfInfoWindowAdapter.getInfoContents(opfMarker);
+            if (infoWindowView != null) {
+                marker.setInfoWindow(new MarkerInfoWindow(infoWindowView, map));
+            } else if (infoContentsView != null) {
+                marker.setInfoWindow(new MarkerInfoWindow(infoContentsView, map, true));
+            }
+        }
+
+        //Set info window click listener
+        final InfoWindow infoWindow = marker.getInfoWindow();
+        if (infoWindow != null) {
+            infoWindow.getView().setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(final View v, final MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        if (opfOnInfoWindowClickListener != null) {
+                            opfOnInfoWindowClickListener.onInfoWindowClick(opfMarker);
+                        }
+                    }
+                    return true;
+                }
+            });
+        }
     }
 }

@@ -47,6 +47,8 @@ public class ClickListenerOverlay extends Overlay {
 
     @Override
     public boolean onSingleTapConfirmed(final MotionEvent e, final MapView mapView) {
+        MarkerInfoWindow.closeAllInfoWindows(mapView);
+
         if (onMapClickListener == null) {
             return false;
         }

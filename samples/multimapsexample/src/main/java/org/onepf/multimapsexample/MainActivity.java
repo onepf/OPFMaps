@@ -28,6 +28,7 @@ import android.widget.Toast;
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapFragment;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
+import org.onepf.opfmaps.listener.OPFOnInfoWindowClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
@@ -106,6 +107,13 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         opfMap.setBuildingsEnabled(true);
         opfMap.setMyLocationEnabled(true);
 
+        //circle
+        opfMap.addCircle(new OPFCircleOptions()
+                .center(new OPFLatLng(55.752004, 37.617017))
+                .radius(1000000.0)
+                .fillColor(Color.CYAN)
+                .strokeColor(Color.BLUE));
+
         //markers
         opfMap.addMarker(new OPFMarkerOptions()
                 .visible(true)
@@ -115,12 +123,13 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 .icon(OPFBitmapDescriptorFactory.defaultMarker(OPFBitmapDescriptorFactory.HUE_AZURE))
                 .draggable(true));
 
-        //circle
-        opfMap.addCircle(new OPFCircleOptions()
-                .center(new OPFLatLng(55.752004, 37.617017))
-                .radius(1000000.0)
-                .fillColor(Color.CYAN)
-                .strokeColor(Color.BLUE));
+        opfMap.addMarker(new OPFMarkerOptions()
+                .visible(true)
+                .position(new OPFLatLng(55.752004, -122.40205))
+                .title("marker #3")
+                .snippet("snippet #3")
+                .icon(OPFBitmapDescriptorFactory.defaultMarker(OPFBitmapDescriptorFactory.HUE_YELLOW))
+                .draggable(true));
 
         opfMap.addMarker(new OPFMarkerOptions()
                 .visible(true)
@@ -172,9 +181,21 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             }
         });
 
+        opfMap.setOnInfoWindowClickListener(new OPFOnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(@NonNull final OPFMarker marker) {
+                OPFLog.logMethod(marker);
+                Toast.makeText(MainActivity.this, "Info window click : " + marker, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         opfMap.setInfoWindowAdapter(new OPFInfoWindowAdapter() {
             @Override
             public View getInfoWindow(@NonNull final OPFMarker marker) {
+                if (!marker.getSnippet().equals("snippet #2")) {
+                    return null;
+                }
+
                 //noinspection InflateParams
                 final View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.info_window, null);
                 final TextView title = (TextView) inflate.findViewById(R.id.title);
@@ -186,7 +207,16 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
             @Override
             public View getInfoContents(@NonNull final OPFMarker marker) {
-                return null;
+                if (!marker.getSnippet().equals("snippet #1")) {
+                    return null;
+                }
+
+                final View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.info_window, null);
+                final TextView title = (TextView) inflate.findViewById(R.id.title);
+                title.setText(marker.getTitle());
+                final TextView snippet = (TextView) inflate.findViewById(R.id.snippet);
+                snippet.setText(marker.getSnippet());
+                return inflate;
             }
         });
 
