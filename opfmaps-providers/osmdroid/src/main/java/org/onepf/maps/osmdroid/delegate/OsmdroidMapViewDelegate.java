@@ -38,6 +38,7 @@ import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfutils.OPFLog;
 import org.osmdroid.api.IMapController;
+import org.osmdroid.util.TileSystem;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
@@ -119,6 +120,21 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     @Override
     public void onLowMemory() {
         //todo implement
+    }
+
+    @Override
+    public void scrollTo(final int x, final int y) {
+        final int worldSize = TileSystem.MapSize(this.getZoomLevel(false));
+        final int newY;
+        if (y < 0) { // when over north pole
+            newY = 0; // scroll to north pole
+        } else if (y + getHeight() >= worldSize) { // when over south pole
+            newY = worldSize - getHeight() - 1; // scroll to south pole
+        } else {
+            newY = y;
+        }
+
+        super.scrollTo(x, newY);
     }
 
     @Override
