@@ -28,6 +28,7 @@ import org.onepf.maps.osmdroid.overlay.ClickListenerOverlay;
 import org.onepf.maps.osmdroid.overlay.ClickableCompassOverlay;
 import org.onepf.maps.osmdroid.overlay.MyLocationOverlayWithButton;
 import org.onepf.maps.osmdroid.overlay.RotationGestureOverlay;
+import org.onepf.maps.osmdroid.overlay.ScrollGesturesOverlay;
 import org.onepf.maps.osmdroid.overlay.compass.CompassRotationOrientationProvider;
 import org.onepf.maps.osmdroid.overlay.listener.RotationObserver;
 import org.onepf.maps.osmdroid.utils.ConvertUtils;
@@ -73,6 +74,8 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     private ClickableCompassOverlay compassOverlay;
     @Nullable
     private RotationGestureOverlay rotationGestureOverlay;
+    @Nullable
+    private ScrollGesturesOverlay scrollGesturesOverlay;
     @Nullable
     private ClickListenerOverlay clickListenerOverlay;
     @Nullable
@@ -190,6 +193,14 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         }
     }
 
+    public void setScrollGesturesEnabled(final boolean isScrollGesturesEnabled) {
+        if (scrollGesturesOverlay == null) {
+            return;
+        }
+
+        scrollGesturesOverlay.setScrollGesturesEnabled(isScrollGesturesEnabled);
+    }
+
     public void setOnMapClickListener(@NonNull final OPFOnMapClickListener onMapClickListener) {
         if (clickListenerOverlay == null) {
             return;
@@ -270,8 +281,16 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         return isMyLocationButtonEnabled;
     }
 
+    public boolean isScrollGesturesEnabled() {
+        return scrollGesturesOverlay == null || scrollGesturesOverlay.isScrollGesturesEnabled();
+    }
+
     private void initOverlays() {
         final Context context = getContext();
+
+        //Scroll gestures
+        scrollGesturesOverlay = new ScrollGesturesOverlay(context);
+        getOverlays().add(scrollGesturesOverlay);
 
         //Click listener
         clickListenerOverlay = new ClickListenerOverlay(context);
@@ -318,11 +337,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         setRotateGesturesEnabled(options.getRotateGesturesEnabled() == null ? true : options.getRotateGesturesEnabled());
         setMultiTouchControls(options.getZoomGesturesEnabled() == null ? true : options.getZoomGesturesEnabled());
         setBuiltInZoomControls(options.getZoomControlsEnabled() == null ? true : options.getZoomControlsEnabled());
-
-        final Boolean isScrollGesturesEnabled = options.getScrollGesturesEnabled();
-        if (isScrollGesturesEnabled == null || isScrollGesturesEnabled) {
-            //todo implement for disable
-        }
+        setScrollGesturesEnabled(options.getScrollGesturesEnabled() == null ? true : options.getScrollGesturesEnabled());
 
         final Boolean isTiltGesturesEnabled = options.getTiltGesturesEnabled();
         if (isTiltGesturesEnabled == null || isTiltGesturesEnabled) {

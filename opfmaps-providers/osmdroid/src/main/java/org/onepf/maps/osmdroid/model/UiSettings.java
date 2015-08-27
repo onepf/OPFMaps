@@ -55,8 +55,7 @@ public final class UiSettings {
     }
 
     public boolean isScrollGesturesEnabled() {
-        //todo implement for disable
-        return true;
+        return mapView.isScrollGesturesEnabled();
     }
 
     public boolean isTiltGesturesEnabled() {
@@ -97,7 +96,7 @@ public final class UiSettings {
     }
 
     public void setScrollGesturesEnabled(final boolean enabled) {
-        //todo implement
+        mapView.setScrollGesturesEnabled(enabled);
     }
 
     public void setTiltGesturesEnabled(final boolean enabled) {
