@@ -54,31 +54,9 @@ public final class OsmdroidMapOptions implements Parcelable {
     @Nullable
     private Boolean isScrollGesturesEnabled = null;
     @Nullable
-    private Boolean isTiltGesturesEnabled = null;
-    @Nullable
     private Boolean isZoomControlsEnabled = null;
     @Nullable
     private Boolean isZoomGesturesEnabled = null;
-    @Nullable
-    private Boolean isAlignCompassTop = null;
-    @Nullable
-    private Boolean isAlignCompassBottom = null;
-    @Nullable
-    private Boolean isAlignCompassLeft = null;
-    @Nullable
-    private Boolean isAlignCompassRight = null;
-    @Nullable
-    private Integer compassDrawable = null;
-    @Nullable
-    private Boolean isAlignLocatorLeft = null;
-    @Nullable
-    private Boolean isAlignLocatorTop = null;
-    @Nullable
-    private Boolean isAlignLocatorBottom = null;
-    @Nullable
-    private Boolean isAlignLocatorRight = null;
-    @Nullable
-    private Integer locatorDrawable = null;
 
     public OsmdroidMapOptions() {
     }
@@ -89,19 +67,8 @@ public final class OsmdroidMapOptions implements Parcelable {
         isCompassEnabled = readBoolean(parcel);
         isRotateGesturesEnabled = readBoolean(parcel);
         isScrollGesturesEnabled = readBoolean(parcel);
-        isTiltGesturesEnabled = readBoolean(parcel);
         isZoomControlsEnabled = readBoolean(parcel);
         isZoomGesturesEnabled = readBoolean(parcel);
-        isAlignCompassTop = readBoolean(parcel);
-        isAlignCompassBottom = readBoolean(parcel);
-        isAlignCompassLeft = readBoolean(parcel);
-        isAlignCompassRight = readBoolean(parcel);
-        compassDrawable = readInteger(parcel);
-        isAlignLocatorLeft = readBoolean(parcel);
-        isAlignLocatorTop = readBoolean(parcel);
-        isAlignLocatorBottom = readBoolean(parcel);
-        isAlignLocatorRight = readBoolean(parcel);
-        locatorDrawable = readInteger(parcel);
     }
 
     @NonNull
@@ -153,7 +120,7 @@ public final class OsmdroidMapOptions implements Parcelable {
 
     @Nullable
     public Boolean getTiltGesturesEnabled() {
-        return this.isTiltGesturesEnabled;
+        return false;
     }
 
     @Nullable
@@ -208,7 +175,7 @@ public final class OsmdroidMapOptions implements Parcelable {
 
     @NonNull
     public OsmdroidMapOptions tiltGesturesEnabled(final boolean enabled) {
-        this.isTiltGesturesEnabled = enabled;
+        OPFLog.logStubCall(enabled);
         return this;
     }
 
@@ -247,26 +214,11 @@ public final class OsmdroidMapOptions implements Parcelable {
         dest.writeValue(isCompassEnabled);
         dest.writeValue(isRotateGesturesEnabled);
         dest.writeValue(isScrollGesturesEnabled);
-        dest.writeValue(isTiltGesturesEnabled);
         dest.writeValue(isZoomControlsEnabled);
         dest.writeValue(isZoomGesturesEnabled);
-        dest.writeValue(isAlignCompassTop);
-        dest.writeValue(isAlignCompassBottom);
-        dest.writeValue(isAlignCompassLeft);
-        dest.writeValue(isAlignCompassRight);
-        dest.writeValue(compassDrawable);
-        dest.writeValue(isAlignLocatorLeft);
-        dest.writeValue(isAlignLocatorTop);
-        dest.writeValue(isAlignLocatorBottom);
-        dest.writeValue(isAlignLocatorRight);
-        dest.writeValue(locatorDrawable);
     }
 
     private Boolean readBoolean(@NonNull final Parcel parcel) {
         return (Boolean) parcel.readValue(Boolean.class.getClassLoader());
-    }
-    
-    private Integer readInteger(@NonNull final Parcel parcel) {
-        return (Integer) parcel.readValue(Integer.class.getClassLoader());
     }
 }

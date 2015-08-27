@@ -97,34 +97,30 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         callback.onMapReady(new OPFMap(new OsmdroidMapDelegate(this)));
     }
 
+    //TODO: Implement callbacks
+
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
-        //todo implement
     }
 
     @Override
     public void onResume() {
-        //todo implement
     }
 
     @Override
     public void onPause() {
-        //todo implement
     }
 
     @Override
     public void onDestroy() {
-        //todo implement
     }
 
     @Override
     public void onSaveInstanceState(@Nullable final Bundle outState) {
-        //todo implement
     }
 
     @Override
     public void onLowMemory() {
-        //todo implement
     }
 
     @Override
@@ -324,8 +320,6 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         final IMapController controller = getController();
         final CameraPosition cameraPosition = options.getCamera();
         if (cameraPosition != null) {
-            //todo implement zoom convertion
-            //todo is it tilt in osm
             controller.setCenter(cameraPosition.target);
             controller.setZoom((int) cameraPosition.zoom);
             setMapOrientation(cameraPosition.bearing);
@@ -338,11 +332,6 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         setMultiTouchControls(options.getZoomGesturesEnabled() == null ? true : options.getZoomGesturesEnabled());
         setBuiltInZoomControls(options.getZoomControlsEnabled() == null ? true : options.getZoomControlsEnabled());
         setScrollGesturesEnabled(options.getScrollGesturesEnabled() == null ? true : options.getScrollGesturesEnabled());
-
-        final Boolean isTiltGesturesEnabled = options.getTiltGesturesEnabled();
-        if (isTiltGesturesEnabled == null || isTiltGesturesEnabled) {
-            //todo check is it enabled in osm
-        }
 
         invalidate();
     }
