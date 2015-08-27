@@ -18,17 +18,19 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
+import org.onepf.maps.osmdroid.model.VisibleRegion;
 import org.onepf.opfmaps.delegate.model.VisibleRegionDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
+import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.GeoPoint;
 
 /**
  * @author Roman Savin
  * @since 06.08.2015
  */
 public final class OsmdroidVisibleRegionDelegate implements VisibleRegionDelegate {
-
-    //todo implement
 
     public static final Creator<OsmdroidVisibleRegionDelegate> CREATOR = new Creator<OsmdroidVisibleRegionDelegate>() {
         @Override
@@ -42,90 +44,79 @@ public final class OsmdroidVisibleRegionDelegate implements VisibleRegionDelegat
         }
     };
 
-    /*@NonNull
-    private final VisibleRegion visibleRegion;*/
+    @NonNull
+    private final VisibleRegion visibleRegion;
 
     public OsmdroidVisibleRegionDelegate(@NonNull final OPFLatLng nearLeft,
                                          @NonNull final OPFLatLng nearRight,
                                          @NonNull final OPFLatLng farLeft,
                                          @NonNull final OPFLatLng farRight,
                                          @NonNull final OPFLatLngBounds latLngBounds) {
-        /*this.visibleRegion = new VisibleRegion(
-                new LatLng(nearLeft.getLat(), nearLeft.getLng()),
-                new LatLng(nearRight.getLat(), nearRight.getLng()),
-                new LatLng(farLeft.getLat(), farLeft.getLng()),
-                new LatLng(farRight.getLat(), farRight.getLng()),
-                new LatLngBounds(
-                        new LatLng(latLngBounds.getSouthwest().getLat(), latLngBounds.getNortheast().getLng()),
-                        new LatLng(latLngBounds.getNortheast().getLat(), latLngBounds.getNortheast().getLng())
+        this.visibleRegion = new VisibleRegion(
+                new GeoPoint(nearLeft.getLat(), nearLeft.getLng()),
+                new GeoPoint(nearRight.getLat(), nearRight.getLng()),
+                new GeoPoint(farLeft.getLat(), farLeft.getLng()),
+                new GeoPoint(farRight.getLat(), farRight.getLng()),
+                new BoundingBoxE6(
+                        latLngBounds.getNortheast().getLat(),
+                        latLngBounds.getNortheast().getLng(),
+                        latLngBounds.getSouthwest().getLat(),
+                        latLngBounds.getSouthwest().getLng()
                 )
-        );*/
+        );
     }
 
-    /*public OsmdroidVisibleRegionDelegate(@NonNull final VisibleRegion visibleRegion) {
+    public OsmdroidVisibleRegionDelegate(@NonNull final VisibleRegion visibleRegion) {
         this.visibleRegion = visibleRegion;
     }
-*/
+
     private OsmdroidVisibleRegionDelegate(@NonNull final Parcel parcel) {
-       /* this.visibleRegion = parcel.readParcelable(VisibleRegion.class.getClassLoader());*/
+        this.visibleRegion = parcel.readParcelable(VisibleRegion.class.getClassLoader());
     }
 
     @NonNull
     @Override
     public OPFLatLng getFarLeft() {
-        //todo implement
-        return null;
-        /*return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.farLeft));*/
+        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.farLeft));
     }
 
     @NonNull
     @Override
     public OPFLatLng getFarRight() {
-        //todo implement
-        return null;
-        /*return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.farRight));*/
+        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.farRight));
     }
 
     @NonNull
     @Override
     public OPFLatLngBounds getLatLngBounds() {
-        //todo implement
-        return null;
-        /*return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(
-                new LatLngBounds(visibleRegion.latLngBounds.southwest, visibleRegion.latLngBounds.northeast)
-        ));*/
+        return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(
+                visibleRegion.latLngBounds
+        ));
     }
 
     @NonNull
     @Override
     public OPFLatLng getNearLeft() {
-        //todo implement
-        return null;
-        /*return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.nearLeft));*/
+        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.nearLeft));
     }
 
     @NonNull
     @Override
     public OPFLatLng getNearRight() {
-        //todo implement
-        return null;
-        /*return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.nearRight));*/
+        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.nearRight));
     }
 
     @Override
     public int describeContents() {
-        //todo implement
-        return 0;
-        /*return visibleRegion.describeContents();*/
+        return visibleRegion.describeContents();
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        //todo implement
-        /*dest.writeParcelable(visibleRegion, flags);*/
+        dest.writeParcelable(visibleRegion, flags);
     }
 
-    /*//CHECKSTYLE:OFF
+    //CHECKSTYLE:OFF
     @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
@@ -146,5 +137,5 @@ public final class OsmdroidVisibleRegionDelegate implements VisibleRegionDelegat
     @Override
     public String toString() {
         return visibleRegion.toString();
-    }*/
+    }
 }

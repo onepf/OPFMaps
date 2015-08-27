@@ -17,7 +17,10 @@
 package org.onepf.maps.osmdroid.delegate.model;
 
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
+
+import org.onepf.maps.osmdroid.model.VisibleRegion;
 import org.onepf.opfmaps.delegate.model.ProjectionDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFVisibleRegion;
@@ -54,8 +57,19 @@ public final class OsmdroidProjectionDelegate implements ProjectionDelegate {
     @NonNull
     @Override
     public OPFVisibleRegion getVisibleRegion() {
-        //todo implement
-        return null;
+        final Rect rect = projection.getScreenRect();
+        final IGeoPoint nearLeft = projection.fromPixels(rect.left, rect.bottom);
+        final IGeoPoint nearRight = projection.fromPixels(rect.right, rect.bottom);
+        final IGeoPoint farLeft = projection.fromPixels(rect.left, rect.top);
+        final IGeoPoint farRight = projection.fromPixels(rect.right, rect.top);
+
+        return new OPFVisibleRegion(new OsmdroidVisibleRegionDelegate(new VisibleRegion(
+                new GeoPoint(nearLeft.getLatitude(), nearLeft.getLongitude()),
+                new GeoPoint(nearRight.getLatitude(), nearRight.getLongitude()),
+                new GeoPoint(farLeft.getLatitude(), farLeft.getLongitude()),
+                new GeoPoint(farRight.getLatitude(), farRight.getLongitude()),
+                projection.getBoundingBox()
+        )));
     }
 
     //CHECKSTYLE:OFF
