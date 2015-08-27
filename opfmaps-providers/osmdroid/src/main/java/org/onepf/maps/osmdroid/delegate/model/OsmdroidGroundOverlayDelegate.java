@@ -134,7 +134,7 @@ public final class OsmdroidGroundOverlayDelegate implements GroundOverlayDelegat
 
     @Override
     public void setPositionFromBounds(@NonNull final OPFLatLngBounds bounds) {
-        //todo add implementation or stub log
+        groundOverlay.setPosition(new GeoPoint(bounds.getCenter().getLat(), bounds.getCenter().getLng()));
     }
 
     @Override

@@ -145,7 +145,6 @@ public final class ConvertUtils {
 
         final OPFLatLng location = options.getLocation();
         if (location != null) {
-            //todo create position from anchor and bearing?
             groundOverlay.setPosition(new GeoPoint(location.getLat(), location.getLng()));
         }
 
