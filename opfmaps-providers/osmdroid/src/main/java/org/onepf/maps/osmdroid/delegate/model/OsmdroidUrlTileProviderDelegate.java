@@ -16,13 +16,11 @@
 
 package org.onepf.maps.osmdroid.delegate.model;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import org.onepf.maps.osmdroid.model.Tile;
-import org.onepf.maps.osmdroid.model.UrlTileProvider;
+
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
 import org.onepf.opfmaps.model.OPFTile;
-import org.onepf.opfmaps.model.OPFUrlTileProvider.TileUrlProvider;
+import org.onepf.opfutils.OPFLog;
 
 import java.net.URL;
 
@@ -32,58 +30,17 @@ import java.net.URL;
  */
 public class OsmdroidUrlTileProviderDelegate implements UrlTileProviderDelegate {
 
-    @NonNull
-    private final UrlTileProvider urlTileProvider;
-
-    public OsmdroidUrlTileProviderDelegate(
-            final int width,
-            final int height,
-            @NonNull final TileUrlProvider tileUrlProvider) {
-        this.urlTileProvider = new UrlTileProvider(width, height) {
-
-            @Override
-            public URL getTileUrl(final int x, final int y, final int zoom) {
-                return tileUrlProvider.getTileUrl(x, y, zoom);
-            }
-        };
-    }
-
     @Nullable
     @Override
     public URL getTileUrl(final int x, final int y, final int zoom) {
-        return urlTileProvider.getTileUrl(x, y, zoom);
+        OPFLog.logStubCall(x, y, zoom);
+        return null;
     }
 
     @Nullable
     @Override
     public OPFTile getTile(final int x, final int y, final int zoom) {
-        final Tile tile = urlTileProvider.getTile(x, y, zoom);
-        if (tile != null) {
-            return new OPFTile(new OsmdroidTileDelegate(tile));
-        }
+        OPFLog.logStubCall(x, y, zoom);
         return null;
-    }
-
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
-    @Override
-    public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidUrlTileProviderDelegate)) return false;
-
-        return urlTileProvider.equals(((OsmdroidUrlTileProviderDelegate) other).urlTileProvider);
-    }
-    //CHECKSTYLE:ON
-
-    @Override
-    public int hashCode() {
-        return urlTileProvider.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return urlTileProvider.toString();
     }
 }

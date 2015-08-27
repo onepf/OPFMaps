@@ -19,12 +19,11 @@ package org.onepf.maps.osmdroid.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import org.onepf.maps.osmdroid.model.Tile;
-import org.onepf.maps.osmdroid.model.TileOverlayOptions;
-import org.onepf.maps.osmdroid.model.TileProvider;
+
 import org.onepf.opfmaps.delegate.model.TileOverlayOptionsDelegate;
 import org.onepf.opfmaps.model.OPFTile;
 import org.onepf.opfmaps.model.OPFTileProvider;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -44,121 +43,81 @@ public final class OsmdroidTileOverlayOptionsDelegate implements TileOverlayOpti
         }
     };
 
-    @NonNull
-    private final TileOverlayOptions tileOverlayOptions;
-
     public OsmdroidTileOverlayOptionsDelegate() {
-        this.tileOverlayOptions = new TileOverlayOptions();
+        //nothing
     }
 
     private OsmdroidTileOverlayOptionsDelegate(@NonNull final Parcel parcel) {
-        this.tileOverlayOptions = parcel.readParcelable(TileOverlayOptions.class.getClassLoader());
+        //nothing
     }
 
     @SuppressWarnings("PMD.BooleanGetMethodName")
     @Override
     public boolean getFadeIn() {
-        return tileOverlayOptions.getFadeIn();
+        OPFLog.logStubCall();
+        return false;
     }
 
     @Nullable
     @Override
     public OPFTileProvider getTileProvider() {
-        final TileProvider tileProvider = tileOverlayOptions.getTileProvider();
-        if (tileProvider == null) {
-            return null;
-        }
+        OPFLog.logStubCall();
         return new OPFTileProvider() {
             @Nullable
             @Override
             public OPFTile getTile(final int x, final int y, final int zoom) {
-                final Tile tile = tileProvider.getTile(x, y, zoom);
-                if (tile == null) {
-                    return null;
-                }
-
-                return new OPFTile(new OsmdroidTileDelegate(tile));
+                return null;
             }
         };
     }
 
     @Override
     public float getZIndex() {
-        return tileOverlayOptions.getZIndex();
+        OPFLog.logStubCall();
+        return 0;
     }
 
     @Override
     public boolean isVisible() {
-        return tileOverlayOptions.isVisible();
+        OPFLog.logStubCall();
+        return false;
     }
 
     @NonNull
     @Override
     public OsmdroidTileOverlayOptionsDelegate fadeIn(final boolean fadeIn) {
-        tileOverlayOptions.fadeIn(fadeIn);
+        OPFLog.logStubCall(fadeIn);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidTileOverlayOptionsDelegate tileProvider(@NonNull final OPFTileProvider tileProvider) {
-        tileOverlayOptions.tileProvider(new TileProvider() {
-            @Override
-            public Tile getTile(final int x, final int y, final int zoom) {
-                final OPFTile opfTile = tileProvider.getTile(x, y, zoom);
-                if (opfTile == null) {
-                    return null;
-                }
-                return new Tile(opfTile.getWidth(), opfTile.getHeight(), opfTile.getData());
-            }
-        });
+        OPFLog.logStubCall(tileProvider);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidTileOverlayOptionsDelegate visible(final boolean visible) {
-        tileOverlayOptions.visible(visible);
+        OPFLog.logStubCall(visible);
         return this;
     }
 
     @NonNull
     @Override
     public OsmdroidTileOverlayOptionsDelegate zIndex(final float zIndex) {
-        tileOverlayOptions.zIndex(zIndex);
+        OPFLog.logStubCall(zIndex);
         return this;
     }
 
     @Override
     public int describeContents() {
-        return tileOverlayOptions.describeContents();
+        return 0;
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(tileOverlayOptions, flags);
-    }
-
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
-    @Override
-    public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidTileOverlayOptionsDelegate)) return false;
-
-        return tileOverlayOptions.equals(((OsmdroidTileOverlayOptionsDelegate) other).tileOverlayOptions);
-    }
-    //CHECKSTYLE:ON
-
-    @Override
-    public int hashCode() {
-        return tileOverlayOptions.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return tileOverlayOptions.toString();
+        //nothing
     }
 }

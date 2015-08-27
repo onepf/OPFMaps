@@ -24,7 +24,6 @@ import org.onepf.maps.osmdroid.model.BitmapDescriptor;
 import org.onepf.maps.osmdroid.model.CameraPosition;
 import org.onepf.maps.osmdroid.model.OsmdroidMapOptions;
 import org.onepf.opfmaps.OPFMapOptions;
-import org.onepf.opfmaps.delegate.model.TileOverlayDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCircleOptions;
@@ -34,8 +33,6 @@ import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
-import org.onepf.opfmaps.model.OPFTileOverlayOptions;
-import org.onepf.opfmaps.model.OPFTileProvider;
 import org.osmdroid.bonuspack.overlays.GroundOverlay;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polygon;
@@ -229,18 +226,6 @@ public final class ConvertUtils {
         }
 
         return polyline;
-    }
-
-    @NonNull
-    public static TileOverlayDelegate convertTileOverlayOptions(@NonNull final MapView mapView,
-                                                                @NonNull final OPFTileOverlayOptions options) {
-        final OPFTileProvider opfTileProvider = options.getTileProvider();
-        if (opfTileProvider == null) {
-            throw new IllegalArgumentException("Tile provider is not specified");
-        }
-
-        //todo implement
-        return null;
     }
 
     @NonNull

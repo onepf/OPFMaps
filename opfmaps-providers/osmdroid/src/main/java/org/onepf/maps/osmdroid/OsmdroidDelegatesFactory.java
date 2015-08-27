@@ -137,7 +137,7 @@ public final class OsmdroidDelegatesFactory implements DelegatesAbstractFactory 
     @NonNull
     @Override
     public TileDelegate createTileDelegate(final int width, final int height, @NonNull final byte[] data) {
-        return new OsmdroidTileDelegate(width, height, data);
+        return new OsmdroidTileDelegate();
     }
 
     @NonNull
@@ -153,7 +153,7 @@ public final class OsmdroidDelegatesFactory implements DelegatesAbstractFactory 
             final int height,
             @NonNull final TileUrlProvider tileUrlProvider
     ) {
-        return new OsmdroidUrlTileProviderDelegate(width, height, tileUrlProvider);
+        return new OsmdroidUrlTileProviderDelegate();
     }
 
     @NonNull

@@ -18,8 +18,9 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import org.onepf.maps.osmdroid.model.Tile;
+
 import org.onepf.opfmaps.delegate.model.TileDelegate;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -39,67 +40,40 @@ public final class OsmdroidTileDelegate implements TileDelegate {
         }
     };
 
-    @NonNull
-    private final Tile tile;
-
-    public OsmdroidTileDelegate(final int width, final int height, @NonNull final byte[] data) {
-        this.tile = new Tile(width, height, data);
-    }
-
-    public OsmdroidTileDelegate(@NonNull final Tile tile) {
-        this.tile = tile;
+    public OsmdroidTileDelegate() {
+        //nothing
     }
 
     private OsmdroidTileDelegate(@NonNull final Parcel parcel) {
-        this.tile = parcel.readParcelable(Tile.class.getClassLoader());
+        //nothing
     }
 
     @NonNull
     @Override
     public byte[] getData() {
-        return tile.data;
+        OPFLog.logStubCall();
+        return new byte[0];
     }
 
     @Override
     public int getHeight() {
-        return tile.height;
+        OPFLog.logStubCall();
+        return 0;
     }
 
     @Override
     public int getWidth() {
-        return tile.width;
+        OPFLog.logStubCall();
+        return 0;
     }
 
     @Override
     public int describeContents() {
-        return tile.describeContents();
+        return 0;
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(tile, flags);
-    }
-
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
-    @Override
-    public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidTileDelegate)) return false;
-
-        return tile.equals(((OsmdroidTileDelegate) other).tile);
-    }
-    //CHECKSTYLE:ON
-
-    @Override
-    public int hashCode() {
-        return tile.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return tile.toString();
+        //nothing
     }
 }

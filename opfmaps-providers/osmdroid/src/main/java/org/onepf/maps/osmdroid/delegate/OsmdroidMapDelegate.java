@@ -30,6 +30,7 @@ import org.onepf.maps.osmdroid.delegate.model.OsmdroidMarkerDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidPolygonDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidPolylineDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidProjectionDelegate;
+import org.onepf.maps.osmdroid.delegate.model.OsmdroidTileOverlayDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidUiSettingsDelegate;
 import org.onepf.maps.osmdroid.model.CameraUpdate;
 import org.onepf.maps.osmdroid.model.UiSettings;
@@ -193,8 +194,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFTileOverlay addTileOverlay(@NonNull final OPFTileOverlayOptions options) {
-        //todo implement
-        return null;
+        return new OPFTileOverlay(new OsmdroidTileOverlayDelegate());
     }
 
     @Override

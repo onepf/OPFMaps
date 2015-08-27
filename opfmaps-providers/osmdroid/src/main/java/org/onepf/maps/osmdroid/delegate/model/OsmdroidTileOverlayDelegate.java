@@ -17,12 +17,9 @@
 package org.onepf.maps.osmdroid.delegate.model;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
 import org.onepf.opfmaps.delegate.model.TileOverlayDelegate;
 import org.onepf.opfutils.OPFLog;
-import org.osmdroid.tileprovider.MapTileProviderBase;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.TilesOverlay;
 
 /**
  * @author Roman Savin
@@ -30,65 +27,40 @@ import org.osmdroid.views.overlay.TilesOverlay;
  */
 public final class OsmdroidTileOverlayDelegate implements TileOverlayDelegate {
 
-    @Nullable
-    private MapView mapView;
-
-    @NonNull
-    private final TilesOverlay tileOverlay;
-
-    @NonNull
-    private final MapTileProviderBase tileProvider;
-
-    @NonNull
-    private final String id;
-
-    public OsmdroidTileOverlayDelegate(@NonNull final MapView mapView, @NonNull final MapTileProviderBase tileProvider) {
-        this.mapView = mapView;
-        this.tileProvider = tileProvider;
-        this.tileOverlay = new TilesOverlay(tileProvider, mapView.getContext());
-        this.id = Integer.toString(this.tileOverlay.hashCode());
-    }
-
-    @NonNull
-    public TilesOverlay getTileOverlay() {
-        return tileOverlay;
-    }
-
     @Override
     public void clearTileCache() {
-        tileProvider.clearTileCache();
+        OPFLog.logStubCall();
     }
 
     @SuppressWarnings("PMD.BooleanGetMethodName")
     @Override
     public boolean getFadeIn() {
-        //todo is it true by default
-        return true;
+        OPFLog.logStubCall();
+        return false;
     }
 
     @NonNull
     @Override
     public String getId() {
-        return id;
+        OPFLog.logStubCall();
+        return "";
     }
 
     @Override
     public float getZIndex() {
+        OPFLog.logStubCall();
         return 0;
     }
 
     @Override
     public boolean isVisible() {
-        return tileOverlay.isEnabled();
+        OPFLog.logStubCall();
+        return false;
     }
 
     @Override
     public void remove() {
-        if (mapView != null) {
-            mapView.getOverlays().remove(tileOverlay);
-            mapView.invalidate();
-            mapView = null;
-        }
+        OPFLog.logStubCall();
     }
 
     @Override
@@ -98,34 +70,11 @@ public final class OsmdroidTileOverlayDelegate implements TileOverlayDelegate {
 
     @Override
     public void setVisible(final boolean visible) {
-        tileOverlay.setEnabled(visible);
+        OPFLog.logStubCall(visible);
     }
 
     @Override
     public void setZIndex(final float zIndex) {
         OPFLog.logStubCall(zIndex);
-    }
-
-    @Override
-    public int hashCode() {
-        return tileOverlay.hashCode();
-    }
-
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
-    @Override
-    public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidTileOverlayDelegate)) return false;
-
-        return tileOverlay.equals(((OsmdroidTileOverlayDelegate) other).tileOverlay);
-    }
-    //CHECKSTYLE:ON
-
-    @Override
-    public String toString() {
-        return tileOverlay.toString();
     }
 }
