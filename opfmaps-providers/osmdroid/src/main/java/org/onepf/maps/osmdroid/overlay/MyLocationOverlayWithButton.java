@@ -24,9 +24,11 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.MotionEvent;
 
 import org.onepf.maps.osmdroid.R;
+import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
@@ -41,7 +43,7 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
  * @author Roman Savin
  * @since 26.08.2015
  */
-public class ClickableMyLocationOverlay extends MyLocationNewOverlay {
+public class MyLocationOverlayWithButton extends MyLocationNewOverlay {
 
     private static final float CENTER_OFFSET_DP = 36F;
     private static final float SIZE = 48F;
@@ -53,31 +55,34 @@ public class ClickableMyLocationOverlay extends MyLocationNewOverlay {
     private final Matrix matrix = new Matrix();
     @NonNull
     private final Paint smoothPaint = new Paint(Paint.FILTER_BITMAP_FLAG);
+    @Nullable
+    private OPFOnMyLocationButtonClickListener onMyLocationButtonClickListener;
 
     private final float frameCenterX;
     private final float frameCenterY;
 
     private boolean isPressed;
+    private boolean isMyLocationButtonEnabled = true;
 
     private int frameLeft;
     private int frameTop;
     private int frameRight;
     private int frameBottom;
 
-    public ClickableMyLocationOverlay(final Context context, final MapView mapView) {
+    public MyLocationOverlayWithButton(final Context context, final MapView mapView) {
         this(context, new GpsMyLocationProvider(context), mapView);
     }
 
-    public ClickableMyLocationOverlay(final Context context,
-                                      final IMyLocationProvider myLocationProvider,
-                                      final MapView mapView) {
+    public MyLocationOverlayWithButton(final Context context,
+                                       final IMyLocationProvider myLocationProvider,
+                                       final MapView mapView) {
         this(context, myLocationProvider, mapView, new DefaultResourceProxyImpl(context));
     }
 
-    public ClickableMyLocationOverlay(final Context context,
-                                      final IMyLocationProvider myLocationProvider,
-                                      final MapView mapView,
-                                      final ResourceProxy resourceProxy) {
+    public MyLocationOverlayWithButton(final Context context,
+                                       final IMyLocationProvider myLocationProvider,
+                                       final MapView mapView,
+                                       final ResourceProxy resourceProxy) {
         super(myLocationProvider, mapView, resourceProxy);
         this.goToMyLocationPicture = BitmapFactory
                 .decodeResource(context.getResources(), R.drawable.ic_my_location);
@@ -89,34 +94,48 @@ public class ClickableMyLocationOverlay extends MyLocationNewOverlay {
     @Override
     protected void draw(final Canvas canvas, final MapView mapView, final boolean shadow) {
         super.draw(canvas, mapView, shadow);
+        if (isMyLocationEnabled() && isMyLocationButtonEnabled) {
+            final Projection proj = mMapView.getProjection();
+            final float centerX = mapView.getWidth() - CENTER_OFFSET_DP * mScale;
+            final float centerY = CENTER_OFFSET_DP * mScale;
 
-        final Projection proj = mMapView.getProjection();
-        final float centerX = mapView.getWidth() - CENTER_OFFSET_DP * mScale;
-        final float centerY = CENTER_OFFSET_DP * mScale;
+            matrix.setTranslate(-frameCenterX, -frameCenterY);
+            matrix.postTranslate(centerX, centerY);
 
-        matrix.setTranslate(-frameCenterX, -frameCenterY);
-        matrix.postTranslate(centerX, centerY);
-
-        canvas.save();
-        canvas.concat(proj.getInvertedScaleRotateCanvasMatrix());
-        canvas.concat(matrix);
-        canvas.drawBitmap(goToMyLocationPicture, 0, 0, smoothPaint);
-        if (isPressed) {
-            final Paint rectPaint = new Paint();
-            rectPaint.setColor(Color.argb(30, 0, 0, 0));
-            canvas.drawRect(0, 0, goToMyLocationPicture.getWidth(), goToMyLocationPicture.getHeight(), rectPaint);
+            canvas.save();
+            canvas.concat(proj.getInvertedScaleRotateCanvasMatrix());
+            canvas.concat(matrix);
+            canvas.drawBitmap(goToMyLocationPicture, 0, 0, smoothPaint);
+            if (isPressed) {
+                final Paint rectPaint = new Paint();
+                rectPaint.setColor(Color.argb(30, 0, 0, 0));
+                canvas.drawRect(0, 0, goToMyLocationPicture.getWidth(), goToMyLocationPicture.getHeight(), rectPaint);
+            }
+            canvas.restore();
         }
-        canvas.restore();
+    }
+
+    @Override
+    public void disableMyLocation() {
+        super.disableMyLocation();
+        invalidateMyLocationFrame();
+    }
+
+    @Override
+    public boolean enableMyLocation() {
+        final boolean isSuccess = super.enableMyLocation();
+        if (isSuccess) {
+            invalidateMyLocationFrame();
+        }
+        return isSuccess;
     }
 
     @Override
     public boolean onSingleTapConfirmed(final MotionEvent event, final MapView mapView) {
-        if (isTapOnGoToMyLocationIcon(event)) {
-            final GeoPoint lastKnownLocation = getMyLocation();
-            if (lastKnownLocation != null) {
-                final IMapController controller = mapView.getController();
-                controller.setZoom(MY_LOCATION_ZOOM_LEVEL);
-                controller.animateTo(lastKnownLocation);
+        if (isTapOnGoToMyLocationIcon(event) && isMyLocationEnabled() && isMyLocationButtonEnabled) {
+            final boolean isHandled = handleClickListener();
+            if (!isHandled) {
+                moveToLastKnownLocation();
             }
             return true;
         }
@@ -126,17 +145,40 @@ public class ClickableMyLocationOverlay extends MyLocationNewOverlay {
 
     @Override
     public boolean onTouchEvent(final MotionEvent event, final MapView mapView) {
-        if (isTapOnGoToMyLocationIcon(event) && event.getAction() != MotionEvent.ACTION_UP) {
-            isPressed = true;
-            invalidateMyLocationFrame();
-        } else if (isPressed) {
-            isPressed = false;
-            invalidateMyLocationFrame();
+        if (isMyLocationEnabled() && isMyLocationButtonEnabled) {
+            if (isTapOnGoToMyLocationIcon(event) && event.getAction() != MotionEvent.ACTION_UP) {
+                isPressed = true;
+                invalidateMyLocationFrame();
+            } else if (isPressed) {
+                isPressed = false;
+                invalidateMyLocationFrame();
+            }
         }
         return super.onTouchEvent(event, mapView);
     }
 
+    public void enableMyLocationButton() {
+        if (!isMyLocationButtonEnabled) {
+            isMyLocationButtonEnabled = true;
+            invalidateMyLocationFrame();
+        }
+    }
+
+    public void disableMyLocationButton() {
+        if (isMyLocationButtonEnabled) {
+            isMyLocationButtonEnabled = false;
+            invalidateMyLocationFrame();
+        }
+    }
+
+    public void setOnMyLocationButtonClickListener(
+            @NonNull final OPFOnMyLocationButtonClickListener onMyLocationButtonClickListener
+    ) {
+        this.onMyLocationButtonClickListener = onMyLocationButtonClickListener;
+    }
+
     private void invalidateMyLocationFrame() {
+        updateFrameCoordinates();
         mMapView.postInvalidateMapCoordinates(frameLeft, frameTop, frameRight, frameBottom);
     }
 
@@ -159,5 +201,21 @@ public class ClickableMyLocationOverlay extends MyLocationNewOverlay {
         frameTop = (int) (mapViewLeft + (CENTER_OFFSET_DP - SIZE / 2) * mScale);
         frameRight = (int) (mapViewLeft + (centerX + SIZE / 2) * mScale);
         frameBottom = (int) (mapViewTop + (CENTER_OFFSET_DP + SIZE / 2) * mScale);
+    }
+
+    private boolean handleClickListener() {
+        if (onMyLocationButtonClickListener != null) {
+            return onMyLocationButtonClickListener.onMyLocationButtonClick();
+        }
+        return false;
+    }
+
+    private void moveToLastKnownLocation() {
+        final GeoPoint lastKnownLocation = getMyLocation();
+        if (lastKnownLocation != null) {
+            final IMapController controller = mMapView.getController();
+            controller.setZoom(MY_LOCATION_ZOOM_LEVEL);
+            controller.animateTo(lastKnownLocation);
+        }
     }
 }

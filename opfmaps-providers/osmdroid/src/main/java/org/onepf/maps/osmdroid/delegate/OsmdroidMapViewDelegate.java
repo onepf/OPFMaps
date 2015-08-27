@@ -26,7 +26,7 @@ import org.onepf.maps.osmdroid.model.CameraPosition;
 import org.onepf.maps.osmdroid.model.OsmdroidMapOptions;
 import org.onepf.maps.osmdroid.overlay.ClickListenerOverlay;
 import org.onepf.maps.osmdroid.overlay.ClickableCompassOverlay;
-import org.onepf.maps.osmdroid.overlay.ClickableMyLocationOverlay;
+import org.onepf.maps.osmdroid.overlay.MyLocationOverlayWithButton;
 import org.onepf.maps.osmdroid.overlay.RotationGestureOverlay;
 import org.onepf.maps.osmdroid.overlay.compass.CompassRotationOrientationProvider;
 import org.onepf.maps.osmdroid.overlay.listener.RotationObserver;
@@ -36,6 +36,7 @@ import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
+import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfutils.OPFLog;
 import org.osmdroid.api.IMapController;
@@ -64,6 +65,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     private boolean isRotateGesturesEnabled;
     private boolean isZoomGesturesEnabled;
     private boolean isMyLocationEnabled;
+    private boolean isMyLocationButtonEnabled;
 
     @NonNull
     private OPFMapType mapType = OPFMapType.NORMAL;
@@ -74,7 +76,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     @Nullable
     private ClickListenerOverlay clickListenerOverlay;
     @Nullable
-    private ClickableMyLocationOverlay myLocationOverlay;
+    private MyLocationOverlayWithButton myLocationOverlay;
 
     public OsmdroidMapViewDelegate(final Context context) {
         this(context, null);
@@ -217,6 +219,27 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         }
     }
 
+    public void setMyLocationButtonEnabled(final boolean isMyLocationButtonEnabled) {
+        if (myLocationOverlay == null) {
+            return;
+        }
+
+        this.isMyLocationButtonEnabled = isMyLocationButtonEnabled;
+        if (isMyLocationButtonEnabled) {
+            myLocationOverlay.enableMyLocationButton();
+        } else {
+            myLocationOverlay.disableMyLocationButton();
+        }
+    }
+
+    public void setOnMyLocationButtonClickListener(@NonNull final OPFOnMyLocationButtonClickListener clickListener) {
+        if (myLocationOverlay == null) {
+            return;
+        }
+
+        myLocationOverlay.setOnMyLocationButtonClickListener(clickListener);
+    }
+
     @NonNull
     public OPFMapType getMapType() {
         return mapType;
@@ -243,6 +266,10 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         return isMyLocationEnabled;
     }
 
+    public boolean isMyLocationButtonEnabled() {
+        return isMyLocationButtonEnabled;
+    }
+
     private void initOverlays() {
         final Context context = getContext();
 
@@ -264,7 +291,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         rotationGestureOverlay = new RotationGestureOverlay(context, this);
 
         //My Location
-        myLocationOverlay = new ClickableMyLocationOverlay(context, this);
+        myLocationOverlay = new MyLocationOverlayWithButton(context, this);
         getOverlays().add(myLocationOverlay);
     }
 

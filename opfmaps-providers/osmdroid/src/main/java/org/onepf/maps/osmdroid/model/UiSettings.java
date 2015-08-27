@@ -47,8 +47,7 @@ public final class UiSettings {
     }
 
     public boolean isMyLocationButtonEnabled() {
-        //todo implement my location button
-        return false;
+        return mapView.isMyLocationButtonEnabled();
     }
 
     public boolean isRotateGesturesEnabled() {
@@ -90,7 +89,7 @@ public final class UiSettings {
     }
 
     public void setMyLocationButtonEnabled(final boolean enabled) {
-        //todo implement
+        mapView.setMyLocationButtonEnabled(enabled);
     }
 
     public void setRotateGesturesEnabled(final boolean enabled) {

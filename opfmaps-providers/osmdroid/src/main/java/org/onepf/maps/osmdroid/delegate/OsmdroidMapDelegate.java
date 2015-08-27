@@ -450,13 +450,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setOnMyLocationButtonClickListener(@NonNull final OPFOnMyLocationButtonClickListener listener) {
-        //todo implement
-        /*map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
-                return listener.onMyLocationButtonClick();
-            }
-        });*/
+        map.setOnMyLocationButtonClickListener(listener);
     }
 
     @Override

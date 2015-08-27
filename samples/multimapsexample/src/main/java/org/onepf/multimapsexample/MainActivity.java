@@ -34,6 +34,7 @@ import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
+import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
 import org.onepf.opfmaps.model.OPFBitmapDescriptorFactory;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCircleOptions;
@@ -41,11 +42,14 @@ import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
+import org.onepf.opfmaps.model.OPFUiSettings;
 import org.onepf.opfutils.OPFLog;
 
 public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
     //private OPFMapView mapView;
+
+    private OPFMap opfMap;
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -102,10 +106,19 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull final OPFMap opfMap) {
         OPFLog.logMethod(opfMap);
+        this.opfMap = opfMap;
 
         opfMap.setMyLocationEnabled(true);
         opfMap.setBuildingsEnabled(true);
-        opfMap.setMyLocationEnabled(true);
+
+        opfMap.setOnMyLocationButtonClickListener(new OPFOnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                Toast.makeText(MainActivity.this, "My location click", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        opfMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         //circle
         opfMap.addCircle(new OPFCircleOptions()
@@ -228,4 +241,9 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         });
     }
     //CHECKSTYLE:ON
+
+    public void onEnableMyLocationClick(@NonNull final View view) {
+        final OPFUiSettings opfUiSettings = opfMap.getUiSettings();
+        opfUiSettings.setMyLocationButtonEnabled(!opfUiSettings.isMyLocationButtonEnabled());
+    }
 }

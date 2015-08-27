@@ -16,4 +16,6 @@
 
 <resources>
     <string name="app_name">MultiMapsExample</string>
+
+    <string name="toggle_my_location_button">Toggle My location button</string>
 </resources>
