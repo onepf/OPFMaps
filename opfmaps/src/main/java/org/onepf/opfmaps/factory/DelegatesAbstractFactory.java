@@ -38,6 +38,7 @@ import org.onepf.opfmaps.delegate.model.VisibleRegionDelegate;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
+import org.onepf.opfmaps.model.OPFUrlTileProvider.TileUrlProvider;
 
 /**
  * @author Roman Savin
@@ -83,7 +84,9 @@ public interface DelegatesAbstractFactory {
     TileOverlayOptionsDelegate createTileOverlayOptionDelegate();
 
     @NonNull
-    UrlTileProviderDelegate createUrlTileProviderDelegate(final int width, final int height);
+    UrlTileProviderDelegate createUrlTileProviderDelegate(final int width,
+                                                          final int height,
+                                                          @NonNull final TileUrlProvider tileUrlProvider);
 
     @NonNull
     BitmapDescriptorFactoryDelegate createBitmapDescriptorFactory();

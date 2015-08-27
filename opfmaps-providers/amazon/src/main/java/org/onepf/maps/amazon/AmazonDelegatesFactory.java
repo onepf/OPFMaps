@@ -18,9 +18,11 @@ package org.onepf.maps.amazon;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+
 import com.amazon.geo.mapsv2.AmazonMapOptions;
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.LatLngBounds;
+
 import org.onepf.maps.amazon.delegate.AmazonMapOptionsDelegate;
 import org.onepf.maps.amazon.delegate.AmazonMapViewDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonBitmapDescriptorFactoryDelegate;
@@ -59,9 +61,7 @@ import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
-import org.onepf.opfutils.OPFLog;
-
-import java.net.URL;
+import org.onepf.opfmaps.model.OPFUrlTileProvider.TileUrlProvider;
 
 /**
  * @author Roman Savin
@@ -148,16 +148,12 @@ public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
 
     @NonNull
     @Override
-    public UrlTileProviderDelegate createUrlTileProviderDelegate(final int width, final int height) {
-        return new AmazonUrlTileProviderDelegate(width, height) {
-            @NonNull
-            @Override
-            public URL getTileUrl(final int x, final int y, final int zoom) {
-                OPFLog.logStubCall(x, y, zoom);
-                //noinspection ConstantConditions
-                return null;
-            }
-        };
+    public UrlTileProviderDelegate createUrlTileProviderDelegate(
+            final int width,
+            final int height,
+            @NonNull final TileUrlProvider tileUrlProvider
+    ) {
+        return new AmazonUrlTileProviderDelegate(width, height, tileUrlProvider);
     }
 
     @NonNull

@@ -62,8 +62,10 @@ public final class Tile implements Parcelable {
     }
 
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeInt(data.length);
-        dest.writeByteArray(data);
+        if (data != null) {
+            dest.writeInt(data.length);
+            dest.writeByteArray(data);
+        }
         dest.writeInt(height);
         dest.writeInt(width);
     }

@@ -18,11 +18,13 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.amazon.geo.mapsv2.model.Tile;
 import com.amazon.geo.mapsv2.model.UrlTileProvider;
+
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
 import org.onepf.opfmaps.model.OPFTile;
-import org.onepf.opfutils.OPFLog;
+import org.onepf.opfmaps.model.OPFUrlTileProvider.TileUrlProvider;
 
 import java.net.URL;
 
@@ -30,25 +32,30 @@ import java.net.URL;
  * @author Roman Savin
  * @since 03.08.2015
  */
-public abstract class AmazonUrlTileProviderDelegate implements UrlTileProviderDelegate {
+public class AmazonUrlTileProviderDelegate implements UrlTileProviderDelegate {
 
     @NonNull
     private final UrlTileProvider urlTileProvider;
 
-    public AmazonUrlTileProviderDelegate(final int width, final int height) {
+    public AmazonUrlTileProviderDelegate(
+            final int width,
+            final int height,
+            @NonNull final TileUrlProvider tileUrlProvider
+    ) {
         this.urlTileProvider = new UrlTileProvider(width, height) {
 
             @Override
-            public URL getTileUrl(final int i, final int i1, final int i2) {
-                OPFLog.logStubCall(i, i1, i2);
-                return null;
+            public URL getTileUrl(final int x, final int y, final int zoom) {
+                return tileUrlProvider.getTileUrl(x, y, zoom);
             }
         };
     }
 
-    @NonNull
+    @Nullable
     @Override
-    public abstract URL getTileUrl(final int x, final int y, final int zoom);
+    public URL getTileUrl(final int x, final int y, final int zoom) {
+        return urlTileProvider.getTileUrl(x, y, zoom);
+    }
 
     @Nullable
     @Override

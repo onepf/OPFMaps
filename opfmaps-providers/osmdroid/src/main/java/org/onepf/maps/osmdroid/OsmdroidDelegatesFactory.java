@@ -57,11 +57,9 @@ import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
-import org.onepf.opfutils.OPFLog;
+import org.onepf.opfmaps.model.OPFUrlTileProvider.TileUrlProvider;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
-
-import java.net.URL;
 
 /**
  * @author Roman Savin
@@ -150,16 +148,12 @@ public final class OsmdroidDelegatesFactory implements DelegatesAbstractFactory 
 
     @NonNull
     @Override
-    public UrlTileProviderDelegate createUrlTileProviderDelegate(final int width, final int height) {
-        return new OsmdroidUrlTileProviderDelegate(width, height) {
-            @NonNull
-            @Override
-            public URL getTileUrl(final int x, final int y, final int zoom) {
-                OPFLog.logStubCall(x, y, zoom);
-                //noinspection ConstantConditions
-                return null;
-            }
-        };
+    public UrlTileProviderDelegate createUrlTileProviderDelegate(
+            final int width,
+            final int height,
+            @NonNull final TileUrlProvider tileUrlProvider
+    ) {
+        return new OsmdroidUrlTileProviderDelegate(width, height, tileUrlProvider);
     }
 
     @NonNull

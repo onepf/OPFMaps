@@ -34,7 +34,7 @@ public abstract class UrlTileProvider implements TileProvider {
         this.height = height;
     }
 
-    public abstract URL getTileUrl(final int var1, final int var2, final int var3);
+    public abstract URL getTileUrl(final int x, final int y, final int zoom);
 
     public final Tile getTile(final int x, final int y, final int zoom) {
         return NO_TILE;

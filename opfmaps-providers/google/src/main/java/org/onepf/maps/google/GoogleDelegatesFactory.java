@@ -18,9 +18,11 @@ package org.onepf.maps.google;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+
 import org.onepf.maps.google.delegate.GoogleMapOptionsDelegate;
 import org.onepf.maps.google.delegate.GoogleMapViewDelegate;
 import org.onepf.maps.google.delegate.model.GoogleBitmapDescriptorFactoryDelegate;
@@ -59,9 +61,7 @@ import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
-import org.onepf.opfutils.OPFLog;
-
-import java.net.URL;
+import org.onepf.opfmaps.model.OPFUrlTileProvider.TileUrlProvider;
 
 /**
  * @author Roman Savin
@@ -148,16 +148,12 @@ public final class GoogleDelegatesFactory implements DelegatesAbstractFactory {
 
     @NonNull
     @Override
-    public UrlTileProviderDelegate createUrlTileProviderDelegate(final int width, final int height) {
-        return new GoogleUrlTileProviderDelegate(width, height) {
-            @NonNull
-            @Override
-            public URL getTileUrl(final int x, final int y, final int zoom) {
-                OPFLog.logStubCall(x, y, zoom);
-                //noinspection ConstantConditions
-                return null;
-            }
-        };
+    public UrlTileProviderDelegate createUrlTileProviderDelegate(
+            final int width,
+            final int height,
+            @NonNull final TileUrlProvider tileUrlProvider
+    ) {
+        return new GoogleUrlTileProviderDelegate(width, height, tileUrlProvider);
     }
 
     @NonNull
