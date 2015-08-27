@@ -14,32 +14,18 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout
+<fragment
+    android:id="@+id/map"
+    android:name="org.onepf.opfmaps.OPFMapFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <fragment
-        android:id="@+id/map"
-        android:name="org.onepf.opfmaps.OPFMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        map:opf_cameraTargetLat="37.7"
-        map:opf_cameraTargetLng="-122.4"
-        map:opf_mapType="hybrid"
-        tools:context=".MainActivity"/>
-
-    <Button
-        android:id="@+id/enable_my_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:onClick="onEnableMyLocationClick"
-        android:text="@string/toggle_my_location_button"/>
-
-</FrameLayout>
+    android:layout_height="match_parent"
+    map:opf_cameraTargetLat="37.7"
+    map:opf_cameraTargetLng="-122.4"
+    map:opf_mapType="hybrid"
+    tools:context=".MainActivity"/>
     <!--<org.onepf.opfmaps.OPFMapView
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:map="http://schemas.android.com/apk/res-auto"
