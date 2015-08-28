@@ -43,15 +43,18 @@ public final class PolylineOptions implements Parcelable {
         }
     };
 
+    private static final int DEFAULT_COLOR = -16777216;
+
     @NonNull
     private final List<GeoPoint> points = new ArrayList<>();
-    private int color = -16777216;
+    private int color = DEFAULT_COLOR;
     private float width = 10.0F;
-    private float zIndex = 0.0F;
-    private boolean isGeodesic = false;
+    private float zIndex;
+    private boolean isGeodesic;
     private boolean isVisible = true;
 
     public PolylineOptions() {
+        //nothing
     }
 
     private PolylineOptions(@NonNull final Parcel source) {
@@ -156,6 +159,7 @@ public final class PolylineOptions implements Parcelable {
         }
     }
 
+    @SuppressWarnings("PMD.NPathComplexity")
     @Override
     public int hashCode() {
         int result = points.hashCode();

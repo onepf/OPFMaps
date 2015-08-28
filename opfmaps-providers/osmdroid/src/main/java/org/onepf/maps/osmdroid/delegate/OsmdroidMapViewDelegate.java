@@ -101,26 +101,32 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
 
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
+        //later
     }
 
     @Override
     public void onResume() {
+        //later
     }
 
     @Override
     public void onPause() {
+        //later
     }
 
     @Override
     public void onDestroy() {
+        //later
     }
 
     @Override
     public void onSaveInstanceState(@Nullable final Bundle outState) {
+        //later
     }
 
     @Override
     public void onLowMemory() {
+        //later
     }
 
     @Override
@@ -320,19 +326,26 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         final IMapController controller = getController();
         final CameraPosition cameraPosition = options.getCamera();
         if (cameraPosition != null) {
-            controller.setCenter(cameraPosition.target);
-            controller.setZoom((int) cameraPosition.zoom);
-            setMapOrientation(cameraPosition.bearing);
+            controller.setCenter(cameraPosition.getTarget());
+            controller.setZoom((int) cameraPosition.getZoom());
+            setMapOrientation(cameraPosition.getBearing());
         }
 
         setMapType(options.getMapType());
 
-        setCompassEnabled(options.getCompassEnabled() == null ? true : options.getCompassEnabled());
-        setRotateGesturesEnabled(options.getRotateGesturesEnabled() == null ? true : options.getRotateGesturesEnabled());
-        setMultiTouchControls(options.getZoomGesturesEnabled() == null ? true : options.getZoomGesturesEnabled());
-        setBuiltInZoomControls(options.getZoomControlsEnabled() == null ? true : options.getZoomControlsEnabled());
-        setScrollGesturesEnabled(options.getScrollGesturesEnabled() == null ? true : options.getScrollGesturesEnabled());
+        setCompassEnabled(getBoolean(options.getCompassEnabled(), true));
+        setRotateGesturesEnabled(getBoolean(options.getRotateGesturesEnabled(), true));
+        setMultiTouchControls(getBoolean(options.getZoomGesturesEnabled(), true));
+        setBuiltInZoomControls(getBoolean(options.getZoomControlsEnabled(), true));
+        setScrollGesturesEnabled(getBoolean(options.getScrollGesturesEnabled(), true));
 
         invalidate();
+    }
+
+    private boolean getBoolean(@Nullable final Boolean value, final boolean defValue) {
+        if (value == null) {
+            return defValue;
+        }
+        return value;
     }
 }

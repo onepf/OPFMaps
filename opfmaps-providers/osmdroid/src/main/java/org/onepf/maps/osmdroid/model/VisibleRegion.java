@@ -43,15 +43,15 @@ public final class VisibleRegion implements Parcelable {
     };
 
     @NonNull
-    public final GeoPoint nearLeft;
+    private final GeoPoint nearLeft;
     @NonNull
-    public final GeoPoint nearRight;
+    private final GeoPoint nearRight;
     @NonNull
-    public final GeoPoint farLeft;
+    private final GeoPoint farLeft;
     @NonNull
-    public final GeoPoint farRight;
+    private final GeoPoint farRight;
     @NonNull
-    public final BoundingBoxE6 latLngBounds;
+    private final BoundingBoxE6 latLngBounds;
 
     public VisibleRegion(@NonNull final GeoPoint nearLeft,
                          @NonNull final GeoPoint nearRight,
@@ -71,6 +71,31 @@ public final class VisibleRegion implements Parcelable {
         this.farLeft = parcel.readParcelable(GeoPoint.class.getClassLoader());
         this.farRight = parcel.readParcelable(GeoPoint.class.getClassLoader());
         this.latLngBounds = parcel.readParcelable(BoundingBoxE6.class.getClassLoader());
+    }
+
+    @NonNull
+    public GeoPoint getNearLeft() {
+        return nearLeft;
+    }
+
+    @NonNull
+    public GeoPoint getNearRight() {
+        return nearRight;
+    }
+
+    @NonNull
+    public GeoPoint getFarLeft() {
+        return farLeft;
+    }
+
+    @NonNull
+    public GeoPoint getFarRight() {
+        return farRight;
+    }
+
+    @NonNull
+    public BoundingBoxE6 getLatLngBounds() {
+        return latLngBounds;
     }
 
     @Override

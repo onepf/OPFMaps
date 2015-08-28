@@ -48,6 +48,8 @@ public class MyLocationOverlayWithButton extends MyLocationNewOverlay {
     private static final float CENTER_OFFSET_DP = 36F;
     private static final float SIZE = 48F;
     private static final int MY_LOCATION_ZOOM_LEVEL = 15;
+    private static final float INACCURACY = 0.5f;
+    private static final int PRESSED_FRAME_ALPHA = 30;
 
     @NonNull
     private final Bitmap goToMyLocationPicture;
@@ -87,8 +89,8 @@ public class MyLocationOverlayWithButton extends MyLocationNewOverlay {
         this.goToMyLocationPicture = BitmapFactory
                 .decodeResource(context.getResources(), R.drawable.ic_my_location);
 
-        frameCenterX = goToMyLocationPicture.getWidth() / 2 + 0.5f;
-        frameCenterY = goToMyLocationPicture.getHeight() / 2 + 0.5f;
+        frameCenterX = goToMyLocationPicture.getWidth() / 2 + INACCURACY;
+        frameCenterY = goToMyLocationPicture.getHeight() / 2 + INACCURACY;
     }
 
     @Override
@@ -108,7 +110,7 @@ public class MyLocationOverlayWithButton extends MyLocationNewOverlay {
             canvas.drawBitmap(goToMyLocationPicture, 0, 0, smoothPaint);
             if (isPressed) {
                 final Paint rectPaint = new Paint();
-                rectPaint.setColor(Color.argb(30, 0, 0, 0));
+                rectPaint.setColor(Color.argb(PRESSED_FRAME_ALPHA, 0, 0, 0));
                 canvas.drawRect(0, 0, goToMyLocationPicture.getWidth(), goToMyLocationPicture.getHeight(), rectPaint);
             }
             canvas.restore();

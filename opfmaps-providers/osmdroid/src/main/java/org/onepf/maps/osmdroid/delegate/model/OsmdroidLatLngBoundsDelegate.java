@@ -25,6 +25,7 @@ import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Roman Savin
@@ -124,7 +125,7 @@ public final class OsmdroidLatLngBoundsDelegate implements LatLngBoundsDelegate 
     public static class Builder implements LatLngBoundsDelegate.Builder {
 
         @NonNull
-        private final ArrayList<GeoPoint> geoPoints = new ArrayList<>();
+        private final List<GeoPoint> geoPoints = new ArrayList<>();
 
         @NonNull
         @Override
@@ -137,7 +138,9 @@ public final class OsmdroidLatLngBoundsDelegate implements LatLngBoundsDelegate 
         @NonNull
         @Override
         public OPFLatLngBounds build() {
-            return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(BoundingBoxE6.fromGeoPoints(geoPoints)));
+            return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(BoundingBoxE6.fromGeoPoints(
+                    new ArrayList<>(geoPoints)
+            )));
         }
     }
 }

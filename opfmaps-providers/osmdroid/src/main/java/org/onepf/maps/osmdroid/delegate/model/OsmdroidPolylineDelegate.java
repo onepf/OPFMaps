@@ -18,6 +18,7 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.opfmaps.delegate.model.PolylineDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfutils.OPFLog;
@@ -36,14 +37,14 @@ public final class OsmdroidPolylineDelegate implements PolylineDelegate {
 
     @Nullable
     private MapView mapView;
-    
+
     @NonNull
     private final Polyline polyline;
-    
+
     @NonNull
     private final String id;
 
-    public OsmdroidPolylineDelegate(@SuppressWarnings("NullableProblems") @NonNull final MapView mapView, 
+    public OsmdroidPolylineDelegate(@SuppressWarnings("NullableProblems") @NonNull final MapView mapView,
                                     @NonNull final Polyline polyline) {
         this.mapView = mapView;
         this.polyline = polyline;

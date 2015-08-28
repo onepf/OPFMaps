@@ -66,23 +66,23 @@ public final class OsmdroidCameraPositionDelegate implements CameraPositionDeleg
 
     @Override
     public float getBearing() {
-        return cameraPosition.bearing;
+        return cameraPosition.getBearing();
     }
 
     @NonNull
     @Override
     public OPFLatLng getTarget() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(cameraPosition.target));
+        return new OPFLatLng(new OsmdroidLatLngDelegate(cameraPosition.getTarget()));
     }
 
     @Override
     public float getTilt() {
-        return cameraPosition.tilt;
+        return cameraPosition.getTilt();
     }
 
     @Override
     public float getZoom() {
-        return cameraPosition.zoom;
+        return cameraPosition.getZoom();
     }
 
     //CHECKSTYLE:OFF

@@ -20,6 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 
@@ -43,23 +44,26 @@ public final class GroundOverlayOptions implements Parcelable {
         }
     };
 
+    private static final float CIRCLE_DEGREES = 360F;
+
     @Nullable
-    private BoundingBoxE6 bounds = null;
+    private BoundingBoxE6 bounds;
     @Nullable
-    private GeoPoint location = null;
+    private GeoPoint location;
     @NonNull
     private BitmapDescriptor image = BitmapDescriptorFactory.defaultMarker();
-    private float anchorU = 0.0F;
-    private float anchorV = 0.0F;
-    private float bearing = 0.0F;
+    private float anchorU;
+    private float anchorV;
+    private float bearing;
     private float height = -1.0F;
-    private float transparency = 0.0F;
+    private float transparency;
     private float width = 10.0F;
-    private float zIndex = 0.0F;
+    private float zIndex;
     private boolean isVisible = true;
 
 
     public GroundOverlayOptions() {
+        //nothing
     }
 
     private GroundOverlayOptions(@NonNull final Parcel parcel) {
@@ -85,11 +89,11 @@ public final class GroundOverlayOptions implements Parcelable {
 
     @NonNull
     public GroundOverlayOptions bearing(final float bearing) {
-        this.bearing = bearing % 360.0F;
-        if(this.bearing == -0.0F) {
+        this.bearing = bearing % CIRCLE_DEGREES;
+        if (this.bearing == -0.0F) {
             this.bearing = 0.0F;
-        } else if(this.bearing < 0.0F) {
-            this.bearing += 360.0F;
+        } else if (this.bearing < 0.0F) {
+            this.bearing += CIRCLE_DEGREES;
         }
 
         return this;
@@ -150,13 +154,13 @@ public final class GroundOverlayOptions implements Parcelable {
 
     @NonNull
     public GroundOverlayOptions position(@Nullable final GeoPoint location, final float width, final float height) {
-        if(this.bounds != null) {
+        if (this.bounds != null) {
             throw new IllegalStateException("Position has already been set using positionFromBounds");
-        } else if(location == null) {
+        } else if (location == null) {
             throw new IllegalArgumentException("Location must be specified");
-        } else if(width < 0.0F) {
+        } else if (width < 0.0F) {
             throw new IllegalArgumentException("Width must be non-negative");
-        } else if(height < 0.0F) {
+        } else if (height < 0.0F) {
             throw new IllegalArgumentException("Height must be non-negative");
         } else {
             this.location = location;
@@ -168,11 +172,11 @@ public final class GroundOverlayOptions implements Parcelable {
 
     @NonNull
     public GroundOverlayOptions position(@Nullable final GeoPoint location, final float width) {
-        if(this.bounds != null) {
+        if (this.bounds != null) {
             throw new IllegalStateException("Position has already been set using positionFromBounds");
-        } else if(location == null) {
+        } else if (location == null) {
             throw new IllegalArgumentException("Location must be specified");
-        } else if(width < 0.0F) {
+        } else if (width < 0.0F) {
             throw new IllegalArgumentException("Width must be non-negative");
         } else {
             this.location = location;
@@ -184,7 +188,7 @@ public final class GroundOverlayOptions implements Parcelable {
 
     @NonNull
     public GroundOverlayOptions positionFromBounds(@Nullable final BoundingBoxE6 bounds) {
-        if(this.location != null) {
+        if (this.location != null) {
             throw new IllegalStateException("Position has already been set using position: " + this.location);
         } else {
             this.bounds = bounds;
@@ -194,7 +198,7 @@ public final class GroundOverlayOptions implements Parcelable {
 
     @NonNull
     public GroundOverlayOptions transparency(final float transparency) {
-        if(transparency >= 0.0F && transparency <= 1.0F) {
+        if (transparency >= 0.0F && transparency <= 1.0F) {
             this.transparency = transparency;
             return this;
         } else {
@@ -257,6 +261,7 @@ public final class GroundOverlayOptions implements Parcelable {
         }
     }
 
+    @SuppressWarnings("PMD.NPathComplexity")
     @Override
     public int hashCode() {
         int result = bounds != null ? bounds.hashCode() : 0;

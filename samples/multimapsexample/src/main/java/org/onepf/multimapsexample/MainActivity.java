@@ -100,6 +100,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
     }*/
 
     //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
     public void onMapReady(@NonNull final OPFMap opfMap) {
         OPFLog.logMethod(opfMap);
@@ -219,6 +220,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                     return null;
                 }
 
+                //noinspection InflateParams
                 final View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.info_window, null);
                 final TextView title = (TextView) inflate.findViewById(R.id.title);
                 title.setText(marker.getTitle());

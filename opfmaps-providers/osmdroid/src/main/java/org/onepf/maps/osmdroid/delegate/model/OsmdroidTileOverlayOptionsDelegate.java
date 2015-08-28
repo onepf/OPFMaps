@@ -34,7 +34,7 @@ public final class OsmdroidTileOverlayOptionsDelegate implements TileOverlayOpti
     public static final Creator<OsmdroidTileOverlayOptionsDelegate> CREATOR = new Creator<OsmdroidTileOverlayOptionsDelegate>() {
         @Override
         public OsmdroidTileOverlayOptionsDelegate createFromParcel(final Parcel source) {
-            return new OsmdroidTileOverlayOptionsDelegate(source);
+            return new OsmdroidTileOverlayOptionsDelegate();
         }
 
         @Override
@@ -44,10 +44,6 @@ public final class OsmdroidTileOverlayOptionsDelegate implements TileOverlayOpti
     };
 
     public OsmdroidTileOverlayOptionsDelegate() {
-        //nothing
-    }
-
-    private OsmdroidTileOverlayOptionsDelegate(@NonNull final Parcel parcel) {
         //nothing
     }
 

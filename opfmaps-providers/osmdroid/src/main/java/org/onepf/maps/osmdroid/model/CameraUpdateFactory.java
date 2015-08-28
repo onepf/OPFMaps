@@ -47,8 +47,8 @@ public final class CameraUpdateFactory {
     @NonNull
     public static CameraUpdate newCameraPosition(@NonNull final CameraPosition cameraPosition) {
         return new CameraUpdate.Builder(CAMERA_POSITION)
-                .setCenter(cameraPosition.target)
-                .setBearing(cameraPosition.bearing)
+                .setCenter(cameraPosition.getTarget())
+                .setBearing(cameraPosition.getBearing())
                 .build();
     }
 

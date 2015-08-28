@@ -31,7 +31,7 @@ public final class OsmdroidTileDelegate implements TileDelegate {
     public static final Creator<OsmdroidTileDelegate> CREATOR = new Creator<OsmdroidTileDelegate>() {
         @Override
         public OsmdroidTileDelegate createFromParcel(final Parcel source) {
-            return new OsmdroidTileDelegate(source);
+            return new OsmdroidTileDelegate();
         }
 
         @Override
@@ -41,10 +41,6 @@ public final class OsmdroidTileDelegate implements TileDelegate {
     };
 
     public OsmdroidTileDelegate() {
-        //nothing
-    }
-
-    private OsmdroidTileDelegate(@NonNull final Parcel parcel) {
         //nothing
     }
 

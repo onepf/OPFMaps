@@ -55,6 +55,7 @@ public final class ConvertUtils {
         throw new UnsupportedOperationException();
     }
 
+    @SuppressWarnings("PMD.NPathComplexity")
     @NonNull
     public static OsmdroidMapOptions convertMapOptions(@NonNull final OPFMapOptions opfOptions) {
         final OsmdroidMapOptions options = new OsmdroidMapOptions()

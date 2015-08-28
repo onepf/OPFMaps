@@ -16,6 +16,7 @@
 
 package org.onepf.maps.osmdroid.delegate;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
@@ -548,12 +549,12 @@ public class OsmdroidMapDelegate implements MapDelegate {
         final InfoWindow infoWindow = marker.getInfoWindow();
         if (infoWindow != null) {
             infoWindow.getView().setOnTouchListener(new View.OnTouchListener() {
+
+                @SuppressLint("ClickableViewAccessibility")
                 @Override
                 public boolean onTouch(final View v, final MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        if (opfOnInfoWindowClickListener != null) {
-                            opfOnInfoWindowClickListener.onInfoWindowClick(opfMarker);
-                        }
+                    if (event.getAction() == MotionEvent.ACTION_UP && opfOnInfoWindowClickListener != null) {
+                        opfOnInfoWindowClickListener.onInfoWindowClick(opfMarker);
                     }
                     return true;
                 }

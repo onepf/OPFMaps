@@ -28,6 +28,7 @@ import org.osmdroid.util.GeoPoint;
  * @author Roman Savin
  * @since 17.08.2015
  */
+@SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
 public final class CameraUpdate {
 
     public enum CameraUpdateSource {
@@ -60,6 +61,8 @@ public final class CameraUpdate {
     private final float xPixel;
     private final float yPixel;
 
+    //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.ExcessiveParameterList")
     private CameraUpdate(@NonNull final CameraUpdateSource cameraUpdateSource,
                          @Nullable final GeoPoint center,
                          @Nullable final BoundingBoxE6 bounds,
@@ -83,6 +86,7 @@ public final class CameraUpdate {
         this.xPixel = xPixel;
         this.yPixel = yPixel;
     }
+    //CHECKSTYLE:ON
 
     @NonNull
     public CameraUpdateSource getCameraUpdateSource() {
@@ -157,6 +161,7 @@ public final class CameraUpdate {
         }
     }
 
+    @SuppressWarnings("PMD.NPathComplexity")
     @Override
     public int hashCode() {
         int result = cameraUpdateSource.hashCode();
@@ -173,10 +178,10 @@ public final class CameraUpdate {
         return result;
     }
 
-    final static class Builder {
+    static final class Builder {
 
         @NonNull
-        private CameraUpdateSource cameraUpdateSource;
+        private final CameraUpdateSource cameraUpdateSource;
         @Nullable
         private GeoPoint center;
         @Nullable
@@ -255,6 +260,7 @@ public final class CameraUpdate {
             return this;
         }
 
+        @SuppressWarnings("PMD.AccessorClassGeneration")
         @NonNull
         CameraUpdate build() {
             return new CameraUpdate(

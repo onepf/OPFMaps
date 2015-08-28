@@ -32,9 +32,9 @@ import org.osmdroid.views.overlay.Overlay;
  */
 public class RotationGestureOverlay extends Overlay implements IOverlayMenuProvider {
 
-    private final static int MENU_ENABLED = getSafeMenuId();
-    private final static int MENU_ROTATE_CCW = getSafeMenuId();
-    private final static int MENU_ROTATE_CW = getSafeMenuId();
+    private static final int MENU_ENABLED = getSafeMenuId();
+    private static final int MENU_ROTATE_CCW = getSafeMenuId();
+    private static final int MENU_ROTATE_CW = getSafeMenuId();
 
     @NonNull
     private final RotationGestureDetector rotationDetector;

@@ -43,16 +43,19 @@ public final class CircleOptions implements Parcelable {
         }
     };
 
+    private static final int DEFAULT_STROKE_COLOR = -16777216;
+
     @Nullable
-    private GeoPoint center = null;
-    private int fillColor = 0;
-    private double radius = 0.0;
-    private int strokeColor = -16777216;
+    private GeoPoint center;
+    private int fillColor;
+    private double radius;
+    private int strokeColor = DEFAULT_STROKE_COLOR;
     private float strokeWidth = 10.0F;
-    private float zIndex = 0.0F;
+    private float zIndex;
     private boolean isVisible = true;
 
     public CircleOptions() {
+        //nothing
     }
 
     private CircleOptions(@NonNull final Parcel parcel) {
@@ -171,6 +174,7 @@ public final class CircleOptions implements Parcelable {
         }
     }
 
+    @SuppressWarnings("PMD.NPathComplexity")
     @Override
     public int hashCode() {
         int result;
@@ -178,7 +182,9 @@ public final class CircleOptions implements Parcelable {
         result = center != null ? center.hashCode() : 0;
         result = 31 * result + fillColor;
         temp = Double.doubleToLongBits(radius);
+        //CHECKSTYLE:OFF
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        //CHECKSTYLE:ON
         result = 31 * result + strokeColor;
         result = 31 * result + (strokeWidth != +0.0f ? Float.floatToIntBits(strokeWidth) : 0);
         result = 31 * result + (zIndex != +0.0f ? Float.floatToIntBits(zIndex) : 0);

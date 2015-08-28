@@ -43,19 +43,22 @@ public final class PolygonOptions implements Parcelable {
         }
     };
 
+    private static final int DEFAULT_STROKE_COLOR = -16777216;
+
     @NonNull
     private final List<List<GeoPoint>> holes = new ArrayList<>();
     @NonNull
     private final List<GeoPoint> points = new ArrayList<>();
 
-    private int fillColor = 0;
-    private int strokeColor = -16777216;
+    private int fillColor;
+    private int strokeColor = DEFAULT_STROKE_COLOR;
     private float strokeWidth = 10.0F;
-    private float zIndex = 0.0F;
-    private boolean isGeodesic = false;
+    private float zIndex;
+    private boolean isGeodesic;
     private boolean isVisible = true;
 
     public PolygonOptions() {
+        //nothing
     }
 
     private PolygonOptions(Parcel source) {
@@ -191,6 +194,7 @@ public final class PolygonOptions implements Parcelable {
         }
     }
 
+    @SuppressWarnings("PMD.NPathComplexity")
     @Override
     public int hashCode() {
         int result = holes.hashCode();

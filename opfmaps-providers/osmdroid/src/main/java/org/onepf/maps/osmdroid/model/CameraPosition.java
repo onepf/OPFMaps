@@ -20,6 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.maps.osmdroid.utils.CompareUtils;
 import org.osmdroid.util.GeoPoint;
 
@@ -57,20 +58,16 @@ public final class CameraPosition implements Parcelable {
     }
 
     @NonNull
-    public final GeoPoint target;
-    public final float zoom;
-    public final float tilt;
-    public final float bearing;
+    private final GeoPoint target;
+    private final float zoom;
+    private final float tilt;
+    private final float bearing;
 
-    public CameraPosition(@Nullable final GeoPoint target, final float zoom, final float tilt, final float bearing) {
-        if (target == null) {
-            throw new NullPointerException("null camera target");
-        } else {
-            this.target = target;
-            this.zoom = zoom;
-            this.tilt = tilt;
-            this.bearing = bearing;
-        }
+    public CameraPosition(@NonNull final GeoPoint target, final float zoom, final float tilt, final float bearing) {
+        this.target = target;
+        this.zoom = zoom;
+        this.tilt = tilt;
+        this.bearing = bearing;
     }
 
     private CameraPosition(@NonNull final Parcel parcel) {
@@ -78,6 +75,23 @@ public final class CameraPosition implements Parcelable {
         this.zoom = parcel.readFloat();
         this.tilt = parcel.readFloat();
         this.bearing = parcel.readFloat();
+    }
+
+    @NonNull
+    public GeoPoint getTarget() {
+        return target;
+    }
+
+    public float getZoom() {
+        return zoom;
+    }
+
+    public float getTilt() {
+        return tilt;
+    }
+
+    public float getBearing() {
+        return bearing;
     }
 
     @Override
@@ -131,12 +145,13 @@ public final class CameraPosition implements Parcelable {
     public static final class Builder {
 
         @Nullable
-        private GeoPoint target = null;
-        private float zoom = 0.0F;
-        private float tilt = 0.0F;
-        private float bearing = 0.0F;
+        private GeoPoint target;
+        private float zoom;
+        private float tilt;
+        private float bearing;
 
         public Builder() {
+            //nothing
         }
 
         public Builder(@NonNull final CameraPosition previous) {
@@ -167,6 +182,10 @@ public final class CameraPosition implements Parcelable {
         }
 
         public CameraPosition build() {
+            if (target == null) {
+                throw new IllegalArgumentException("target position can't be null");
+            }
+
             return new CameraPosition(target, zoom, tilt, bearing);
         }
     }

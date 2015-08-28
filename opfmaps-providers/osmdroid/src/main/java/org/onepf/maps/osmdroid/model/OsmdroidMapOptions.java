@@ -20,6 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfutils.OPFLog;
 
@@ -42,23 +43,24 @@ public final class OsmdroidMapOptions implements Parcelable {
             return new OsmdroidMapOptions[size];
         }
     };
-    
+
     @NonNull
     private OPFMapType mapType = NORMAL;
     @Nullable
-    private CameraPosition camera = null;
+    private CameraPosition camera;
     @Nullable
-    private Boolean isCompassEnabled = null;
+    private Boolean isCompassEnabled;
     @Nullable
-    private Boolean isRotateGesturesEnabled = null;
+    private Boolean isRotateGesturesEnabled;
     @Nullable
-    private Boolean isScrollGesturesEnabled = null;
+    private Boolean isScrollGesturesEnabled;
     @Nullable
-    private Boolean isZoomControlsEnabled = null;
+    private Boolean isZoomControlsEnabled;
     @Nullable
-    private Boolean isZoomGesturesEnabled = null;
+    private Boolean isZoomGesturesEnabled;
 
     public OsmdroidMapOptions() {
+        //nothing
     }
 
     private OsmdroidMapOptions(@NonNull final Parcel parcel) {

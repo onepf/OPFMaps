@@ -31,12 +31,15 @@ import org.osmdroid.views.overlay.compass.IOrientationProvider;
  */
 public final class CompassRotationOrientationProvider implements IOrientationProvider, RotationObserver {
 
+    private static final float CIRCLE_DEGREES = 360.0F;
+    private static final float STRAIGHT_ANGLE = 90.0F;
+
     @Nullable
     private IOrientationConsumer orientationConsumer;
 
     private final int screenRotation;
 
-    private float orientation = 0;
+    private float orientation;
 
     public CompassRotationOrientationProvider(@NonNull final Context context) {
         final WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -62,7 +65,7 @@ public final class CompassRotationOrientationProvider implements IOrientationPro
 
     @Override
     public void onRotate(final float degrees) {
-        orientation = degrees % 360.0f + 90 * screenRotation;
+        orientation = degrees % CIRCLE_DEGREES + STRAIGHT_ANGLE * screenRotation;
         if (orientationConsumer != null) {
             orientationConsumer.onOrientationChanged(orientation, this);
         }

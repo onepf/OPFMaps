@@ -37,6 +37,7 @@ public class ClickableCompassOverlay extends CompassOverlay {
     private static final float COMPASS_CENTER_X = 35.0f;
     private static final float COMPASS_CENTER_Y = 35.0f;
     private static final float COMPASS_RADIUS = 20.0f;
+    private static final float STRAIGHT_ANGLE = 90.0f;
 
     public ClickableCompassOverlay(@NonNull final Context context, @NonNull final MapView mapView) {
         this(context, new InternalCompassOrientationProvider(context), mapView);
@@ -57,7 +58,7 @@ public class ClickableCompassOverlay extends CompassOverlay {
 
         final WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         final Display display = windowManager.getDefaultDisplay();
-        onOrientationChanged(display.getRotation() * 90, orientationProvider);
+        onOrientationChanged(display.getRotation() * STRAIGHT_ANGLE, orientationProvider);
     }
 
     @Override

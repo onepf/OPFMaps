@@ -25,12 +25,11 @@ android {
     }
 
     lintOptions {
-        abortOnError false
+        abortOnError true
+        checkAllWarnings true
+        warningsAsErrors true
+        disable 'IconDensities'
     }
-}
-
-check {
-    abortOnError false
 }
 
 dependencies {
@@ -41,8 +40,8 @@ dependencies {
     compile 'org.osmdroid:osmdroid-android:4.3'
     compile 'org.osmdroid:bonuspack:5.3'
 
-    compile 'org.slf4j:slf4j-android:1.6.1-RC1'
+    compile 'org.slf4j:slf4j-android:1.7.12'
     compile 'com.android.support:support-v4:22.2.1'
-    compile 'org.apache.commons:commons-lang3:3.3.2'
-    compile 'com.google.code.gson:gson:2.3'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'com.google.code.gson:gson:2.3.1'
 }

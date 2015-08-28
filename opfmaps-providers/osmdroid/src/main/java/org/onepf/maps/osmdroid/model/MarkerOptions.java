@@ -42,25 +42,28 @@ public final class MarkerOptions implements Parcelable {
         }
     };
 
+    private static final float DEFAULT_ANCHOR_U = 0.5F;
+
     @Nullable
-    private GeoPoint position = null;
+    private GeoPoint position;
     @Nullable
-    private String title = null;
+    private String title;
     @NonNull
     private BitmapDescriptor icon = BitmapDescriptorFactory.defaultMarker();
     @Nullable
-    private String snippet = null;
+    private String snippet;
     private float alpha = 1.0F;
-    private float anchorU = 0.5F;
+    private float anchorU = DEFAULT_ANCHOR_U;
     private float anchorV = 1.0F;
-    private boolean isDraggable = false;
-    private boolean isFlat = false;
-    private float infoWindowAnchorU = 0.5F;
-    private float infoWindowAnchorV = 0.0F;
-    private float rotation = 0.0F;
+    private boolean isDraggable;
+    private boolean isFlat;
+    private float infoWindowAnchorU = DEFAULT_ANCHOR_U;
+    private float infoWindowAnchorV;
+    private float rotation;
     private boolean isVisible = true;
 
     public MarkerOptions() {
+        //nothing
     }
 
     private MarkerOptions(@NonNull final Parcel parcel) {
@@ -250,6 +253,7 @@ public final class MarkerOptions implements Parcelable {
         }
     }
 
+    @SuppressWarnings("PMD.NPathComplexity")
     @Override
     public int hashCode() {
         int result = position != null ? position.hashCode() : 0;

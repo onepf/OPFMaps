@@ -77,33 +77,33 @@ public final class OsmdroidVisibleRegionDelegate implements VisibleRegionDelegat
     @NonNull
     @Override
     public OPFLatLng getFarLeft() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.farLeft));
+        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.getFarLeft()));
     }
 
     @NonNull
     @Override
     public OPFLatLng getFarRight() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.farRight));
+        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.getFarRight()));
     }
 
     @NonNull
     @Override
     public OPFLatLngBounds getLatLngBounds() {
         return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(
-                visibleRegion.latLngBounds
+                visibleRegion.getLatLngBounds()
         ));
     }
 
     @NonNull
     @Override
     public OPFLatLng getNearLeft() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.nearLeft));
+        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.getNearLeft()));
     }
 
     @NonNull
     @Override
     public OPFLatLng getNearRight() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.nearRight));
+        return new OPFLatLng(new OsmdroidLatLngDelegate(visibleRegion.getNearRight()));
     }
 
     @Override

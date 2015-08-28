@@ -198,7 +198,7 @@ public final class BitmapDescriptor implements Parcelable {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    OPFLog.e(e.getMessage());
                 }
             }
         }
