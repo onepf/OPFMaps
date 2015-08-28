@@ -83,12 +83,17 @@ public final class OPFMapHelper {
 
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes") //todo remove
     @NonNull
-    public DelegatesAbstractFactory getDelegatesFactory() {
+    public OPFMapProvider getCurrentProvider() {
         if (currentProvider == null) {
             //todo throw init exception
             throw new RuntimeException("Init");
         }
 
-        return currentProvider.getDelegatesFactory();
+        return currentProvider;
+    }
+
+    @NonNull
+    public DelegatesAbstractFactory getDelegatesFactory() {
+        return getCurrentProvider().getDelegatesFactory();
     }
 }

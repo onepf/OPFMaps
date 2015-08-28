@@ -19,10 +19,12 @@ package org.onepf.maps.osmdroid.utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import org.onepf.maps.osmdroid.OsmdroidMapProvider;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidCircleDelegate;
 import org.onepf.maps.osmdroid.model.BitmapDescriptor;
 import org.onepf.maps.osmdroid.model.CameraPosition;
 import org.onepf.maps.osmdroid.model.OsmdroidMapOptions;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFCameraPosition;
@@ -38,7 +40,6 @@ import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
@@ -231,16 +232,6 @@ public final class ConvertUtils {
 
     @NonNull
     public static ITileSource convertMapTypeToTileSource(@NonNull final OPFMapType type) {
-        switch (type) {
-            case NORMAL:
-                return TileSourceFactory.MAPNIK;
-            case SATELLITE:
-                return TileSourceFactory.MAPQUESTAERIAL;
-            case TERRAIN:
-            case HYBRID:
-                return TileSourceFactory.MAPQUESTOSM;
-            default:
-                return TileSourceFactory.MAPNIK;
-        }
+        return ((OsmdroidMapProvider) OPFMapHelper.getInstance().getCurrentProvider()).getTileSourceMap().get(type);
     }
 }
