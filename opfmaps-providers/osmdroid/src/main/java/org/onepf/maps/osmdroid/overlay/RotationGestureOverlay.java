@@ -108,7 +108,13 @@ public class RotationGestureOverlay extends Overlay implements IOverlayMenuProvi
 
     private class RotationGestureDetector {
 
+        private static final int START_ROTATION_DEGREES = 2;
+
+        private boolean isRotationStarted;
+
         private float rotation;
+
+        private float initialRotation;
 
         public void onTouch(final MotionEvent event) {
             if (event.getPointerCount() != 2) {
@@ -117,18 +123,32 @@ public class RotationGestureOverlay extends Overlay implements IOverlayMenuProvi
 
             if (event.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
                 rotation = rotation(event);
+                initialRotation = rotation;
+            } else if (event.getActionMasked() == MotionEvent.ACTION_POINTER_UP) {
+                isRotationStarted = false;
+                return;
             }
 
-            float rotation = rotation(event);
-            float delta = rotation - this.rotation;
-            this.rotation += delta;
-            mapView.setMapOrientation(mapView.getMapOrientation() + delta);
+            float currentRotation = rotation(event);
+            float delta = currentRotation - rotation;
+            rotation += delta / 100;
+
+            if (!isRotationStarted && Math.abs(initialRotation - rotation) > START_ROTATION_DEGREES) {
+                isRotationStarted = true;
+                rotation = currentRotation;
+                return;
+            }
+
+            if (isRotationStarted) {
+                isRotationStarted = true;
+                mapView.setMapOrientation(mapView.getMapOrientation() + delta);
+            }
         }
 
         private float rotation(final MotionEvent event) {
-            double delta_x = event.getX(0) - event.getX(1);
-            double delta_y = event.getY(0) - event.getY(1);
-            double radians = Math.atan2(delta_y, delta_x);
+            double deltaX = event.getX(0) - event.getX(1);
+            double deltaY = event.getY(0) - event.getY(1);
+            double radians = Math.atan2(deltaY, deltaX);
             return (float) Math.toDegrees(radians);
         }
     }
