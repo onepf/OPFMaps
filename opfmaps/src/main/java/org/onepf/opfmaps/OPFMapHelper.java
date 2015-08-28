@@ -71,6 +71,7 @@ public final class OPFMapHelper {
             if (provider.isAvailable(context) && provider.hasRequiredPermissions(context)
                     && provider.isKeyPresented(context) && provider.hasRequestedFeatures(context)) {
                 currentProvider = provider;
+                break;
             }
         }
 
@@ -82,12 +83,17 @@ public final class OPFMapHelper {
 
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes") //todo remove
     @NonNull
-    public DelegatesAbstractFactory getDelegatesFactory() {
+    public OPFMapProvider getCurrentProvider() {
         if (currentProvider == null) {
             //todo throw init exception
             throw new RuntimeException("Init");
         }
 
-        return currentProvider.getDelegatesFactory();
+        return currentProvider;
+    }
+
+    @NonNull
+    public DelegatesAbstractFactory getDelegatesFactory() {
+        return getCurrentProvider().getDelegatesFactory();
     }
 }

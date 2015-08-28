@@ -27,13 +27,14 @@ import java.net.URL;
  * @author Roman Savin
  * @since 30.07.2015
  */
-public abstract class OPFUrlTileProvider implements UrlTileProviderDelegate {
+public class OPFUrlTileProvider implements UrlTileProviderDelegate {
 
     @NonNull
     private final UrlTileProviderDelegate delegate;
 
-    public OPFUrlTileProvider(final int width, final int height) {
-        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createUrlTileProviderDelegate(width, height);
+    public OPFUrlTileProvider(final int width, final int height, @NonNull final TileUrlProvider tileUrlProvider) {
+        this.delegate = OPFMapHelper.getInstance().getDelegatesFactory()
+                .createUrlTileProviderDelegate(width, height, tileUrlProvider);
     }
 
     @Override
@@ -42,8 +43,10 @@ public abstract class OPFUrlTileProvider implements UrlTileProviderDelegate {
         return delegate.getTile(x, y, zoom);
     }
 
-    @NonNull
-    public abstract URL getTileUrl(final int x, final int y, final int zoom);
+    @Nullable
+    public URL getTileUrl(final int x, final int y, final int zoom) {
+        return delegate.getTileUrl(x, y, zoom);
+    }
 
     //CHECKSTYLE:OFF
     @SuppressWarnings("PMD.IfStmtsMustUseBraces")
@@ -66,5 +69,11 @@ public abstract class OPFUrlTileProvider implements UrlTileProviderDelegate {
     @Override
     public String toString() {
         return delegate.toString();
+    }
+
+    public interface TileUrlProvider {
+
+        @Nullable
+        URL getTileUrl(final int x, final int y, final int zoom);
     }
 }

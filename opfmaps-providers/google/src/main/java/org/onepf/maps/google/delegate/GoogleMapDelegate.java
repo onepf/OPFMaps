@@ -83,7 +83,7 @@ import org.onepf.opfmaps.model.OPFUiSettings;
  * @author Roman Savin
  * @since 31.07.2015
  */
-@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount", "PMD.TooManyMethods"})
+@SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyMethods"})
 public class GoogleMapDelegate implements MapDelegate {
 
     @NonNull
@@ -314,7 +314,7 @@ public class GoogleMapDelegate implements MapDelegate {
         map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(final CameraPosition cameraPosition) {
-                //todo implement
+                listener.onCameraChange(new OPFCameraPosition(new GoogleCameraPositionDelegate(cameraPosition)));
             }
         });
     }

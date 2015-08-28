@@ -58,7 +58,7 @@ import static com.amazon.geo.mapsv2.AmazonMap.MAP_TYPE_TERRAIN;
  * @author Roman Savin
  * @since 31.07.2015
  */
-@SuppressWarnings({"PMD.GodClass", "PMD.NPathComplexity"})
+@SuppressWarnings("PMD.NPathComplexity")
 public final class ConvertUtils {
 
     private ConvertUtils() {

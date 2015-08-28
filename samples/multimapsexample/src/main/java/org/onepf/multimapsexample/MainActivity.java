@@ -24,20 +24,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapFragment;
+import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
+import org.onepf.opfmaps.listener.OPFOnInfoWindowClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
+import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
+import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
 import org.onepf.opfmaps.model.OPFBitmapDescriptorFactory;
+import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfutils.OPFLog;
-
 
 public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
@@ -95,13 +100,28 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
     }*/
 
     //CHECKSTYLE:OFF
+    @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
     public void onMapReady(@NonNull final OPFMap opfMap) {
         OPFLog.logMethod(opfMap);
 
         opfMap.setMyLocationEnabled(true);
         opfMap.setBuildingsEnabled(true);
-        opfMap.setMyLocationEnabled(true);
+
+        opfMap.setOnMyLocationButtonClickListener(new OPFOnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                Toast.makeText(MainActivity.this, "My location click", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        //circle
+        opfMap.addCircle(new OPFCircleOptions()
+                .center(new OPFLatLng(55.752004, 37.617017))
+                .radius(100000.0)
+                .fillColor(Color.CYAN)
+                .strokeColor(Color.BLUE));
 
         //markers
         opfMap.addMarker(new OPFMarkerOptions()
@@ -109,9 +129,16 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 .position(new OPFLatLng(37.773975, -122.40205))
                 .title("marker #1")
                 .snippet("snippet #1")
-                .icon(OPFBitmapDescriptorFactory.defaultMarker())
+                .icon(OPFBitmapDescriptorFactory.defaultMarker(OPFBitmapDescriptorFactory.HUE_AZURE))
                 .draggable(true));
 
+        opfMap.addMarker(new OPFMarkerOptions()
+                .visible(true)
+                .position(new OPFLatLng(55.752004, -122.40205))
+                .title("marker #3")
+                .snippet("snippet #3")
+                .icon(OPFBitmapDescriptorFactory.defaultMarker(OPFBitmapDescriptorFactory.HUE_YELLOW))
+                .draggable(true));
 
         opfMap.addMarker(new OPFMarkerOptions()
                 .visible(true)
@@ -120,13 +147,6 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 .snippet("snippet #2")
                 .icon(OPFBitmapDescriptorFactory.defaultMarker())
                 .draggable(true));
-
-        //circle
-        opfMap.addCircle(new OPFCircleOptions()
-                .center(new OPFLatLng(55.752004, 37.617017))
-                .radius(1000000.0)
-                .fillColor(Color.CYAN)
-                .strokeColor(Color.BLUE));
 
         opfMap.setOnMarkerDragListener(new OPFOnMarkerDragListener() {
             @Override
@@ -162,9 +182,29 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             }
         });
 
+        opfMap.setOnMapLongClickListener(new OPFOnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(@NonNull final OPFLatLng latLng) {
+                OPFLog.logMethod(latLng);
+                Toast.makeText(MainActivity.this, "Map long click position : " + latLng, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        opfMap.setOnInfoWindowClickListener(new OPFOnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(@NonNull final OPFMarker marker) {
+                OPFLog.logMethod(marker);
+                Toast.makeText(MainActivity.this, "Info window click : " + marker, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         opfMap.setInfoWindowAdapter(new OPFInfoWindowAdapter() {
             @Override
             public View getInfoWindow(@NonNull final OPFMarker marker) {
+                if (!marker.getSnippet().equals("snippet #2")) {
+                    return null;
+                }
+
                 //noinspection InflateParams
                 final View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.info_window, null);
                 final TextView title = (TextView) inflate.findViewById(R.id.title);
@@ -176,7 +216,24 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
             @Override
             public View getInfoContents(@NonNull final OPFMarker marker) {
-                return null;
+                if (!marker.getSnippet().equals("snippet #1")) {
+                    return null;
+                }
+
+                //noinspection InflateParams
+                final View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.info_window, null);
+                final TextView title = (TextView) inflate.findViewById(R.id.title);
+                title.setText(marker.getTitle());
+                final TextView snippet = (TextView) inflate.findViewById(R.id.snippet);
+                snippet.setText(marker.getSnippet());
+                return inflate;
+            }
+        });
+
+        opfMap.setOnCameraChangeListener(new OPFOnCameraChangeListener() {
+            @Override
+            public void onCameraChange(@NonNull final OPFCameraPosition position) {
+                OPFLog.logMethod(position);
             }
         });
     }

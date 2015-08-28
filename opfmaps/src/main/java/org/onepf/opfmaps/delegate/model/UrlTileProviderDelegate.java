@@ -16,7 +16,8 @@
 
 package org.onepf.opfmaps.delegate.model;
 
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import org.onepf.opfmaps.model.OPFTileProvider;
 
 import java.net.URL;
@@ -27,6 +28,6 @@ import java.net.URL;
  */
 public interface UrlTileProviderDelegate extends OPFTileProvider {
 
-    @NonNull
+    @Nullable
     URL getTileUrl(final int x, final int y, final int zoom);
 }

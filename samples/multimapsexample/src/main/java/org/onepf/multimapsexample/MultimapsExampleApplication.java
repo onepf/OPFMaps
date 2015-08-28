@@ -17,8 +17,12 @@
 package org.onepf.multimapsexample;
 
 import android.app.Application;
+
+import com.squareup.leakcanary.LeakCanary;
+
 import org.onepf.maps.amazon.AmazonMapProvider;
 import org.onepf.maps.google.GoogleMapProvider;
+import org.onepf.maps.osmdroid.OsmdroidMapProvider;
 import org.onepf.opfmaps.OPFMapConfiguration;
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfutils.OPFLog;
@@ -32,10 +36,11 @@ public class MultimapsExampleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
 
         OPFLog.setEnabled(BuildConfig.DEBUG, true);
         final OPFMapConfiguration configuration = new OPFMapConfiguration.Builder()
-                .addProviders(new AmazonMapProvider(), new GoogleMapProvider())
+                .addProviders(new OsmdroidMapProvider(), new GoogleMapProvider(), new AmazonMapProvider())
                 .setSelectSystemPreferred(true)
                 .build();
         OPFMapHelper.getInstance().init(this, configuration);

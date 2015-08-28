@@ -57,7 +57,7 @@ public final class GoogleVisibleRegionDelegate implements VisibleRegionDelegate 
                 new LatLng(farLeft.getLat(), farLeft.getLng()),
                 new LatLng(farRight.getLat(), farRight.getLng()),
                 new LatLngBounds(
-                        new LatLng(latLngBounds.getSouthwest().getLat(), latLngBounds.getNortheast().getLng()),
+                        new LatLng(latLngBounds.getSouthwest().getLat(), latLngBounds.getSouthwest().getLng()),
                         new LatLng(latLngBounds.getNortheast().getLat(), latLngBounds.getNortheast().getLng())
                 )
         );

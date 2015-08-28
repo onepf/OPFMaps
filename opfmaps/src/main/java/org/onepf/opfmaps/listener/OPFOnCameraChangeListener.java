@@ -16,11 +16,15 @@
 
 package org.onepf.opfmaps.listener;
 
+import android.support.annotation.NonNull;
+
+import org.onepf.opfmaps.model.OPFCameraPosition;
+
 /**
  * @author Roman Savin
  * @since 30.07.2015
  */
 public interface OPFOnCameraChangeListener {
 
-    //todo void onCameraChange(@NonNull OPFCameraPosition position);
+    void onCameraChange(@NonNull OPFCameraPosition position);
 }
