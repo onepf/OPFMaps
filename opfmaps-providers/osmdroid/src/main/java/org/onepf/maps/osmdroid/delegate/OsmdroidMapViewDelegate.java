@@ -138,7 +138,6 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
                     savedInstanceState.getDouble(CENTER_LNG_BUNDLE_KEY, 0.0)
             ));
             controller.setZoom(savedInstanceState.getInt(ZOOM_LEVEL_BUNDLE_KEY, MIN_ZOOM_LEVEL));
-            setMapOrientation(savedInstanceState.getFloat(MAP_ORIENTATION_BUNDLE_KEY, 0.0f));
 
             setBuiltInZoomControls(savedInstanceState.getBoolean(IS_ZOOM_CONTROLS_ENABLED_BUNDLE_KEY, true));
             setCompassEnabled(savedInstanceState.getBoolean(IS_COMPASS_ENABLED_BUNDLE_KEY, true));
@@ -146,6 +145,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
             setMultiTouchControls(savedInstanceState.getBoolean(IS_ZOOM_GESTURES_ENABLED_BUNDLE_KEY, true));
             setMyLocationEnabled(savedInstanceState.getBoolean(IS_MY_LOCATION_ENABLED_BUNDLE_KEY, true));
             setMyLocationButtonEnabled(savedInstanceState.getBoolean(IS_MY_LOCATION_BUTTON_ENABLED_BUNDLE_KEY, true));
+            setMapOrientation(savedInstanceState.getFloat(MAP_ORIENTATION_BUNDLE_KEY, 0.0f));
         }
     }
 
@@ -188,6 +188,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
             compassOverlay.disableCompass();
         }
         setBuiltInZoomControls(false);
+        rotationObservers.clear();
     }
 
     @Override
