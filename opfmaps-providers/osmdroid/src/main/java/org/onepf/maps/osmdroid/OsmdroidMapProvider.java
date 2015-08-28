@@ -41,12 +41,14 @@ public final class OsmdroidMapProvider extends BaseOPFMapProvider {
     }
 
     public OsmdroidMapProvider(@NonNull final OPFMapType mapType, @NonNull final ITileSource tileSource) {
+        super();
         final Map<OPFMapType, ITileSource> tileSourceMap = createDefaultTileSourceMap();
         tileSourceMap.put(mapType, tileSource);
         this.tileSourceMap = tileSourceMap;
     }
 
     public OsmdroidMapProvider(@NonNull final Map<OPFMapType, ITileSource> tileSourceMap) {
+        super();
         this.tileSourceMap = tileSourceMap;
     }
 

@@ -30,7 +30,7 @@ import org.onepf.opfmaps.model.OPFMapType;
  * @author Roman Savin
  * @since 06.08.2015
  */
-@SuppressWarnings({"PMD.GodClass", "PMD.NPathComplexity"})
+@SuppressWarnings("PMD.NPathComplexity")
 public final class OPFMapOptions implements MapOptionsDelegate {
 
     public static final Creator<OPFMapOptions> CREATOR = new Creator<OPFMapOptions>() {

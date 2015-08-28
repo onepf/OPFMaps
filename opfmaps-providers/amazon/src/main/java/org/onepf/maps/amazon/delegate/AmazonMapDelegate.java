@@ -86,7 +86,7 @@ import org.onepf.opfutils.OPFLog;
  * @author Roman Savin
  * @since 31.07.2015
  */
-@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount", "PMD.TooManyMethods"})
+@SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyMethods"})
 public class AmazonMapDelegate implements MapDelegate {
 
     @NonNull

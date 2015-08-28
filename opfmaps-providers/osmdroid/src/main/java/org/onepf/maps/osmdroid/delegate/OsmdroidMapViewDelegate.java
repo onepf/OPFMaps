@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.onepf.maps.osmdroid.OsmdroidMapProvider;
 import org.onepf.maps.osmdroid.R;
 import org.onepf.maps.osmdroid.model.CameraPosition;
 import org.onepf.maps.osmdroid.model.OsmdroidMapOptions;
@@ -33,6 +34,7 @@ import org.onepf.maps.osmdroid.overlay.compass.CompassRotationOrientationProvide
 import org.onepf.maps.osmdroid.overlay.listener.RotationObserver;
 import org.onepf.maps.osmdroid.utils.ConvertUtils;
 import org.onepf.opfmaps.OPFMap;
+import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
@@ -41,6 +43,9 @@ import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfutils.OPFLog;
 import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.TileSystem;
 import org.osmdroid.views.MapView;
 
@@ -52,6 +57,19 @@ import java.util.List;
  * @since 04.08.2015
  */
 public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate {
+
+    private static final String TILE_SOURCE_BUNDLE_KEY = "org.onepf.maps.osmdroid.delegate.TILE_SOURCE_BUNDLE_KEY";
+    private static final String CENTER_LAT_BUNDLE_KEY = "org.onepf.maps.osmdroid.delegate.CENTER_LAT_BUNDLE_KEY";
+    private static final String CENTER_LNG_BUNDLE_KEY = "org.onepf.maps.osmdroid.delegate.CENTER_LNG_BUNDLE_KEY";
+    private static final String ZOOM_LEVEL_BUNDLE_KEY = "org.onepf.maps.osmdroid.delegate.ZOOM_LEVEL_BUNDLE_KEY";
+    private static final String MAP_ORIENTATION_BUNDLE_KEY = "org.onepf.maps.osmdroid.delegate.MAP_ORIENTATION_BUNDLE_KEY";
+    private static final String IS_ZOOM_CONTROLS_ENABLED_BUNDLE_KEY = "org.onepf.maps.osmdroid.delegate.IS_ZOOM_CONTROLS_ENABLED_BUNDLE_KEY";
+    private static final String IS_COMPASS_ENABLED_BUNDLE_KEY = "org.onepf.maps.osmdroid.delegate.IS_COMPASS_ENABLED_BUNDLE_KEY";
+    private static final String IS_ROTATE_GESTURES_ENABLED_BUNDLE_KEY = "org.onepf.maps.osmdroid.delegate.IS_ROTATE_GESTURES_ENABLED_BUNDLE_KEY";
+    private static final String IS_ZOOM_GESTURES_ENABLED_BUNDLE_KEY = "org.onepf.maps.osmdroid.delegate.IS_ZOOM_GESTURES_ENABLED_BUNDLE_KEY";
+    private static final String IS_MY_LOCATION_ENABLED_BUNDLE_KEY = "org.onepf.maps.osmdroid.delegate.IS_MY_LOCATION_ENABLED_BUNDLE_KEY";
+    private static final String IS_MY_LOCATION_BUTTON_ENABLED_BUNDLE_KEY =
+            "org.onepf.maps.osmdroid.delegate.IS_MY_LOCATION_BUTTON_ENABLED_BUNDLE_KEY";
 
     private static final int MIN_ZOOM_LEVEL = 3;
 
@@ -92,41 +110,89 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
 
     @Override
     public void getMapAsync(@NonNull final OPFOnMapReadyCallback callback) {
-        initOverlays();
-        initOptions();
         callback.onMapReady(new OPFMap(new OsmdroidMapDelegate(this)));
     }
 
-    //TODO: Implement callbacks
-
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
-        //later
+        initOverlays();
+
+        if (savedInstanceState == null) {
+            initOptions();
+        } else {
+            setMinZoomLevel(MIN_ZOOM_LEVEL);
+
+            final String tileSourceName = savedInstanceState.getString(TILE_SOURCE_BUNDLE_KEY,
+                    TileSourceFactory.DEFAULT_TILE_SOURCE.name());
+            try {
+                final ITileSource tileSource = TileSourceFactory.getTileSource(tileSourceName);
+                setTileSource(tileSource);
+            } catch (final IllegalArgumentException e) {
+                setTileSource(((OsmdroidMapProvider) OPFMapHelper.getInstance().getCurrentProvider())
+                        .getTileSourceMap().get(OPFMapType.NORMAL));
+            }
+
+            final IMapController controller = getController();
+            controller.setCenter(new GeoPoint(
+                    savedInstanceState.getDouble(CENTER_LAT_BUNDLE_KEY, 0.0),
+                    savedInstanceState.getDouble(CENTER_LNG_BUNDLE_KEY, 0.0)
+            ));
+            controller.setZoom(savedInstanceState.getInt(ZOOM_LEVEL_BUNDLE_KEY, MIN_ZOOM_LEVEL));
+            setMapOrientation(savedInstanceState.getFloat(MAP_ORIENTATION_BUNDLE_KEY, 0.0f));
+
+            setBuiltInZoomControls(savedInstanceState.getBoolean(IS_ZOOM_CONTROLS_ENABLED_BUNDLE_KEY, true));
+            setCompassEnabled(savedInstanceState.getBoolean(IS_COMPASS_ENABLED_BUNDLE_KEY, true));
+            setRotateGesturesEnabled(savedInstanceState.getBoolean(IS_ROTATE_GESTURES_ENABLED_BUNDLE_KEY, true));
+            setMultiTouchControls(savedInstanceState.getBoolean(IS_ZOOM_GESTURES_ENABLED_BUNDLE_KEY, true));
+            setMyLocationEnabled(savedInstanceState.getBoolean(IS_MY_LOCATION_ENABLED_BUNDLE_KEY, true));
+            setMyLocationButtonEnabled(savedInstanceState.getBoolean(IS_MY_LOCATION_BUTTON_ENABLED_BUNDLE_KEY, true));
+        }
     }
 
     @Override
     public void onResume() {
-        //later
+        //nothing
     }
 
     @Override
     public void onPause() {
-        //later
+        //nothing
     }
 
     @Override
     public void onDestroy() {
-        //later
+        //nothing
     }
 
     @Override
     public void onSaveInstanceState(@Nullable final Bundle outState) {
-        //later
+        if (outState == null) {
+            return;
+        }
+        outState.putString(TILE_SOURCE_BUNDLE_KEY, getTileProvider().getTileSource().name());
+        outState.putDouble(CENTER_LAT_BUNDLE_KEY, getMapCenter().getLatitude());
+        outState.putDouble(CENTER_LNG_BUNDLE_KEY, getMapCenter().getLongitude());
+        outState.putInt(ZOOM_LEVEL_BUNDLE_KEY, getZoomLevel());
+        outState.putFloat(MAP_ORIENTATION_BUNDLE_KEY, getMapOrientation());
+        outState.putBoolean(IS_ZOOM_CONTROLS_ENABLED_BUNDLE_KEY, isZoomControlsEnabled);
+        outState.putBoolean(IS_COMPASS_ENABLED_BUNDLE_KEY, isCompassEnabled);
+        outState.putBoolean(IS_ROTATE_GESTURES_ENABLED_BUNDLE_KEY, isRotateGesturesEnabled);
+        outState.putBoolean(IS_ZOOM_GESTURES_ENABLED_BUNDLE_KEY, isZoomGesturesEnabled);
+        outState.putBoolean(IS_MY_LOCATION_ENABLED_BUNDLE_KEY, isMyLocationEnabled);
+        outState.putBoolean(IS_MY_LOCATION_BUTTON_ENABLED_BUNDLE_KEY, isMyLocationButtonEnabled);
+
+        if (myLocationOverlay != null) {
+            myLocationOverlay.disableMyLocation();
+        }
+        if (compassOverlay != null) {
+            compassOverlay.disableCompass();
+        }
+        setBuiltInZoomControls(false);
     }
 
     @Override
     public void onLowMemory() {
-        //later
+        //nothing
     }
 
     @Override

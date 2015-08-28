@@ -55,7 +55,7 @@ import org.onepf.opfmaps.model.OPFUiSettings;
  * @author Roman Savin
  * @since 30.07.2015
  */
-@SuppressWarnings({"PMD.GodClass", "PMD.ExcessivePublicCount"})
+@SuppressWarnings("PMD.ExcessivePublicCount")
 public final class OPFMap implements MapDelegate {
 
     @NonNull
