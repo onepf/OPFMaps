@@ -27,6 +27,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 
 import org.onepf.maps.osmdroid.R;
 import org.onepf.maps.osmdroid.utils.CompareUtils;
@@ -117,8 +118,7 @@ public final class BitmapDescriptor implements Parcelable {
                 drawable = Drawable.createFromPath(path);
                 break;
             case RES_ID:
-                //noinspection deprecation
-                drawable = context.getResources().getDrawable(resourceId);
+                drawable = ContextCompat.getDrawable(context, resourceId);
                 break;
         }
 
@@ -170,8 +170,7 @@ public final class BitmapDescriptor implements Parcelable {
 
     @NonNull
     private Drawable createDefault(@NonNull final Context context, final float hue) {
-        //noinspection deprecation,ConstantConditions
-        final Drawable drawable = context.getResources().getDrawable(R.drawable.ic_place_white_36dp).mutate();
+        final Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_place_white_36dp).mutate();
         drawable.setColorFilter(new PorterDuffColorFilter(
                 Color.HSVToColor(new float[]{hue, SATURATION, VALUE}),
                 PorterDuff.Mode.MULTIPLY
