@@ -202,11 +202,13 @@ public class OsmdroidMapDelegate implements MapDelegate {
                               final int durationMs,
                               @NonNull final OPFCancelableCallback callback) {
         animateCamera(update);
+        callback.onFinish();
     }
 
     @Override
     public void animateCamera(@NonNull final OPFCameraUpdate update, @NonNull final OPFCancelableCallback callback) {
         animateCamera(update);
+        callback.onFinish();
     }
 
     @Override
