@@ -84,7 +84,6 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     private boolean isRotateGesturesEnabled;
     private boolean isZoomGesturesEnabled;
     private boolean isMyLocationEnabled;
-    private boolean isMyLocationButtonEnabled;
 
     @NonNull
     private OPFMapType mapType = OPFMapType.NORMAL;
@@ -179,7 +178,10 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         outState.putBoolean(IS_ROTATE_GESTURES_ENABLED_BUNDLE_KEY, isRotateGesturesEnabled);
         outState.putBoolean(IS_ZOOM_GESTURES_ENABLED_BUNDLE_KEY, isZoomGesturesEnabled);
         outState.putBoolean(IS_MY_LOCATION_ENABLED_BUNDLE_KEY, isMyLocationEnabled);
-        outState.putBoolean(IS_MY_LOCATION_BUTTON_ENABLED_BUNDLE_KEY, isMyLocationButtonEnabled);
+        if (myLocationOverlay != null) {
+            outState.putBoolean(IS_MY_LOCATION_BUTTON_ENABLED_BUNDLE_KEY,
+                    myLocationOverlay.isMyLocationButtonEnabled());
+        }
 
         if (myLocationOverlay != null) {
             myLocationOverlay.disableMyLocation();
@@ -304,7 +306,6 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
             return;
         }
 
-        this.isMyLocationButtonEnabled = isMyLocationButtonEnabled;
         if (isMyLocationButtonEnabled) {
             myLocationOverlay.enableMyLocationButton();
         } else {
@@ -347,7 +348,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     }
 
     public boolean isMyLocationButtonEnabled() {
-        return isMyLocationButtonEnabled;
+        return myLocationOverlay != null && myLocationOverlay.isMyLocationButtonEnabled();
     }
 
     public boolean isScrollGesturesEnabled() {
@@ -405,8 +406,6 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         setMultiTouchControls(getBoolean(options.getZoomGesturesEnabled(), true));
         setBuiltInZoomControls(getBoolean(options.getZoomControlsEnabled(), true));
         setScrollGesturesEnabled(getBoolean(options.getScrollGesturesEnabled(), true));
-
-        invalidate();
     }
 
     private boolean getBoolean(@Nullable final Boolean value, final boolean defValue) {

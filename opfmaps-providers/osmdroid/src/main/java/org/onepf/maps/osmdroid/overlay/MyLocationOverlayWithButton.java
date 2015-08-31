@@ -34,7 +34,6 @@ import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
@@ -56,12 +55,17 @@ public class MyLocationOverlayWithButton extends MyLocationNewOverlay {
     @NonNull
     private final Matrix matrix = new Matrix();
     @NonNull
+    private final Paint rectPaint = new Paint();
+    @NonNull
     private final Paint smoothPaint = new Paint(Paint.FILTER_BITMAP_FLAG);
     @Nullable
     private OPFOnMyLocationButtonClickListener onMyLocationButtonClickListener;
 
     private final float frameCenterX;
     private final float frameCenterY;
+
+    private float centerX;
+    private float centerY;
 
     private boolean isPressed;
     private boolean isMyLocationButtonEnabled = true;
@@ -96,20 +100,20 @@ public class MyLocationOverlayWithButton extends MyLocationNewOverlay {
     @Override
     protected void draw(final Canvas canvas, final MapView mapView, final boolean shadow) {
         super.draw(canvas, mapView, shadow);
-        if (isMyLocationEnabled() && isMyLocationButtonEnabled) {
-            final Projection proj = mMapView.getProjection();
-            final float centerX = mapView.getWidth() - CENTER_OFFSET_DP * mScale;
-            final float centerY = CENTER_OFFSET_DP * mScale;
+        if (centerX == 0 && centerY == 0) {
+            centerX = mapView.getWidth() - CENTER_OFFSET_DP * mScale;
+            centerY = CENTER_OFFSET_DP * mScale;
+        }
 
+        if (isMyLocationEnabled() && isMyLocationButtonEnabled) {
             matrix.setTranslate(-frameCenterX, -frameCenterY);
             matrix.postTranslate(centerX, centerY);
 
             canvas.save();
-            canvas.concat(proj.getInvertedScaleRotateCanvasMatrix());
+            canvas.concat(mMapView.getProjection().getInvertedScaleRotateCanvasMatrix());
             canvas.concat(matrix);
             canvas.drawBitmap(goToMyLocationPicture, 0, 0, smoothPaint);
             if (isPressed) {
-                final Paint rectPaint = new Paint();
                 rectPaint.setColor(Color.argb(PRESSED_FRAME_ALPHA, 0, 0, 0));
                 canvas.drawRect(0, 0, goToMyLocationPicture.getWidth(), goToMyLocationPicture.getHeight(), rectPaint);
             }
@@ -179,6 +183,10 @@ public class MyLocationOverlayWithButton extends MyLocationNewOverlay {
         this.onMyLocationButtonClickListener = onMyLocationButtonClickListener;
     }
 
+    public boolean isMyLocationButtonEnabled() {
+        return isMyLocationButtonEnabled;
+    }
+
     private void invalidateMyLocationFrame() {
         updateFrameCoordinates();
         mMapView.postInvalidateMapCoordinates(frameLeft, frameTop, frameRight, frameBottom);
@@ -206,6 +214,7 @@ public class MyLocationOverlayWithButton extends MyLocationNewOverlay {
     }
 
     private boolean handleClickListener() {
+        //noinspection SimplifiableIfStatement
         if (onMyLocationButtonClickListener != null) {
             return onMyLocationButtonClickListener.onMyLocationButtonClick();
         }
