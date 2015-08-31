@@ -18,8 +18,10 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+
 import com.amazon.geo.mapsv2.Projection;
 import com.amazon.geo.mapsv2.model.LatLng;
+
 import org.onepf.opfmaps.delegate.model.ProjectionDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFVisibleRegion;
@@ -55,18 +57,12 @@ public final class AmazonProjectionDelegate implements ProjectionDelegate {
         return new OPFVisibleRegion(new AmazonVisibleRegionDelegate(projection.getVisibleRegion()));
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonProjectionDelegate)) return false;
-
-        return projection.equals(((AmazonProjectionDelegate) other).projection);
+        return other != null
+                && (other == this || other instanceof AmazonProjectionDelegate
+                && projection.equals(((AmazonProjectionDelegate) other).projection));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -19,6 +19,7 @@ package org.onepf.opfmaps.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.MarkerOptionsDelegate;
 
@@ -213,18 +214,12 @@ public final class OPFMarkerOptions implements MarkerOptionsDelegate {
         dest.writeParcelable(delegate, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFMarkerOptions)) return false;
-
-        return delegate.equals(((OPFMarkerOptions) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFMarkerOptions
+                && delegate.equals(((OPFMarkerOptions) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

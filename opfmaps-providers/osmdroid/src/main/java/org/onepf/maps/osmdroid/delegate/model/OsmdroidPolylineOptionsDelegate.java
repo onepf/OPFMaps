@@ -18,6 +18,7 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import org.onepf.maps.osmdroid.model.PolylineOptions;
 import org.onepf.opfmaps.delegate.model.PolylineOptionsDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -152,18 +153,12 @@ public final class OsmdroidPolylineOptionsDelegate implements PolylineOptionsDel
         return this;
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidPolylineOptionsDelegate)) return false;
-
-        return polylineOptions.equals(((OsmdroidPolylineOptionsDelegate) other).polylineOptions);
+        return other != null
+                && (other == this || other instanceof OsmdroidPolylineOptionsDelegate
+                && polylineOptions.equals(((OsmdroidPolylineOptionsDelegate) other).polylineOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.VisibleRegionDelegate;
 
@@ -105,18 +106,12 @@ public class OPFVisibleRegion implements VisibleRegionDelegate {
         dest.writeParcelable(delegate, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFVisibleRegion)) return false;
-
-        return delegate.equals(((OPFVisibleRegion) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFVisibleRegion
+                && delegate.equals(((OPFVisibleRegion) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

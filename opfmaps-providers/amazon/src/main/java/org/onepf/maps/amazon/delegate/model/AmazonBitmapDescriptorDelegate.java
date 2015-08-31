@@ -17,7 +17,9 @@
 package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import com.amazon.geo.mapsv2.model.BitmapDescriptor;
+
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorDelegate;
 
 /**
@@ -39,18 +41,12 @@ public final class AmazonBitmapDescriptorDelegate implements BitmapDescriptorDel
         return bitmapDescriptor;
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonBitmapDescriptorDelegate)) return false;
-
-        return bitmapDescriptor.equals(((AmazonBitmapDescriptorDelegate) other).bitmapDescriptor);
+        return other != null
+                && (other == this || other instanceof AmazonBitmapDescriptorDelegate
+                && bitmapDescriptor.equals(((AmazonBitmapDescriptorDelegate) other).bitmapDescriptor));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

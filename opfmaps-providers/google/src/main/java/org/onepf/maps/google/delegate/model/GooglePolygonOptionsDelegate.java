@@ -18,8 +18,10 @@ package org.onepf.maps.google.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolygonOptions;
+
 import org.onepf.opfmaps.delegate.model.PolygonOptionsDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 
@@ -201,18 +203,12 @@ public final class GooglePolygonOptionsDelegate implements PolygonOptionsDelegat
         dest.writeParcelable(polygonOptions, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GooglePolygonOptionsDelegate)) return false;
-
-        return polygonOptions.equals(((GooglePolygonOptionsDelegate) other).polygonOptions);
+        return other != null
+                && (other == this || other instanceof GooglePolygonOptionsDelegate
+                && polygonOptions.equals(((GooglePolygonOptionsDelegate) other).polygonOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

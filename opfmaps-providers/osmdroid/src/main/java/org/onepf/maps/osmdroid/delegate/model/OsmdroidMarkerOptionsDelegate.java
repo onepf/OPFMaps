@@ -19,6 +19,7 @@ package org.onepf.maps.osmdroid.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.maps.osmdroid.model.BitmapDescriptor;
 import org.onepf.maps.osmdroid.model.MarkerOptions;
 import org.onepf.opfmaps.delegate.model.MarkerOptionsDelegate;
@@ -219,18 +220,12 @@ public final class OsmdroidMarkerOptionsDelegate implements MarkerOptionsDelegat
         dest.writeParcelable(markerOptions, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidMarkerOptionsDelegate)) return false;
-
-        return markerOptions.equals(((OsmdroidMarkerOptionsDelegate) other).markerOptions);
+        return other != null
+                && (other == this || other instanceof OsmdroidMarkerOptionsDelegate
+                && markerOptions.equals(((OsmdroidMarkerOptionsDelegate) other).markerOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

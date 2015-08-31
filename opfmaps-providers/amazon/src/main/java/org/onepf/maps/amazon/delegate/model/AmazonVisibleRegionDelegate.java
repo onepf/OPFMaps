@@ -18,9 +18,11 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.LatLngBounds;
 import com.amazon.geo.mapsv2.model.VisibleRegion;
+
 import org.onepf.opfmaps.delegate.model.VisibleRegionDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
@@ -113,18 +115,12 @@ public final class AmazonVisibleRegionDelegate implements VisibleRegionDelegate 
         dest.writeParcelable(visibleRegion, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonVisibleRegionDelegate)) return false;
-
-        return visibleRegion.equals(((AmazonVisibleRegionDelegate) other).visibleRegion);
+        return other != null
+                && (other == this || other instanceof AmazonVisibleRegionDelegate
+                && visibleRegion.equals(((AmazonVisibleRegionDelegate) other).visibleRegion));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

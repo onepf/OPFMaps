@@ -19,9 +19,11 @@ package org.onepf.maps.google.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.google.android.gms.maps.model.Tile;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.maps.model.TileProvider;
+
 import org.onepf.opfmaps.delegate.model.TileOverlayOptionsDelegate;
 import org.onepf.opfmaps.model.OPFTile;
 import org.onepf.opfmaps.model.OPFTileProvider;
@@ -139,18 +141,12 @@ public final class GoogleTileOverlayOptionsDelegate implements TileOverlayOption
         dest.writeParcelable(tileOverlayOptions, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleTileOverlayOptionsDelegate)) return false;
-
-        return tileOverlayOptions.equals(((GoogleTileOverlayOptionsDelegate) other).tileOverlayOptions);
+        return other != null
+                && (other == this || other instanceof GoogleTileOverlayOptionsDelegate
+                && tileOverlayOptions.equals(((GoogleTileOverlayOptionsDelegate) other).tileOverlayOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

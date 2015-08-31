@@ -75,18 +75,12 @@ public final class AmazonIndoorBuildingDelegate implements IndoorBuildingDelegat
         return indoorBuilding.hashCode();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonIndoorBuildingDelegate)) return false;
-
-        return indoorBuilding.equals(((AmazonIndoorBuildingDelegate) other).indoorBuilding);
+        return other != null
+                && (other == this || other instanceof AmazonIndoorBuildingDelegate
+                && indoorBuilding.equals(((AmazonIndoorBuildingDelegate) other).indoorBuilding));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

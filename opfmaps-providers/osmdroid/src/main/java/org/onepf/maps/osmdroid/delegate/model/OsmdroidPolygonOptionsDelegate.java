@@ -18,6 +18,7 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import org.onepf.maps.osmdroid.model.PolygonOptions;
 import org.onepf.opfmaps.delegate.model.PolygonOptionsDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -201,18 +202,12 @@ public final class OsmdroidPolygonOptionsDelegate implements PolygonOptionsDeleg
         dest.writeParcelable(polygonOptions, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidPolygonOptionsDelegate)) return false;
-
-        return polygonOptions.equals(((OsmdroidPolygonOptionsDelegate) other).polygonOptions);
+        return other != null
+                && (other == this || other instanceof OsmdroidPolygonOptionsDelegate
+                && polygonOptions.equals(((OsmdroidPolygonOptionsDelegate) other).polygonOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -17,6 +17,7 @@
 package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
+
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorDelegate;
 
 /**
@@ -37,18 +38,12 @@ public final class OPFBitmapDescriptor {
         return delegate;
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFBitmapDescriptor)) return false;
-
-        return delegate.equals(((OPFBitmapDescriptor) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFBitmapDescriptor
+                && delegate.equals(((OPFBitmapDescriptor) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -18,8 +18,10 @@ package org.onepf.maps.google.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.google.android.gms.maps.model.Tile;
 import com.google.android.gms.maps.model.UrlTileProvider;
+
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
 import org.onepf.opfmaps.model.OPFTile;
 import org.onepf.opfmaps.model.OPFUrlTileProvider.TileUrlProvider;
@@ -65,18 +67,12 @@ public class GoogleUrlTileProviderDelegate implements UrlTileProviderDelegate {
         return null;
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleUrlTileProviderDelegate)) return false;
-
-        return urlTileProvider.equals(((GoogleUrlTileProviderDelegate) other).urlTileProvider);
+        return other != null
+                && (other == this || other instanceof GoogleUrlTileProviderDelegate
+                && urlTileProvider.equals(((GoogleUrlTileProviderDelegate) other).urlTileProvider));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -20,8 +20,10 @@ import android.content.Context;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+
 import com.amazon.geo.mapsv2.model.CameraPosition;
 import com.amazon.geo.mapsv2.model.LatLng;
+
 import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -91,18 +93,12 @@ public final class AmazonCameraPositionDelegate implements CameraPositionDelegat
         return cameraPosition.zoom;
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonCameraPositionDelegate)) return false;
-
-        return cameraPosition.equals(((AmazonCameraPositionDelegate) other).cameraPosition);
+        return other != null
+                && (other == this || other instanceof AmazonCameraPositionDelegate
+                && cameraPosition.equals(((AmazonCameraPositionDelegate) other).cameraPosition));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

@@ -19,10 +19,12 @@ package org.onepf.maps.amazon.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.amazon.geo.mapsv2.model.BitmapDescriptor;
 import com.amazon.geo.mapsv2.model.GroundOverlayOptions;
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.LatLngBounds;
+
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -205,18 +207,12 @@ public final class AmazonGroundOverlayOptionsDelegate implements GroundOverlayOp
         dest.writeParcelable(groundOverlayOptions, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonGroundOverlayOptionsDelegate)) return false;
-
-        return groundOverlayOptions.equals(((AmazonGroundOverlayOptionsDelegate) other).groundOverlayOptions);
+        return other != null
+                && (other == this || other instanceof AmazonGroundOverlayOptionsDelegate
+                && groundOverlayOptions.equals(((AmazonGroundOverlayOptionsDelegate) other).groundOverlayOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

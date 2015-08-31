@@ -17,7 +17,9 @@
 package org.onepf.maps.google.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.CameraUpdate;
+
 import org.onepf.opfmaps.delegate.model.CameraUpdateDelegate;
 
 /**
@@ -39,18 +41,12 @@ public final class GoogleCameraUpdateDelegate implements CameraUpdateDelegate<Ca
         return cameraUpdate;
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleCameraUpdateDelegate)) return false;
-
-        return cameraUpdate.equals(((GoogleCameraUpdateDelegate) other).cameraUpdate);
+        return other != null
+                && (other == this || other instanceof GoogleCameraUpdateDelegate
+                && cameraUpdate.equals(((GoogleCameraUpdateDelegate) other).cameraUpdate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

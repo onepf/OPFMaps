@@ -19,8 +19,10 @@ package org.onepf.maps.amazon.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.amazon.geo.mapsv2.model.CircleOptions;
 import com.amazon.geo.mapsv2.model.LatLng;
+
 import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 
@@ -157,18 +159,13 @@ public final class AmazonCircleOptionsDelegate implements CircleOptionsDelegate 
         return circleOptions.toString();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonCircleOptionsDelegate)) return false;
+        return other != null
+                && (other == this || other instanceof AmazonCircleOptionsDelegate
+                && circleOptions.equals(((AmazonCircleOptionsDelegate) other).circleOptions));
 
-        return circleOptions.equals(((AmazonCircleOptionsDelegate) other).circleOptions);
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

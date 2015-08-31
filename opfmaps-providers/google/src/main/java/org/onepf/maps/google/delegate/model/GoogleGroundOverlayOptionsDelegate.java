@@ -205,18 +205,12 @@ public final class GoogleGroundOverlayOptionsDelegate implements GroundOverlayOp
         dest.writeParcelable(groundOverlayOptions, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleGroundOverlayOptionsDelegate)) return false;
-
-        return groundOverlayOptions.equals(((GoogleGroundOverlayOptionsDelegate) other).groundOverlayOptions);
+        return other != null
+                && (other == this || other instanceof GoogleGroundOverlayOptionsDelegate
+                && groundOverlayOptions.equals(((GoogleGroundOverlayOptionsDelegate) other).groundOverlayOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

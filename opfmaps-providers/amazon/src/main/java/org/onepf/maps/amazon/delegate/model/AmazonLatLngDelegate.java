@@ -18,7 +18,9 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import com.amazon.geo.mapsv2.model.LatLng;
+
 import org.onepf.opfmaps.delegate.model.LatLngDelegate;
 
 /**
@@ -70,18 +72,12 @@ public final class AmazonLatLngDelegate implements LatLngDelegate {
         dest.writeParcelable(latLng, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonLatLngDelegate)) return false;
-
-        return latLng.equals(((AmazonLatLngDelegate) other).latLng);
+        return other != null
+                && (other == this || other instanceof AmazonLatLngDelegate
+                && latLng.equals(((AmazonLatLngDelegate) other).latLng));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

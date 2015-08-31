@@ -17,6 +17,7 @@
 package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
+
 import org.onepf.opfmaps.delegate.model.MarkerDelegate;
 
 /**
@@ -155,18 +156,12 @@ public final class OPFMarker implements MarkerDelegate {
         delegate.showInfoWindow();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFMarker)) return false;
-
-        return delegate.equals(((OPFMarker) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFMarker
+                && delegate.equals(((OPFMarker) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -17,6 +17,7 @@
 package org.onepf.maps.osmdroid.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import org.onepf.maps.osmdroid.model.CameraUpdate;
 import org.onepf.opfmaps.delegate.model.CameraUpdateDelegate;
 
@@ -39,18 +40,12 @@ public final class OsmdroidCameraUpdateDelegate implements CameraUpdateDelegate<
         return cameraUpdate;
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidCameraUpdateDelegate)) return false;
-
-        return cameraUpdate.equals(((OsmdroidCameraUpdateDelegate) other).cameraUpdate);
+        return other != null
+                && (other == this || other instanceof OsmdroidCameraUpdateDelegate
+                && cameraUpdate.equals(((OsmdroidCameraUpdateDelegate) other).cameraUpdate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

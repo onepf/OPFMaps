@@ -19,6 +19,7 @@ package org.onepf.maps.osmdroid.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.maps.osmdroid.model.BitmapDescriptor;
 import org.onepf.maps.osmdroid.model.GroundOverlayOptions;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
@@ -151,8 +152,8 @@ public final class OsmdroidGroundOverlayOptionsDelegate implements GroundOverlay
     @NonNull
     @Override
     public OsmdroidGroundOverlayOptionsDelegate position(@NonNull final OPFLatLng location,
-                                                       final float width,
-                                                       final float height) {
+                                                         final float width,
+                                                         final float height) {
         groundOverlayOptions.position(new GeoPoint(location.getLat(), location.getLng()), width, height);
         return this;
     }
@@ -207,18 +208,12 @@ public final class OsmdroidGroundOverlayOptionsDelegate implements GroundOverlay
         dest.writeParcelable(groundOverlayOptions, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidGroundOverlayOptionsDelegate)) return false;
-
-        return groundOverlayOptions.equals(((OsmdroidGroundOverlayOptionsDelegate) other).groundOverlayOptions);
+        return other != null
+                && (other == this || other instanceof OsmdroidGroundOverlayOptionsDelegate
+                && groundOverlayOptions.equals(((OsmdroidGroundOverlayOptionsDelegate) other).groundOverlayOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

@@ -17,6 +17,7 @@
 package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
+
 import org.onepf.opfmaps.delegate.model.GroundOverlayDelegate;
 
 /**
@@ -129,18 +130,12 @@ public final class OPFGroundOverlay implements GroundOverlayDelegate {
         delegate.setZIndex(zIndex);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFGroundOverlay)) return false;
-
-        return delegate.equals(((OPFGroundOverlay) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFGroundOverlay
+                && delegate.equals(((OPFGroundOverlay) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

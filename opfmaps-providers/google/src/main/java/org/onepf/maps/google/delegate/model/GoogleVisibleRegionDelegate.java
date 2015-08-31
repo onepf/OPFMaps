@@ -18,9 +18,11 @@ package org.onepf.maps.google.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.VisibleRegion;
+
 import org.onepf.opfmaps.delegate.model.VisibleRegionDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
@@ -113,18 +115,12 @@ public final class GoogleVisibleRegionDelegate implements VisibleRegionDelegate 
         dest.writeParcelable(visibleRegion, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleVisibleRegionDelegate)) return false;
-
-        return visibleRegion.equals(((GoogleVisibleRegionDelegate) other).visibleRegion);
+        return other != null
+                && (other == this || other instanceof GoogleVisibleRegionDelegate
+                && visibleRegion.equals(((GoogleVisibleRegionDelegate) other).visibleRegion));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

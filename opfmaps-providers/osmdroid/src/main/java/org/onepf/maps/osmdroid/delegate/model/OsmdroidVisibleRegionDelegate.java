@@ -116,18 +116,12 @@ public final class OsmdroidVisibleRegionDelegate implements VisibleRegionDelegat
         dest.writeParcelable(visibleRegion, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidVisibleRegionDelegate)) return false;
-
-        return visibleRegion.equals(((OsmdroidVisibleRegionDelegate) other).visibleRegion);
+        return other != null
+                && (other == this || other instanceof OsmdroidVisibleRegionDelegate
+                && visibleRegion.equals(((OsmdroidVisibleRegionDelegate) other).visibleRegion));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

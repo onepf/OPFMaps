@@ -19,9 +19,11 @@ package org.onepf.maps.amazon.delegate;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.amazon.geo.mapsv2.AmazonMapOptions;
 import com.amazon.geo.mapsv2.model.CameraPosition;
 import com.amazon.geo.mapsv2.model.LatLng;
+
 import org.onepf.maps.amazon.delegate.model.AmazonCameraPositionDelegate;
 import org.onepf.maps.amazon.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapOptionsDelegate;
@@ -232,18 +234,12 @@ public final class AmazonMapOptionsDelegate implements MapOptionsDelegate {
         dest.writeParcelable(mapOptions, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonMapOptionsDelegate)) return false;
-
-        return mapOptions.equals(((AmazonMapOptionsDelegate) other).mapOptions);
+        return other != null
+                && (other == this || other instanceof AmazonMapOptionsDelegate
+                && mapOptions.equals(((AmazonMapOptionsDelegate) other).mapOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

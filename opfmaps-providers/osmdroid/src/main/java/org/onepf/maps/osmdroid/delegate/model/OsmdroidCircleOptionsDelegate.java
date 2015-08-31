@@ -19,6 +19,7 @@ package org.onepf.maps.osmdroid.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.maps.osmdroid.model.CircleOptions;
 import org.onepf.opfmaps.delegate.model.CircleOptionsDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -157,18 +158,12 @@ public final class OsmdroidCircleOptionsDelegate implements CircleOptionsDelegat
         return circleOptions.toString();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidCircleOptionsDelegate)) return false;
-
-        return circleOptions.equals(((OsmdroidCircleOptionsDelegate) other).circleOptions);
+        return other != null
+                && (other == this || other instanceof OsmdroidCircleOptionsDelegate
+                && circleOptions.equals(((OsmdroidCircleOptionsDelegate) other).circleOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

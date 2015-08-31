@@ -152,16 +152,10 @@ public final class OsmdroidPolylineDelegate implements PolylineDelegate {
         return polyline.hashCode();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidPolylineDelegate)) return false;
-
-        return polyline.equals(((OsmdroidPolylineDelegate) other).polyline);
+        return other != null
+                && (other == this || other instanceof OsmdroidPolylineDelegate
+                && polyline.equals(((OsmdroidPolylineDelegate) other).polyline));
     }
-    //CHECKSTYLE:ON
 }

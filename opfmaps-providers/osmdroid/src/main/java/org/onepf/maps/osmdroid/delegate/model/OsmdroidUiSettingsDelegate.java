@@ -17,6 +17,7 @@
 package org.onepf.maps.osmdroid.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import org.onepf.maps.osmdroid.model.UiSettings;
 import org.onepf.opfmaps.delegate.model.UiSettingsDelegate;
 
@@ -128,19 +129,12 @@ public final class OsmdroidUiSettingsDelegate implements UiSettingsDelegate {
         return uiSettings.isMapToolbarEnabled();
     }
 
-
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidUiSettingsDelegate)) return false;
-
-        return uiSettings.equals(((OsmdroidUiSettingsDelegate) other).uiSettings);
+        return other != null
+                && (other == this || other instanceof OsmdroidUiSettingsDelegate
+                && uiSettings.equals(((OsmdroidUiSettingsDelegate) other).uiSettings));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

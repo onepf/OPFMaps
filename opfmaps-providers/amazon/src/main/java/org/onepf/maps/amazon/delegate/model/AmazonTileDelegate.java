@@ -18,7 +18,9 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import com.amazon.geo.mapsv2.model.Tile;
+
 import org.onepf.opfmaps.delegate.model.TileDelegate;
 
 /**
@@ -80,18 +82,12 @@ public final class AmazonTileDelegate implements TileDelegate {
         dest.writeParcelable(tile, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonTileDelegate)) return false;
-
-        return tile.equals(((AmazonTileDelegate) other).tile);
+        return other != null
+                && (other == this || other instanceof AmazonTileDelegate
+                && tile.equals(((AmazonTileDelegate) other).tile));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

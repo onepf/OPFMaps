@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.R;
 import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
@@ -142,18 +143,12 @@ public final class OPFCameraPosition implements CameraPositionDelegate {
         return delegate.getZoom();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFCameraPosition)) return false;
-
-        return delegate.equals(((OPFCameraPosition) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFCameraPosition
+                && delegate.equals(((OPFCameraPosition) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

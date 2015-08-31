@@ -17,8 +17,10 @@
 package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import com.amazon.geo.mapsv2.model.Circle;
 import com.amazon.geo.mapsv2.model.LatLng;
+
 import org.onepf.opfmaps.delegate.model.CircleDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 
@@ -117,18 +119,12 @@ public final class AmazonCircleDelegate implements CircleDelegate {
         circle.setZIndex(zIndex);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonCircleDelegate)) return false;
-
-        return circle.equals(((AmazonCircleDelegate) other).circle);
+        return other != null
+                && (other == this || other instanceof AmazonCircleDelegate
+                && circle.equals(((AmazonCircleDelegate) other).circle));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

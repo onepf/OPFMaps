@@ -18,8 +18,10 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.Polyline;
+
 import org.onepf.opfmaps.delegate.model.PolylineDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 
@@ -136,16 +138,10 @@ public final class AmazonPolylineDelegate implements PolylineDelegate {
         return polyline.hashCode();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonPolylineDelegate)) return false;
-
-        return polyline.equals(((AmazonPolylineDelegate) other).polyline);
+        return other != null
+                && (other == this || other instanceof AmazonPolylineDelegate
+                && polyline.equals(((AmazonPolylineDelegate) other).polyline));
     }
-    //CHECKSTYLE:ON
 }

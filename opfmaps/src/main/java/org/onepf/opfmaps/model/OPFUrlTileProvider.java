@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
 
@@ -48,18 +49,12 @@ public class OPFUrlTileProvider implements UrlTileProviderDelegate {
         return delegate.getTileUrl(x, y, zoom);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFUrlTileProvider)) return false;
-
-        return delegate.equals(((OPFUrlTileProvider) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFUrlTileProvider
+                && delegate.equals(((OPFUrlTileProvider) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

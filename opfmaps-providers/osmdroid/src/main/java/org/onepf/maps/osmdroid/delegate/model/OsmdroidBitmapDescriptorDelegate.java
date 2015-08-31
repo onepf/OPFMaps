@@ -17,6 +17,7 @@
 package org.onepf.maps.osmdroid.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import org.onepf.maps.osmdroid.model.BitmapDescriptor;
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorDelegate;
 
@@ -39,18 +40,12 @@ public final class OsmdroidBitmapDescriptorDelegate implements BitmapDescriptorD
         return bitmapDescriptor;
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidBitmapDescriptorDelegate)) return false;
-
-        return bitmapDescriptor.equals(((OsmdroidBitmapDescriptorDelegate) other).bitmapDescriptor);
+        return other != null
+                && (other == this || other instanceof OsmdroidBitmapDescriptorDelegate
+                && bitmapDescriptor.equals(((OsmdroidBitmapDescriptorDelegate) other).bitmapDescriptor));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

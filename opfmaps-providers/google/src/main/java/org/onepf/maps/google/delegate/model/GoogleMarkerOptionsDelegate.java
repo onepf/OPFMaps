@@ -19,9 +19,11 @@ package org.onepf.maps.google.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.onepf.opfmaps.delegate.model.MarkerOptionsDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -219,18 +221,12 @@ public final class GoogleMarkerOptionsDelegate implements MarkerOptionsDelegate 
         dest.writeParcelable(markerOptions, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleMarkerOptionsDelegate)) return false;
-
-        return markerOptions.equals(((GoogleMarkerOptionsDelegate) other).markerOptions);
+        return other != null
+                && (other == this || other instanceof GoogleMarkerOptionsDelegate
+                && markerOptions.equals(((GoogleMarkerOptionsDelegate) other).markerOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

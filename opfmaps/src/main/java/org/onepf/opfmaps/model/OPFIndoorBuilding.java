@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.opfmaps.delegate.model.IndoorBuildingDelegate;
 
 import java.util.List;
@@ -56,18 +57,12 @@ public final class OPFIndoorBuilding implements IndoorBuildingDelegate {
         return delegate.isUnderground();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFIndoorBuilding)) return false;
-
-        return delegate.equals(((OPFIndoorBuilding) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFIndoorBuilding
+                && delegate.equals(((OPFIndoorBuilding) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

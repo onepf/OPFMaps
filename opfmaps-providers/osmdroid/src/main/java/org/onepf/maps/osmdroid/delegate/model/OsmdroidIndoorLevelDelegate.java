@@ -18,6 +18,7 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.maps.osmdroid.model.IndoorLevel;
 import org.onepf.opfmaps.delegate.model.IndoorLevelDelegate;
 
@@ -56,18 +57,12 @@ public final class OsmdroidIndoorLevelDelegate implements IndoorLevelDelegate {
         return indoorLevel.hashCode();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidIndoorLevelDelegate)) return false;
-
-        return indoorLevel.equals(((OsmdroidIndoorLevelDelegate) other).indoorLevel);
+        return other != null
+                && (other == this || other instanceof OsmdroidIndoorLevelDelegate
+                && indoorLevel.equals(((OsmdroidIndoorLevelDelegate) other).indoorLevel));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

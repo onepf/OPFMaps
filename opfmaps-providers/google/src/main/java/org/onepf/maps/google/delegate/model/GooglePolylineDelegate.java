@@ -18,8 +18,10 @@ package org.onepf.maps.google.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
+
 import org.onepf.opfmaps.delegate.model.PolylineDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 
@@ -136,16 +138,10 @@ public final class GooglePolylineDelegate implements PolylineDelegate {
         return polyline.hashCode();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GooglePolylineDelegate)) return false;
-
-        return polyline.equals(((GooglePolylineDelegate) other).polyline);
+        return other != null
+                && (other == this || other instanceof GooglePolylineDelegate
+                && polyline.equals(((GooglePolylineDelegate) other).polyline));
     }
-    //CHECKSTYLE:ON
 }

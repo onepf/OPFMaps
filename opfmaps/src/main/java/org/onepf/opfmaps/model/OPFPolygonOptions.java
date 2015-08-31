@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.PolygonOptionsDelegate;
 
@@ -180,18 +181,12 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         dest.writeParcelable(delegate, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFPolygonOptions)) return false;
-
-        return delegate.equals(((OPFPolygonOptions) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFPolygonOptions
+                && delegate.equals(((OPFPolygonOptions) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

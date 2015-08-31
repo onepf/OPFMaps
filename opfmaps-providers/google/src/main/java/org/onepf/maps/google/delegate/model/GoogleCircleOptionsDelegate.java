@@ -157,18 +157,12 @@ public final class GoogleCircleOptionsDelegate implements CircleOptionsDelegate 
         return circleOptions.toString();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleCircleOptionsDelegate)) return false;
-
-        return circleOptions.equals(((GoogleCircleOptionsDelegate) other).circleOptions);
+        return other != null
+                && (other == this || other instanceof GoogleCircleOptionsDelegate
+                && circleOptions.equals(((GoogleCircleOptionsDelegate) other).circleOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

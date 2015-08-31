@@ -17,7 +17,9 @@
 package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import com.amazon.geo.mapsv2.model.TileOverlay;
+
 import org.onepf.opfmaps.delegate.model.TileOverlayDelegate;
 
 /**
@@ -85,18 +87,12 @@ public final class AmazonTileOverlayDelegate implements TileOverlayDelegate {
         return tileOverlay.hashCode();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonTileOverlayDelegate)) return false;
-
-        return tileOverlay.equals(((AmazonTileOverlayDelegate) other).tileOverlay);
+        return other != null
+                && (other == this || other instanceof AmazonTileOverlayDelegate
+                && tileOverlay.equals(((AmazonTileOverlayDelegate) other).tileOverlay));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

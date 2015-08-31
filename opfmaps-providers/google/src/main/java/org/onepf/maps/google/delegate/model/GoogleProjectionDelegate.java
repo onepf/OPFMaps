@@ -18,8 +18,10 @@ package org.onepf.maps.google.delegate.model;
 
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
+
 import org.onepf.opfmaps.delegate.model.ProjectionDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFVisibleRegion;
@@ -55,18 +57,12 @@ public final class GoogleProjectionDelegate implements ProjectionDelegate {
         return new OPFVisibleRegion(new GoogleVisibleRegionDelegate(projection.getVisibleRegion()));
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleProjectionDelegate)) return false;
-
-        return projection.equals(((GoogleProjectionDelegate) other).projection);
+        return other != null
+                && (other == this || other instanceof GoogleProjectionDelegate
+                && projection.equals(((GoogleProjectionDelegate) other).projection));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

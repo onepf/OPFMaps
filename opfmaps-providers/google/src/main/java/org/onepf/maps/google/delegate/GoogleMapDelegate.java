@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.view.View;
+
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.TileOverlay;
+
 import org.onepf.maps.google.delegate.model.GoogleCameraPositionDelegate;
 import org.onepf.maps.google.delegate.model.GoogleCircleDelegate;
 import org.onepf.maps.google.delegate.model.GoogleGroundOverlayDelegate;
@@ -467,18 +469,12 @@ public class GoogleMapDelegate implements MapDelegate {
         map.stopAnimation();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleMapDelegate)) return false;
-
-        return map.equals(((GoogleMapDelegate) other).map);
+        return other != null
+                && (other == this || other instanceof GoogleMapDelegate
+                && map.equals(((GoogleMapDelegate) other).map));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

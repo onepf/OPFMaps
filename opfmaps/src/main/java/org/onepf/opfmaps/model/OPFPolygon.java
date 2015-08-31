@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.opfmaps.delegate.model.PolygonDelegate;
 
 import java.util.List;
@@ -127,18 +128,12 @@ public final class OPFPolygon implements PolygonDelegate {
         delegate.setZIndex(zIndex);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFPolygon)) return false;
-
-        return delegate.equals(((OPFPolygon) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFPolygon
+                && delegate.equals(((OPFPolygon) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

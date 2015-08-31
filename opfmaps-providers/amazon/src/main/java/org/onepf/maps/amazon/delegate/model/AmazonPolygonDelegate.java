@@ -18,8 +18,10 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.Polygon;
+
 import org.onepf.opfmaps.delegate.model.PolygonDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 
@@ -175,16 +177,10 @@ public final class AmazonPolygonDelegate implements PolygonDelegate {
         return polygon.hashCode();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonPolygonDelegate)) return false;
-
-        return polygon.equals(((AmazonPolygonDelegate) other).polygon);
+        return other != null
+                && (other == this || other instanceof AmazonPolygonDelegate
+                && polygon.equals(((AmazonPolygonDelegate) other).polygon));
     }
-    //CHECKSTYLE:ON
 }

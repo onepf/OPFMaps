@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+
 import org.onepf.opfmaps.delegate.MapOptionsDelegate;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFMapType;
@@ -282,18 +283,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         dest.writeParcelable(delegate, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFMapOptions)) return false;
-
-        return delegate.equals(((OPFMapOptions) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFMapOptions
+                && delegate.equals(((OPFMapOptions) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

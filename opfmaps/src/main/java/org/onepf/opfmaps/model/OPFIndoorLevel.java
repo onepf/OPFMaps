@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import org.onepf.opfmaps.delegate.model.IndoorLevelDelegate;
 
 /**
@@ -50,18 +51,12 @@ public final class OPFIndoorLevel implements IndoorLevelDelegate {
         return delegate.getShortName();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OPFIndoorLevel)) return false;
-
-        return delegate.equals(((OPFIndoorLevel) other).delegate);
+        return other != null
+                && (other == this || other instanceof OPFIndoorLevel
+                && delegate.equals(((OPFIndoorLevel) other).delegate));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

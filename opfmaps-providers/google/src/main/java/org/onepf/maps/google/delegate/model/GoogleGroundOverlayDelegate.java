@@ -17,10 +17,12 @@
 package org.onepf.maps.google.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+
 import org.onepf.opfmaps.delegate.model.GroundOverlayDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -140,18 +142,12 @@ public final class GoogleGroundOverlayDelegate implements GroundOverlayDelegate 
         groundOverlay.setZIndex(zIndex);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleGroundOverlayDelegate)) return false;
-
-        return groundOverlay.equals(((GoogleGroundOverlayDelegate) other).groundOverlay);
+        return other != null
+                && (other == this || other instanceof GoogleGroundOverlayDelegate
+                && groundOverlay.equals(((GoogleGroundOverlayDelegate) other).groundOverlay));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

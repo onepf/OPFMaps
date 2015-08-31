@@ -481,18 +481,12 @@ public class OsmdroidMapDelegate implements MapDelegate {
         map.getController().stopAnimation(false);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidMapDelegate)) return false;
-
-        return map.equals(((OsmdroidMapDelegate) other).map);
+        return other != null
+                && (other == this || other instanceof OsmdroidMapDelegate
+                && map.equals(((OsmdroidMapDelegate) other).map));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

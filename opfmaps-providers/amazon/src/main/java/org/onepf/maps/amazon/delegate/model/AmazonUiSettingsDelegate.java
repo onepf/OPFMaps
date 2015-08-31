@@ -17,7 +17,9 @@
 package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import com.amazon.geo.mapsv2.UiSettings;
+
 import org.onepf.opfmaps.delegate.model.UiSettingsDelegate;
 
 /**
@@ -128,19 +130,12 @@ public final class AmazonUiSettingsDelegate implements UiSettingsDelegate {
         return uiSettings.isMapToolbarEnabled();
     }
 
-
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonUiSettingsDelegate)) return false;
-
-        return uiSettings.equals(((AmazonUiSettingsDelegate) other).uiSettings);
+        return other != null
+                && (other == this || other instanceof AmazonUiSettingsDelegate
+                && uiSettings.equals(((AmazonUiSettingsDelegate) other).uiSettings));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

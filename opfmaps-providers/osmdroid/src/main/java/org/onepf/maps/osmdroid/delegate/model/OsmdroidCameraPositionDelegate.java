@@ -18,6 +18,7 @@ package org.onepf.maps.osmdroid.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import org.onepf.maps.osmdroid.model.CameraPosition;
 import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
 import org.onepf.opfmaps.model.OPFCameraPosition;
@@ -85,18 +86,12 @@ public final class OsmdroidCameraPositionDelegate implements CameraPositionDeleg
         return cameraPosition.getZoom();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof OsmdroidCameraPositionDelegate)) return false;
-
-        return cameraPosition.equals(((OsmdroidCameraPositionDelegate) other).cameraPosition);
+        return other != null
+                && (other == this || other instanceof OsmdroidCameraPositionDelegate
+                && cameraPosition.equals(((OsmdroidCameraPositionDelegate) other).cameraPosition));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

@@ -18,8 +18,10 @@ package org.onepf.maps.google.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polygon;
+
 import org.onepf.opfmaps.delegate.model.PolygonDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 
@@ -175,16 +177,10 @@ public final class GooglePolygonDelegate implements PolygonDelegate {
         return polygon.hashCode();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GooglePolygonDelegate)) return false;
-
-        return polygon.equals(((GooglePolygonDelegate) other).polygon);
+        return other != null
+                && (other == this || other instanceof GooglePolygonDelegate
+                && polygon.equals(((GooglePolygonDelegate) other).polygon));
     }
-    //CHECKSTYLE:ON
 }

@@ -18,8 +18,10 @@ package org.onepf.maps.google.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.google.android.gms.maps.model.IndoorBuilding;
 import com.google.android.gms.maps.model.IndoorLevel;
+
 import org.onepf.opfmaps.delegate.model.IndoorBuildingDelegate;
 import org.onepf.opfmaps.model.OPFIndoorLevel;
 
@@ -75,18 +77,12 @@ public final class GoogleIndoorBuildingDelegate implements IndoorBuildingDelegat
         return indoorBuilding.hashCode();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleIndoorBuildingDelegate)) return false;
-
-        return indoorBuilding.equals(((GoogleIndoorBuildingDelegate) other).indoorBuilding);
+        return other != null
+                && (other == this || other instanceof GoogleIndoorBuildingDelegate
+                && indoorBuilding.equals(((GoogleIndoorBuildingDelegate) other).indoorBuilding));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

@@ -18,8 +18,10 @@ package org.onepf.maps.google.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+
 import org.onepf.opfmaps.delegate.model.LatLngBoundsDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
@@ -92,18 +94,12 @@ public final class GoogleLatLngBoundsDelegate implements LatLngBoundsDelegate {
         dest.writeParcelable(bounds, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleLatLngBoundsDelegate)) return false;
-
-        return bounds.equals(((GoogleLatLngBoundsDelegate) other).bounds);
+        return other != null
+                && (other == this || other instanceof GoogleLatLngBoundsDelegate
+                && bounds.equals(((GoogleLatLngBoundsDelegate) other).bounds));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

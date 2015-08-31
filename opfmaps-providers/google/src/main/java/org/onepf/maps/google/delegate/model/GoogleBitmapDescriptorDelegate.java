@@ -17,7 +17,9 @@
 package org.onepf.maps.google.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.model.BitmapDescriptor;
+
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorDelegate;
 
 /**
@@ -39,18 +41,12 @@ public final class GoogleBitmapDescriptorDelegate implements BitmapDescriptorDel
         return bitmapDescriptor;
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleBitmapDescriptorDelegate)) return false;
-
-        return bitmapDescriptor.equals(((GoogleBitmapDescriptorDelegate) other).bitmapDescriptor);
+        return other != null
+                && (other == this || other instanceof GoogleBitmapDescriptorDelegate
+                && bitmapDescriptor.equals(((GoogleBitmapDescriptorDelegate) other).bitmapDescriptor));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

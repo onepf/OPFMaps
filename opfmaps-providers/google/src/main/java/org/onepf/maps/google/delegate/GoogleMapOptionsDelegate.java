@@ -19,9 +19,11 @@ package org.onepf.maps.google.delegate;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+
 import org.onepf.maps.google.delegate.model.GoogleCameraPositionDelegate;
 import org.onepf.maps.google.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapOptionsDelegate;
@@ -232,18 +234,12 @@ public final class GoogleMapOptionsDelegate implements MapOptionsDelegate {
         dest.writeParcelable(mapOptions, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleMapOptionsDelegate)) return false;
-
-        return mapOptions.equals(((GoogleMapOptionsDelegate) other).mapOptions);
+        return other != null
+                && (other == this || other instanceof GoogleMapOptionsDelegate
+                && mapOptions.equals(((GoogleMapOptionsDelegate) other).mapOptions));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

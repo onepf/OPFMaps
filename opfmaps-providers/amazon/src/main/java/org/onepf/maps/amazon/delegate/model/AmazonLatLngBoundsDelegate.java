@@ -92,18 +92,12 @@ public final class AmazonLatLngBoundsDelegate implements LatLngBoundsDelegate {
         dest.writeParcelable(bounds, flags);
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof AmazonLatLngBoundsDelegate)) return false;
-
-        return bounds.equals(((AmazonLatLngBoundsDelegate) other).bounds);
+        return other != null
+                && (other == this || other instanceof AmazonLatLngBoundsDelegate
+                && bounds.equals(((AmazonLatLngBoundsDelegate) other).bounds));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public int hashCode() {

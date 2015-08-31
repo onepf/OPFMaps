@@ -17,7 +17,9 @@
 package org.onepf.maps.google.delegate.model;
 
 import android.support.annotation.NonNull;
+
 import com.google.android.gms.maps.model.TileOverlay;
+
 import org.onepf.opfmaps.delegate.model.TileOverlayDelegate;
 
 /**
@@ -85,18 +87,12 @@ public final class GoogleTileOverlayDelegate implements TileOverlayDelegate {
         return tileOverlay.hashCode();
     }
 
-    //CHECKSTYLE:OFF
-    @SuppressWarnings("PMD.IfStmtsMustUseBraces")
     @Override
     public boolean equals(final Object other) {
-        if (other == null) return false;
-        if (other == this) return true;
-        //noinspection SimplifiableIfStatement
-        if (!(other instanceof GoogleTileOverlayDelegate)) return false;
-
-        return tileOverlay.equals(((GoogleTileOverlayDelegate) other).tileOverlay);
+        return other != null
+                && (other == this || other instanceof GoogleTileOverlayDelegate
+                && tileOverlay.equals(((GoogleTileOverlayDelegate) other).tileOverlay));
     }
-    //CHECKSTYLE:ON
 
     @Override
     public String toString() {
