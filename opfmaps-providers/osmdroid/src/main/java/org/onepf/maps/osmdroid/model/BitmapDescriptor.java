@@ -170,7 +170,7 @@ public final class BitmapDescriptor implements Parcelable {
 
     @NonNull
     private Drawable createDefault(@NonNull final Context context, final float hue) {
-        final Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_place_white_36dp).mutate();
+        final Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_marker).mutate();
         drawable.setColorFilter(new PorterDuffColorFilter(
                 Color.HSVToColor(new float[]{hue, SATURATION, VALUE}),
                 PorterDuff.Mode.MULTIPLY
