@@ -33,6 +33,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             map:opf_mapType="hybrid"
-            map:opf_uiCompass="false"
             map:opf_cameraTargetLat="37.7"
             map:opf_cameraTargetLng="-122.4"/>-->

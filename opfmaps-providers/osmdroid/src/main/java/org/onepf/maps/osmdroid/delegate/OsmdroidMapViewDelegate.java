@@ -109,6 +109,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
 
     @Override
     public void getMapAsync(@NonNull final OPFOnMapReadyCallback callback) {
+        initOverlays();
         callback.onMapReady(new OPFMap(new OsmdroidMapDelegate(this)));
     }
 
@@ -359,29 +360,39 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         final Context context = getContext();
 
         //Scroll gestures
-        scrollGesturesOverlay = new ScrollGesturesOverlay(context);
-        getOverlays().add(scrollGesturesOverlay);
+        if (scrollGesturesOverlay == null) {
+            scrollGesturesOverlay = new ScrollGesturesOverlay(context);
+            getOverlays().add(scrollGesturesOverlay);
+        }
 
         //Click listener
-        clickListenerOverlay = new ClickListenerOverlay(context);
-        getOverlays().add(clickListenerOverlay);
+        if (clickListenerOverlay == null) {
+            clickListenerOverlay = new ClickListenerOverlay(context);
+            getOverlays().add(clickListenerOverlay);
+        }
 
         //Compass
-        final CompassRotationOrientationProvider compassProvider = new CompassRotationOrientationProvider(context);
-        compassOverlay = new ClickableCompassOverlay(
-                context,
-                compassProvider,
-                this
-        );
-        getOverlays().add(compassOverlay);
-        rotationObservers.add(compassProvider);
+        if (compassOverlay == null) {
+            final CompassRotationOrientationProvider compassProvider = new CompassRotationOrientationProvider(context);
+            compassOverlay = new ClickableCompassOverlay(
+                    context,
+                    compassProvider,
+                    this
+            );
+            getOverlays().add(compassOverlay);
+            rotationObservers.add(compassProvider);
+        }
 
         //Rotate gestures
-        rotationGestureOverlay = new RotationGestureOverlay(context, this);
+        if (rotationGestureOverlay == null) {
+            rotationGestureOverlay = new RotationGestureOverlay(context, this);
+        }
 
         //My Location
-        myLocationOverlay = new MyLocationOverlayWithButton(context, this);
-        getOverlays().add(myLocationOverlay);
+        if (myLocationOverlay == null) {
+            myLocationOverlay = new MyLocationOverlayWithButton(context, this);
+            getOverlays().add(myLocationOverlay);
+        }
     }
 
     private void initOptions() {
