@@ -138,7 +138,7 @@ public final class OPFCircleOptions implements CircleOptionsDelegate {
 
     @NonNull
     @Override
-    public CircleOptionsDelegate zIndex(final float zIndex) {
+    public OPFCircleOptions zIndex(final float zIndex) {
         delegate.zIndex(zIndex);
         return this;
     }
