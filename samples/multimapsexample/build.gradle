@@ -60,6 +60,7 @@ dependencies {
     compile project(':google') //todo remove later
     compile project(':amazon') //todo remove later
     compile project(':osmdroid')
+    compile project(':yandex-web')
 
     compile 'org.onepf:opfutils:0.1.25'
 

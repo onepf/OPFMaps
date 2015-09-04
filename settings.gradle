@@ -19,8 +19,8 @@ include ':opfmaps',
         ':google',
         ':osmdroid',
         /*':here',
-        ':yandex',
-        ':yandex-web',*/
+        ':yandex',*/
+        ':yandex-web',
         ':amazonexample',
         ':mapstestapp',
         ':multimapsexample'
@@ -29,8 +29,8 @@ include ':opfmaps',
 project(':amazon').projectDir = new File('opfmaps-providers/amazon')
 project(':google').projectDir = new File('opfmaps-providers/google')
 /*project(':yandex').projectDir = new File('opfmaps-providers/yandex')
-project(':here').projectDir = new File('opfmaps-providers/here')
-project(':yandex-web').projectDir = new File('opfmaps-providers/yandex-web')*/
+project(':here').projectDir = new File('opfmaps-providers/here')*/
+project(':yandex-web').projectDir = new File('opfmaps-providers/yandex-web')
 project(':osmdroid').projectDir = new File('opfmaps-providers/osmdroid')
 project(':amazonexample').projectDir = new File('samples/amazonexample')
 project(':mapstestapp').projectDir = new File('samples/mapstestapp')
