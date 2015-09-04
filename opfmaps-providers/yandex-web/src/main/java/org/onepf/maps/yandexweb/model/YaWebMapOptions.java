@@ -22,6 +22,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.onepf.opfmaps.model.OPFMapType;
+import org.onepf.opfutils.OPFLog;
+
+import static org.onepf.opfmaps.model.OPFMapType.NORMAL;
 
 /**
  * @author Roman Savin
@@ -41,12 +44,27 @@ public final class YaWebMapOptions implements Parcelable {
         }
     };
 
+    @NonNull
+    private OPFMapType mapType = NORMAL;
+    @Nullable
+    private CameraPosition camera;
+    @Nullable
+    private Boolean isScrollGesturesEnabled;
+    @Nullable
+    private Boolean isZoomControlsEnabled;
+    @Nullable
+    private Boolean isZoomGesturesEnabled;
+
     public YaWebMapOptions() {
         //nothing
     }
 
-    private YaWebMapOptions(@NonNull final Parcel source) {
-        //todo implement
+    private YaWebMapOptions(@NonNull final Parcel parcel) {
+        mapType = OPFMapType.valueOf(parcel.readString());
+        camera = parcel.readParcelable(CameraPosition.class.getClassLoader());
+        isScrollGesturesEnabled = readBoolean(parcel);
+        isZoomControlsEnabled = readBoolean(parcel);
+        isZoomGesturesEnabled = readBoolean(parcel);
     }
 
     @NonNull
@@ -57,139 +75,128 @@ public final class YaWebMapOptions implements Parcelable {
 
     @NonNull
     public YaWebMapOptions useViewLifecycleInFragment(final boolean useViewLifecycleInFragment) {
-        //todo implement
+        OPFLog.logStubCall(useViewLifecycleInFragment);
         return this;
     }
 
     @NonNull
     public YaWebMapOptions mapType(@NonNull final OPFMapType mapType) {
-        //todo implement
+        this.mapType = mapType;
         return this;
     }
 
     @NonNull
     public YaWebMapOptions camera(@NonNull final CameraPosition camera) {
-        //todo implement
+        this.camera = camera;
         return this;
     }
 
     @NonNull
     public YaWebMapOptions zoomControlsEnabled(final boolean enabled) {
-        //todo implement
+        this.isZoomControlsEnabled = enabled;
         return this;
     }
 
     @NonNull
     public YaWebMapOptions compassEnabled(final boolean enabled) {
-        //todo implement
+        OPFLog.logStubCall(enabled);
         return this;
     }
 
     @NonNull
     public YaWebMapOptions scrollGesturesEnabled(final boolean enabled) {
-        //todo implement
+        this.isScrollGesturesEnabled = enabled;
         return this;
     }
 
     @NonNull
     public YaWebMapOptions zoomGesturesEnabled(final boolean enabled) {
-        //todo implement
+        this.isZoomGesturesEnabled = enabled;
         return this;
     }
 
     @NonNull
     public YaWebMapOptions tiltGesturesEnabled(final boolean enabled) {
-        //todo implement
+        OPFLog.logStubCall(enabled);
         return this;
     }
 
     @NonNull
     public YaWebMapOptions rotateGesturesEnabled(final boolean enabled) {
-        //todo implement
+        OPFLog.logStubCall(enabled);
         return this;
     }
 
     @NonNull
     public YaWebMapOptions liteMode(final boolean enabled) {
-        //todo implement
+        OPFLog.logStubCall(enabled);
         return this;
     }
 
     @NonNull
     public YaWebMapOptions mapToolbarEnabled(final boolean enabled) {
-        //todo implement
+        OPFLog.logStubCall(enabled);
         return this;
     }
 
     @Nullable
     public Boolean getZOrderOnTop() {
-        return false;
         //todo implement
+        return false;
     }
 
     @Nullable
     public Boolean getUseViewLifecycleInFragment() {
-        //todo implement
         return false;
     }
 
     @NonNull
     public OPFMapType getMapType() {
-        //todo implement
-        return OPFMapType.NORMAL;
+        return mapType;
     }
 
     @Nullable
     public CameraPosition getCamera() {
-        //todo implement
-        return null;
+        return camera;
     }
 
     @Nullable
     public Boolean getZoomControlsEnabled() {
-        //todo implement
-        return false;
+        return isZoomControlsEnabled;
     }
 
     @Nullable
     public Boolean getCompassEnabled() {
-        //todo implement
         return false;
     }
 
     @Nullable
     public Boolean getScrollGesturesEnabled() {
-        //todo implement
-        return false;
+        return isScrollGesturesEnabled;
     }
 
     @Nullable
     public Boolean getZoomGesturesEnabled() {
-        //todo implement
-        return false;
+        return isZoomGesturesEnabled;
     }
 
     @Nullable
     public Boolean getTiltGesturesEnabled() {
-        //todo implement
         return false;
     }
 
     @Nullable
     public Boolean getRotateGesturesEnabled() {
-        //todo implement
         return false;
     }
 
     @Nullable
     public Boolean getLiteMode() {
-        //todo implement
         return false;
     }
 
     @Nullable
     public Boolean getMapToolbarEnabled() {
-        //todo implement
         return false;
     }
 
@@ -200,24 +207,14 @@ public final class YaWebMapOptions implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        //todo implement
+        dest.writeString(mapType.name());
+        dest.writeParcelable(camera, flags);
+        dest.writeValue(isScrollGesturesEnabled);
+        dest.writeValue(isZoomControlsEnabled);
+        dest.writeValue(isZoomGesturesEnabled);
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        //todo implement
-        return super.equals(other);
-    }
-
-    @Override
-    public int hashCode() {
-        //todo implement
-        return super.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        //todo implement
-        return super.toString();
+    private Boolean readBoolean(@NonNull final Parcel parcel) {
+        return (Boolean) parcel.readValue(Boolean.class.getClassLoader());
     }
 }

@@ -23,13 +23,28 @@
 
 <script type="text/javascript">
     ymaps.ready(init);
-    var myMap;
+    var map,
+            isZoomControlsEnabled = ZOOM_CONTROLS_ENABLED_STUB;
 
     function init() {
-        myMap = new ymaps.Map("map", {
-            center: [55.76, 37.64],
-            zoom: 7
-        });
+        map = new ymaps.Map(
+                "map",
+                {
+                    type: 'MAP_TYPE_STUB',
+                    center: [CENTER_LAT_STUB, CENTER_LNG_STUB],
+                    zoom: ZOOM_STUB,
+                    behaviors: ['DRAG_STUB', 'MULTI_TOUCH_STUB', 'DBL_CLICK_STUB'],
+                    controls: ['largeMapDefaultSet']
+                },
+                {
+                    minZoom: 3
+                }
+        );
+        map.container.enterFullscreen();
+
+        if (isZoomControlsEnabled === false) {
+            map.controls.remove('zoomControl')
+        }
 
         OnMapReadyCallback.onMapReady();
     }
@@ -39,8 +54,11 @@
             content: 'Москва!',
             balloonContent: 'Столица России'
         });
-        myMap.geoObjects.add(myPlacemark);
+        map.geoObjects.add(myPlacemark);
     }
 
+    function setType(type) {
+        map.setType(type);
+    }
 </script>
 </body>

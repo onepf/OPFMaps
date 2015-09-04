@@ -24,9 +24,15 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import org.onepf.maps.yandexweb.jsi.JSIOnMapReadyCallback;
+import org.onepf.maps.yandexweb.listener.OnMapReadyCallback;
 import org.onepf.maps.yandexweb.model.YaWebMapOptions;
+import org.onepf.maps.yandexweb.utils.ConvertUtils;
+import org.onepf.maps.yandexweb.utils.JSEvaluator;
+import org.onepf.maps.yandexweb.utils.JSOptionsInjector;
+import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
+import org.onepf.opfmaps.model.OPFMapType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,12 +43,21 @@ import java.io.InputStreamReader;
  * @author Roman Savin
  * @since 02.09.2015
  */
-public class YaWebMapViewDelegate extends WebView implements MapViewDelegate {
+public class YaWebMapViewDelegate extends WebView implements MapViewDelegate, OnMapReadyCallback {
 
     private static final String MAP_HTML_FILE_NAME = "yandex-map.html";
 
+    @NonNull
+    private OPFMapType mapType = OPFMapType.NORMAL;
+
     @Nullable
     private final YaWebMapOptions options;
+    @Nullable
+    private OPFOnMapReadyCallback onMapReadyCallback;
+    @Nullable
+    private Bundle savedInstanceState;
+
+    private boolean isMapReady;
 
     public YaWebMapViewDelegate(final Context context) {
         this(context, null);
@@ -56,24 +71,29 @@ public class YaWebMapViewDelegate extends WebView implements MapViewDelegate {
 
     @Override
     public void getMapAsync(@NonNull final OPFOnMapReadyCallback callback) {
-        addJavascriptInterface(new JSIOnMapReadyCallback(callback, this, this), JSIOnMapReadyCallback.JS_INTERFACE_NAME);
+        this.isMapReady = false;
+        this.onMapReadyCallback = callback;
+        addJavascriptInterface(new JSIOnMapReadyCallback(this), JSIOnMapReadyCallback.JS_INTERFACE_NAME);
 
         setWebViewClient(new WebViewClient());
         final WebSettings settings = getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setUseWideViewPort(false);
         settings.setDefaultTextEncodingName("UTF-8");
-        loadData(getDataString(), "text/html", "UTF-8");
+        loadData(JSOptionsInjector.injectOptions(getDataString(), options), "text/html", "UTF-8");
     }
 
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
-
+        this.savedInstanceState = savedInstanceState;
+        if (isMapReady && savedInstanceState != null) {
+            initMapState();
+        }
     }
 
     @Override
     public void onDestroy() {
-        removeJavascriptInterface(JSIOnMapReadyCallback.JS_INTERFACE_NAME);
+
     }
 
     @Override
@@ -84,6 +104,35 @@ public class YaWebMapViewDelegate extends WebView implements MapViewDelegate {
     @Override
     public void onLowMemory() {
 
+    }
+
+    @Override
+    public void onMapReady() {
+        if (onMapReadyCallback != null) {
+            isMapReady = true;
+            initMapState();
+            onMapReadyCallback.onMapReady(new OPFMap(new YaWebMapDelegate(this)));
+
+            removeJavascriptInterface(JSIOnMapReadyCallback.JS_INTERFACE_NAME);
+            onMapReadyCallback = null;
+        }
+    }
+
+    public void setMapType(@NonNull final OPFMapType mapType) {
+        this.mapType = mapType;
+        JSEvaluator.evaluateJSFunction(this, null, "setType", ConvertUtils.convertMapTypeToJs(mapType));
+    }
+
+    @NonNull
+    public OPFMapType getMapType() {
+        return mapType;
+    }
+
+    private void initMapState() {
+        if (savedInstanceState != null) {
+            //todo init from savedInstanceState
+            savedInstanceState = null;
+        }
     }
 
     private String getDataString() {

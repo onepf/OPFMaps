@@ -23,6 +23,7 @@ import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.YaWebMapOptions;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.model.OPFCameraPosition;
+import org.onepf.opfmaps.model.OPFMapType;
 
 /**
  * @author Roman Savin
@@ -210,4 +211,15 @@ public final class ConvertUtils {
         return polyline;
     }
 */
+    @NonNull
+    public static String convertMapTypeToJs(@NonNull final OPFMapType type) {
+        switch (type) {
+            case HYBRID:
+                return JSOptionsInjector.JS_MAP_TYPE_HYBRID;
+            case SATELLITE:
+                return JSOptionsInjector.JS_MAP_TYPE_SATELLITE;
+            default:
+                return JSOptionsInjector.JS_MAP_TYPE_NORMAL;
+        }
+    }
 }

@@ -16,14 +16,11 @@
 
 package org.onepf.maps.yandexweb.jsi;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebView;
-import org.onepf.maps.yandexweb.delegate.YaWebMapDelegate;
-import org.onepf.maps.yandexweb.delegate.YaWebMapViewDelegate;
-import org.onepf.opfmaps.OPFMap;
-import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
+import org.onepf.maps.yandexweb.listener.OnMapReadyCallback;
 
 /**
  * @author Roman Savin
@@ -33,32 +30,23 @@ public final class JSIOnMapReadyCallback {
 
     public final static String JS_INTERFACE_NAME = "OnMapReadyCallback";
 
-    @Nullable
-    private OPFOnMapReadyCallback callback;
+    @NonNull
+    private final OnMapReadyCallback callback;
 
-    @Nullable
-    private WebView webView;
+    @NonNull
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
-    @Nullable
-    private YaWebMapViewDelegate delegate;
-
-    @SuppressWarnings("NullableProblems")
-    public JSIOnMapReadyCallback(@NonNull final OPFOnMapReadyCallback callback,
-                                 @NonNull final WebView webView,
-                                 @NonNull final YaWebMapViewDelegate delegate) {
+    public JSIOnMapReadyCallback(@NonNull final OnMapReadyCallback callback) {
         this.callback = callback;
-        this.webView = webView;
-        this.delegate = delegate;
     }
 
     @JavascriptInterface
     public void onMapReady() {
-        if (callback != null && webView != null && delegate != null) {
-            callback.onMapReady(new OPFMap(new YaWebMapDelegate(delegate)));
-            webView.removeJavascriptInterface(JS_INTERFACE_NAME);
-            callback = null;
-            webView = null;
-            delegate = null;
-        }
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                callback.onMapReady();
+            }
+        });
     }
 }
