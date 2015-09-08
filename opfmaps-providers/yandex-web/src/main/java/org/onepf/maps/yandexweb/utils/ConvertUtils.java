@@ -18,6 +18,7 @@ package org.onepf.maps.yandexweb.utils;
 
 import android.support.annotation.NonNull;
 
+import org.onepf.maps.yandexweb.jsi.JSMapStateInjector;
 import org.onepf.maps.yandexweb.model.CameraPosition;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.YaWebMapOptions;
@@ -215,11 +216,23 @@ public final class ConvertUtils {
     public static String convertMapTypeToJs(@NonNull final OPFMapType type) {
         switch (type) {
             case HYBRID:
-                return JSOptionsInjector.JS_MAP_TYPE_HYBRID;
+                return JSMapStateInjector.JS_MAP_TYPE_HYBRID;
             case SATELLITE:
-                return JSOptionsInjector.JS_MAP_TYPE_SATELLITE;
+                return JSMapStateInjector.JS_MAP_TYPE_SATELLITE;
             default:
-                return JSOptionsInjector.JS_MAP_TYPE_NORMAL;
+                return JSMapStateInjector.JS_MAP_TYPE_NORMAL;
+        }
+    }
+
+    @NonNull
+    public static OPFMapType convertMapTypeFromJs(@NonNull final String jsType) {
+        switch (jsType) {
+            case JSMapStateInjector.JS_MAP_TYPE_HYBRID:
+                return OPFMapType.HYBRID;
+            case JSMapStateInjector.JS_MAP_TYPE_SATELLITE:
+                return OPFMapType.SATELLITE;
+            default:
+                return OPFMapType.NORMAL;
         }
     }
 }

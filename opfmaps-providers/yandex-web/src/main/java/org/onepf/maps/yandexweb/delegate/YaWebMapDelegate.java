@@ -64,6 +64,9 @@ import org.onepf.opfutils.OPFLog;
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyMethods"})
 public class YaWebMapDelegate implements MapDelegate {
 
+    private static final float MAX_ZOOM_LEVEL = 23.0f;
+    private static final float MIN_ZOOM_LEVEL = 3.0f;
+
     @NonNull
     private final YaWebMapViewDelegate map;
 
@@ -151,20 +154,17 @@ public class YaWebMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFMapType getMapType() {
-        //todo implement
-        return null;
+        return map.getMapType();
     }
 
     @Override
     public float getMaxZoomLevel() {
-        //todo implement
-        return 0;
+        return MAX_ZOOM_LEVEL;
     }
 
     @Override
     public float getMinZoomLevel() {
-        //todo implement
-        return 0;
+        return MIN_ZOOM_LEVEL;
     }
 
     @NonNull
@@ -192,8 +192,7 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public boolean isMyLocationEnabled() {
-        //todo implement
-        return false;
+        return map.isMyLocationEnabled();
     }
 
     @Override
@@ -224,7 +223,7 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void setInfoWindowAdapter(@NonNull final OPFInfoWindowAdapter adapter) {
-        //todo implement
+        OPFLog.logStubCall(adapter);
     }
 
     @Override
@@ -234,16 +233,17 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void setMapType(@NonNull final OPFMapType type) {
-        //todo implement
+        map.setMapType(type);
     }
 
     @Override
     public void setMyLocationEnabled(final boolean enabled) {
-        //todo implement
+        map.setMyLocationEnabled(enabled);
     }
 
     @Override
     public void setOnCameraChangeListener(@NonNull final OPFOnCameraChangeListener listener) {
+        //todo implement
         OPFLog.logStubCall(listener);
     }
 
@@ -294,7 +294,7 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void setTrafficEnabled(final boolean enabled) {
-        OPFLog.logStubCall(enabled);
+        //todo implement
     }
 
     @Override
@@ -309,7 +309,7 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void stopAnimation() {
-        //todo implement
+        OPFLog.logStubCall();
     }
 
     @Override

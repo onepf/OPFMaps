@@ -19,6 +19,7 @@ package org.onepf.maps.yandexweb.model;
 import android.support.annotation.NonNull;
 
 import org.onepf.maps.yandexweb.delegate.YaWebMapViewDelegate;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -34,87 +35,79 @@ public final class UiSettings {
     }
 
     public boolean isCompassEnabled() {
-        //todo implement
         return false;
     }
 
     public boolean isIndoorLevelPickerEnabled() {
-        //todo implement
         return false;
     }
 
     public boolean isMapToolbarEnabled() {
-        //todo implement
         return false;
     }
 
     public boolean isMyLocationButtonEnabled() {
-        //todo implement
-        return false;
+        return map.isMyLocationButtonEnabled();
     }
 
     public boolean isRotateGesturesEnabled() {
-        //todo implement
         return false;
     }
 
     public boolean isScrollGesturesEnabled() {
-        //todo implement
-        return false;
+        return map.isScrollGesturesEnabled();
     }
 
     public boolean isTiltGesturesEnabled() {
-        //todo implement
         return false;
     }
 
     public boolean isZoomControlsEnabled() {
-        //todo implement
-        return false;
+        return map.isZoomControlsEnabled();
     }
 
     public boolean isZoomGesturesEnabled() {
-        //todo implement
-        return false;
+        return map.isZoomGesturesEnabled();
     }
 
     public void setAllGesturesEnabled(final boolean enabled) {
-        //todo implement
+        map.setScrollGesturesEnabled(enabled);
+        map.setZoomGesturesEnabled(enabled);
     }
 
     public void setCompassEnabled(final boolean enabled) {
-        //todo implement
+        OPFLog.logStubCall(enabled);
     }
 
     public void setIndoorLevelPickerEnabled(final boolean enabled) {
-        //todo implement
+        OPFLog.logStubCall(enabled);
     }
 
     public void setMapToolbarEnabled(final boolean enabled) {
-        //todo implement
+        OPFLog.logStubCall(enabled);
     }
 
     public void setMyLocationButtonEnabled(final boolean enabled) {
-        //todo implement
+        map.setMyLocationButtonEnabled(enabled);
     }
 
     public void setRotateGesturesEnabled(final boolean enabled) {
-        //todo implement
+        OPFLog.logStubCall(enabled);
     }
 
     public void setScrollGesturesEnabled(final boolean enabled) {
-        //todo implement
+        map.setScrollGesturesEnabled(enabled);
     }
 
     public void setTiltGesturesEnabled(final boolean enabled) {
-        //todo implement
+        OPFLog.logStubCall(enabled);
     }
 
     public void setZoomControlsEnabled(final boolean enabled) {
-        //todo implement
+        map.setZoomControlsEnabled(enabled);
     }
 
     public void setZoomGesturesEnabled(final boolean enabled) {
-        //todo implement
+        map.setZoomGesturesEnabled(enabled);
     }
 }
