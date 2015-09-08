@@ -73,6 +73,7 @@ public final class UiSettings {
     public void setAllGesturesEnabled(final boolean enabled) {
         mapView.setRotateGesturesEnabled(enabled);
         mapView.setMultiTouchControls(enabled);
+        mapView.setScrollGesturesEnabled(enabled);
     }
 
     public void setCompassEnabled(final boolean enabled) {
