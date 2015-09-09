@@ -17,6 +17,16 @@
 package org.onepf.maps.yandexweb.model;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.webkit.WebView;
+import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
+import org.onepf.maps.yandexweb.utils.ConvertUtils;
+
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.FILL_COLOR_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.STROKE_COLOR_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.STROKE_WIDTH_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.VISIBLE_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.Z_INDEX_OPTION;
 
 /**
  * @author Roman Savin
@@ -24,99 +34,130 @@ import android.support.annotation.NonNull;
  */
 public final class Circle {
 
-    Circle() {
-        //todo implement
+    @Nullable
+    private WebView webView;
+    @NonNull
+    private final String id;
+    @NonNull
+    private LatLng center;
+    private int fillColor;
+    private double radius;
+    private int strokeColor;
+    private float strokeWidth;
+    private float zIndex;
+    private boolean isVisible;
+
+    public Circle(@SuppressWarnings("NullableProblems") @NonNull final WebView webView,
+                  @NonNull final LatLng center,
+                  final int fillColor,
+                  final double radius,
+                  final int strokeColor,
+                  final float strokeWidth,
+                  final float zIndex,
+                  final boolean isVisible) {
+        this.webView = webView;
+        this.id = Integer.toString(hashCode());
+        this.center = center;
+        this.fillColor = fillColor;
+        this.radius = radius;
+        this.strokeColor = strokeColor;
+        this.strokeWidth = strokeWidth;
+        this.zIndex = zIndex;
+        this.isVisible = isVisible;
     }
 
     @NonNull
     public String getId() {
-        //todo implement
-        return "";
+        return id;
     }
 
     @NonNull
     public LatLng getCenter() {
-        //todo implement
-        return new LatLng(0, 0);
+        return center;
     }
 
     public int getFillColor() {
-        //todo implement
-        return 0;
+        return fillColor;
     }
 
     public double getRadius() {
-        //todo implement
-        return 0;
+        return radius;
     }
 
     public int getStrokeColor() {
-        //todo implement
-        return 0;
+        return strokeColor;
     }
 
     public float getStrokeWidth() {
-        //todo implement
-        return 0;
+        return strokeWidth;
     }
 
     public float getZIndex() {
-        //todo implement
-        return 0;
+        return zIndex;
     }
 
     public boolean isVisible() {
-        //todo implement
-        return false;
+        return isVisible;
     }
 
     public void remove() {
-        //todo implement
+        if (webView != null) {
+            JSYandexMapProxy.removeGeoObject(webView, id);
+            webView = null;
+        }
     }
 
     public void setCenter(@NonNull final LatLng center) {
-        //todo implement
+        this.center = center;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectCoordinates(webView, id, center);
+        }
     }
 
     public void setFillColor(final int color) {
-        //todo implement
+        this.fillColor = color;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, FILL_COLOR_OPTION, ConvertUtils.convertColor(color));
+        }
     }
 
     public void setRadius(final double radius) {
-        //todo implement
+        this.radius = radius;
+        if (webView != null) {
+            JSYandexMapProxy.setCircleRadius(webView, id, radius);
+        }
     }
 
     public void setStrokeColor(final int color) {
-        //todo implement
+        this.strokeColor = color;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, STROKE_COLOR_OPTION, ConvertUtils.convertColor(color));
+        }
     }
 
     public void setStrokeWidth(final float width) {
-        //todo implement
+        this.strokeWidth = width;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, STROKE_WIDTH_OPTION, width);
+        }
     }
 
     public void setVisible(final boolean visible) {
-        //todo implement
+        this.isVisible = visible;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, VISIBLE_OPTION, visible);
+        }
     }
 
     public void setZIndex(final float zIndex) {
-        //todo implement
+        this.zIndex = zIndex;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, Z_INDEX_OPTION, zIndex);
+        }
     }
 
     @Override
     public String toString() {
-        //todo implement
-        return super.toString();
-    }
-
-    @Override
-    public int hashCode() {
-        //todo implement
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        //todo implement
-        return super.equals(obj);
+        return "Circle : [center = " + center + ", radius = " + radius + "]";
     }
 }

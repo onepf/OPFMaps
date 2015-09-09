@@ -26,6 +26,7 @@
 
     ymaps.ready(init);
     var map,
+            geoObjectsByIds = [],
             lastLocationGeoObjects,
             isZoomControlsEnabled = ZOOM_CONTROLS_ENABLED_STUB,
             isMyLocationEnabled = MY_LOCATION_ENABLED_STUB,
@@ -82,6 +83,40 @@
         OnMapReadyCallback.onMapReady();
     }
 
+    function addCircle(id, lat, lng, radius, fillColor, strokeColor, strokeWidth, zIndex, isVisible) {
+        var circle = new ymaps.Circle([[lat, lng], radius], {}, {
+            fillColor: fillColor,
+            strokeColor: strokeColor,
+            strokeWidth: strokeWidth,
+            zIndex: zIndex,
+            visible: isVisible
+        });
+
+        map.geoObjects.add(circle);
+        geoObjectsByIds[id] = circle;
+    }
+
+    function removeGeoObject(id) {
+        var geoObject = geoObjectsByIds[id];
+        map.geoObjects.remove(geoObject);
+        geoObjectsByIds.splice(id, 1);
+    }
+
+    function setGeoObjectOption(id, option, value) {
+        var geoObject = geoObjectsByIds[id];
+        geoObject.options.set(option, value);
+    }
+
+    function setGeoObjectCoordinates(id, lat, lng) {
+        var geoObject = geoObjectsByIds[id];
+        geoObject.geometry.setCoordinates([lat, lng]);
+    }
+
+    function setCircleRadius(id, radius) {
+        var circle = geoObjectsByIds[id];
+        circle.geometry.setRadius(radius);
+    }
+
     function addMarker() {
         var myPlacemark = new ymaps.Placemark([55.76, 37.64], {
             content: 'Москва!',
@@ -103,26 +138,26 @@
     }
 
     function setZoomControlsEnabled(isEnabled) {
-        setControlEnabled('zoomControl', isEnabled === 'true');
+        setControlEnabled('zoomControl', isEnabled);
     }
 
     function setZoomGesturesEnabled(isEnabled) {
-        setBehaviorEnabled('multiTouch', isEnabled === 'true');
-        setBehaviorEnabled('dblClickZoom', isEnabled === 'true');
+        setBehaviorEnabled('multiTouch', isEnabled);
+        setBehaviorEnabled('dblClickZoom', isEnabled);
     }
 
     function setScrollGesturesEnabled(isEnabled) {
-        setBehaviorEnabled('drag', isEnabled === 'true');
+        setBehaviorEnabled('drag', isEnabled);
     }
 
     function setMyLocationButtonEnabled(isEnabled) {
-        isMyLocationButtonEnabled = (isEnabled === 'true');
+        isMyLocationButtonEnabled = isEnabled;
 
         setControlEnabled('geolocationControl', isMyLocationButtonEnabled && isMyLocationEnabled);
     }
 
     function setMyLocationEnabled(isEnabled) {
-        isMyLocationEnabled = (isEnabled === 'true');
+        isMyLocationEnabled = isEnabled;
         if (isMyLocationEnabled) {
             showMyPosition();
             setControlEnabled('geolocationControl', isMyLocationButtonEnabled);

@@ -88,29 +88,12 @@ public final class ConvertUtils {
         return options;
     }
 
- /*   @NonNull
-    public static YaWebCircleDelegate convertCircleOptions(@NonNull final MapView mapView,
-                                                           @NonNull final OPFCircleOptions options) {
-        final OPFLatLng opfCenter = options.getCenter();
-        if (opfCenter == null) {
-            throw new IllegalArgumentException("Center is not specified");
-        }
-
-        final YaWebCircleDelegate circleDelegate = new YaWebCircleDelegate(
-                mapView,
-                new Polygon(mapView.getContext()),
-                new LatLng(opfCenter.getLat(), opfCenter.getLng()),
-                options.getRadius()
-        );
-
-        circleDelegate.setFillColor(options.getFillColor());
-        circleDelegate.setStrokeColor(options.getStrokeColor());
-        circleDelegate.setStrokeWidth(options.getStrokeWidth());
-        circleDelegate.setVisible(options.isVisible());
-
-        return circleDelegate;
+    @NonNull
+    public static String convertColor(final int color) {
+        return String.format("%06X", (0xFFFFFF & color));
     }
 
+ /*
     @NonNull
     public static GroundOverlay convertGroundOverlayOptions(@NonNull final Context context,
                                                             @NonNull final OPFGroundOverlayOptions options) {

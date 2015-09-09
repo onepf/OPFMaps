@@ -19,9 +19,14 @@ package org.onepf.maps.yandexweb.delegate;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import android.webkit.WebView;
+import org.onepf.maps.yandexweb.delegate.model.YaWebCircleDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebIndoorBuildingDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebTileOverlayDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebUiSettingsDelegate;
+import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
+import org.onepf.maps.yandexweb.model.Circle;
+import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.UiSettings;
 import org.onepf.opfmaps.delegate.MapDelegate;
 import org.onepf.opfmaps.listener.OPFCancelableCallback;
@@ -43,6 +48,7 @@ import org.onepf.opfmaps.model.OPFGroundOverlay;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFIndoorBuilding;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
+import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLocationSource;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
@@ -77,8 +83,24 @@ public class YaWebMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFCircle addCircle(@NonNull final OPFCircleOptions options) {
-        //todo implement
-        return null;
+        final OPFLatLng center = options.getCenter();
+        if (center == null) {
+            throw new IllegalArgumentException("Circle center can't be null");
+        }
+
+        final Circle circle = new Circle(
+                map,
+                new LatLng(center.getLat(), center.getLng()),
+                options.getFillColor(),
+                options.getRadius(),
+                options.getStrokeColor(),
+                options.getStrokeWidth(),
+                options.getZIndex(),
+                options.isVisible()
+        );
+
+        JSYandexMapProxy.addCircle(map, circle);
+        return new OPFCircle(new YaWebCircleDelegate(circle));
     }
 
     @NonNull

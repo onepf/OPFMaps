@@ -29,7 +29,7 @@ import org.onepf.maps.yandexweb.jsi.JSIOnCameraChangeListener;
 import org.onepf.maps.yandexweb.jsi.JSIOnMapReadyCallback;
 import org.onepf.maps.yandexweb.jsi.JSIOnMapTypeChangeListener;
 import org.onepf.maps.yandexweb.jsi.JSMapStateInjector;
-import org.onepf.maps.yandexweb.jsi.JSYandexMap;
+import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
 import org.onepf.maps.yandexweb.listener.OnCameraChangeListener;
 import org.onepf.maps.yandexweb.listener.OnMapReadyCallback;
 import org.onepf.maps.yandexweb.listener.OnMapTypeChangeListener;
@@ -190,42 +190,42 @@ public class YaWebMapViewDelegate extends WebView
 
     public void setMapType(@NonNull final OPFMapType mapType) {
         mapState.setMapType(mapType);
-        JSYandexMap.setType(this, mapType);
+        JSYandexMapProxy.setMapType(this, mapType);
     }
 
     public void setCenter(@NonNull final LatLng center) {
         mapState.setCenter(center);
-        JSYandexMap.setCenter(this, center);
+        JSYandexMapProxy.setMapCenter(this, center);
     }
 
     public void setZoomLevel(final float zoomLevel) {
         mapState.setZoomLevel(zoomLevel);
-        JSYandexMap.setZoomLevel(this, zoomLevel);
+        JSYandexMapProxy.setZoomLevel(this, zoomLevel);
     }
 
     public void setMyLocationEnabled(final boolean isMyLocationEnabled) {
         mapState.setIsMyLocationEnabled(isMyLocationEnabled);
-        JSYandexMap.setMyLocationEnabled(this, isMyLocationEnabled);
+        JSYandexMapProxy.setMyLocationEnabled(this, isMyLocationEnabled);
     }
 
     public void setMyLocationButtonEnabled(final boolean isMyLocationButtonEnabled) {
         mapState.setIsMyLocationButtonEnabled(isMyLocationButtonEnabled);
-        JSYandexMap.setMyLocationButtonEnabled(this, isMyLocationButtonEnabled);
+        JSYandexMapProxy.setMyLocationButtonEnabled(this, isMyLocationButtonEnabled);
     }
 
     public void setScrollGesturesEnabled(final boolean isScrollGesturesEnabled) {
         mapState.setIsScrollGesturesEnabled(isScrollGesturesEnabled);
-        JSYandexMap.setScrollGesturesEnabled(this, isScrollGesturesEnabled);
+        JSYandexMapProxy.setScrollGesturesEnabled(this, isScrollGesturesEnabled);
     }
 
     public void setZoomControlsEnabled(final boolean isZoomControlsEnabled) {
         mapState.setIsZoomControlsEnabled(isZoomControlsEnabled);
-        JSYandexMap.setZoomControlsEnabled(this, isZoomControlsEnabled);
+        JSYandexMapProxy.setZoomControlsEnabled(this, isZoomControlsEnabled);
     }
 
     public void setZoomGesturesEnabled(final boolean isZoomGesturesEnabled) {
         mapState.setIsZoomGesturesEnabled(isZoomGesturesEnabled);
-        JSYandexMap.setZoomGesturesEnabled(this, isZoomGesturesEnabled);
+        JSYandexMapProxy.setZoomGesturesEnabled(this, isZoomGesturesEnabled);
     }
 
     private void loadMap() {
