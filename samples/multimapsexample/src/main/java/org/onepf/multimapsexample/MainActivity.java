@@ -48,6 +48,8 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
     //private OPFMapView mapView;
 
+    private OPFMarker marker;
+
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,10 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         mapView.onDestroy();
     }*/
 
+    public void onButtonClick(final View view) {
+        Toast.makeText(this, "Info window shown : " + marker.isInfoWindowShown(), Toast.LENGTH_SHORT).show();
+    }
+
     //CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -124,7 +130,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 .strokeColor(Color.BLUE));
 
         //markers
-        opfMap.addMarker(new OPFMarkerOptions()
+        marker = opfMap.addMarker(new OPFMarkerOptions()
                 .visible(true)
                 .position(new OPFLatLng(37.773975, -122.40205))
                 .title("marker #1")
@@ -169,7 +175,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             @Override
             public boolean onMarkerClick(@NonNull final OPFMarker marker) {
                 OPFLog.logMethod(marker);
-                Toast.makeText(MainActivity.this, "Marker click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Marker click : " + marker.getTitle(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });

@@ -96,6 +96,72 @@
         geoObjectsByIds[id] = circle;
     }
 
+    function addMarker(id, lat, lng, balloonContentHeader, balloonContentBody, isVisible, isDraggable, color) {
+        var marker = new ymaps.Placemark([lat, lng],
+                {
+                    balloonContentHeader: balloonContentHeader,
+                    balloonContentBody: balloonContentBody
+                },
+                {
+                    visible: isVisible,
+                    draggable: isDraggable,
+                    iconColor: color,
+                    hideIconOnBalloonOpen: false,
+                    openBalloonOnClick: false,
+                    balloonOffset: [3, -25]
+                }
+        );
+        marker.events.add('click', function () {
+            OnMarkerClickListener.onMarkerClick(id);
+        });
+        marker.events.add('dragstart', function (event) {
+            var position = event.get('position'),
+                    projection = map.options.get('projection'),
+                    latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
+            OnMarkerDragListener.onMarkerDragStart(id, latLng[0], latLng[1]);
+        });
+        marker.events.add('drag', function (event) {
+            var position = event.get('position'),
+                    projection = map.options.get('projection'),
+                    latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
+            OnMarkerDragListener.onMarkerDrag(id, latLng[0], latLng[1]);
+        });
+        marker.events.add('dragend', function (event) {
+            var position = event.get('position'),
+                    projection = map.options.get('projection'),
+                    latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
+            OnMarkerDragListener.onMarkerDragEnd(id, latLng[0], latLng[1]);
+        });
+        marker.balloon.events.add('open', function() {
+            OnInfoWindowChangeListener.onOpen(id);
+        });
+        marker.balloon.events.add('close', function() {
+            OnInfoWindowChangeListener.onClose(id);
+        });
+
+        map.geoObjects.add(marker);
+        geoObjectsByIds[id] = marker;
+    }
+
+    function hideBalloon(id) {
+        var geoObject = geoObjectsByIds[id];
+        geoObject.balloon.close();
+    }
+
+    function showBalloon(id) {
+        var geoObject = geoObjectsByIds[id];
+        geoObject.balloon.open();
+    }
+
+    function toggleBalloon(id) {
+        var geoObject = geoObjectsByIds[id];
+        if (geoObject.balloon.isOpen()) {
+            geoObject.balloon.close();
+        } else {
+            geoObject.balloon.open();
+        }
+    }
+
     function removeGeoObject(id) {
         var geoObject = geoObjectsByIds[id];
         map.geoObjects.remove(geoObject);
@@ -107,6 +173,11 @@
         geoObject.options.set(option, value);
     }
 
+    function setGeoObjectProperty(id, property, value) {
+        var geoObject = geoObjectsByIds[id];
+        geoObject.properties.set(property, value);
+    }
+
     function setGeoObjectCoordinates(id, lat, lng) {
         var geoObject = geoObjectsByIds[id];
         geoObject.geometry.setCoordinates([lat, lng]);
@@ -115,14 +186,6 @@
     function setCircleRadius(id, radius) {
         var circle = geoObjectsByIds[id];
         circle.geometry.setRadius(radius);
-    }
-
-    function addMarker() {
-        var myPlacemark = new ymaps.Placemark([55.76, 37.64], {
-            content: 'Москва!',
-            balloonContent: 'Столица России'
-        });
-        map.geoObjects.add(myPlacemark);
     }
 
     function setType(type) {
@@ -184,7 +247,7 @@
     }
 
     function showMyPosition() {
-        ymaps.geolocation.get().then(function(result) {
+        ymaps.geolocation.get().then(function (result) {
             lastLocationGeoObjects = result.geoObjects;
             map.geoObjects.add(lastLocationGeoObjects);
         });

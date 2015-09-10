@@ -23,6 +23,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import org.onepf.maps.yandexweb.model.Circle;
 import org.onepf.maps.yandexweb.model.LatLng;
+import org.onepf.maps.yandexweb.model.Marker;
 import org.onepf.maps.yandexweb.utils.ConvertUtils;
 import org.onepf.opfmaps.model.OPFMapType;
 
@@ -39,6 +40,10 @@ public final class JSYandexMapProxy {
     public static final String STROKE_WIDTH_OPTION = "strokeWidth";
     public static final String Z_INDEX_OPTION = "zIndex";
     public static final String VISIBLE_OPTION = "visible";
+    public static final String DRAGGABLE_OPTION = "draggable";
+    public static final String ICON_COLOR_OPTION = "iconColor";
+    public static final String BALLOON_CONTENT_HEADER_OPTION = "balloonContentHeader";
+    public static final String BALLOON_CONTENT_BODY_OPTION = "balloonContentBody";
 
     private static final String SET_TYPE_FUNCTION_NAME = "setType";
     private static final String SET_CENTER_FUNCTION_NAME = "setCenter";
@@ -49,7 +54,12 @@ public final class JSYandexMapProxy {
     private static final String SET_ZOOM_CONTROLS_ENABLED_FUNCTION_NAME = "setZoomControlsEnabled";
     private static final String SET_ZOOM_GESTURES_ENABLED_FUNCTION_NAME = "setZoomGesturesEnabled";
     private static final String ADD_CIRCLE_FUNCTION_NAME = "addCircle";
+    private static final String ADD_MARKER_FUNCTION_NAME = "addMarker";
+    private static final String HIDE_BALLOON_FUNCTION_NAME = "hideBalloon";
+    private static final String SHOW_BALLOON_FUNCTION_NAME = "showBalloon";
+    private static final String TOGGLE_BALLOON_FUNCTION_NAME = "toggleBalloon";
     private static final String SET_GEO_OBJECT_OPTION = "setGeoObjectOption";
+    private static final String SET_GEO_OBJECT_PROPERTY = "setGeoObjectProperty";
     private static final String REMOVE_GEO_OBJECT_FUNCTION_NAME = "removeGeoObject";
     private static final String SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME = "setGeoObjectCoordinates";
     private static final String SET_CIRCLE_RADIUS_FUNCTION_NAME = "setCircleRadius";
@@ -118,6 +128,39 @@ public final class JSYandexMapProxy {
         );
     }
 
+    public static void addMarker(@NonNull final WebView webView,
+                                 @NonNull final Marker marker,
+                                 @NonNull final String color) {
+        evaluateJSFunctionAsync(
+                webView,
+                null,
+                ADD_MARKER_FUNCTION_NAME,
+                wrapToQuotes(marker.getId()),
+                Double.toString(marker.getPosition().getLat()),
+                Double.toString(marker.getPosition().getLng()),
+                wrapToQuotes(marker.getTitle()),
+                wrapToQuotes(marker.getSnippet()),
+                Boolean.toString(marker.isVisible()),
+                Boolean.toString(marker.isDraggable()),
+                wrapToQuotes(color)
+        );
+    }
+
+    public static void hideInfoWindow(@NonNull final WebView webView,
+                                      @NonNull final String id) {
+        evaluateJSFunctionAsync(webView, null, HIDE_BALLOON_FUNCTION_NAME, wrapToQuotes(id));
+    }
+
+    public static void showInfoWindow(@NonNull final WebView webView,
+                                      @NonNull final String id) {
+        evaluateJSFunctionAsync(webView, null, SHOW_BALLOON_FUNCTION_NAME, wrapToQuotes(id));
+    }
+
+    public static void toggleInfoWindow(@NonNull final WebView webView,
+                                        @NonNull final String id) {
+        evaluateJSFunctionAsync(webView, null, TOGGLE_BALLOON_FUNCTION_NAME, wrapToQuotes(id));
+    }
+
     public static void setGeoObjectOption(@NonNull final WebView webView,
                                           @NonNull final String id,
                                           @NonNull final String option,
@@ -130,6 +173,20 @@ public final class JSYandexMapProxy {
                                           @NonNull final String option,
                                           @NonNull final String value) {
         setGeoObjectOptionFormatted(webView, id, option, wrapToQuotes(value));
+    }
+
+    public static void setGeoObjectProperty(@NonNull final WebView webView,
+                                            @NonNull final String id,
+                                            @NonNull final String option,
+                                            @NonNull final Object value) {
+        setGeoObjectPropertyFormatted(webView, id, option, value.toString());
+    }
+
+    public static void setGeoObjectProperty(@NonNull final WebView webView,
+                                            @NonNull final String id,
+                                            @NonNull final String option,
+                                            @NonNull final String value) {
+        setGeoObjectPropertyFormatted(webView, id, option, wrapToQuotes(value));
     }
 
     public static void setGeoObjectCoordinates(@NonNull final WebView webView,
@@ -157,6 +214,13 @@ public final class JSYandexMapProxy {
         evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_OPTION, wrapToQuotes(id), wrapToQuotes(option), value);
     }
 
+    private static void setGeoObjectPropertyFormatted(@NonNull final WebView webView,
+                                                      @NonNull final String id,
+                                                      @NonNull final String property,
+                                                      @NonNull final String value) {
+        evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_PROPERTY, wrapToQuotes(id), wrapToQuotes(property), value);
+    }
+
     private static void evaluateJSFunctionAsync(@NonNull final WebView webView,
                                                 @Nullable final ValueCallback<String> resultCallback,
                                                 @NonNull final String function,
@@ -169,8 +233,9 @@ public final class JSYandexMapProxy {
         }
     }
 
-    private static String wrapToQuotes(@NonNull final String param) {
-        return String.format(US, "'%s'", param);
+    @NonNull
+    private static String wrapToQuotes(@Nullable final String param) {
+        return String.format(US, "'%s'", param != null ? param : "");
     }
 
     @NonNull

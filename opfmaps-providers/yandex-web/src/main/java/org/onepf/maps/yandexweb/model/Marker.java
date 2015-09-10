@@ -17,6 +17,18 @@
 package org.onepf.maps.yandexweb.model;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.webkit.WebView;
+import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
+import org.onepf.opfutils.OPFLog;
+
+import java.util.Map;
+
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.BALLOON_CONTENT_BODY_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.BALLOON_CONTENT_HEADER_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.DRAGGABLE_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.ICON_COLOR_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.VISIBLE_OPTION;
 
 /**
  * @author Roman Savin
@@ -24,135 +36,180 @@ import android.support.annotation.NonNull;
  */
 public final class Marker {
 
-    Marker() {
-        //todo implement
+    @Nullable
+    private WebView webView;
+    @Nullable
+    private Map<String, Marker> markersByIds;
+    @NonNull
+    private final String id;
+    @NonNull
+    private LatLng position;
+    @Nullable
+    private String title;
+    @Nullable
+    private String snippet;
+    private boolean isDraggable;
+    private boolean isInfoWindowShown;
+    private boolean isVisible;
+
+    public Marker(@Nullable WebView webView,
+                  @Nullable Map<String, Marker> markersByIds,
+                  @NonNull final LatLng position,
+                  @Nullable final String title,
+                  @Nullable final String snippet,
+                  final boolean isDraggable,
+                  final boolean isVisible) {
+        this.id = Integer.toString(hashCode());
+        this.webView = webView;
+        this.markersByIds = markersByIds;
+        this.position = position;
+        this.title = title;
+        this.snippet = snippet;
+        this.isDraggable = isDraggable;
+        this.isInfoWindowShown = false;
+        this.isVisible = isVisible;
     }
 
     @NonNull
     public String getId() {
-        //todo implement
-        return null;
+        return id;
     }
 
     public float getAlpha() {
-        //todo implement
-        return 0;
+        return 1.0f;
     }
 
     @NonNull
     public LatLng getPosition() {
-        //todo implement
-        return null;
+        return position;
     }
 
     public float getRotation() {
-        //todo implement
-        return 0;
+        return 0.0f;
     }
 
-    @NonNull
+    @Nullable
     public String getSnippet() {
-        //todo implement
-        return null;
+        return snippet;
     }
 
-    @NonNull
+    @Nullable
     public String getTitle() {
-        //todo implement
-        return null;
-    }
-
-    public void hideInfoWindow() {
-        //todo implement
+        return title;
     }
 
     public boolean isDraggable() {
-        //todo implement
-        return false;
+        return isDraggable;
     }
 
     public boolean isFlat() {
-        //todo implement
         return false;
     }
 
     public boolean isInfoWindowShown() {
-        //todo implement
-        return false;
+        return isInfoWindowShown;
     }
 
     public boolean isVisible() {
-        //todo implement
-        return false;
-    }
-
-    public void remove() {
-        //todo implement
-    }
-
-    public void setAlpha(final float alpha) {
-        //todo implement
-    }
-
-    public void setAnchor(final float anchorU, final float anchorV) {
-        //todo implement
-    }
-
-    public void setDraggable(final boolean draggable) {
-        //todo implement
-    }
-
-    public void setFlat(final boolean flat) {
-        //todo implement
-    }
-
-    public void setIcon(@NonNull final BitmapDescriptor icon) {
-        //todo implement
-    }
-
-    public void setInfoWindowAnchor(final float anchorU, final float anchorV) {
-        //todo implement
-    }
-
-    public void setPosition(@NonNull final LatLng latLng) {
-        //todo implement
-    }
-
-    public void setRotation(final float rotation) {
-        //todo implement
-    }
-
-    public void setSnippet(@NonNull final String snippet) {
-        //todo implement
-    }
-
-    public void setTitle(@NonNull final String title) {
-        //todo implement
-    }
-
-    public void setVisible(final boolean visible) {
-        //todo implement
+        return isVisible;
     }
 
     public void showInfoWindow() {
-        //todo implement
+        isInfoWindowShown = true;
+        if (webView != null) {
+            JSYandexMapProxy.showInfoWindow(webView, id);
+        }
     }
 
-    @Override
-    public int hashCode() {
-        //todo implement
-        return super.hashCode();
+    public void hideInfoWindow() {
+        isInfoWindowShown = false;
+        if (webView != null) {
+            JSYandexMapProxy.hideInfoWindow(webView, id);
+        }
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        //todo implement
-        return super.equals(other);
+    public void changeIsInfoWindowShownValue(final boolean isInfoWindowShown) {
+        this.isInfoWindowShown = isInfoWindowShown;
+    }
+
+    public void remove() {
+        if (webView != null) {
+            JSYandexMapProxy.removeGeoObject(webView, id);
+            webView = null;
+        }
+        if (markersByIds != null) {
+            markersByIds.remove(id);
+            markersByIds = null;
+        }
+    }
+
+    public void setAlpha(final float alpha) {
+        OPFLog.logStubCall(alpha);
+    }
+
+    public void setAnchor(final float anchorU, final float anchorV) {
+        OPFLog.logStubCall(anchorU, anchorV);
+    }
+
+    public void setDraggable(final boolean draggable) {
+        this.isDraggable = draggable;
+        if (webView != null){
+            JSYandexMapProxy.setGeoObjectOption(webView, id, DRAGGABLE_OPTION, draggable);
+        }
+    }
+
+    public void setFlat(final boolean flat) {
+        OPFLog.logStubCall(flat);
+    }
+
+    public void setIcon(@NonNull final BitmapDescriptor icon) {
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, ICON_COLOR_OPTION, icon.getRGBColor());
+        }
+    }
+
+    public void setInfoWindowAnchor(final float anchorU, final float anchorV) {
+        OPFLog.logStubCall(anchorU, anchorV);
+    }
+
+    public void changePositionValue(@NonNull final LatLng latLng) {
+        this.position = latLng;
+    }
+
+    public void setPosition(@NonNull final LatLng latLng) {
+        this.position = latLng;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectCoordinates(webView, id, latLng);
+        }
+    }
+
+    public void setRotation(final float rotation) {
+        OPFLog.logStubCall(rotation);
+    }
+
+    public void setSnippet(@NonNull final String snippet) {
+        this.snippet = snippet;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectProperty(webView, id, BALLOON_CONTENT_BODY_OPTION, snippet);
+        }
+    }
+
+    public void setTitle(@NonNull final String title) {
+        this.title = title;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectProperty(webView, id, BALLOON_CONTENT_HEADER_OPTION, title);
+        }
+    }
+
+    public void setVisible(final boolean visible) {
+        this.isVisible = visible;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, VISIBLE_OPTION, visible);
+        }
     }
 
     @Override
     public String toString() {
-        //todo implement
-        return super.toString();
+        return "marker : [position = " + position + ", title = " + title + ", snippet = " + snippet + "]";
     }
 }

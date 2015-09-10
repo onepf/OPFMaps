@@ -26,13 +26,19 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import org.onepf.maps.yandexweb.jsi.JSIOnCameraChangeListener;
+import org.onepf.maps.yandexweb.jsi.JSIOnInfoWindowChangeListener;
 import org.onepf.maps.yandexweb.jsi.JSIOnMapReadyCallback;
 import org.onepf.maps.yandexweb.jsi.JSIOnMapTypeChangeListener;
+import org.onepf.maps.yandexweb.jsi.JSIOnMarkerClickListener;
+import org.onepf.maps.yandexweb.jsi.JSIOnMarkerDragListener;
 import org.onepf.maps.yandexweb.jsi.JSMapStateInjector;
 import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
 import org.onepf.maps.yandexweb.listener.OnCameraChangeListener;
+import org.onepf.maps.yandexweb.listener.OnInfoWindowChangeListener;
 import org.onepf.maps.yandexweb.listener.OnMapReadyCallback;
 import org.onepf.maps.yandexweb.listener.OnMapTypeChangeListener;
+import org.onepf.maps.yandexweb.listener.OnMarkerClickListener;
+import org.onepf.maps.yandexweb.listener.OnMarkerDragListener;
 import org.onepf.maps.yandexweb.model.CameraPosition;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.YaWebMapOptions;
@@ -52,15 +58,18 @@ import java.io.InputStreamReader;
  * @since 02.09.2015
  */
 public class YaWebMapViewDelegate extends WebView
-        implements MapViewDelegate, OnMapReadyCallback, OnCameraChangeListener, OnMapTypeChangeListener {
+        implements MapViewDelegate, OnMapReadyCallback, OnCameraChangeListener,
+        OnMapTypeChangeListener, OnMarkerClickListener, OnMarkerDragListener, OnInfoWindowChangeListener {
 
     private static final String MAP_HTML_FILE_NAME = "yandex-map.html";
 
     private static final String MAP_STATE_BUNDLE_KEY = "org.onepf.maps.yandexweb.delegate.MAP_STATE_BUNDLE_KEY";
 
-    //todo change map state after map changing
     @NonNull
     private MapState mapState;
+
+    @Nullable
+    private YaWebMapDelegate yaWebMapDelegate;
 
     @Nullable
     private final YaWebMapOptions options;
@@ -99,6 +108,9 @@ public class YaWebMapViewDelegate extends WebView
         this.savedInstanceState = savedInstanceState;
         addJavascriptInterface(new JSIOnCameraChangeListener(this), JSIOnCameraChangeListener.JS_INTERFACE_NAME);
         addJavascriptInterface(new JSIOnMapTypeChangeListener(this), JSIOnMapTypeChangeListener.JS_INTERFACE_NAME);
+        addJavascriptInterface(new JSIOnMarkerClickListener(this), JSIOnMarkerClickListener.JS_INTERFACE_NAME);
+        addJavascriptInterface(new JSIOnMarkerDragListener(this), JSIOnMarkerDragListener.JS_INTERFACE_NAME);
+        addJavascriptInterface(new JSIOnInfoWindowChangeListener(this), JSIOnInfoWindowChangeListener.JS_INTERFACE_NAME);
 
         isCreated = true;
         if (needLoad) {
@@ -112,9 +124,13 @@ public class YaWebMapViewDelegate extends WebView
         isCreated = false;
         onMapReadyCallback = null;
         savedInstanceState = null;
+        yaWebMapDelegate = null;
 
         removeJavascriptInterface(JSIOnCameraChangeListener.JS_INTERFACE_NAME);
         removeJavascriptInterface(JSIOnMapTypeChangeListener.JS_INTERFACE_NAME);
+        removeJavascriptInterface(JSIOnMarkerClickListener.JS_INTERFACE_NAME);
+        removeJavascriptInterface(JSIOnMarkerDragListener.JS_INTERFACE_NAME);
+        removeJavascriptInterface(JSIOnInfoWindowChangeListener.JS_INTERFACE_NAME);
     }
 
     @Override
@@ -134,7 +150,8 @@ public class YaWebMapViewDelegate extends WebView
     @Override
     public void onMapReady() {
         if (onMapReadyCallback != null) {
-            onMapReadyCallback.onMapReady(new OPFMap(new YaWebMapDelegate(this)));
+            yaWebMapDelegate = new YaWebMapDelegate(this);
+            onMapReadyCallback.onMapReady(new OPFMap(yaWebMapDelegate));
 
             removeJavascriptInterface(JSIOnMapReadyCallback.JS_INTERFACE_NAME);
             onMapReadyCallback = null;
@@ -152,6 +169,52 @@ public class YaWebMapViewDelegate extends WebView
     public void onTypeChange(@NonNull final OPFMapType type) {
         OPFLog.logMethod(type);
         mapState.setMapType(type);
+    }
+
+    @Override
+    public void onMarkerClick(@NonNull final String markerId) {
+        boolean isHandled = false;
+        if (yaWebMapDelegate != null) {
+            isHandled = yaWebMapDelegate.onMarkerClick(markerId);
+        }
+        if (!isHandled) {
+            JSYandexMapProxy.toggleInfoWindow(this, markerId);
+        }
+    }
+
+    @Override
+    public void onMarkerDragStart(@NonNull final String markerId, final double lat, final double lng) {
+        if (yaWebMapDelegate != null) {
+            yaWebMapDelegate.onMarkerDragStart(markerId, lat, lng);
+        }
+    }
+
+    @Override
+    public void onMarkerDrag(@NonNull final String markerId, final double lat, final double lng) {
+        if (yaWebMapDelegate != null) {
+            yaWebMapDelegate.onMarkerDrag(markerId, lat, lng);
+        }
+    }
+
+    @Override
+    public void onMarkerDragEnd(@NonNull final String markerId, final double lat, final double lng) {
+        if (yaWebMapDelegate != null) {
+            yaWebMapDelegate.onMarkerDragEnd(markerId, lat, lng);
+        }
+    }
+
+    @Override
+    public void onInfoWindowOpen(final String markerId) {
+        if (yaWebMapDelegate != null) {
+            yaWebMapDelegate.onInfoWindowOpen(markerId);
+        }
+    }
+
+    @Override
+    public void onInfoWindowClose(final String markerId) {
+        if (yaWebMapDelegate != null) {
+            yaWebMapDelegate.onInfoWindowClose(markerId);
+        }
     }
 
     @NonNull

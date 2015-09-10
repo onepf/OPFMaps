@@ -16,16 +16,21 @@
 
 package org.onepf.maps.yandexweb.model;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import org.onepf.maps.yandexweb.utils.ConvertUtils;
 
 /**
  * @author Roman Savin
  * @since 02.09.2015
  */
 public final class BitmapDescriptor implements Parcelable {
-    //todo implement
+
+    private static final float DEFAULT_HUE = 3F;
+    private static final float SATURATION = 0.73F;
+    private static final float VALUE = 0.96F;
 
     public static final Creator<BitmapDescriptor> CREATOR = new Creator<BitmapDescriptor>() {
         @Override
@@ -39,10 +44,43 @@ public final class BitmapDescriptor implements Parcelable {
         }
     };
 
+    private final float hue;
+
     public BitmapDescriptor() {
+        this(DEFAULT_HUE);
+    }
+
+    public BitmapDescriptor(final float hue) {
+        this.hue = hue;
     }
 
     private BitmapDescriptor(@NonNull final Parcel parcel) {
+        this.hue = parcel.readFloat();
+    }
+
+    @NonNull
+    public String getRGBColor() {
+        return ConvertUtils.convertColor(Color.HSVToColor(new float[]{hue, SATURATION, VALUE}));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj == null) {
+            return false;
+        } else if (this.getClass() != obj.getClass()) {
+            return false;
+        } else {
+            BitmapDescriptor other = (BitmapDescriptor) obj;
+
+            return this.hue == other.hue;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return (hue != +0.0f ? Float.floatToIntBits(hue) : 0);
     }
 
     @Override
@@ -52,5 +90,6 @@ public final class BitmapDescriptor implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
+        dest.writeFloat(hue);
     }
 }

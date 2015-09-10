@@ -18,13 +18,14 @@ package org.onepf.maps.yandexweb.model;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
  * @since 02.09.2015
  */
 public final class BitmapDescriptorFactory {
-    //todo implement
+
     private BitmapDescriptorFactory() {
         throw new UnsupportedOperationException();
     }
@@ -36,31 +37,36 @@ public final class BitmapDescriptorFactory {
 
     @NonNull
     public static BitmapDescriptor defaultMarker(final float hue) {
-        return new BitmapDescriptor();
+        return new BitmapDescriptor(hue);
     }
 
     @NonNull
     public static BitmapDescriptor fromAsset(@NonNull final String assetName) {
+        OPFLog.logStubCall(assetName);
         return new BitmapDescriptor();
     }
 
     @NonNull
     public static BitmapDescriptor fromBitmap(@NonNull final Bitmap image) {
+        OPFLog.logStubCall(image);
         return new BitmapDescriptor();
     }
 
     @NonNull
     public static BitmapDescriptor fromFile(@NonNull final String fileName) {
+        OPFLog.logStubCall(fileName);
         return new BitmapDescriptor();
     }
 
     @NonNull
     public static BitmapDescriptor fromPath(@NonNull final String absolutePath) {
+        OPFLog.logStubCall(absolutePath);
         return new BitmapDescriptor();
     }
 
     @NonNull
     public static BitmapDescriptor fromResource(final int resourceId) {
+        OPFLog.logStubCall(resourceId);
         return new BitmapDescriptor();
     }
 }

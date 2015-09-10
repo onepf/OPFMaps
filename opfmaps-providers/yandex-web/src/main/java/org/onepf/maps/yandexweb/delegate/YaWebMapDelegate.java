@@ -18,15 +18,18 @@ package org.onepf.maps.yandexweb.delegate;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-
-import android.webkit.WebView;
+import android.support.annotation.Nullable;
 import org.onepf.maps.yandexweb.delegate.model.YaWebCircleDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebIndoorBuildingDelegate;
+import org.onepf.maps.yandexweb.delegate.model.YaWebMarkerDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebTileOverlayDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebUiSettingsDelegate;
 import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
+import org.onepf.maps.yandexweb.model.BitmapDescriptor;
+import org.onepf.maps.yandexweb.model.BitmapDescriptorFactory;
 import org.onepf.maps.yandexweb.model.Circle;
 import org.onepf.maps.yandexweb.model.LatLng;
+import org.onepf.maps.yandexweb.model.Marker;
 import org.onepf.maps.yandexweb.model.UiSettings;
 import org.onepf.opfmaps.delegate.MapDelegate;
 import org.onepf.opfmaps.listener.OPFCancelableCallback;
@@ -40,6 +43,7 @@ import org.onepf.opfmaps.listener.OPFOnMarkerClickListener;
 import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
 import org.onepf.opfmaps.listener.OPFSnapshotReadyCallback;
+import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCameraUpdate;
 import org.onepf.opfmaps.model.OPFCircle;
@@ -63,6 +67,9 @@ import org.onepf.opfmaps.model.OPFTileOverlayOptions;
 import org.onepf.opfmaps.model.OPFUiSettings;
 import org.onepf.opfutils.OPFLog;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Roman Savin
  * @since 02.09.2015
@@ -75,6 +82,18 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @NonNull
     private final YaWebMapViewDelegate map;
+
+    @Nullable
+    private OPFOnMarkerClickListener opfOnMarkerClickListener;
+
+    @Nullable
+    private OPFOnMarkerDragListener opfOnMarkerDragListener;
+
+    @Nullable
+    private Marker draggableMarker;
+
+    @NonNull
+    private final Map<String, Marker> markersByIds = new HashMap<>();
 
     public YaWebMapDelegate(@NonNull final YaWebMapViewDelegate map) {
         this.map = map;
@@ -113,8 +132,29 @@ public class YaWebMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFMarker addMarker(@NonNull final OPFMarkerOptions options) {
-        //todo implement
-        return null;
+        final OPFLatLng position = options.getPosition();
+        if (position == null) {
+            throw new IllegalArgumentException("Marker position can't be null");
+        }
+        final OPFBitmapDescriptor opfBitmapDescriptor = options.getIcon();
+        final BitmapDescriptor bitmapDescriptor = opfBitmapDescriptor != null ?
+                (BitmapDescriptor) opfBitmapDescriptor.getDelegate().getBitmapDescriptor()
+                : BitmapDescriptorFactory.defaultMarker();
+
+        final Marker marker = new Marker(
+                map,
+                markersByIds,
+                new LatLng(position.getLat(), position.getLng()),
+                options.getTitle(),
+                options.getSnippet(),
+                options.isDraggable(),
+                options.isVisible()
+        );
+
+        markersByIds.put(marker.getId(), marker);
+
+        JSYandexMapProxy.addMarker(map, marker, bitmapDescriptor.getRGBColor());
+        return new OPFMarker(new YaWebMarkerDelegate(marker));
     }
 
     @NonNull
@@ -296,12 +336,12 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void setOnMarkerClickListener(@NonNull final OPFOnMarkerClickListener listener) {
-        //todo implement
+        this.opfOnMarkerClickListener = listener;
     }
 
     @Override
     public void setOnMarkerDragListener(@NonNull final OPFOnMarkerDragListener listener) {
-        //todo implement
+        this.opfOnMarkerDragListener = listener;
     }
 
     @Override
@@ -349,5 +389,63 @@ public class YaWebMapDelegate implements MapDelegate {
     @Override
     public String toString() {
         return map.toString();
+    }
+
+    boolean onMarkerClick(@NonNull final String markerId) {
+        //noinspection SimplifiableIfStatement
+        if (opfOnMarkerClickListener != null && markersByIds.containsKey(markerId)) {
+            return opfOnMarkerClickListener.onMarkerClick(new OPFMarker(new YaWebMarkerDelegate(markersByIds.get(markerId))));
+        }
+
+        return false;
+    }
+
+    void onMarkerDragStart(@NonNull final String markerId, final double lat, final double lng) {
+        if (opfOnMarkerDragListener != null && markersByIds.containsKey(markerId)) {
+            draggableMarker = createDraggableMarker(markerId, lat, lng);
+            opfOnMarkerDragListener.onMarkerDragStart(new OPFMarker(new YaWebMarkerDelegate(draggableMarker)));
+        }
+    }
+
+    void onMarkerDrag(@NonNull final String markerId, final double lat, final double lng) {
+        if (opfOnMarkerDragListener != null) {
+            if (draggableMarker != null && draggableMarker.getId().equals(markerId)) {
+                draggableMarker.changePositionValue(new LatLng(lat, lng));
+                opfOnMarkerDragListener.onMarkerDrag(new OPFMarker(new YaWebMarkerDelegate(draggableMarker)));
+            } else if (markersByIds.containsKey(markerId)) {
+                draggableMarker = createDraggableMarker(markerId, lat, lng);
+                opfOnMarkerDragListener.onMarkerDrag(new OPFMarker(new YaWebMarkerDelegate(draggableMarker)));
+            }
+        }
+    }
+
+    void onMarkerDragEnd(@NonNull final String markerId, final double lat, final double lng) {
+        if (opfOnMarkerDragListener != null) {
+            if (draggableMarker != null && draggableMarker.getId().equals(markerId)) {
+                draggableMarker.changePositionValue(new LatLng(lat, lng));
+                opfOnMarkerDragListener.onMarkerDragEnd(new OPFMarker(new YaWebMarkerDelegate(draggableMarker)));
+            } else if (markersByIds.containsKey(markerId)) {
+                opfOnMarkerDragListener.onMarkerDragEnd(new OPFMarker(new YaWebMarkerDelegate(createDraggableMarker(markerId, lat, lng))));
+            }
+        }
+        draggableMarker = null;
+    }
+
+    void onInfoWindowOpen(@NonNull final String markerId) {
+        if (opfOnMarkerClickListener != null && markersByIds.containsKey(markerId)) {
+            markersByIds.get(markerId).changeIsInfoWindowShownValue(true);
+        }
+    }
+
+    void onInfoWindowClose(@NonNull final String markerId) {
+        if (opfOnMarkerClickListener != null && markersByIds.containsKey(markerId)) {
+            markersByIds.get(markerId).changeIsInfoWindowShownValue(false);
+        }
+    }
+
+    private Marker createDraggableMarker(@NonNull final String markerId, final double lat, final double lng) {
+        final Marker marker = markersByIds.get(markerId);
+        marker.changePositionValue(new LatLng(lat, lng));
+        return marker;
     }
 }

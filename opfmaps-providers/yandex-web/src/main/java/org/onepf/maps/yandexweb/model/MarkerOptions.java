@@ -20,6 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import org.onepf.opfutils.OPFLog;
 
 import static org.onepf.maps.yandexweb.utils.CompareUtils.isEquals;
 
@@ -51,14 +52,7 @@ public final class MarkerOptions implements Parcelable {
     private BitmapDescriptor icon = BitmapDescriptorFactory.defaultMarker();
     @Nullable
     private String snippet;
-    private float alpha = 1.0F;
-    private float anchorU = DEFAULT_ANCHOR_U;
-    private float anchorV = 1.0F;
     private boolean isDraggable;
-    private boolean isFlat;
-    private float infoWindowAnchorU = DEFAULT_ANCHOR_U;
-    private float infoWindowAnchorV;
-    private float rotation;
     private boolean isVisible = true;
 
     public MarkerOptions() {
@@ -70,27 +64,19 @@ public final class MarkerOptions implements Parcelable {
         this.title = parcel.readString();
         this.icon = parcel.readParcelable(BitmapDescriptor.class.getClassLoader());
         this.snippet = parcel.readString();
-        this.alpha = parcel.readFloat();
-        this.anchorU = parcel.readFloat();
-        this.anchorV = parcel.readFloat();
         this.isDraggable = parcel.readByte() != 0;
-        this.isFlat = parcel.readByte() != 0;
-        this.infoWindowAnchorU = parcel.readFloat();
-        this.infoWindowAnchorV = parcel.readFloat();
-        this.rotation = parcel.readFloat();
         this.isVisible = parcel.readByte() != 0;
     }
 
     @NonNull
     public MarkerOptions alpha(final float alpha) {
-        this.alpha = alpha;
+        OPFLog.logStubCall(alpha);
         return this;
     }
 
     @NonNull
     public MarkerOptions anchor(final float u, final float v) {
-        this.anchorU = u;
-        this.anchorV = v;
+        OPFLog.logStubCall(u, v);
         return this;
     }
 
@@ -102,33 +88,33 @@ public final class MarkerOptions implements Parcelable {
 
     @NonNull
     public MarkerOptions flat(final boolean flat) {
-        this.isFlat = flat;
+        OPFLog.logStubCall(flat);
         return this;
     }
 
     public float getAlpha() {
-        return this.alpha;
+        return 1.0f;
     }
 
     public float getAnchorU() {
-        return this.anchorU;
+        return DEFAULT_ANCHOR_U;
     }
 
     public float getAnchorV() {
-        return this.anchorV;
+        return 0.0f;
     }
 
-    @Nullable
+    @NonNull
     public BitmapDescriptor getIcon() {
         return this.icon;
     }
 
     public float getInfoWindowAnchorU() {
-        return this.infoWindowAnchorU;
+        return DEFAULT_ANCHOR_U;
     }
 
     public float getInfoWindowAnchorV() {
-        return this.infoWindowAnchorV;
+        return 0.0f;
     }
 
     @Nullable
@@ -137,7 +123,7 @@ public final class MarkerOptions implements Parcelable {
     }
 
     public float getRotation() {
-        return this.rotation;
+        return 0.0f;
     }
 
     @Nullable
@@ -158,8 +144,7 @@ public final class MarkerOptions implements Parcelable {
 
     @NonNull
     public MarkerOptions infoWindowAnchor(final float u, final float v) {
-        this.infoWindowAnchorU = u;
-        this.infoWindowAnchorV = v;
+        OPFLog.logStubCall(u, v);
         return this;
     }
 
@@ -168,7 +153,7 @@ public final class MarkerOptions implements Parcelable {
     }
 
     public boolean isFlat() {
-        return this.isFlat;
+        return false;
     }
 
     public boolean isVisible() {
@@ -183,7 +168,7 @@ public final class MarkerOptions implements Parcelable {
 
     @NonNull
     public MarkerOptions rotation(final float rotation) {
-        this.rotation = rotation;
+        OPFLog.logStubCall(rotation);
         return this;
     }
 
@@ -216,14 +201,7 @@ public final class MarkerOptions implements Parcelable {
         dest.writeString(title);
         dest.writeParcelable(icon, flags);
         dest.writeString(snippet);
-        dest.writeFloat(alpha);
-        dest.writeFloat(anchorU);
-        dest.writeFloat(anchorV);
         dest.writeByte((byte) (isDraggable ? 1 : 0));
-        dest.writeByte((byte) (isFlat ? 1 : 0));
-        dest.writeFloat(infoWindowAnchorU);
-        dest.writeFloat(infoWindowAnchorV);
-        dest.writeFloat(rotation);
         dest.writeByte((byte) (isVisible ? 1 : 0));
     }
 
@@ -240,14 +218,7 @@ public final class MarkerOptions implements Parcelable {
                     && isEquals(this.title, other.title)
                     && isEquals(this.icon, other.title)
                     && isEquals(this.snippet, other.snippet)
-                    && this.alpha == other.alpha
-                    && this.anchorU == other.anchorU
-                    && this.anchorV == other.anchorV
                     && this.isDraggable == other.isDraggable
-                    && this.isFlat == other.isFlat
-                    && this.infoWindowAnchorU == other.infoWindowAnchorU
-                    && this.infoWindowAnchorV == other.infoWindowAnchorV
-                    && this.rotation == other.rotation
                     && this.isVisible == other.isVisible;
         }
     }
@@ -259,14 +230,7 @@ public final class MarkerOptions implements Parcelable {
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + icon.hashCode();
         result = 31 * result + (snippet != null ? snippet.hashCode() : 0);
-        result = 31 * result + (alpha != +0.0f ? Float.floatToIntBits(alpha) : 0);
-        result = 31 * result + (anchorU != +0.0f ? Float.floatToIntBits(anchorU) : 0);
-        result = 31 * result + (anchorV != +0.0f ? Float.floatToIntBits(anchorV) : 0);
         result = 31 * result + (isDraggable ? 1 : 0);
-        result = 31 * result + (isFlat ? 1 : 0);
-        result = 31 * result + (infoWindowAnchorU != +0.0f ? Float.floatToIntBits(infoWindowAnchorU) : 0);
-        result = 31 * result + (infoWindowAnchorV != +0.0f ? Float.floatToIntBits(infoWindowAnchorV) : 0);
-        result = 31 * result + (rotation != +0.0f ? Float.floatToIntBits(rotation) : 0);
         result = 31 * result + (isVisible ? 1 : 0);
         return result;
     }

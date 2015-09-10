@@ -39,8 +39,6 @@ public final class ConvertUtils {
     @SuppressWarnings("PMD.NPathComplexity")
     @NonNull
     public static YaWebMapOptions convertMapOptions(@NonNull final OPFMapOptions opfOptions) {
-        //todo implement
-
         final YaWebMapOptions options = new YaWebMapOptions()
                 .mapType(opfOptions.getMapType());
 
@@ -90,7 +88,7 @@ public final class ConvertUtils {
 
     @NonNull
     public static String convertColor(final int color) {
-        return String.format("%06X", (0xFFFFFF & color));
+        return String.format("#%06X", (0xFFFFFF & color));
     }
 
  /*
