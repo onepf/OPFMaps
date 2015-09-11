@@ -19,6 +19,7 @@ package org.onepf.maps.yandexweb.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import org.onepf.opfutils.OPFLog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +50,6 @@ public final class PolylineOptions implements Parcelable {
     private int color = DEFAULT_COLOR;
     private float width = 10.0F;
     private float zIndex;
-    private boolean isGeodesic;
     private boolean isVisible = true;
 
     public PolylineOptions() {
@@ -61,7 +61,6 @@ public final class PolylineOptions implements Parcelable {
         this.color = source.readInt();
         this.width = source.readFloat();
         this.zIndex = source.readFloat();
-        this.isGeodesic = source.readByte() != 0;
         this.isVisible = source.readByte() != 0;
     }
 
@@ -94,7 +93,7 @@ public final class PolylineOptions implements Parcelable {
 
     @NonNull
     public PolylineOptions geodesic(final boolean geodesic) {
-        this.isGeodesic = geodesic;
+        OPFLog.logStubCall(geodesic);
         return this;
     }
 
@@ -116,7 +115,7 @@ public final class PolylineOptions implements Parcelable {
     }
 
     public boolean isGeodesic() {
-        return this.isGeodesic;
+        return false;
     }
 
     public boolean isVisible() {
@@ -152,7 +151,6 @@ public final class PolylineOptions implements Parcelable {
             return this.color == other.color
                     && this.width == other.width
                     && this.zIndex == other.zIndex
-                    && this.isGeodesic == other.isGeodesic
                     && this.isVisible == other.isVisible
                     && this.points.equals(other.points);
         }
@@ -165,7 +163,6 @@ public final class PolylineOptions implements Parcelable {
         result = 31 * result + color;
         result = 31 * result + (width != +0.0f ? Float.floatToIntBits(width) : 0);
         result = 31 * result + (zIndex != +0.0f ? Float.floatToIntBits(zIndex) : 0);
-        result = 31 * result + (isGeodesic ? 1 : 0);
         result = 31 * result + (isVisible ? 1 : 0);
         return result;
     }
@@ -179,7 +176,6 @@ public final class PolylineOptions implements Parcelable {
         out.writeInt(this.color);
         out.writeFloat(this.width);
         out.writeFloat(this.zIndex);
-        out.writeByte((byte) (this.isGeodesic ? 1 : 0));
         out.writeByte((byte) (this.isVisible ? 1 : 0));
     }
 }

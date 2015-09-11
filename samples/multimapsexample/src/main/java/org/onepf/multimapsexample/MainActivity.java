@@ -45,6 +45,8 @@ import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygon;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
+import org.onepf.opfmaps.model.OPFPolyline;
+import org.onepf.opfmaps.model.OPFPolylineOptions;
 import org.onepf.opfutils.OPFLog;
 
 import java.util.Arrays;
@@ -55,6 +57,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
     private OPFPolygon polygon;
     private OPFCircle circle;
+    private OPFPolyline polyline;
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -125,6 +128,13 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 )
         ));
         circle.setCenter(new OPFLatLng(56.752004, 37.617017));
+
+        polyline.setPoints(Arrays.asList(
+                new OPFLatLng(56.69661394384935, 36.608256084788515),
+                new OPFLatLng(56.08224581388055, 38.05120657972254),
+                new OPFLatLng(56.830126194643654, 38.90446672723731)
+        ));
+        polyline.setColor(Color.YELLOW);
     }
 
     //CHECKSTYLE:OFF
@@ -266,23 +276,30 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         });
 
         polygon = opfMap.addPolygon(new OPFPolygonOptions()
-                .add(
-                        new OPFLatLng(55.7597311265849, 37.71333884100602),
-                        new OPFLatLng(55.70860754839525, 37.69927662137808),
-                        new OPFLatLng(55.75862834496016, 37.513138401618356)
-                ).addHole(
-                        Arrays.asList(
-                                new OPFLatLng(55.739139488175816, 37.586989729090135),
-                                new OPFLatLng(55.726197236786376, 37.7097639987773),
-                                new OPFLatLng(55.70969983952349, 37.70240624420652)
-                        )
-                ).addHole(
-                        Arrays.asList(
-                                new OPFLatLng(55.7522606417405, 37.645697095053656),
-                                new OPFLatLng(55.75133838313202, 37.66817936044419),
-                                new OPFLatLng(55.74298813628395, 37.6541842601019)
-                        )
-                ).fillColor(Color.RED).strokeColor(Color.GREEN).strokeWidth(1.0f).zIndex(1.0f));
+                        .add(
+                                new OPFLatLng(55.7597311265849, 37.71333884100602),
+                                new OPFLatLng(55.70860754839525, 37.69927662137808),
+                                new OPFLatLng(55.75862834496016, 37.513138401618356)
+                        ).addHole(
+                                Arrays.asList(
+                                        new OPFLatLng(55.739139488175816, 37.586989729090135),
+                                        new OPFLatLng(55.726197236786376, 37.7097639987773),
+                                        new OPFLatLng(55.70969983952349, 37.70240624420652)
+                                )
+                        ).addHole(
+                                Arrays.asList(
+                                        new OPFLatLng(55.7522606417405, 37.645697095053656),
+                                        new OPFLatLng(55.75133838313202, 37.66817936044419),
+                                        new OPFLatLng(55.74298813628395, 37.6541842601019)
+                                )
+                        ).fillColor(Color.RED).strokeColor(Color.GREEN).strokeWidth(1.0f).zIndex(1.0f)
+        );
+
+        polyline = opfMap.addPolyline(new OPFPolylineOptions().add(
+                new OPFLatLng(55.69661394384935, 36.608256084788515),
+                new OPFLatLng(55.08224581388055, 38.05120657972254),
+                new OPFLatLng(55.830126194643654, 38.90446672723731)
+        ).color(Color.BLACK).width(3.0f).zIndex(1.0f));
     }
     //CHECKSTYLE:ON
 }

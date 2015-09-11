@@ -25,6 +25,7 @@ import org.onepf.maps.yandexweb.model.Circle;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.Marker;
 import org.onepf.maps.yandexweb.model.Polygon;
+import org.onepf.maps.yandexweb.model.Polyline;
 import org.onepf.maps.yandexweb.utils.ConvertUtils;
 import org.onepf.opfmaps.model.OPFMapType;
 
@@ -59,6 +60,7 @@ public final class JSYandexMapProxy {
     private static final String ADD_CIRCLE_FUNCTION_NAME = "addCircle";
     private static final String ADD_MARKER_FUNCTION_NAME = "addMarker";
     private static final String ADD_POLYGON_FUNCTION_NAME = "addPolygon";
+    private static final String ADD_POLYLINE_FUNCTION_NAME = "addPolyline";
     private static final String HIDE_BALLOON_FUNCTION_NAME = "hideBalloon";
     private static final String SHOW_BALLOON_FUNCTION_NAME = "showBalloon";
     private static final String TOGGLE_BALLOON_FUNCTION_NAME = "toggleBalloon";
@@ -150,19 +152,36 @@ public final class JSYandexMapProxy {
         );
     }
 
-
     public static void addPolygon(@NonNull final WebView webView, @NonNull final Polygon polygon) {
+        final StringBuilder js3dArrayBuilder = new StringBuilder();
+        build3DJSLatLngArray(js3dArrayBuilder, polygon.getPoints(), polygon.getHoles());
         evaluateJSFunctionAsync(
                 webView,
                 null,
                 ADD_POLYGON_FUNCTION_NAME,
                 wrapToQuotes(polygon.getId()),
-                formatThreeDimensionalJSLatLngArray(polygon.getPoints(), polygon.getHoles()),
+                js3dArrayBuilder.toString(),
                 wrapToQuotes(ConvertUtils.convertColor(polygon.getFillColor())),
                 wrapToQuotes(ConvertUtils.convertColor(polygon.getStrokeColor())),
                 Float.toString(polygon.getStrokeWidth()),
                 Float.toString(polygon.getZIndex()),
                 Boolean.toString(polygon.isVisible())
+        );
+    }
+
+    public static void addPolyline(@NonNull final WebView webView, @NonNull final Polyline polyline) {
+        final StringBuilder js2dArrayBuilder = new StringBuilder();
+        build2DJSLatLngArray(js2dArrayBuilder, polyline.getPoints());
+        evaluateJSFunctionAsync(
+                webView,
+                null,
+                ADD_POLYLINE_FUNCTION_NAME,
+                wrapToQuotes(polyline.getId()),
+                js2dArrayBuilder.toString(),
+                wrapToQuotes(ConvertUtils.convertColor(polyline.getColor())),
+                Float.toString(polyline.getWidth()),
+                Float.toString(polyline.getZIndex()),
+                Boolean.toString(polyline.isVisible())
         );
     }
 
@@ -212,15 +231,29 @@ public final class JSYandexMapProxy {
     public static void setGeoObjectCoordinates(@NonNull final WebView webView,
                                                @NonNull final String id,
                                                @NonNull final LatLng center) {
+        final StringBuilder jsLatLngArrayBuilder = new StringBuilder();
+        buildJSLatLngArray(jsLatLngArrayBuilder, center);
         evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME,
-                wrapToQuotes(id), formatJSLatLngArray(center));
+                wrapToQuotes(id), jsLatLngArrayBuilder.toString());
+    }
+
+    public static void setGeoObjectCoordinates(@NonNull final WebView webView,
+                                               @NonNull final String id,
+                                               @NonNull final List<LatLng> points) {
+        final StringBuilder js2dLatLngArrayBuilder = new StringBuilder();
+        build2DJSLatLngArray(js2dLatLngArrayBuilder, points);
+        evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME,
+                wrapToQuotes(id), js2dLatLngArrayBuilder.toString());
     }
 
     public static void setGeoObjectCoordinates(@NonNull final WebView webView,
                                                @NonNull final String id,
                                                @NonNull final List<LatLng> points,
                                                @Nullable final List<List<LatLng>> holes) {
-        evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME, wrapToQuotes(id), formatThreeDimensionalJSLatLngArray(points, holes));
+        final StringBuilder js3dLatLngArrayBuilder = new StringBuilder();
+        build3DJSLatLngArray(js3dLatLngArrayBuilder, points, holes);
+        evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME,
+                wrapToQuotes(id), js3dLatLngArrayBuilder.toString());
     }
 
     public static void setCircleRadius(@NonNull final WebView webView,
@@ -260,31 +293,38 @@ public final class JSYandexMapProxy {
         }
     }
 
-    private static String formatThreeDimensionalJSLatLngArray(@NonNull final List<LatLng> points,
-                                                              @Nullable final List<List<LatLng>> holes) {
-        final StringBuilder stringBuilder = new StringBuilder("[[");
-
-        for (LatLng point : points) {
-            stringBuilder.append('[').append(point.getLat()).append(',').append(point.getLng()).append("],");
-        }
-        stringBuilder.append("],");
+    private static void build3DJSLatLngArray(@NonNull final StringBuilder stringBuilder,
+                                             @NonNull final List<LatLng> points,
+                                             @Nullable final List<List<LatLng>> holes) {
+        stringBuilder.append('[');
+        build2DJSLatLngArray(stringBuilder, points);
+        stringBuilder.append(',');
 
         if (holes != null) {
             for (List<LatLng> hole : holes) {
-                stringBuilder.append('[');
-                for (LatLng holePoint : hole) {
-                    stringBuilder.append('[').append(holePoint.getLat()).append(',').append(holePoint.getLng()).append("],");
-                }
-                stringBuilder.append("],");
+                build2DJSLatLngArray(stringBuilder, hole);
+                stringBuilder.append(',');
             }
         }
 
         stringBuilder.append(']');
-        return stringBuilder.toString();
     }
 
-    private static String formatJSLatLngArray(@NonNull final LatLng latLng) {
-        return String.format(US, "[%s, %s]", latLng.getLat(), latLng.getLng());
+    private static void build2DJSLatLngArray(@NonNull final StringBuilder stringBuilder,
+                                             @NonNull final List<LatLng> points) {
+        stringBuilder.append('[');
+
+        for (LatLng point : points) {
+            buildJSLatLngArray(stringBuilder, point);
+            stringBuilder.append(',');
+        }
+
+        stringBuilder.append(']');
+    }
+
+    private static void buildJSLatLngArray(@NonNull final StringBuilder stringBuilder,
+                                           @NonNull final LatLng latLng) {
+        stringBuilder.append('[').append(latLng.getLat()).append(',').append(latLng.getLng()).append(']');
     }
 
     @NonNull

@@ -24,6 +24,7 @@ import org.onepf.maps.yandexweb.delegate.model.YaWebGroundOverlayDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebIndoorBuildingDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebMarkerDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebPolygonDelegate;
+import org.onepf.maps.yandexweb.delegate.model.YaWebPolylineDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebTileOverlayDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebUiSettingsDelegate;
 import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
@@ -34,6 +35,7 @@ import org.onepf.maps.yandexweb.model.GroundOverlay;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.Marker;
 import org.onepf.maps.yandexweb.model.Polygon;
+import org.onepf.maps.yandexweb.model.Polyline;
 import org.onepf.maps.yandexweb.model.UiSettings;
 import org.onepf.maps.yandexweb.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapDelegate;
@@ -147,8 +149,10 @@ public class YaWebMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFPolyline addPolyline(@NonNull final OPFPolylineOptions options) {
-        //todo implement
-        return null;
+        final Polyline polyline = ConvertUtils.convertPolylineOptions(map, options);
+
+        JSYandexMapProxy.addPolyline(map, polyline);
+        return new OPFPolyline(new YaWebPolylineDelegate(polyline));
     }
 
     @NonNull

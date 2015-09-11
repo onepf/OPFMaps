@@ -160,6 +160,23 @@
         geoObjectsByIds[id] = polygon;
     }
 
+    function addPolyline(id, points, color, width, zIndex, isVisible) {
+        var polyline = new ymaps.Polyline(points, {},
+                {
+                    hasBalloon: false,
+                    hasHint: false,
+                    openBalloonOnClick: false,
+                    strokeColor: color,
+                    strokeWidth: width,
+                    zIndex: zIndex,
+                    visible: isVisible
+                }
+        );
+
+        map.geoObjects.add(polyline);
+        geoObjectsByIds[id] = polyline;
+    }
+
     function hideBalloon(id) {
         var geoObject = geoObjectsByIds[id];
         geoObject.balloon.close();

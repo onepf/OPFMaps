@@ -25,6 +25,7 @@ import org.onepf.maps.yandexweb.model.Circle;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.Marker;
 import org.onepf.maps.yandexweb.model.Polygon;
+import org.onepf.maps.yandexweb.model.Polyline;
 import org.onepf.maps.yandexweb.model.YaWebMapOptions;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.model.OPFCameraPosition;
@@ -33,6 +34,7 @@ import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
+import org.onepf.opfmaps.model.OPFPolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,6 +166,25 @@ public final class ConvertUtils {
                 options.getFillColor(),
                 options.getStrokeColor(),
                 options.getStrokeWidth(),
+                options.getZIndex(),
+                options.isVisible()
+        );
+    }
+
+    @NonNull
+    public static Polyline convertPolylineOptions(@NonNull final WebView webView,
+                                                  @NonNull final OPFPolylineOptions options) {
+        final List<OPFLatLng> opfPoints = options.getPoints();
+        final List<LatLng> points = new ArrayList<>(opfPoints.size());
+        for (OPFLatLng opfPoint : opfPoints) {
+            points.add(new LatLng(opfPoint.getLat(), opfPoint.getLng()));
+        }
+
+        return new Polyline(
+                webView,
+                points,
+                options.getColor(),
+                options.getWidth(),
                 options.getZIndex(),
                 options.isVisible()
         );
