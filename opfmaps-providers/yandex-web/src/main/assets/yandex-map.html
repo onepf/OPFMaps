@@ -132,15 +132,32 @@
                     latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
             OnMarkerDragListener.onMarkerDragEnd(id, latLng[0], latLng[1]);
         });
-        marker.balloon.events.add('open', function() {
+        marker.balloon.events.add('open', function () {
             OnInfoWindowChangeListener.onOpen(id);
         });
-        marker.balloon.events.add('close', function() {
+        marker.balloon.events.add('close', function () {
             OnInfoWindowChangeListener.onClose(id);
         });
 
         map.geoObjects.add(marker);
         geoObjectsByIds[id] = marker;
+    }
+
+    function addPolygon(id, points, fillColor, strokeColor, strokeWidth, zIndex, isVisible) {
+        var polygon = new ymaps.Polygon(points, {},
+                {
+                    hasBalloon: false,
+                    hasHint: false,
+                    openBalloonOnClick: false,
+                    fillColor: fillColor,
+                    strokeColor: strokeColor,
+                    strokeWidth: strokeWidth,
+                    zIndex: zIndex,
+                    visible: isVisible
+                }
+        );
+        map.geoObjects.add(polygon);
+        geoObjectsByIds[id] = polygon;
     }
 
     function hideBalloon(id) {
@@ -178,9 +195,9 @@
         geoObject.properties.set(property, value);
     }
 
-    function setGeoObjectCoordinates(id, lat, lng) {
+    function setGeoObjectCoordinates(id, coordinates) {
         var geoObject = geoObjectsByIds[id];
-        geoObject.geometry.setCoordinates([lat, lng]);
+        geoObject.geometry.setCoordinates(coordinates);
     }
 
     function setCircleRadius(id, radius) {

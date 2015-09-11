@@ -37,18 +37,24 @@ import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
 import org.onepf.opfmaps.model.OPFBitmapDescriptorFactory;
 import org.onepf.opfmaps.model.OPFCameraPosition;
+import org.onepf.opfmaps.model.OPFCircle;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
+import org.onepf.opfmaps.model.OPFPolygon;
+import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfutils.OPFLog;
+
+import java.util.Arrays;
 
 public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
     //private OPFMapView mapView;
 
-    private OPFMarker marker;
+    private OPFPolygon polygon;
+    private OPFCircle circle;
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -102,7 +108,23 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
     }*/
 
     public void onButtonClick(final View view) {
-        Toast.makeText(this, "Info window shown : " + marker.isInfoWindowShown(), Toast.LENGTH_SHORT).show();
+        polygon.setPoints(Arrays.asList(new OPFLatLng(56.7597311265849, 37.71333884100602),
+                new OPFLatLng(56.70860754839525, 37.69927662137808),
+                new OPFLatLng(56.75862834496016, 37.513138401618356)));
+        polygon.setHoles(Arrays.asList(
+                Arrays.asList(
+                        new OPFLatLng(56.739139488175816, 37.586989729090135),
+                        new OPFLatLng(56.726197236786376, 37.7097639987773),
+                        new OPFLatLng(56.70969983952349, 37.70240624420652)
+
+                ),
+                Arrays.asList(
+                        new OPFLatLng(56.7522606417405, 37.645697095053656),
+                        new OPFLatLng(56.75133838313202, 37.66817936044419),
+                        new OPFLatLng(56.74298813628395, 37.6541842601019)
+                )
+        ));
+        circle.setCenter(new OPFLatLng(56.752004, 37.617017));
     }
 
     //CHECKSTYLE:OFF
@@ -123,14 +145,14 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         });
 
         //circle
-        opfMap.addCircle(new OPFCircleOptions()
+        circle = opfMap.addCircle(new OPFCircleOptions()
                 .center(new OPFLatLng(55.752004, 37.617017))
                 .radius(100000.0)
                 .fillColor(Color.CYAN)
-                .strokeColor(Color.BLUE));
+                .strokeColor(Color.BLUE).zIndex(1.0f));
 
         //markers
-        marker = opfMap.addMarker(new OPFMarkerOptions()
+        opfMap.addMarker(new OPFMarkerOptions()
                 .visible(true)
                 .position(new OPFLatLng(37.773975, -122.40205))
                 .title("marker #1")
@@ -242,6 +264,25 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 OPFLog.logMethod(position);
             }
         });
+
+        polygon = opfMap.addPolygon(new OPFPolygonOptions()
+                .add(
+                        new OPFLatLng(55.7597311265849, 37.71333884100602),
+                        new OPFLatLng(55.70860754839525, 37.69927662137808),
+                        new OPFLatLng(55.75862834496016, 37.513138401618356)
+                ).addHole(
+                        Arrays.asList(
+                                new OPFLatLng(55.739139488175816, 37.586989729090135),
+                                new OPFLatLng(55.726197236786376, 37.7097639987773),
+                                new OPFLatLng(55.70969983952349, 37.70240624420652)
+                        )
+                ).addHole(
+                        Arrays.asList(
+                                new OPFLatLng(55.7522606417405, 37.645697095053656),
+                                new OPFLatLng(55.75133838313202, 37.66817936044419),
+                                new OPFLatLng(55.74298813628395, 37.6541842601019)
+                        )
+                ).fillColor(Color.RED).strokeColor(Color.GREEN).strokeWidth(1.0f).zIndex(1.0f));
     }
     //CHECKSTYLE:ON
 }

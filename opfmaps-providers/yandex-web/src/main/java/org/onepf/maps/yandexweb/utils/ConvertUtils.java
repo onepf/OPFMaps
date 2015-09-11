@@ -17,14 +17,26 @@
 package org.onepf.maps.yandexweb.utils;
 
 import android.support.annotation.NonNull;
-
+import android.support.annotation.Nullable;
+import android.webkit.WebView;
 import org.onepf.maps.yandexweb.jsi.JSMapStateInjector;
 import org.onepf.maps.yandexweb.model.CameraPosition;
+import org.onepf.maps.yandexweb.model.Circle;
 import org.onepf.maps.yandexweb.model.LatLng;
+import org.onepf.maps.yandexweb.model.Marker;
+import org.onepf.maps.yandexweb.model.Polygon;
 import org.onepf.maps.yandexweb.model.YaWebMapOptions;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.model.OPFCameraPosition;
+import org.onepf.opfmaps.model.OPFCircleOptions;
+import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFMapType;
+import org.onepf.opfmaps.model.OPFMarkerOptions;
+import org.onepf.opfmaps.model.OPFPolygonOptions;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Roman Savin
@@ -87,112 +99,81 @@ public final class ConvertUtils {
     }
 
     @NonNull
+    public static Circle convertCircleOptions(@NonNull final WebView webView, @NonNull final OPFCircleOptions options) {
+        final OPFLatLng center = options.getCenter();
+        if (center == null) {
+            throw new IllegalArgumentException("Circle center can't be null");
+        }
+
+        return new Circle(
+                webView,
+                new LatLng(center.getLat(), center.getLng()),
+                options.getFillColor(),
+                options.getRadius(),
+                options.getStrokeColor(),
+                options.getStrokeWidth(),
+                options.getZIndex(),
+                options.isVisible()
+        );
+    }
+
+    @NonNull
+    public static Marker convertMarkerOptions(@NonNull final WebView webView,
+                                              @Nullable final Map<String, Marker> markersByIds,
+                                              @NonNull final OPFMarkerOptions options) {
+        final OPFLatLng position = options.getPosition();
+        if (position == null) {
+            throw new IllegalArgumentException("Marker position can't be null");
+        }
+
+        return new Marker(
+                webView,
+                markersByIds,
+                new LatLng(position.getLat(), position.getLng()),
+                options.getTitle(),
+                options.getSnippet(),
+                options.isDraggable(),
+                options.isVisible()
+        );
+    }
+
+    @NonNull
+    public static Polygon convertPolygonOptions(@NonNull final WebView webView,
+                                                @NonNull final OPFPolygonOptions options) {
+        final List<OPFLatLng> opfPoints = options.getPoints();
+        final List<LatLng> points = new ArrayList<>(opfPoints.size());
+        for (OPFLatLng opfPoint : opfPoints) {
+            points.add(new LatLng(opfPoint.getLat(), opfPoint.getLng()));
+        }
+
+        final List<List<OPFLatLng>> opfHoles = options.getHoles();
+        final List<List<LatLng>> holes = new ArrayList<>(opfHoles.size());
+        for (List<OPFLatLng> opfHole : opfHoles) {
+            final List<LatLng> hole = new ArrayList<>(opfHole.size());
+            for (OPFLatLng opfHolePoint : opfHole) {
+                hole.add(new LatLng(opfHolePoint.getLat(), opfHolePoint.getLng()));
+            }
+            holes.add(hole);
+        }
+
+
+        return new Polygon(
+                webView,
+                points,
+                holes,
+                options.getFillColor(),
+                options.getStrokeColor(),
+                options.getStrokeWidth(),
+                options.getZIndex(),
+                options.isVisible()
+        );
+    }
+
+    @NonNull
     public static String convertColor(final int color) {
         return String.format("#%06X", (0xFFFFFF & color));
     }
 
- /*
-    @NonNull
-    public static GroundOverlay convertGroundOverlayOptions(@NonNull final Context context,
-                                                            @NonNull final OPFGroundOverlayOptions options) {
-        final GroundOverlay groundOverlay = new GroundOverlay(context);
-        groundOverlay.setBearing(options.getBearing());
-        groundOverlay.setTransparency(options.getTransparency());
-
-        final OPFBitmapDescriptor opfBitmapDescriptor = options.getImage();
-        if (opfBitmapDescriptor != null) {
-            groundOverlay.setImage(((BitmapDescriptor) options.getImage()
-                    .getDelegate().getBitmapDescriptor()).createDrawable(context));
-        }
-
-        final OPFLatLng location = options.getLocation();
-        if (location != null) {
-            groundOverlay.setPosition(new LatLng(location.getLat(), location.getLng()));
-        }
-
-        return groundOverlay;
-    }
-
-    @NonNull
-    public static Marker convertMarkerOptions(@NonNull final MapView map, @NonNull final OPFMarkerOptions options) {
-        final Marker marker = new Marker(map);
-        marker.setAlpha(options.getAlpha());
-        marker.setAnchor(options.getAnchorU(), options.getAnchorV());
-        marker.setDraggable(options.isDraggable());
-        marker.setFlat(options.isFlat());
-        marker.setInfoWindowAnchor(options.getInfoWindowAnchorU(), options.getInfoWindowAnchorV());
-        marker.setRotation(options.getRotation());
-        marker.setSnippet(options.getSnippet());
-        marker.setTitle(options.getTitle());
-
-        final OPFBitmapDescriptor opfBitmapDescriptor = options.getIcon();
-        if (opfBitmapDescriptor != null) {
-            marker.setIcon(((BitmapDescriptor) options.getIcon()
-                    .getDelegate().getBitmapDescriptor()).createDrawable(map.getContext()));
-        }
-
-        final OPFLatLng position = options.getPosition();
-        if (position != null) {
-            marker.setPosition(new LatLng(position.getLat(), position.getLng()));
-        }
-
-        return marker;
-    }
-
-    @NonNull
-    public static Polygon convertPolygonOptions(@NonNull final Context context, @NonNull final OPFPolygonOptions options) {
-        final Polygon polygon = new Polygon(context);
-        polygon.setFillColor(options.getFillColor());
-        polygon.setStrokeColor(options.getStrokeColor());
-        polygon.setStrokeWidth(options.getStrokeWidth());
-        polygon.setVisible(options.isVisible());
-
-        final List<List<OPFLatLng>> opfHoles = options.getHoles();
-        if (!opfHoles.isEmpty()) {
-            final List<List<LatLng>> osmdroidHoles = new ArrayList<>(opfHoles.size());
-            for (List<OPFLatLng> hole : opfHoles) {
-                final List<LatLng> osmdroidHole = new ArrayList<>(hole.size());
-                for (OPFLatLng point : hole) {
-                    osmdroidHole.add(new LatLng(point.getLat(), point.getLng()));
-                }
-                osmdroidHoles.add(osmdroidHole);
-            }
-            polygon.setHoles(osmdroidHoles);
-        }
-
-        final List<OPFLatLng> opfPoints = options.getPoints();
-        if (!opfPoints.isEmpty()) {
-            final List<LatLng> osmdroidPoints = new ArrayList<>(opfPoints.size());
-            for (OPFLatLng point : opfPoints) {
-                osmdroidPoints.add(new LatLng(point.getLat(), point.getLng()));
-            }
-            polygon.setPoints(osmdroidPoints);
-        }
-
-        return polygon;
-    }
-
-    @NonNull
-    public static Polyline convertPolylineOptions(@NonNull final Context context,
-                                                  @NonNull final OPFPolylineOptions options) {
-        final Polyline polyline = new Polyline(context);
-        polyline.setColor(options.getColor());
-        polyline.setGeodesic(options.isGeodesic());
-        polyline.setVisible(options.isVisible());
-        polyline.setWidth(options.getWidth());
-
-        final List<OPFLatLng> opfPoints = options.getPoints();
-        if (!opfPoints.isEmpty()) {
-            final List<LatLng> points = new ArrayList<>(opfPoints.size());
-            for (OPFLatLng opfPoint : opfPoints) {
-                points.add(new LatLng(opfPoint.getLat(), opfPoint.getLng()));
-            }
-            polyline.setPoints(points);
-        }
-
-        return polyline;
-    }
-*/
     @NonNull
     public static String convertMapTypeToJs(@NonNull final OPFMapType type) {
         switch (type) {

@@ -20,17 +20,22 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import org.onepf.maps.yandexweb.delegate.model.YaWebCircleDelegate;
+import org.onepf.maps.yandexweb.delegate.model.YaWebGroundOverlayDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebIndoorBuildingDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebMarkerDelegate;
+import org.onepf.maps.yandexweb.delegate.model.YaWebPolygonDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebTileOverlayDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebUiSettingsDelegate;
 import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
 import org.onepf.maps.yandexweb.model.BitmapDescriptor;
 import org.onepf.maps.yandexweb.model.BitmapDescriptorFactory;
 import org.onepf.maps.yandexweb.model.Circle;
+import org.onepf.maps.yandexweb.model.GroundOverlay;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.Marker;
+import org.onepf.maps.yandexweb.model.Polygon;
 import org.onepf.maps.yandexweb.model.UiSettings;
+import org.onepf.maps.yandexweb.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapDelegate;
 import org.onepf.opfmaps.listener.OPFCancelableCallback;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
@@ -52,7 +57,6 @@ import org.onepf.opfmaps.model.OPFGroundOverlay;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFIndoorBuilding;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
-import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLocationSource;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
@@ -102,21 +106,7 @@ public class YaWebMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFCircle addCircle(@NonNull final OPFCircleOptions options) {
-        final OPFLatLng center = options.getCenter();
-        if (center == null) {
-            throw new IllegalArgumentException("Circle center can't be null");
-        }
-
-        final Circle circle = new Circle(
-                map,
-                new LatLng(center.getLat(), center.getLng()),
-                options.getFillColor(),
-                options.getRadius(),
-                options.getStrokeColor(),
-                options.getStrokeWidth(),
-                options.getZIndex(),
-                options.isVisible()
-        );
+        final Circle circle = ConvertUtils.convertCircleOptions(map, options);
 
         JSYandexMapProxy.addCircle(map, circle);
         return new OPFCircle(new YaWebCircleDelegate(circle));
@@ -125,31 +115,19 @@ public class YaWebMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFGroundOverlay addGroundOverlay(@NonNull final OPFGroundOverlayOptions options) {
-        //todo implement
-        return null;
+        OPFLog.logStubCall(options);
+        return new OPFGroundOverlay(new YaWebGroundOverlayDelegate(new GroundOverlay()));
     }
 
     @NonNull
     @Override
     public OPFMarker addMarker(@NonNull final OPFMarkerOptions options) {
-        final OPFLatLng position = options.getPosition();
-        if (position == null) {
-            throw new IllegalArgumentException("Marker position can't be null");
-        }
         final OPFBitmapDescriptor opfBitmapDescriptor = options.getIcon();
         final BitmapDescriptor bitmapDescriptor = opfBitmapDescriptor != null ?
                 (BitmapDescriptor) opfBitmapDescriptor.getDelegate().getBitmapDescriptor()
                 : BitmapDescriptorFactory.defaultMarker();
 
-        final Marker marker = new Marker(
-                map,
-                markersByIds,
-                new LatLng(position.getLat(), position.getLng()),
-                options.getTitle(),
-                options.getSnippet(),
-                options.isDraggable(),
-                options.isVisible()
-        );
+        final Marker marker = ConvertUtils.convertMarkerOptions(map, markersByIds, options);
 
         markersByIds.put(marker.getId(), marker);
 
@@ -160,8 +138,10 @@ public class YaWebMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFPolygon addPolygon(@NonNull final OPFPolygonOptions options) {
-        //todo implement
-        return null;
+        final Polygon polygon = ConvertUtils.convertPolygonOptions(map, options);
+
+        JSYandexMapProxy.addPolygon(map, polygon);
+        return new OPFPolygon(new YaWebPolygonDelegate(polygon));
     }
 
     @NonNull

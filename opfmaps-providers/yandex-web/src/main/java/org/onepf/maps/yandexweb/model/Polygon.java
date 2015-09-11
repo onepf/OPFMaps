@@ -18,8 +18,18 @@ package org.onepf.maps.yandexweb.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.webkit.WebView;
+import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
+import org.onepf.maps.yandexweb.utils.ConvertUtils;
+import org.onepf.opfutils.OPFLog;
 
 import java.util.List;
+
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.FILL_COLOR_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.STROKE_COLOR_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.STROKE_WIDTH_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.VISIBLE_OPTION;
+import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.Z_INDEX_OPTION;
 
 /**
  * @author Roman Savin
@@ -27,108 +37,135 @@ import java.util.List;
  */
 public final class Polygon {
 
-    Polygon() {
-        //todo implement
+    @Nullable
+    private WebView webView;
+    @NonNull
+    private final String id;
+    @NonNull
+    private List<LatLng> points;
+    @Nullable
+    private List<List<LatLng>> holes;
+    private int fillColor;
+    private int strokeColor;
+    private float strokeWidth;
+    private float zIndex;
+    private boolean isVisible;
+
+    public Polygon(@SuppressWarnings("NullableProblems") @NonNull final WebView webView,
+                   @NonNull final List<LatLng> points,
+                   @Nullable final List<List<LatLng>> holes,
+                   final int fillColor,
+                   final int strokeColor,
+                   final float strokeWidth,
+                   final float zIndex,
+                   final boolean isVisible) {
+        this.id = Integer.toString(hashCode());
+        this.webView = webView;
+        this.points = points;
+        this.holes = holes;
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
+        this.strokeWidth = strokeWidth;
+        this.zIndex = zIndex;
+        this.isVisible = isVisible;
     }
 
     @NonNull
     public String getId() {
-        //todo implement
-        return null;
+        return id;
     }
 
     public int getFillColor() {
-        //todo implement
-        return 0;
+        return fillColor;
     }
 
     @Nullable
     public List<List<LatLng>> getHoles() {
-        //todo implement
-        return null;
+        return holes;
     }
 
     @NonNull
     public List<LatLng> getPoints() {
-        //todo implement
-        return null;
+        return points;
     }
 
     public int getStrokeColor() {
-        //todo implement
-        return 0;
+        return strokeColor;
     }
 
     public float getStrokeWidth() {
-        //todo implement
-        return 0;
+        return strokeWidth;
     }
 
     public float getZIndex() {
-        //todo implement
-        return 0;
+        return zIndex;
     }
 
     public boolean isGeodesic() {
-        //todo implement
         return false;
     }
 
     public boolean isVisible() {
-        return false;
+        return isVisible;
     }
 
     public void remove() {
-        //todo implement
+        if (webView != null) {
+            JSYandexMapProxy.removeGeoObject(webView, id);
+            webView = null;
+        }
     }
 
     public void setFillColor(final int color) {
-        //todo implement
+        this.fillColor = color;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, FILL_COLOR_OPTION, ConvertUtils.convertColor(color));
+        }
     }
 
     public void setGeodesic(final boolean geodesic) {
-        //todo implement
+        OPFLog.logStubCall(geodesic);
     }
 
-    public void setHoles(@NonNull final List<? extends List<LatLng>> holes) {
-        //todo implement
+    public void setHoles(@NonNull final List<List<LatLng>> holes) {
+        this.holes = holes;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectCoordinates(webView, id, points, holes);
+        }
     }
 
     public void setPoints(@NonNull final List<LatLng> points) {
-        //todo implement
+        this.points = points;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectCoordinates(webView, id, points, holes);
+        }
     }
 
     public void setStrokeColor(final int color) {
-        //todo implement
+        this.strokeColor = color;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, STROKE_COLOR_OPTION, ConvertUtils.convertColor(color));
+        }
     }
 
     public void setStrokeWidth(final float width) {
-        //todo implement
+        this.strokeWidth = width;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, STROKE_WIDTH_OPTION, width);
+        }
     }
 
     public void setVisible(final boolean visible) {
-        //todo implement
+        this.isVisible = visible;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, VISIBLE_OPTION, visible);
+        }
     }
 
     public void setZIndex(final float zIndex) {
-        //todo implement
-    }
-
-    @Override
-    public String toString() {
-        //todo implement
-        return super.toString();
-    }
-
-    @Override
-    public int hashCode() {
-        //todo implement
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        //todo implement
-        return super.equals(other);
+        this.zIndex = zIndex;
+        if (webView != null) {
+            JSYandexMapProxy.setGeoObjectOption(webView, id, Z_INDEX_OPTION, zIndex);
+        }
     }
 }

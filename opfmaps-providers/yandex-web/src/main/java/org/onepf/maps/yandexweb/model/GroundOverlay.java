@@ -17,6 +17,7 @@
 package org.onepf.maps.yandexweb.model;
 
 import android.support.annotation.NonNull;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -24,112 +25,82 @@ import android.support.annotation.NonNull;
  */
 public final class GroundOverlay {
 
-    GroundOverlay() {
-        //todo implement
-    }
-
     public float getBearing() {
         return 0;
     }
 
     @NonNull
     public String getId() {
-        //todo implement
-        return null;
+        return "";
     }
 
     @NonNull
     public LatLngBounds getBounds() {
-        //todo implement
-        return null;
+        return new LatLngBounds(new LatLng(0, 0), new LatLng(0, 0));
     }
 
     public float getHeight() {
-        //todo implement
         return 0;
     }
 
     @NonNull
     public LatLng getPosition() {
-        //todo implement
-        return null;
+        return new LatLng(0, 0);
     }
 
     public float getTransparency() {
-        //todo implement
         return 0;
     }
 
     public float getWidth() {
-        //todo implement
         return 0;
     }
 
     public float getZIndex() {
-        //todo implement
         return 0;
     }
 
     public boolean isVisible() {
-        //todo implement
         return false;
     }
 
     public void remove() {
-        //todo implement
+        OPFLog.logStubCall();
     }
 
     public void setBearing(final float bearing) {
-        //todo implement
+        OPFLog.logStubCall(bearing);
     }
 
     public void setDimensions(final float width) {
-        //todo implement
+        OPFLog.logStubCall(width);
     }
 
     public void setDimensions(final float width, final float height) {
-        //todo implement
+        OPFLog.logStubCall(width, height);
     }
 
     public void setImage(@NonNull final BitmapDescriptor image) {
-        //todo implement
+        OPFLog.logStubCall(image);
     }
 
     public void setPosition(@NonNull final LatLng latLng) {
-        //todo implement
+        OPFLog.logStubCall(latLng);
     }
 
     public void setPositionFromBounds(@NonNull final LatLngBounds bounds) {
-        //todo implement
+        OPFLog.logStubCall(bounds);
     }
 
     public void setTransparency(final float transparency) {
-        //todo implement
+        OPFLog.logStubCall(transparency);
     }
 
     public void setVisible(final boolean visible) {
-        //todo implement
+        OPFLog.logStubCall(visible);
     }
 
     public void setZIndex(final float zIndex) {
-        //todo implement
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        //todo implement
-        return super.equals(other);
-    }
-
-    @Override
-    public int hashCode() {
-        //todo implement
-        return super.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        //todo implement
-        return super.toString();
+        OPFLog.logStubCall(zIndex);
     }
 }
