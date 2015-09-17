@@ -58,6 +58,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
     private OPFPolygon polygon;
     private OPFCircle circle;
     private OPFPolyline polyline;
+    private OPFMap opfMap;
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -135,6 +136,8 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 new OPFLatLng(56.830126194643654, 38.90446672723731)
         ));
         polyline.setColor(Color.YELLOW);
+
+        opfMap.setTrafficEnabled(!opfMap.isTrafficEnabled());
     }
 
     //CHECKSTYLE:OFF
@@ -142,6 +145,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull final OPFMap opfMap) {
         OPFLog.logMethod(opfMap);
+        this.opfMap = opfMap;
 
         opfMap.setMyLocationEnabled(true);
         opfMap.setBuildingsEnabled(true);
@@ -227,6 +231,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             public void onMapLongClick(@NonNull final OPFLatLng latLng) {
                 OPFLog.logMethod(latLng);
                 Toast.makeText(MainActivity.this, "Map long click position : " + latLng, Toast.LENGTH_SHORT).show();
+                opfMap.addMarker(new OPFMarkerOptions().position(latLng));
             }
         });
 
@@ -267,6 +272,14 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 final TextView snippet = (TextView) inflate.findViewById(R.id.snippet);
                 snippet.setText(marker.getSnippet());
                 return inflate;
+            }
+        });
+
+        opfMap.setOnMyLocationButtonClickListener(new OPFOnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                Toast.makeText(MainActivity.this, "My location button click", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 

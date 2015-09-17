@@ -30,7 +30,8 @@
             lastLocationGeoObjects,
             isZoomControlsEnabled = ZOOM_CONTROLS_ENABLED_STUB,
             isMyLocationEnabled = MY_LOCATION_ENABLED_STUB,
-            isMyLocationButtonEnabled = MY_LOCATION_BUTTON_ENABLED_STUB;
+            isMyLocationButtonEnabled = MY_LOCATION_BUTTON_ENABLED_STUB,
+            trafficControl;
 
     function init() {
         map = new ymaps.Map(
@@ -47,6 +48,15 @@
                 }
         );
         map.container.enterFullscreen();
+
+        trafficControl = map.controls.get('trafficControl');
+        trafficControl.events.add('showtraffic', function () {
+            OnTrafficVisibilityChangeListener.onTrafficShow();
+        });
+
+        trafficControl.events.add('hidetraffic', function () {
+            OnTrafficVisibilityChangeListener.onTrafficHide();
+        });
 
         if (isZoomControlsEnabled === false) {
             map.controls.remove('zoomControl')
@@ -93,7 +103,6 @@
         var offsets = getOffsets();
         OnMapReadyCallback.onMapReady(offsets[0], offsets[1]);
     }
-
 
     function getOffsets() {
         var projection = map.options.get('projection'),
@@ -287,6 +296,11 @@
     function setControlEnabled(controlName, isEnabled) {
         if (isEnabled) {
             map.controls.add(controlName);
+            if (controlName === 'geolocationControl') {
+                map.controls.get('geolocationControl').events.add('click', function () {
+                    OnMyLocationButtonClickListener.onMyLocationButtonClick();
+                });
+            }
         } else {
             map.controls.remove(controlName);
         }
@@ -314,6 +328,14 @@
     function clearMap() {
         geoObjectsByIds = [];
         map.geoObjects.removeAll();
+    }
+
+    function setTrafficEnabled(enabled) {
+        if (enabled == true) {
+            trafficControl.showTraffic();
+        } else {
+            trafficControl.hideTraffic();
+        }
     }
 </script>
 </body>

@@ -17,11 +17,13 @@
 package org.onepf.maps.yandexweb.delegate;
 
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import org.onepf.maps.yandexweb.delegate.model.YaWebCameraPositionDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebCircleDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebGroundOverlayDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebIndoorBuildingDelegate;
@@ -35,6 +37,7 @@ import org.onepf.maps.yandexweb.delegate.model.YaWebUiSettingsDelegate;
 import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
 import org.onepf.maps.yandexweb.model.BitmapDescriptor;
 import org.onepf.maps.yandexweb.model.BitmapDescriptorFactory;
+import org.onepf.maps.yandexweb.model.CameraPosition;
 import org.onepf.maps.yandexweb.model.CameraUpdate;
 import org.onepf.maps.yandexweb.model.Circle;
 import org.onepf.maps.yandexweb.model.GroundOverlay;
@@ -102,12 +105,16 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Nullable
     private OPFOnMarkerClickListener opfOnMarkerClickListener;
-
     @Nullable
     private OPFOnMarkerDragListener opfOnMarkerDragListener;
-
     @Nullable
     private OPFOnMapClickListener opfOnMapClickListener;
+    @Nullable
+    private OPFOnCameraChangeListener opfOnCameraChangeListener;
+    @Nullable
+    private OPFOnMapLongClickListener opfOnMapLongClickListener;
+    @Nullable
+    private OPFOnMyLocationButtonClickListener opfOnMyLocationButtonClickListener;
 
     @Nullable
     private Marker currentDragMarker;
@@ -201,8 +208,9 @@ public class YaWebMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFCameraPosition getCameraPosition() {
-        //todo implement
-        return null;
+        return new OPFCameraPosition(new YaWebCameraPositionDelegate(
+                CameraPosition.fromLatLngZoom(map.getCenter(), map.getZoomLevel())
+        ));
     }
 
     @NonNull
@@ -261,7 +269,7 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public boolean isTrafficEnabled() {
-        return false;
+        return map.isTrafficEnabled();
     }
 
     @Override
@@ -349,8 +357,7 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void setOnCameraChangeListener(@NonNull final OPFOnCameraChangeListener listener) {
-        //todo implement
-        OPFLog.logStubCall(listener);
+        this.opfOnCameraChangeListener = listener;
     }
 
     @Override
@@ -360,7 +367,7 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void setOnInfoWindowClickListener(@NonNull final OPFOnInfoWindowClickListener listener) {
-        //todo implement
+        OPFLog.logStubCall(listener);
     }
 
     @Override
@@ -375,7 +382,7 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener listener) {
-        //todo implement
+        this.opfOnMapLongClickListener = listener;
     }
 
     @Override
@@ -390,17 +397,17 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void setOnMyLocationButtonClickListener(@NonNull final OPFOnMyLocationButtonClickListener listener) {
-        //todo implement
+        this.opfOnMyLocationButtonClickListener = listener;
     }
 
     @Override
     public void setPadding(final int left, final int top, final int right, final int bottom) {
-        //todo implement
+        OPFLog.logStubCall(left, top, right, bottom);
     }
 
     @Override
     public void setTrafficEnabled(final boolean enabled) {
-        //todo implement
+        JSYandexMapProxy.setTrafficEnabled(map, enabled);
     }
 
     @Override
@@ -490,6 +497,25 @@ public class YaWebMapDelegate implements MapDelegate {
     void onMapClick(@NonNull final LatLng latLng) {
         if (opfOnMapClickListener != null) {
             opfOnMapClickListener.onMapClick(new OPFLatLng(new YaWebLatLngDelegate(latLng)));
+        }
+    }
+
+    void onCameraChange(@NonNull final CameraPosition cameraPosition) {
+        if (opfOnCameraChangeListener != null) {
+            opfOnCameraChangeListener.onCameraChange(new OPFCameraPosition(new YaWebCameraPositionDelegate(cameraPosition)));
+        }
+    }
+
+    void onLongPress(final Point point) {
+        if (opfOnMapLongClickListener != null && projection != null) {
+            final LatLng latLng = projection.fromScreenLocation(point);
+            opfOnMapLongClickListener.onMapLongClick(new OPFLatLng(new YaWebLatLngDelegate(latLng)));
+        }
+    }
+
+    void onMyLocationButtonClick() {
+        if (opfOnMyLocationButtonClickListener != null) {
+            opfOnMyLocationButtonClickListener.onMyLocationButtonClick();
         }
     }
 

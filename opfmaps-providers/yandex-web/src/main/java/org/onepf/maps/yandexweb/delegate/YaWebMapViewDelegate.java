@@ -24,6 +24,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -36,6 +37,8 @@ import org.onepf.maps.yandexweb.jsi.JSIOnMapReadyCallback;
 import org.onepf.maps.yandexweb.jsi.JSIOnMapTypeChangeListener;
 import org.onepf.maps.yandexweb.jsi.JSIOnMarkerClickListener;
 import org.onepf.maps.yandexweb.jsi.JSIOnMarkerDragListener;
+import org.onepf.maps.yandexweb.jsi.JSIOnMyLocationButtonClickListener;
+import org.onepf.maps.yandexweb.jsi.JSIOnTrafficVisibilityChangeListener;
 import org.onepf.maps.yandexweb.jsi.JSMapStateInjector;
 import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
 import org.onepf.maps.yandexweb.listener.OnCameraChangeListener;
@@ -45,6 +48,8 @@ import org.onepf.maps.yandexweb.listener.OnMapReadyCallback;
 import org.onepf.maps.yandexweb.listener.OnMapTypeChangeListener;
 import org.onepf.maps.yandexweb.listener.OnMarkerClickListener;
 import org.onepf.maps.yandexweb.listener.OnMarkerDragListener;
+import org.onepf.maps.yandexweb.listener.OnMyLocationButtonClickListener;
+import org.onepf.maps.yandexweb.listener.OnTrafficVisibilityChangeListener;
 import org.onepf.maps.yandexweb.model.CameraPosition;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.YaWebMapOptions;
@@ -68,7 +73,7 @@ import java.io.InputStreamReader;
 public class YaWebMapViewDelegate extends WebView
         implements MapViewDelegate, OnMapReadyCallback, OnCameraChangeListener,
         OnMapTypeChangeListener, OnMarkerClickListener, OnMarkerDragListener, OnInfoWindowChangeListener,
-        OnMapClickListener {
+        OnMapClickListener, OnMyLocationButtonClickListener, OnTrafficVisibilityChangeListener {
 
     private static final String MAP_HTML_FILE_NAME = "yandex-map.html";
 
@@ -79,6 +84,8 @@ public class YaWebMapViewDelegate extends WebView
 
     @Nullable
     private YaWebMapDelegate yaWebMapDelegate;
+    @Nullable
+    private GestureDetector gestureDetector;
 
     @Nullable
     private final YaWebMapOptions options;
@@ -89,6 +96,8 @@ public class YaWebMapViewDelegate extends WebView
     private Bundle savedInstanceState;
     private boolean needLoad;
     private boolean isCreated;
+
+    private boolean isTrafficEnabled;
 
     public YaWebMapViewDelegate(final Context context) {
         this(context, null);
@@ -121,6 +130,10 @@ public class YaWebMapViewDelegate extends WebView
         addJavascriptInterface(new JSIOnMarkerDragListener(this), JSIOnMarkerDragListener.JS_INTERFACE_NAME);
         addJavascriptInterface(new JSIOnInfoWindowChangeListener(this), JSIOnInfoWindowChangeListener.JS_INTERFACE_NAME);
         addJavascriptInterface(new JSIOnMapClickListener(this), JSIOnMapClickListener.JS_INTERFACE_NAME);
+        addJavascriptInterface(new JSIOnMyLocationButtonClickListener(this), JSIOnMyLocationButtonClickListener.JS_INTERFACE_NAME);
+        addJavascriptInterface(new JSIOnTrafficVisibilityChangeListener(this), JSIOnTrafficVisibilityChangeListener.JS_INTERFACE_NAME);
+
+        gestureDetector = new GestureDetector(getContext(), new OnLongPressGestureListener());
 
         isCreated = true;
         if (needLoad) {
@@ -135,6 +148,7 @@ public class YaWebMapViewDelegate extends WebView
         onMapReadyCallback = null;
         savedInstanceState = null;
         yaWebMapDelegate = null;
+        gestureDetector = null;
 
         removeJavascriptInterface(JSIOnCameraChangeListener.JS_INTERFACE_NAME);
         removeJavascriptInterface(JSIOnMapTypeChangeListener.JS_INTERFACE_NAME);
@@ -142,6 +156,8 @@ public class YaWebMapViewDelegate extends WebView
         removeJavascriptInterface(JSIOnMarkerDragListener.JS_INTERFACE_NAME);
         removeJavascriptInterface(JSIOnInfoWindowChangeListener.JS_INTERFACE_NAME);
         removeJavascriptInterface(JSIOnMapClickListener.JS_INTERFACE_NAME);
+        removeJavascriptInterface(JSIOnMyLocationButtonClickListener.JS_INTERFACE_NAME);
+        removeJavascriptInterface(JSIOnTrafficVisibilityChangeListener.JS_INTERFACE_NAME);
     }
 
     @Override
@@ -168,7 +184,6 @@ public class YaWebMapViewDelegate extends WebView
             removeJavascriptInterface(JSIOnMapReadyCallback.JS_INTERFACE_NAME);
             onMapReadyCallback = null;
 
-
             //TODO: remove after fixing Projection on big zoom levels.
             setOnTouchListener(new OnTouchListener() {
                 @Override
@@ -193,6 +208,7 @@ public class YaWebMapViewDelegate extends WebView
         mapState.setZoomLevel(cameraPosition.getZoom());
 
         if (yaWebMapDelegate != null) {
+            yaWebMapDelegate.onCameraChange(cameraPosition);
             yaWebMapDelegate.updateProjectionZoomLevel(getZoomLevel(), offsetX, offsetY);
         }
     }
@@ -256,6 +272,31 @@ public class YaWebMapViewDelegate extends WebView
         }
     }
 
+    @Override
+    public boolean onTouchEvent(final MotionEvent event) {
+        if (gestureDetector != null) {
+            gestureDetector.onTouchEvent(event);
+        }
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void onMyLocationButtonClick() {
+        if (yaWebMapDelegate != null) {
+            yaWebMapDelegate.onMyLocationButtonClick();
+        }
+    }
+
+    @Override
+    public void onTrafficShow() {
+        this.isTrafficEnabled = true;
+    }
+
+    @Override
+    public void onTrafficHide() {
+        this.isTrafficEnabled = false;
+    }
+
     @NonNull
     public OPFMapType getMapType() {
         return mapState.getMapType();
@@ -288,6 +329,10 @@ public class YaWebMapViewDelegate extends WebView
 
     public boolean isZoomGesturesEnabled() {
         return mapState.isZoomGesturesEnabled();
+    }
+
+    public boolean isTrafficEnabled() {
+        return isTrafficEnabled;
     }
 
     public void setMapType(@NonNull final OPFMapType mapType) {
@@ -519,6 +564,21 @@ public class YaWebMapViewDelegate extends WebView
 
         private void setIsMyLocationButtonEnabled(final boolean isMyLocationButtonEnabled) {
             this.isMyLocationButtonEnabled = isMyLocationButtonEnabled;
+        }
+    }
+
+    private final class OnLongPressGestureListener extends GestureDetector.SimpleOnGestureListener{
+
+        @Override
+        public boolean onDown(final MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public void onLongPress(final MotionEvent e) {
+            if (yaWebMapDelegate != null) {
+                yaWebMapDelegate.onLongPress(new Point((int) e.getX(), (int) e.getY()));
+            }
         }
     }
 }

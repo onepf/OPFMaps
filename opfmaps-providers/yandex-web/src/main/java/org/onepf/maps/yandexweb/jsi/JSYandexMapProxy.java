@@ -70,6 +70,7 @@ public final class JSYandexMapProxy {
     private static final String SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME = "setGeoObjectCoordinates";
     private static final String SET_CIRCLE_RADIUS_FUNCTION_NAME = "setCircleRadius";
     private static final String CLEAR_MAP_FUNCTION_NAME = "clearMap";
+    private static final String SET_TRAFFIC_ENABLED_FUNCTION_NAME = "setTrafficEnabled";
 
     private JSYandexMapProxy() {
         throw new UnsupportedOperationException();
@@ -270,6 +271,10 @@ public final class JSYandexMapProxy {
 
     public static void clearMap(@NonNull final WebView webView) {
         evaluateJSFunctionAsync(webView, null, CLEAR_MAP_FUNCTION_NAME);
+    }
+
+    public static void setTrafficEnabled(@NonNull final WebView webView, final boolean isEnabled) {
+        evaluateJSFunctionAsync(webView, null, SET_TRAFFIC_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
     }
 
     private static void setGeoObjectOptionFormatted(@NonNull final WebView webView,
