@@ -17,16 +17,21 @@
 package org.onepf.maps.yandexweb.delegate;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.MotionEvent;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import org.onepf.maps.yandexweb.jsi.JSIOnCameraChangeListener;
 import org.onepf.maps.yandexweb.jsi.JSIOnInfoWindowChangeListener;
+import org.onepf.maps.yandexweb.jsi.JSIOnMapClickListener;
 import org.onepf.maps.yandexweb.jsi.JSIOnMapReadyCallback;
 import org.onepf.maps.yandexweb.jsi.JSIOnMapTypeChangeListener;
 import org.onepf.maps.yandexweb.jsi.JSIOnMarkerClickListener;
@@ -35,6 +40,7 @@ import org.onepf.maps.yandexweb.jsi.JSMapStateInjector;
 import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
 import org.onepf.maps.yandexweb.listener.OnCameraChangeListener;
 import org.onepf.maps.yandexweb.listener.OnInfoWindowChangeListener;
+import org.onepf.maps.yandexweb.listener.OnMapClickListener;
 import org.onepf.maps.yandexweb.listener.OnMapReadyCallback;
 import org.onepf.maps.yandexweb.listener.OnMapTypeChangeListener;
 import org.onepf.maps.yandexweb.listener.OnMarkerClickListener;
@@ -45,7 +51,9 @@ import org.onepf.maps.yandexweb.model.YaWebMapOptions;
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
+import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFMapType;
+import org.onepf.opfmaps.model.OPFProjection;
 import org.onepf.opfutils.OPFLog;
 
 import java.io.BufferedReader;
@@ -59,7 +67,8 @@ import java.io.InputStreamReader;
  */
 public class YaWebMapViewDelegate extends WebView
         implements MapViewDelegate, OnMapReadyCallback, OnCameraChangeListener,
-        OnMapTypeChangeListener, OnMarkerClickListener, OnMarkerDragListener, OnInfoWindowChangeListener {
+        OnMapTypeChangeListener, OnMarkerClickListener, OnMarkerDragListener, OnInfoWindowChangeListener,
+        OnMapClickListener {
 
     private static final String MAP_HTML_FILE_NAME = "yandex-map.html";
 
@@ -111,6 +120,7 @@ public class YaWebMapViewDelegate extends WebView
         addJavascriptInterface(new JSIOnMarkerClickListener(this), JSIOnMarkerClickListener.JS_INTERFACE_NAME);
         addJavascriptInterface(new JSIOnMarkerDragListener(this), JSIOnMarkerDragListener.JS_INTERFACE_NAME);
         addJavascriptInterface(new JSIOnInfoWindowChangeListener(this), JSIOnInfoWindowChangeListener.JS_INTERFACE_NAME);
+        addJavascriptInterface(new JSIOnMapClickListener(this), JSIOnMapClickListener.JS_INTERFACE_NAME);
 
         isCreated = true;
         if (needLoad) {
@@ -131,6 +141,7 @@ public class YaWebMapViewDelegate extends WebView
         removeJavascriptInterface(JSIOnMarkerClickListener.JS_INTERFACE_NAME);
         removeJavascriptInterface(JSIOnMarkerDragListener.JS_INTERFACE_NAME);
         removeJavascriptInterface(JSIOnInfoWindowChangeListener.JS_INTERFACE_NAME);
+        removeJavascriptInterface(JSIOnMapClickListener.JS_INTERFACE_NAME);
     }
 
     @Override
@@ -148,21 +159,42 @@ public class YaWebMapViewDelegate extends WebView
     }
 
     @Override
-    public void onMapReady() {
+    public void onMapReady(final double offsetX, final double offsetY) {
         if (onMapReadyCallback != null) {
             yaWebMapDelegate = new YaWebMapDelegate(this);
+            yaWebMapDelegate.initProjection(new Rect(0, 0, getWidth(), getHeight()), getZoomLevel(), offsetX, offsetY);
             onMapReadyCallback.onMapReady(new OPFMap(yaWebMapDelegate));
 
             removeJavascriptInterface(JSIOnMapReadyCallback.JS_INTERFACE_NAME);
             onMapReadyCallback = null;
+
+
+            //TODO: remove after fixing Projection on big zoom levels.
+            setOnTouchListener(new OnTouchListener() {
+                @Override
+                public boolean onTouch(final View v, final MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        final OPFProjection projection = yaWebMapDelegate.getProjection();
+                        final int x = (int) event.getX();
+                        final int y = (int) event.getY();
+                        final OPFLatLng latLng = projection.fromScreenLocation(new Point(x, y));
+                        OPFLog.d("x = %s, y = %s, lat = %s, lng = %s", x, y, latLng.getLat(), latLng.getLng());
+                    }
+                    return false;
+                }
+            });
         }
     }
 
     @Override
-    public void onCameraChange(@NonNull final CameraPosition cameraPosition) {
+    public void onCameraChange(@NonNull final CameraPosition cameraPosition, final double offsetX, final double offsetY) {
         OPFLog.logMethod(cameraPosition);
         mapState.setCenter(cameraPosition.getTarget());
         mapState.setZoomLevel(cameraPosition.getZoom());
+
+        if (yaWebMapDelegate != null) {
+            yaWebMapDelegate.updateProjectionZoomLevel(getZoomLevel(), offsetX, offsetY);
+        }
     }
 
     @Override
@@ -214,6 +246,13 @@ public class YaWebMapViewDelegate extends WebView
     public void onInfoWindowClose(final String markerId) {
         if (yaWebMapDelegate != null) {
             yaWebMapDelegate.onInfoWindowClose(markerId);
+        }
+    }
+
+    @Override
+    public void onMapClick(final LatLng latLng) {
+        if (yaWebMapDelegate != null) {
+            yaWebMapDelegate.onMapClick(latLng);
         }
     }
 
@@ -316,7 +355,11 @@ public class YaWebMapViewDelegate extends WebView
             final CameraPosition cameraPosition = options.getCamera();
             if (cameraPosition != null) {
                 mapState.setCenter(cameraPosition.getTarget());
-                mapState.setZoomLevel(cameraPosition.getZoom());
+
+                float zoom = cameraPosition.getZoom();
+                zoom = zoom < YaWebMapDelegate.MIN_ZOOM_LEVEL ? YaWebMapDelegate.MIN_ZOOM_LEVEL
+                        : zoom > YaWebMapDelegate.MAX_ZOOM_LEVEL ? YaWebMapDelegate.MAX_ZOOM_LEVEL : zoom;
+                mapState.setZoomLevel(zoom);
             }
 
             mapState.setIsZoomControlsEnabled(options.getZoomControlsEnabled() == null ? true : options.getZoomControlsEnabled());

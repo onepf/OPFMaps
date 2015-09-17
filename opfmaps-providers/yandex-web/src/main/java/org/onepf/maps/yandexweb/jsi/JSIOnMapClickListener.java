@@ -20,34 +20,33 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.webkit.JavascriptInterface;
-import org.onepf.maps.yandexweb.listener.OnCameraChangeListener;
-import org.onepf.maps.yandexweb.model.CameraPosition;
+import org.onepf.maps.yandexweb.listener.OnMapClickListener;
 import org.onepf.maps.yandexweb.model.LatLng;
 
 /**
  * @author Roman Savin
- * @since 08.09.2015
+ * @since 15.09.2015
  */
-public final class JSIOnCameraChangeListener {
+public final class JSIOnMapClickListener {
 
-    public final static String JS_INTERFACE_NAME = "OnCameraChangeListener";
+    public static final String JS_INTERFACE_NAME = "OnMapClickListener";
 
     @NonNull
-    private final OnCameraChangeListener listener;
+    private final OnMapClickListener listener;
 
     @NonNull
     private final Handler handler = new Handler(Looper.getMainLooper());
 
-    public JSIOnCameraChangeListener(@NonNull final OnCameraChangeListener listener) {
+    public JSIOnMapClickListener(@NonNull final OnMapClickListener listener) {
         this.listener = listener;
     }
 
     @JavascriptInterface
-    public void onCameraChange(final double lat, final double lng, final float zoom, final double offsetX, final double offsetY) {
+    public void onMapClick(final double lat, final double lng) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                listener.onCameraChange(CameraPosition.fromLatLngZoom(new LatLng(lat, lng), zoom), offsetX, offsetY);
+                listener.onMapClick(new LatLng(lat, lng));
             }
         });
     }

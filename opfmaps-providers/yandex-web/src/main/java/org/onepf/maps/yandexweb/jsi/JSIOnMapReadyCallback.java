@@ -41,11 +41,11 @@ public final class JSIOnMapReadyCallback {
     }
 
     @JavascriptInterface
-    public void onMapReady() {
+    public void onMapReady(final double offsetX, final double offsetY) {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                callback.onMapReady();
+                callback.onMapReady(offsetX, offsetY);
             }
         });
     }

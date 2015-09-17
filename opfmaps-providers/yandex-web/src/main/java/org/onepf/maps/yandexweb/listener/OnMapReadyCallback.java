@@ -22,5 +22,5 @@ package org.onepf.maps.yandexweb.listener;
  */
 public interface OnMapReadyCallback {
 
-    void onMapReady();
+    void onMapReady(final double offsetX, final double offsetY);
 }

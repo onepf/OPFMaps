@@ -18,13 +18,13 @@ package org.onepf.multimapsexample;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapFragment;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
@@ -217,6 +217,8 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             public void onMapClick(@NonNull final OPFLatLng latLng) {
                 OPFLog.logMethod(latLng);
                 Toast.makeText(MainActivity.this, "Map click position : " + latLng, Toast.LENGTH_SHORT).show();
+                final Point point = opfMap.getProjection().toScreenLocation(latLng);
+                OPFLog.d("clickX = %s, clickY = %s", point.x, point.y);
             }
         });
 

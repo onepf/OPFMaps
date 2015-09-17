@@ -26,8 +26,6 @@ import org.onepf.opfutils.OPFLog;
  */
 public final class IndoorLevel {
 
-    //todo implement
-
     public void activate() {
         OPFLog.logStubCall();
     }

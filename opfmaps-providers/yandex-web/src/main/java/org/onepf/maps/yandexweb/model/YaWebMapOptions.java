@@ -69,7 +69,7 @@ public final class YaWebMapOptions implements Parcelable {
 
     @NonNull
     public YaWebMapOptions zOrderOnTop(final boolean zOrderOnTop) {
-        //todo implement
+        OPFLog.logStubCall(zOrderOnTop);
         return this;
     }
 
@@ -141,7 +141,6 @@ public final class YaWebMapOptions implements Parcelable {
 
     @Nullable
     public Boolean getZOrderOnTop() {
-        //todo implement
         return false;
     }
 

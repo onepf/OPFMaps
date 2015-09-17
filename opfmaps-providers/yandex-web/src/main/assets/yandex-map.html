@@ -48,7 +48,6 @@
         );
         map.container.enterFullscreen();
 
-
         if (isZoomControlsEnabled === false) {
             map.controls.remove('zoomControl')
         }
@@ -62,25 +61,46 @@
         }
 
         map.events.add('actionbreak', function () {
-            var center = map.getCenter();
-            OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom());
+            var center = map.getCenter(),
+                    offsets = getOffsets();
+            OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom(), offsets[0], offsets[1]);
         });
 
         map.events.add('actionend', function () {
-            var center = map.getCenter();
-            OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom());
+            var center = map.getCenter(),
+                    offsets = getOffsets();
+            OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom(), offsets[0], offsets[1]);
         });
 
         map.events.add('sizechange', function () {
-            var center = map.getCenter();
-            OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom());
+            var center = map.getCenter(),
+                    offsets = getOffsets();
+            OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom(), offsets[0], offsets[1]);
         });
 
         map.events.add('typechange', function () {
             OnMapTypeChangeListener.onTypeChange(map.getType());
         });
 
-        OnMapReadyCallback.onMapReady();
+        map.events.add('click', function (event) {
+            var position = event.get('position'),
+                    projection = map.options.get('projection'),
+                    latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
+
+            OnMapClickListener.onMapClick(latLng[0], latLng[1]);
+        });
+
+        var offsets = getOffsets();
+        OnMapReadyCallback.onMapReady(offsets[0], offsets[1]);
+    }
+
+
+    function getOffsets() {
+        var projection = map.options.get('projection'),
+                centerInPixels = projection.toGlobalPixels([0, 0], map.getZoom()),
+                currentCenterInPixels = map.getGlobalPixelCenter();
+
+        return [centerInPixels[0] - currentCenterInPixels[0], centerInPixels[1] - currentCenterInPixels[1]];
     }
 
     function addCircle(id, lat, lng, radius, fillColor, strokeColor, strokeWidth, zIndex, isVisible) {

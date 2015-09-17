@@ -28,8 +28,6 @@ import java.util.List;
  */
 public final class IndoorBuilding {
 
-    //todo implement
-
     public int getActiveLevelIndex() {
         OPFLog.logStubCall();
         return 0;

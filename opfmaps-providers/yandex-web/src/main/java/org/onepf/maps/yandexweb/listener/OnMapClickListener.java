@@ -16,14 +16,13 @@
 
 package org.onepf.maps.yandexweb.listener;
 
-import android.support.annotation.NonNull;
-import org.onepf.maps.yandexweb.model.CameraPosition;
+import org.onepf.maps.yandexweb.model.LatLng;
 
 /**
  * @author Roman Savin
- * @since 08.09.2015
+ * @since 15.09.2015
  */
-public interface OnCameraChangeListener {
+public interface OnMapClickListener {
 
-    void onCameraChange(@NonNull final CameraPosition cameraPosition, final double offsetX, final double offsetY);
+    void onMapClick(final LatLng latLng);
 }

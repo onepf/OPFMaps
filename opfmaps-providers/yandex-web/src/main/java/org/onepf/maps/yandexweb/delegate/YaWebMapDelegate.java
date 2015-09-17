@@ -17,25 +17,32 @@
 package org.onepf.maps.yandexweb.delegate;
 
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import org.onepf.maps.yandexweb.delegate.model.YaWebCircleDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebGroundOverlayDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebIndoorBuildingDelegate;
+import org.onepf.maps.yandexweb.delegate.model.YaWebLatLngDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebMarkerDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebPolygonDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebPolylineDelegate;
+import org.onepf.maps.yandexweb.delegate.model.YaWebProjectionDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebTileOverlayDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebUiSettingsDelegate;
 import org.onepf.maps.yandexweb.jsi.JSYandexMapProxy;
 import org.onepf.maps.yandexweb.model.BitmapDescriptor;
 import org.onepf.maps.yandexweb.model.BitmapDescriptorFactory;
+import org.onepf.maps.yandexweb.model.CameraUpdate;
 import org.onepf.maps.yandexweb.model.Circle;
 import org.onepf.maps.yandexweb.model.GroundOverlay;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.Marker;
 import org.onepf.maps.yandexweb.model.Polygon;
 import org.onepf.maps.yandexweb.model.Polyline;
+import org.onepf.maps.yandexweb.model.Projection;
 import org.onepf.maps.yandexweb.model.UiSettings;
 import org.onepf.maps.yandexweb.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapDelegate;
@@ -59,6 +66,7 @@ import org.onepf.opfmaps.model.OPFGroundOverlay;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFIndoorBuilding;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
+import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLocationSource;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
@@ -83,17 +91,23 @@ import java.util.Map;
 @SuppressWarnings({"PMD.ExcessivePublicCount", "PMD.TooManyMethods"})
 public class YaWebMapDelegate implements MapDelegate {
 
-    private static final float MAX_ZOOM_LEVEL = 23.0f;
-    private static final float MIN_ZOOM_LEVEL = 3.0f;
+    public static final float MAX_ZOOM_LEVEL = 23.0f;
+    public static final float MIN_ZOOM_LEVEL = 3.0f;
 
     @NonNull
     private final YaWebMapViewDelegate map;
+
+    @Nullable
+    private Projection projection;
 
     @Nullable
     private OPFOnMarkerClickListener opfOnMarkerClickListener;
 
     @Nullable
     private OPFOnMarkerDragListener opfOnMarkerDragListener;
+
+    @Nullable
+    private OPFOnMapClickListener opfOnMapClickListener;
 
     @Nullable
     private Marker draggableMarker;
@@ -216,8 +230,11 @@ public class YaWebMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFProjection getProjection() {
-        //todo implement
-        return null;
+        if (projection == null) {
+            this.projection = new Projection(new Rect(0, 0, 0, 0), map.getContext(), MIN_ZOOM_LEVEL, 0, 0);
+        }
+
+        return new OPFProjection(new YaWebProjectionDelegate(projection));
     }
 
     @NonNull
@@ -248,7 +265,49 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void moveCamera(@NonNull final OPFCameraUpdate update) {
-        //todo implement
+        final CameraUpdate cameraUpdate = (CameraUpdate) update.getDelegate().getCameraUpdate();
+
+        switch (cameraUpdate.getCameraUpdateSource()) {
+            case CAMERA_POSITION:
+            case GEOPOINT:
+                if (cameraUpdate.getCenter() != null) {
+                    map.setCenter(cameraUpdate.getCenter());
+                }
+                break;
+            case BOUNDS_PADDING:
+            case BOUNDS_WIDTH_HEIGHT_PADDING:
+                //todo implement
+                break;
+            case GEOPOINT_ZOOM:
+                map.setZoomLevel(cameraUpdate.getZoom());
+                if (cameraUpdate.getCenter() != null) {
+                    map.setCenter(cameraUpdate.getCenter());
+                }
+                break;
+            case SCROLL_BY:
+                //todo implement
+                //controller.scrollBy((int) cameraUpdate.getXPixel(), (int) cameraUpdate.getYPixel());
+                break;
+            case ZOOM_BY_FOCUS:
+                //todo implement
+                //zoomByFocus(cameraUpdate);
+                break;
+            case ZOOM_BY:
+                //todo implement
+                //zoomBy(cameraUpdate);
+                break;
+            case ZOOM_IN:
+                //todo implement
+                //controller.zoomIn();
+                break;
+            case ZOOM_OUT:
+                //todo implement
+                ///controller.zoomOut();
+                break;
+            case ZOOM_TO:
+                map.setZoomLevel(cameraUpdate.getZoom());
+                break;
+        }
     }
 
     @Override
@@ -305,7 +364,7 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void setOnMapClickListener(@NonNull final OPFOnMapClickListener listener) {
-        //todo implement
+        this.opfOnMapClickListener = listener;
     }
 
     @Override
@@ -424,6 +483,34 @@ public class YaWebMapDelegate implements MapDelegate {
     void onInfoWindowClose(@NonNull final String markerId) {
         if (opfOnMarkerClickListener != null && markersByIds.containsKey(markerId)) {
             markersByIds.get(markerId).changeIsInfoWindowShownValue(false);
+        }
+    }
+
+    void onMapClick(@NonNull final LatLng latLng) {
+        if (opfOnMapClickListener != null) {
+            opfOnMapClickListener.onMapClick(new OPFLatLng(new YaWebLatLngDelegate(latLng)));
+        }
+    }
+
+    void initProjection(@NonNull final Rect screenRect, final float zoomLevel, final double offsetX, final double offsetY) {
+        final DisplayMetrics displayMetrics = map.getResources().getDisplayMetrics();
+        projection = new Projection(
+                screenRect,
+                map.getContext(),
+                zoomLevel,
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) offsetX, displayMetrics),
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) offsetY, displayMetrics)
+        );
+    }
+
+    void updateProjectionZoomLevel(final float zoomLevel, final double offsetX, final double offsetY) {
+        OPFLog.logMethod(zoomLevel, offsetX, offsetY);
+        if (projection != null) {
+            projection.setZoomLevel(zoomLevel);
+
+            final DisplayMetrics displayMetrics = map.getResources().getDisplayMetrics();
+            projection.setOffsetX(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) offsetX, displayMetrics));
+            projection.setOffsetY(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) offsetY, displayMetrics));
         }
     }
 
