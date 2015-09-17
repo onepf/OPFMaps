@@ -310,5 +310,10 @@
     function hideMyPosition() {
         map.geoObjects.remove(lastLocationGeoObjects);
     }
+
+    function clearMap() {
+        geoObjectsByIds = [];
+        map.geoObjects.removeAll();
+    }
 </script>
 </body>

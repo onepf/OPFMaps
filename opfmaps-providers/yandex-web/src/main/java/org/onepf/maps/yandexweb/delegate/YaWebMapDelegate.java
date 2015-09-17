@@ -110,7 +110,7 @@ public class YaWebMapDelegate implements MapDelegate {
     private OPFOnMapClickListener opfOnMapClickListener;
 
     @Nullable
-    private Marker draggableMarker;
+    private Marker currentDragMarker;
 
     @NonNull
     private final Map<String, Marker> markersByIds = new HashMap<>();
@@ -194,7 +194,8 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void clear() {
-        //todo implement
+        JSYandexMapProxy.clearMap(map);
+        markersByIds.clear();
     }
 
     @NonNull
@@ -445,33 +446,33 @@ public class YaWebMapDelegate implements MapDelegate {
 
     void onMarkerDragStart(@NonNull final String markerId, final double lat, final double lng) {
         if (opfOnMarkerDragListener != null && markersByIds.containsKey(markerId)) {
-            draggableMarker = createDraggableMarker(markerId, lat, lng);
-            opfOnMarkerDragListener.onMarkerDragStart(new OPFMarker(new YaWebMarkerDelegate(draggableMarker)));
+            currentDragMarker = createDraggableMarker(markerId, lat, lng);
+            opfOnMarkerDragListener.onMarkerDragStart(new OPFMarker(new YaWebMarkerDelegate(currentDragMarker)));
         }
     }
 
     void onMarkerDrag(@NonNull final String markerId, final double lat, final double lng) {
         if (opfOnMarkerDragListener != null) {
-            if (draggableMarker != null && draggableMarker.getId().equals(markerId)) {
-                draggableMarker.changePositionValue(new LatLng(lat, lng));
-                opfOnMarkerDragListener.onMarkerDrag(new OPFMarker(new YaWebMarkerDelegate(draggableMarker)));
+            if (currentDragMarker != null && currentDragMarker.getId().equals(markerId)) {
+                currentDragMarker.changePositionValue(new LatLng(lat, lng));
+                opfOnMarkerDragListener.onMarkerDrag(new OPFMarker(new YaWebMarkerDelegate(currentDragMarker)));
             } else if (markersByIds.containsKey(markerId)) {
-                draggableMarker = createDraggableMarker(markerId, lat, lng);
-                opfOnMarkerDragListener.onMarkerDrag(new OPFMarker(new YaWebMarkerDelegate(draggableMarker)));
+                currentDragMarker = createDraggableMarker(markerId, lat, lng);
+                opfOnMarkerDragListener.onMarkerDrag(new OPFMarker(new YaWebMarkerDelegate(currentDragMarker)));
             }
         }
     }
 
     void onMarkerDragEnd(@NonNull final String markerId, final double lat, final double lng) {
         if (opfOnMarkerDragListener != null) {
-            if (draggableMarker != null && draggableMarker.getId().equals(markerId)) {
-                draggableMarker.changePositionValue(new LatLng(lat, lng));
-                opfOnMarkerDragListener.onMarkerDragEnd(new OPFMarker(new YaWebMarkerDelegate(draggableMarker)));
+            if (currentDragMarker != null && currentDragMarker.getId().equals(markerId)) {
+                currentDragMarker.changePositionValue(new LatLng(lat, lng));
+                opfOnMarkerDragListener.onMarkerDragEnd(new OPFMarker(new YaWebMarkerDelegate(currentDragMarker)));
             } else if (markersByIds.containsKey(markerId)) {
                 opfOnMarkerDragListener.onMarkerDragEnd(new OPFMarker(new YaWebMarkerDelegate(createDraggableMarker(markerId, lat, lng))));
             }
         }
-        draggableMarker = null;
+        currentDragMarker = null;
     }
 
     void onInfoWindowOpen(@NonNull final String markerId) {
