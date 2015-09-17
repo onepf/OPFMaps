@@ -92,7 +92,7 @@ import java.util.Map;
 public class YaWebMapDelegate implements MapDelegate {
 
     public static final float MAX_ZOOM_LEVEL = 23.0f;
-    public static final float MIN_ZOOM_LEVEL = 3.0f;
+    public static final float MIN_ZOOM_LEVEL = 2.0f;
 
     @NonNull
     private final YaWebMapViewDelegate map;
