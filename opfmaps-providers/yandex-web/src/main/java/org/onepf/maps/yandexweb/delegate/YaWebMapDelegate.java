@@ -186,17 +186,19 @@ public class YaWebMapDelegate implements MapDelegate {
     public void animateCamera(@NonNull final OPFCameraUpdate update,
                               final int durationMs,
                               @NonNull final OPFCancelableCallback callback) {
-        //todo implement
+        animateCamera(update);
+        callback.onFinish();
     }
 
     @Override
     public void animateCamera(@NonNull final OPFCameraUpdate update, @NonNull final OPFCancelableCallback callback) {
-        //todo implement
+        animateCamera(update);
+        callback.onFinish();
     }
 
     @Override
     public void animateCamera(@NonNull final OPFCameraUpdate update) {
-        //todo implement
+        moveCamera(update);
     }
 
     @Override
@@ -285,7 +287,9 @@ public class YaWebMapDelegate implements MapDelegate {
                 break;
             case BOUNDS_PADDING:
             case BOUNDS_WIDTH_HEIGHT_PADDING:
-                //todo implement
+                if (cameraUpdate.getBounds() != null) {
+                    map.setCenter(cameraUpdate.getBounds().getCenter());
+                }
                 break;
             case GEOPOINT_ZOOM:
                 map.setZoomLevel(cameraUpdate.getZoom());
@@ -294,24 +298,19 @@ public class YaWebMapDelegate implements MapDelegate {
                 }
                 break;
             case SCROLL_BY:
-                //todo implement
-                //controller.scrollBy((int) cameraUpdate.getXPixel(), (int) cameraUpdate.getYPixel());
+                scrollBy(cameraUpdate);
                 break;
             case ZOOM_BY_FOCUS:
-                //todo implement
-                //zoomByFocus(cameraUpdate);
+                zoomByFocus(cameraUpdate);
                 break;
             case ZOOM_BY:
-                //todo implement
-                //zoomBy(cameraUpdate);
+                zoomBy(cameraUpdate);
                 break;
             case ZOOM_IN:
-                //todo implement
-                //controller.zoomIn();
+                map.setZoomLevel(map.getZoomLevel() + 1);
                 break;
             case ZOOM_OUT:
-                //todo implement
-                ///controller.zoomOut();
+                map.setZoomLevel(map.getZoomLevel() - 1);
                 break;
             case ZOOM_TO:
                 map.setZoomLevel(cameraUpdate.getZoom());
@@ -545,5 +544,34 @@ public class YaWebMapDelegate implements MapDelegate {
         final Marker marker = markersByIds.get(markerId);
         marker.changePositionValue(new LatLng(lat, lng));
         return marker;
+    }
+
+    private void scrollBy(@NonNull final CameraUpdate cameraUpdate) {
+        if (projection != null) {
+            final Point centerPoint = projection.toScreenLocation(map.getCenter());
+            centerPoint.offset((int) cameraUpdate.getXPixel(), (int) cameraUpdate.getYPixel());
+            map.setCenter(projection.fromScreenLocation(centerPoint));
+        }
+    }
+
+    private void zoomByFocus(@NonNull final CameraUpdate cameraUpdate) {
+        if (projection == null) {
+            return;
+        }
+
+        final Point focus = cameraUpdate.getFocus();
+        if (focus == null) {
+            return;
+        }
+
+        final LatLng center = projection.fromScreenLocation(focus);
+        map.setZoomLevel(map.getZoomLevel() + cameraUpdate.getZoom());
+        map.setCenter(center);
+    }
+
+    private void zoomBy(@NonNull final CameraUpdate cameraUpdate) {
+        final float currentZoomLevel = map.getZoomLevel();
+        final int zoomAmount = (int) cameraUpdate.getZoom();
+        map.setZoomLevel(currentZoomLevel + zoomAmount);
     }
 }
