@@ -30,7 +30,7 @@ apply from: urlCache.get('https://raw.githubusercontent.com/onepf/OPF-mvn-repo/m
 
 android {
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 23
         versionName "1.0"
     }
