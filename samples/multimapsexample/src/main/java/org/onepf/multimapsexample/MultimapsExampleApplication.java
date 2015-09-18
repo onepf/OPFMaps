@@ -22,7 +22,7 @@ import com.squareup.leakcanary.LeakCanary;
 
 import org.onepf.maps.amazon.AmazonMapProvider;
 import org.onepf.maps.google.GoogleMapProvider;
-import org.onepf.maps.osmdroid.OsmdroidMapProvider;
+import org.onepf.maps.yandexweb.YaWebMapProvider;
 import org.onepf.opfmaps.OPFMapConfiguration;
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfutils.OPFLog;
@@ -40,7 +40,7 @@ public class MultimapsExampleApplication extends Application {
 
         OPFLog.setEnabled(BuildConfig.DEBUG, true);
         final OPFMapConfiguration configuration = new OPFMapConfiguration.Builder()
-                .addProviders(new OsmdroidMapProvider(), new GoogleMapProvider(), new AmazonMapProvider())
+                .addProviders(new YaWebMapProvider(), new GoogleMapProvider(), new AmazonMapProvider())
                 .setSelectSystemPreferred(true)
                 .build();
         OPFMapHelper.getInstance().init(this, configuration);

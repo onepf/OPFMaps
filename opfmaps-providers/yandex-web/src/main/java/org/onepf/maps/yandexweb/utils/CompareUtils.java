@@ -14,26 +14,25 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
-apply from: urlCache.get('https://raw.githubusercontent.com/onepf/OPF-mvn-repo/master/opf-commons.gradle')
+package org.onepf.maps.yandexweb.utils;
 
-android {
-    defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionName "1.0"
+import android.support.annotation.Nullable;
+
+/**
+ * @author Roman Savin
+ * @since 02.09.2015
+ */
+//todo move to OPF module
+public final class CompareUtils {
+
+    private CompareUtils() {
+        throw new UnsupportedOperationException();
     }
 
-    lintOptions {
-        abortOnError true
-        checkAllWarnings true
-        warningsAsErrors true
+    public static boolean isEquals(@Nullable final Object obj1, @Nullable final Object obj2) {
+        if (obj1 == null) {
+            return obj2 == null;
+        }
+        return obj1.equals(obj2);
     }
-}
-
-dependencies {
-    compile project(':opfmaps') //todo remove later
-
-    provided 'org.onepf:opfutils:0.1.25'
-    provided 'com.android.support:support-annotations:23.0.0'
 }

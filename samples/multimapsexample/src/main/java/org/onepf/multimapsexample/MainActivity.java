@@ -18,13 +18,13 @@ package org.onepf.multimapsexample;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapFragment;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
@@ -37,16 +37,28 @@ import org.onepf.opfmaps.listener.OPFOnMarkerDragListener;
 import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
 import org.onepf.opfmaps.model.OPFBitmapDescriptorFactory;
 import org.onepf.opfmaps.model.OPFCameraPosition;
+import org.onepf.opfmaps.model.OPFCircle;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
+import org.onepf.opfmaps.model.OPFPolygon;
+import org.onepf.opfmaps.model.OPFPolygonOptions;
+import org.onepf.opfmaps.model.OPFPolyline;
+import org.onepf.opfmaps.model.OPFPolylineOptions;
 import org.onepf.opfutils.OPFLog;
+
+import java.util.Arrays;
 
 public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
     //private OPFMapView mapView;
+
+    private OPFPolygon polygon;
+    private OPFCircle circle;
+    private OPFPolyline polyline;
+    private OPFMap opfMap;
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -99,11 +111,41 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         mapView.onDestroy();
     }*/
 
+    public void onButtonClick(final View view) {
+        polygon.setPoints(Arrays.asList(new OPFLatLng(56.7597311265849, 37.71333884100602),
+                new OPFLatLng(56.70860754839525, 37.69927662137808),
+                new OPFLatLng(56.75862834496016, 37.513138401618356)));
+        polygon.setHoles(Arrays.asList(
+                Arrays.asList(
+                        new OPFLatLng(56.739139488175816, 37.586989729090135),
+                        new OPFLatLng(56.726197236786376, 37.7097639987773),
+                        new OPFLatLng(56.70969983952349, 37.70240624420652)
+
+                ),
+                Arrays.asList(
+                        new OPFLatLng(56.7522606417405, 37.645697095053656),
+                        new OPFLatLng(56.75133838313202, 37.66817936044419),
+                        new OPFLatLng(56.74298813628395, 37.6541842601019)
+                )
+        ));
+        circle.setCenter(new OPFLatLng(56.752004, 37.617017));
+
+        polyline.setPoints(Arrays.asList(
+                new OPFLatLng(56.69661394384935, 36.608256084788515),
+                new OPFLatLng(56.08224581388055, 38.05120657972254),
+                new OPFLatLng(56.830126194643654, 38.90446672723731)
+        ));
+        polyline.setColor(Color.YELLOW);
+
+        opfMap.setTrafficEnabled(!opfMap.isTrafficEnabled());
+    }
+
     //CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
     public void onMapReady(@NonNull final OPFMap opfMap) {
         OPFLog.logMethod(opfMap);
+        this.opfMap = opfMap;
 
         opfMap.setMyLocationEnabled(true);
         opfMap.setBuildingsEnabled(true);
@@ -117,11 +159,11 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         });
 
         //circle
-        opfMap.addCircle(new OPFCircleOptions()
+        circle = opfMap.addCircle(new OPFCircleOptions()
                 .center(new OPFLatLng(55.752004, 37.617017))
                 .radius(100000.0)
                 .fillColor(Color.CYAN)
-                .strokeColor(Color.BLUE));
+                .strokeColor(Color.BLUE).zIndex(1.0f));
 
         //markers
         opfMap.addMarker(new OPFMarkerOptions()
@@ -169,7 +211,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             @Override
             public boolean onMarkerClick(@NonNull final OPFMarker marker) {
                 OPFLog.logMethod(marker);
-                Toast.makeText(MainActivity.this, "Marker click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Marker click : " + marker.getTitle(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -179,6 +221,8 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             public void onMapClick(@NonNull final OPFLatLng latLng) {
                 OPFLog.logMethod(latLng);
                 Toast.makeText(MainActivity.this, "Map click position : " + latLng, Toast.LENGTH_SHORT).show();
+                final Point point = opfMap.getProjection().toScreenLocation(latLng);
+                OPFLog.d("clickX = %s, clickY = %s", point.x, point.y);
             }
         });
 
@@ -187,6 +231,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             public void onMapLongClick(@NonNull final OPFLatLng latLng) {
                 OPFLog.logMethod(latLng);
                 Toast.makeText(MainActivity.this, "Map long click position : " + latLng, Toast.LENGTH_SHORT).show();
+                opfMap.addMarker(new OPFMarkerOptions().position(latLng));
             }
         });
 
@@ -230,12 +275,46 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             }
         });
 
+        opfMap.setOnMyLocationButtonClickListener(new OPFOnMyLocationButtonClickListener() {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                Toast.makeText(MainActivity.this, "My location button click", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
         opfMap.setOnCameraChangeListener(new OPFOnCameraChangeListener() {
             @Override
             public void onCameraChange(@NonNull final OPFCameraPosition position) {
                 OPFLog.logMethod(position);
             }
         });
+
+        polygon = opfMap.addPolygon(new OPFPolygonOptions()
+                        .add(
+                                new OPFLatLng(55.7597311265849, 37.71333884100602),
+                                new OPFLatLng(55.70860754839525, 37.69927662137808),
+                                new OPFLatLng(55.75862834496016, 37.513138401618356)
+                        ).addHole(
+                                Arrays.asList(
+                                        new OPFLatLng(55.739139488175816, 37.586989729090135),
+                                        new OPFLatLng(55.726197236786376, 37.7097639987773),
+                                        new OPFLatLng(55.70969983952349, 37.70240624420652)
+                                )
+                        ).addHole(
+                                Arrays.asList(
+                                        new OPFLatLng(55.7522606417405, 37.645697095053656),
+                                        new OPFLatLng(55.75133838313202, 37.66817936044419),
+                                        new OPFLatLng(55.74298813628395, 37.6541842601019)
+                                )
+                        ).fillColor(Color.RED).strokeColor(Color.GREEN).strokeWidth(1.0f).zIndex(1.0f)
+        );
+
+        polyline = opfMap.addPolyline(new OPFPolylineOptions().add(
+                new OPFLatLng(55.69661394384935, 36.608256084788515),
+                new OPFLatLng(55.08224581388055, 38.05120657972254),
+                new OPFLatLng(55.830126194643654, 38.90446672723731)
+        ).color(Color.BLACK).width(3.0f).zIndex(1.0f));
     }
     //CHECKSTYLE:ON
 }

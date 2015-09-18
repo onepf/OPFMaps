@@ -14,26 +14,15 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
-apply from: urlCache.get('https://raw.githubusercontent.com/onepf/OPF-mvn-repo/master/opf-commons.gradle')
+package org.onepf.maps.yandexweb.listener;
 
-android {
-    defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionName "1.0"
-    }
+import org.onepf.maps.yandexweb.model.LatLng;
 
-    lintOptions {
-        abortOnError true
-        checkAllWarnings true
-        warningsAsErrors true
-    }
-}
+/**
+ * @author Roman Savin
+ * @since 15.09.2015
+ */
+public interface OnMapClickListener {
 
-dependencies {
-    compile project(':opfmaps') //todo remove later
-
-    provided 'org.onepf:opfutils:0.1.25'
-    provided 'com.android.support:support-annotations:23.0.0'
+    void onMapClick(final LatLng latLng);
 }

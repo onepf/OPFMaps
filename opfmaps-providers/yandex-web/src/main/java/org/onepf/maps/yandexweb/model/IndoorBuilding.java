@@ -14,26 +14,39 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.library'
-apply from: urlCache.get('https://raw.githubusercontent.com/onepf/OPF-mvn-repo/master/opf-commons.gradle')
+package org.onepf.maps.yandexweb.model;
 
-android {
-    defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionName "1.0"
+import android.support.annotation.Nullable;
+
+import org.onepf.opfutils.OPFLog;
+
+import java.util.List;
+
+/**
+ * @author Roman Savin
+ * @since 17.08.2015
+ */
+public final class IndoorBuilding {
+
+    public int getActiveLevelIndex() {
+        OPFLog.logStubCall();
+        return 0;
     }
 
-    lintOptions {
-        abortOnError true
-        checkAllWarnings true
-        warningsAsErrors true
+    public int getDefaultLevelIndex() {
+        OPFLog.logStubCall();
+        return 0;
     }
-}
 
-dependencies {
-    compile project(':opfmaps') //todo remove later
+    @Nullable
+    public List<IndoorLevel> getLevels() {
+        OPFLog.logStubCall();
+        return null;
+    }
 
-    provided 'org.onepf:opfutils:0.1.25'
-    provided 'com.android.support:support-annotations:23.0.0'
+    public boolean isUnderground() {
+        OPFLog.logStubCall();
+        return false;
+    }
+
 }
