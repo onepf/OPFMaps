@@ -19,7 +19,6 @@ package org.onepf.maps.yandexweb.jsi;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import org.onepf.maps.yandexweb.model.Circle;
 import org.onepf.maps.yandexweb.model.LatLng;
@@ -78,43 +77,43 @@ public final class JSYandexMapProxy {
 
     public static void setMapType(@NonNull final WebView webView,
                                   @NonNull final OPFMapType mapType) {
-        evaluateJSFunctionAsync(webView, null, SET_TYPE_FUNCTION_NAME, wrapToQuotes(ConvertUtils.convertMapTypeToJs(mapType)));
+        evaluateJSFunctionAsync(webView, SET_TYPE_FUNCTION_NAME, wrapToQuotes(ConvertUtils.convertMapTypeToJs(mapType)));
     }
 
     public static void setMapCenter(@NonNull final WebView webView,
                                     @NonNull final LatLng center) {
-        evaluateJSFunctionAsync(webView, null, SET_CENTER_FUNCTION_NAME,
+        evaluateJSFunctionAsync(webView, SET_CENTER_FUNCTION_NAME,
                 Double.toString(center.getLat()), Double.toString(center.getLng()));
     }
 
     public static void setZoomLevel(@NonNull final WebView webView,
                                     final float zoomLevel) {
-        evaluateJSFunctionAsync(webView, null, SET_ZOOM_LEVEL_FUNCTION_NAME, Float.toString(zoomLevel));
+        evaluateJSFunctionAsync(webView, SET_ZOOM_LEVEL_FUNCTION_NAME, Float.toString(zoomLevel));
     }
 
     public static void setMyLocationEnabled(@NonNull final WebView webView,
                                             final boolean isEnabled) {
-        evaluateJSFunctionAsync(webView, null, SET_MY_LOCATION_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
+        evaluateJSFunctionAsync(webView, SET_MY_LOCATION_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
     }
 
     public static void setMyLocationButtonEnabled(@NonNull final WebView webView,
                                                   final boolean isEnabled) {
-        evaluateJSFunctionAsync(webView, null, SET_MY_LOCATION_BUTTON_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
+        evaluateJSFunctionAsync(webView, SET_MY_LOCATION_BUTTON_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
     }
 
     public static void setScrollGesturesEnabled(@NonNull final WebView webView,
                                                 final boolean isEnabled) {
-        evaluateJSFunctionAsync(webView, null, SET_SCROLL_GESTURES_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
+        evaluateJSFunctionAsync(webView, SET_SCROLL_GESTURES_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
     }
 
     public static void setZoomControlsEnabled(@NonNull final WebView webView,
                                               final boolean isEnabled) {
-        evaluateJSFunctionAsync(webView, null, SET_ZOOM_CONTROLS_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
+        evaluateJSFunctionAsync(webView, SET_ZOOM_CONTROLS_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
     }
 
     public static void setZoomGesturesEnabled(@NonNull final WebView webView,
                                               final boolean isEnabled) {
-        evaluateJSFunctionAsync(webView, null, SET_ZOOM_GESTURES_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
+        evaluateJSFunctionAsync(webView, SET_ZOOM_GESTURES_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
     }
 
     public static void addCircle(@NonNull final WebView webView,
@@ -122,7 +121,6 @@ public final class JSYandexMapProxy {
 
         evaluateJSFunctionAsync(
                 webView,
-                null,
                 ADD_CIRCLE_FUNCTION_NAME,
                 wrapToQuotes(circle.getId()),
                 Double.toString(circle.getCenter().getLat()),
@@ -141,7 +139,6 @@ public final class JSYandexMapProxy {
                                  @NonNull final String color) {
         evaluateJSFunctionAsync(
                 webView,
-                null,
                 ADD_MARKER_FUNCTION_NAME,
                 wrapToQuotes(marker.getId()),
                 Double.toString(marker.getPosition().getLat()),
@@ -159,7 +156,6 @@ public final class JSYandexMapProxy {
         build3DJSLatLngArray(js3dArrayBuilder, polygon.getPoints(), polygon.getHoles());
         evaluateJSFunctionAsync(
                 webView,
-                null,
                 ADD_POLYGON_FUNCTION_NAME,
                 wrapToQuotes(polygon.getId()),
                 js3dArrayBuilder.toString(),
@@ -176,7 +172,6 @@ public final class JSYandexMapProxy {
         build2DJSLatLngArray(js2dArrayBuilder, polyline.getPoints());
         evaluateJSFunctionAsync(
                 webView,
-                null,
                 ADD_POLYLINE_FUNCTION_NAME,
                 wrapToQuotes(polyline.getId()),
                 js2dArrayBuilder.toString(),
@@ -189,17 +184,17 @@ public final class JSYandexMapProxy {
 
     public static void hideInfoWindow(@NonNull final WebView webView,
                                       @NonNull final String id) {
-        evaluateJSFunctionAsync(webView, null, HIDE_BALLOON_FUNCTION_NAME, wrapToQuotes(id));
+        evaluateJSFunctionAsync(webView, HIDE_BALLOON_FUNCTION_NAME, wrapToQuotes(id));
     }
 
     public static void showInfoWindow(@NonNull final WebView webView,
                                       @NonNull final String id) {
-        evaluateJSFunctionAsync(webView, null, SHOW_BALLOON_FUNCTION_NAME, wrapToQuotes(id));
+        evaluateJSFunctionAsync(webView, SHOW_BALLOON_FUNCTION_NAME, wrapToQuotes(id));
     }
 
     public static void toggleInfoWindow(@NonNull final WebView webView,
                                         @NonNull final String id) {
-        evaluateJSFunctionAsync(webView, null, TOGGLE_BALLOON_FUNCTION_NAME, wrapToQuotes(id));
+        evaluateJSFunctionAsync(webView, TOGGLE_BALLOON_FUNCTION_NAME, wrapToQuotes(id));
     }
 
     public static void setGeoObjectOption(@NonNull final WebView webView,
@@ -219,13 +214,6 @@ public final class JSYandexMapProxy {
     public static void setGeoObjectProperty(@NonNull final WebView webView,
                                             @NonNull final String id,
                                             @NonNull final String option,
-                                            @NonNull final Object value) {
-        setGeoObjectPropertyFormatted(webView, id, option, value.toString());
-    }
-
-    public static void setGeoObjectProperty(@NonNull final WebView webView,
-                                            @NonNull final String id,
-                                            @NonNull final String option,
                                             @NonNull final String value) {
         setGeoObjectPropertyFormatted(webView, id, option, wrapToQuotes(value));
     }
@@ -235,7 +223,7 @@ public final class JSYandexMapProxy {
                                                @NonNull final LatLng center) {
         final StringBuilder jsLatLngArrayBuilder = new StringBuilder();
         buildJSLatLngArray(jsLatLngArrayBuilder, center);
-        evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME,
+        evaluateJSFunctionAsync(webView, SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME,
                 wrapToQuotes(id), jsLatLngArrayBuilder.toString());
     }
 
@@ -244,7 +232,7 @@ public final class JSYandexMapProxy {
                                                @NonNull final List<LatLng> points) {
         final StringBuilder js2dLatLngArrayBuilder = new StringBuilder();
         build2DJSLatLngArray(js2dLatLngArrayBuilder, points);
-        evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME,
+        evaluateJSFunctionAsync(webView, SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME,
                 wrapToQuotes(id), js2dLatLngArrayBuilder.toString());
     }
 
@@ -254,51 +242,49 @@ public final class JSYandexMapProxy {
                                                @Nullable final List<List<LatLng>> holes) {
         final StringBuilder js3dLatLngArrayBuilder = new StringBuilder();
         build3DJSLatLngArray(js3dLatLngArrayBuilder, points, holes);
-        evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME,
+        evaluateJSFunctionAsync(webView, SET_GEO_OBJECT_COORDINATES_FUNCTION_NAME,
                 wrapToQuotes(id), js3dLatLngArrayBuilder.toString());
     }
 
     public static void setCircleRadius(@NonNull final WebView webView,
                                        @NonNull final String id,
                                        final double radius) {
-        evaluateJSFunctionAsync(webView, null, SET_CIRCLE_RADIUS_FUNCTION_NAME, wrapToQuotes(id), Double.toString(radius));
+        evaluateJSFunctionAsync(webView, SET_CIRCLE_RADIUS_FUNCTION_NAME, wrapToQuotes(id), Double.toString(radius));
     }
 
     public static void removeGeoObject(@NonNull final WebView webView,
                                        @NonNull final String id) {
-        evaluateJSFunctionAsync(webView, null, REMOVE_GEO_OBJECT_FUNCTION_NAME, wrapToQuotes(id));
+        evaluateJSFunctionAsync(webView, REMOVE_GEO_OBJECT_FUNCTION_NAME, wrapToQuotes(id));
     }
 
     public static void clearMap(@NonNull final WebView webView) {
-        evaluateJSFunctionAsync(webView, null, CLEAR_MAP_FUNCTION_NAME);
+        evaluateJSFunctionAsync(webView, CLEAR_MAP_FUNCTION_NAME);
     }
 
     public static void setTrafficEnabled(@NonNull final WebView webView, final boolean isEnabled) {
-        evaluateJSFunctionAsync(webView, null, SET_TRAFFIC_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
+        evaluateJSFunctionAsync(webView, SET_TRAFFIC_ENABLED_FUNCTION_NAME, Boolean.toString(isEnabled));
     }
 
     private static void setGeoObjectOptionFormatted(@NonNull final WebView webView,
                                                     @NonNull final String id,
                                                     @NonNull final String option,
                                                     @NonNull final String value) {
-        evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_OPTION, wrapToQuotes(id), wrapToQuotes(option), value);
+        evaluateJSFunctionAsync(webView, SET_GEO_OBJECT_OPTION, wrapToQuotes(id), wrapToQuotes(option), value);
     }
 
     private static void setGeoObjectPropertyFormatted(@NonNull final WebView webView,
                                                       @NonNull final String id,
                                                       @NonNull final String property,
                                                       @NonNull final String value) {
-        evaluateJSFunctionAsync(webView, null, SET_GEO_OBJECT_PROPERTY, wrapToQuotes(id), wrapToQuotes(property), value);
+        evaluateJSFunctionAsync(webView, SET_GEO_OBJECT_PROPERTY, wrapToQuotes(id), wrapToQuotes(property), value);
     }
 
     private static void evaluateJSFunctionAsync(@NonNull final WebView webView,
-                                                @Nullable final ValueCallback<String> resultCallback,
                                                 @NonNull final String function,
                                                 @Nullable final String... params) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            webView.evaluateJavascript(formatScript(function, params), resultCallback);
+            webView.evaluateJavascript(formatScript(function, params), null);
         } else {
-            //todo make in worker thread
             webView.loadUrl("javascript:" + formatScript(function, params));
         }
     }
