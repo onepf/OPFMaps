@@ -16,326 +16,329 @@
 
 <head>
     <script src="https://api-maps.yandex.ru/2.1/?lang=LOCALIZATION_STUB" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        console.log("before init");
+
+        ymaps.ready(init);
+        var map,
+                geoObjectsByIds = [],
+                lastLocationGeoObjects,
+                isZoomControlsEnabled = ZOOM_CONTROLS_ENABLED_STUB,
+                isMyLocationEnabled = MY_LOCATION_ENABLED_STUB,
+                isMyLocationButtonEnabled = MY_LOCATION_BUTTON_ENABLED_STUB,
+                trafficControl;
+
+        function init() {
+            console.log("into init");
+            map = new ymaps.Map(
+                    "map",
+                    {
+                        type: 'MAP_TYPE_STUB',
+                        center: [CENTER_LAT_STUB, CENTER_LNG_STUB],
+                        zoom: ZOOM_STUB,
+                        behaviors: ['DRAG_STUB', 'MULTI_TOUCH_STUB', 'DBL_CLICK_STUB'],
+                        controls: ['largeMapDefaultSet']
+                    },
+                    {
+                        minZoom: 2
+                    }
+            );
+            map.container.enterFullscreen();
+
+            trafficControl = map.controls.get('trafficControl');
+            trafficControl.events.add('showtraffic', function () {
+                OnTrafficVisibilityChangeListener.onTrafficShow();
+            });
+
+            trafficControl.events.add('hidetraffic', function () {
+                OnTrafficVisibilityChangeListener.onTrafficHide();
+            });
+
+            if (isZoomControlsEnabled === false) {
+                map.controls.remove('zoomControl')
+            }
+
+            if (isMyLocationButtonEnabled === false || isMyLocationEnabled === false) {
+                map.controls.remove('geolocationControl')
+            }
+
+            if (isMyLocationEnabled) {
+                showMyPosition();
+            }
+
+            map.events.add('actionbreak', function () {
+                var center = map.getCenter(),
+                        offsets = getOffsets();
+                OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom(), offsets[0], offsets[1]);
+            });
+
+            map.events.add('actionend', function () {
+                var center = map.getCenter(),
+                        offsets = getOffsets();
+                OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom(), offsets[0], offsets[1]);
+            });
+
+            map.events.add('sizechange', function () {
+                var center = map.getCenter(),
+                        offsets = getOffsets();
+                OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom(), offsets[0], offsets[1]);
+            });
+
+            map.events.add('typechange', function () {
+                OnMapTypeChangeListener.onTypeChange(map.getType());
+            });
+
+            map.events.add('click', function (event) {
+                var position = event.get('position'),
+                        projection = map.options.get('projection'),
+                        latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
+
+                OnMapClickListener.onMapClick(latLng[0], latLng[1]);
+            });
+
+            var offsets = getOffsets();
+            OnMapReadyCallback.onMapReady(offsets[0], offsets[1]);
+        }
+
+        function getOffsets() {
+            var projection = map.options.get('projection'),
+                    centerInPixels = projection.toGlobalPixels([0, 0], map.getZoom()),
+                    currentCenterInPixels = map.getGlobalPixelCenter();
+
+            return [centerInPixels[0] - currentCenterInPixels[0], centerInPixels[1] - currentCenterInPixels[1]];
+        }
+
+        function addCircle(id, lat, lng, radius, fillColor, strokeColor, strokeWidth, zIndex, isVisible) {
+            var circle = new ymaps.Circle([[lat, lng], radius], {}, {
+                fillColor: fillColor,
+                strokeColor: strokeColor,
+                strokeWidth: strokeWidth,
+                zIndex: zIndex,
+                visible: isVisible
+            });
+
+            map.geoObjects.add(circle);
+            geoObjectsByIds[id] = circle;
+        }
+
+        function addMarker(id, lat, lng, balloonContentHeader, balloonContentBody, isVisible, isDraggable, color) {
+            var marker = new ymaps.Placemark([lat, lng],
+                    {
+                        balloonContentHeader: balloonContentHeader,
+                        balloonContentBody: balloonContentBody
+                    },
+                    {
+                        visible: isVisible,
+                        draggable: isDraggable,
+                        iconColor: color,
+                        hideIconOnBalloonOpen: false,
+                        openBalloonOnClick: false,
+                        balloonOffset: [3, -25]
+                    }
+            );
+            marker.events.add('click', function () {
+                OnMarkerClickListener.onMarkerClick(id);
+            });
+            marker.events.add('dragstart', function (event) {
+                var position = event.get('position'),
+                        projection = map.options.get('projection'),
+                        latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
+                OnMarkerDragListener.onMarkerDragStart(id, latLng[0], latLng[1]);
+            });
+            marker.events.add('drag', function (event) {
+                var position = event.get('position'),
+                        projection = map.options.get('projection'),
+                        latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
+                OnMarkerDragListener.onMarkerDrag(id, latLng[0], latLng[1]);
+            });
+            marker.events.add('dragend', function (event) {
+                var position = event.get('position'),
+                        projection = map.options.get('projection'),
+                        latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
+                OnMarkerDragListener.onMarkerDragEnd(id, latLng[0], latLng[1]);
+            });
+            marker.balloon.events.add('open', function () {
+                OnInfoWindowChangeListener.onOpen(id);
+            });
+            marker.balloon.events.add('close', function () {
+                OnInfoWindowChangeListener.onClose(id);
+            });
+
+            map.geoObjects.add(marker);
+            geoObjectsByIds[id] = marker;
+        }
+
+        function addPolygon(id, points, fillColor, strokeColor, strokeWidth, zIndex, isVisible) {
+            var polygon = new ymaps.Polygon(points, {},
+                    {
+                        hasBalloon: false,
+                        hasHint: false,
+                        openBalloonOnClick: false,
+                        fillColor: fillColor,
+                        strokeColor: strokeColor,
+                        strokeWidth: strokeWidth,
+                        zIndex: zIndex,
+                        visible: isVisible
+                    }
+            );
+            map.geoObjects.add(polygon);
+            geoObjectsByIds[id] = polygon;
+        }
+
+        function addPolyline(id, points, color, width, zIndex, isVisible) {
+            var polyline = new ymaps.Polyline(points, {},
+                    {
+                        hasBalloon: false,
+                        hasHint: false,
+                        openBalloonOnClick: false,
+                        strokeColor: color,
+                        strokeWidth: width,
+                        zIndex: zIndex,
+                        visible: isVisible
+                    }
+            );
+
+            map.geoObjects.add(polyline);
+            geoObjectsByIds[id] = polyline;
+        }
+
+        function hideBalloon(id) {
+            var geoObject = geoObjectsByIds[id];
+            geoObject.balloon.close();
+        }
+
+        function showBalloon(id) {
+            var geoObject = geoObjectsByIds[id];
+            geoObject.balloon.open();
+        }
+
+        function toggleBalloon(id) {
+            var geoObject = geoObjectsByIds[id];
+            if (geoObject.balloon.isOpen()) {
+                geoObject.balloon.close();
+            } else {
+                geoObject.balloon.open();
+            }
+        }
+
+        function removeGeoObject(id) {
+            var geoObject = geoObjectsByIds[id];
+            map.geoObjects.remove(geoObject);
+            geoObjectsByIds.splice(id, 1);
+        }
+
+        function setGeoObjectOption(id, option, value) {
+            var geoObject = geoObjectsByIds[id];
+            geoObject.options.set(option, value);
+        }
+
+        function setGeoObjectProperty(id, property, value) {
+            var geoObject = geoObjectsByIds[id];
+            geoObject.properties.set(property, value);
+        }
+
+        function setGeoObjectCoordinates(id, coordinates) {
+            var geoObject = geoObjectsByIds[id];
+            geoObject.geometry.setCoordinates(coordinates);
+        }
+
+        function setCircleRadius(id, radius) {
+            var circle = geoObjectsByIds[id];
+            circle.geometry.setRadius(radius);
+        }
+
+        function setType(type) {
+            map.setType(type);
+        }
+
+        function setCenter(lat, lng) {
+            map.setCenter([lat, lng]);
+        }
+
+        function setZoom(zoom) {
+            map.setZoom(zoom);
+        }
+
+        function setZoomControlsEnabled(isEnabled) {
+            setControlEnabled('zoomControl', isEnabled);
+        }
+
+        function setZoomGesturesEnabled(isEnabled) {
+            setBehaviorEnabled('multiTouch', isEnabled);
+            setBehaviorEnabled('dblClickZoom', isEnabled);
+        }
+
+        function setScrollGesturesEnabled(isEnabled) {
+            setBehaviorEnabled('drag', isEnabled);
+        }
+
+        function setMyLocationButtonEnabled(isEnabled) {
+            isMyLocationButtonEnabled = isEnabled;
+
+            setControlEnabled('geolocationControl', isMyLocationButtonEnabled && isMyLocationEnabled);
+        }
+
+        function setMyLocationEnabled(isEnabled) {
+            isMyLocationEnabled = isEnabled;
+            if (isMyLocationEnabled) {
+                showMyPosition();
+                setControlEnabled('geolocationControl', isMyLocationButtonEnabled);
+            } else {
+                hideMyPosition();
+                setControlEnabled('geolocationControl', false);
+            }
+        }
+
+        function setControlEnabled(controlName, isEnabled) {
+            if (isEnabled) {
+                map.controls.add(controlName);
+                if (controlName === 'geolocationControl') {
+                    map.controls.get('geolocationControl').events.add('click', function () {
+                        OnMyLocationButtonClickListener.onMyLocationButtonClick();
+                    });
+                }
+            } else {
+                map.controls.remove(controlName);
+            }
+        }
+
+        function setBehaviorEnabled(behaviorName, isEnabled) {
+            if (isEnabled) {
+                map.behaviors.enable(behaviorName);
+            } else {
+                map.behaviors.disable(behaviorName);
+            }
+        }
+
+        function showMyPosition() {
+            ymaps.geolocation.get().then(function (result) {
+                lastLocationGeoObjects = result.geoObjects;
+                map.geoObjects.add(lastLocationGeoObjects);
+            });
+        }
+
+        function hideMyPosition() {
+            map.geoObjects.remove(lastLocationGeoObjects);
+        }
+
+        function clearMap() {
+            geoObjectsByIds = [];
+            map.geoObjects.removeAll();
+        }
+
+        function setTrafficEnabled(enabled) {
+            if (enabled == true) {
+                trafficControl.showTraffic();
+            } else {
+                trafficControl.hideTraffic();
+            }
+        }
+    </script>
 </head>
 
 <body>
 <div id="map" style="width: 100%; height: 100%"></div>
 
-<script type="text/javascript">
-    'use strict';
 
-    ymaps.ready(init);
-    var map,
-            geoObjectsByIds = [],
-            lastLocationGeoObjects,
-            isZoomControlsEnabled = ZOOM_CONTROLS_ENABLED_STUB,
-            isMyLocationEnabled = MY_LOCATION_ENABLED_STUB,
-            isMyLocationButtonEnabled = MY_LOCATION_BUTTON_ENABLED_STUB,
-            trafficControl;
-
-    function init() {
-        map = new ymaps.Map(
-                "map",
-                {
-                    type: 'MAP_TYPE_STUB',
-                    center: [CENTER_LAT_STUB, CENTER_LNG_STUB],
-                    zoom: ZOOM_STUB,
-                    behaviors: ['DRAG_STUB', 'MULTI_TOUCH_STUB', 'DBL_CLICK_STUB'],
-                    controls: ['largeMapDefaultSet']
-                },
-                {
-                    minZoom: 2
-                }
-        );
-        map.container.enterFullscreen();
-
-        trafficControl = map.controls.get('trafficControl');
-        trafficControl.events.add('showtraffic', function () {
-            OnTrafficVisibilityChangeListener.onTrafficShow();
-        });
-
-        trafficControl.events.add('hidetraffic', function () {
-            OnTrafficVisibilityChangeListener.onTrafficHide();
-        });
-
-        if (isZoomControlsEnabled === false) {
-            map.controls.remove('zoomControl')
-        }
-
-        if (isMyLocationButtonEnabled === false || isMyLocationEnabled === false) {
-            map.controls.remove('geolocationControl')
-        }
-
-        if (isMyLocationEnabled) {
-            showMyPosition();
-        }
-
-        map.events.add('actionbreak', function () {
-            var center = map.getCenter(),
-                    offsets = getOffsets();
-            OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom(), offsets[0], offsets[1]);
-        });
-
-        map.events.add('actionend', function () {
-            var center = map.getCenter(),
-                    offsets = getOffsets();
-            OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom(), offsets[0], offsets[1]);
-        });
-
-        map.events.add('sizechange', function () {
-            var center = map.getCenter(),
-                    offsets = getOffsets();
-            OnCameraChangeListener.onCameraChange(center[0], center[1], map.getZoom(), offsets[0], offsets[1]);
-        });
-
-        map.events.add('typechange', function () {
-            OnMapTypeChangeListener.onTypeChange(map.getType());
-        });
-
-        map.events.add('click', function (event) {
-            var position = event.get('position'),
-                    projection = map.options.get('projection'),
-                    latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
-
-            OnMapClickListener.onMapClick(latLng[0], latLng[1]);
-        });
-
-        var offsets = getOffsets();
-        OnMapReadyCallback.onMapReady(offsets[0], offsets[1]);
-    }
-
-    function getOffsets() {
-        var projection = map.options.get('projection'),
-                centerInPixels = projection.toGlobalPixels([0, 0], map.getZoom()),
-                currentCenterInPixels = map.getGlobalPixelCenter();
-
-        return [centerInPixels[0] - currentCenterInPixels[0], centerInPixels[1] - currentCenterInPixels[1]];
-    }
-
-    function addCircle(id, lat, lng, radius, fillColor, strokeColor, strokeWidth, zIndex, isVisible) {
-        var circle = new ymaps.Circle([[lat, lng], radius], {}, {
-            fillColor: fillColor,
-            strokeColor: strokeColor,
-            strokeWidth: strokeWidth,
-            zIndex: zIndex,
-            visible: isVisible
-        });
-
-        map.geoObjects.add(circle);
-        geoObjectsByIds[id] = circle;
-    }
-
-    function addMarker(id, lat, lng, balloonContentHeader, balloonContentBody, isVisible, isDraggable, color) {
-        var marker = new ymaps.Placemark([lat, lng],
-                {
-                    balloonContentHeader: balloonContentHeader,
-                    balloonContentBody: balloonContentBody
-                },
-                {
-                    visible: isVisible,
-                    draggable: isDraggable,
-                    iconColor: color,
-                    hideIconOnBalloonOpen: false,
-                    openBalloonOnClick: false,
-                    balloonOffset: [3, -25]
-                }
-        );
-        marker.events.add('click', function () {
-            OnMarkerClickListener.onMarkerClick(id);
-        });
-        marker.events.add('dragstart', function (event) {
-            var position = event.get('position'),
-                    projection = map.options.get('projection'),
-                    latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
-            OnMarkerDragListener.onMarkerDragStart(id, latLng[0], latLng[1]);
-        });
-        marker.events.add('drag', function (event) {
-            var position = event.get('position'),
-                    projection = map.options.get('projection'),
-                    latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
-            OnMarkerDragListener.onMarkerDrag(id, latLng[0], latLng[1]);
-        });
-        marker.events.add('dragend', function (event) {
-            var position = event.get('position'),
-                    projection = map.options.get('projection'),
-                    latLng = projection.fromGlobalPixels(map.converter.pageToGlobal(position), map.getZoom());
-            OnMarkerDragListener.onMarkerDragEnd(id, latLng[0], latLng[1]);
-        });
-        marker.balloon.events.add('open', function () {
-            OnInfoWindowChangeListener.onOpen(id);
-        });
-        marker.balloon.events.add('close', function () {
-            OnInfoWindowChangeListener.onClose(id);
-        });
-
-        map.geoObjects.add(marker);
-        geoObjectsByIds[id] = marker;
-    }
-
-    function addPolygon(id, points, fillColor, strokeColor, strokeWidth, zIndex, isVisible) {
-        var polygon = new ymaps.Polygon(points, {},
-                {
-                    hasBalloon: false,
-                    hasHint: false,
-                    openBalloonOnClick: false,
-                    fillColor: fillColor,
-                    strokeColor: strokeColor,
-                    strokeWidth: strokeWidth,
-                    zIndex: zIndex,
-                    visible: isVisible
-                }
-        );
-        map.geoObjects.add(polygon);
-        geoObjectsByIds[id] = polygon;
-    }
-
-    function addPolyline(id, points, color, width, zIndex, isVisible) {
-        var polyline = new ymaps.Polyline(points, {},
-                {
-                    hasBalloon: false,
-                    hasHint: false,
-                    openBalloonOnClick: false,
-                    strokeColor: color,
-                    strokeWidth: width,
-                    zIndex: zIndex,
-                    visible: isVisible
-                }
-        );
-
-        map.geoObjects.add(polyline);
-        geoObjectsByIds[id] = polyline;
-    }
-
-    function hideBalloon(id) {
-        var geoObject = geoObjectsByIds[id];
-        geoObject.balloon.close();
-    }
-
-    function showBalloon(id) {
-        var geoObject = geoObjectsByIds[id];
-        geoObject.balloon.open();
-    }
-
-    function toggleBalloon(id) {
-        var geoObject = geoObjectsByIds[id];
-        if (geoObject.balloon.isOpen()) {
-            geoObject.balloon.close();
-        } else {
-            geoObject.balloon.open();
-        }
-    }
-
-    function removeGeoObject(id) {
-        var geoObject = geoObjectsByIds[id];
-        map.geoObjects.remove(geoObject);
-        geoObjectsByIds.splice(id, 1);
-    }
-
-    function setGeoObjectOption(id, option, value) {
-        var geoObject = geoObjectsByIds[id];
-        geoObject.options.set(option, value);
-    }
-
-    function setGeoObjectProperty(id, property, value) {
-        var geoObject = geoObjectsByIds[id];
-        geoObject.properties.set(property, value);
-    }
-
-    function setGeoObjectCoordinates(id, coordinates) {
-        var geoObject = geoObjectsByIds[id];
-        geoObject.geometry.setCoordinates(coordinates);
-    }
-
-    function setCircleRadius(id, radius) {
-        var circle = geoObjectsByIds[id];
-        circle.geometry.setRadius(radius);
-    }
-
-    function setType(type) {
-        map.setType(type);
-    }
-
-    function setCenter(lat, lng) {
-        map.setCenter([lat, lng]);
-    }
-
-    function setZoom(zoom) {
-        map.setZoom(zoom);
-    }
-
-    function setZoomControlsEnabled(isEnabled) {
-        setControlEnabled('zoomControl', isEnabled);
-    }
-
-    function setZoomGesturesEnabled(isEnabled) {
-        setBehaviorEnabled('multiTouch', isEnabled);
-        setBehaviorEnabled('dblClickZoom', isEnabled);
-    }
-
-    function setScrollGesturesEnabled(isEnabled) {
-        setBehaviorEnabled('drag', isEnabled);
-    }
-
-    function setMyLocationButtonEnabled(isEnabled) {
-        isMyLocationButtonEnabled = isEnabled;
-
-        setControlEnabled('geolocationControl', isMyLocationButtonEnabled && isMyLocationEnabled);
-    }
-
-    function setMyLocationEnabled(isEnabled) {
-        isMyLocationEnabled = isEnabled;
-        if (isMyLocationEnabled) {
-            showMyPosition();
-            setControlEnabled('geolocationControl', isMyLocationButtonEnabled);
-        } else {
-            hideMyPosition();
-            setControlEnabled('geolocationControl', false);
-        }
-    }
-
-    function setControlEnabled(controlName, isEnabled) {
-        if (isEnabled) {
-            map.controls.add(controlName);
-            if (controlName === 'geolocationControl') {
-                map.controls.get('geolocationControl').events.add('click', function () {
-                    OnMyLocationButtonClickListener.onMyLocationButtonClick();
-                });
-            }
-        } else {
-            map.controls.remove(controlName);
-        }
-    }
-
-    function setBehaviorEnabled(behaviorName, isEnabled) {
-        if (isEnabled) {
-            map.behaviors.enable(behaviorName);
-        } else {
-            map.behaviors.disable(behaviorName);
-        }
-    }
-
-    function showMyPosition() {
-        ymaps.geolocation.get().then(function (result) {
-            lastLocationGeoObjects = result.geoObjects;
-            map.geoObjects.add(lastLocationGeoObjects);
-        });
-    }
-
-    function hideMyPosition() {
-        map.geoObjects.remove(lastLocationGeoObjects);
-    }
-
-    function clearMap() {
-        geoObjectsByIds = [];
-        map.geoObjects.removeAll();
-    }
-
-    function setTrafficEnabled(enabled) {
-        if (enabled == true) {
-            trafficControl.showTraffic();
-        } else {
-            trafficControl.hideTraffic();
-        }
-    }
-</script>
 </body>
