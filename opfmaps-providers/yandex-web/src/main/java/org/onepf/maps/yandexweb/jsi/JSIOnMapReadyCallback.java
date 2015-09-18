@@ -28,7 +28,7 @@ import org.onepf.maps.yandexweb.listener.OnMapReadyCallback;
  */
 public final class JSIOnMapReadyCallback {
 
-    public final static String JS_INTERFACE_NAME = "OnMapReadyCallback";
+    public static final String JS_INTERFACE_NAME = "OnMapReadyCallback";
 
     @NonNull
     private final OnMapReadyCallback callback;

@@ -47,6 +47,7 @@ public final class Circle {
     private float zIndex;
     private boolean isVisible;
 
+    //CHECKSTYLE:OFF
     public Circle(@SuppressWarnings("NullableProblems") @NonNull final WebView webView,
                   @NonNull final LatLng center,
                   final int fillColor,
@@ -65,6 +66,7 @@ public final class Circle {
         this.zIndex = zIndex;
         this.isVisible = isVisible;
     }
+    //CHECKSTYLE:ON
 
     @NonNull
     public String getId() {

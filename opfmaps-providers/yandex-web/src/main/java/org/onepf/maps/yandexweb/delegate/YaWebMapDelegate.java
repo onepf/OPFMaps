@@ -146,8 +146,8 @@ public class YaWebMapDelegate implements MapDelegate {
     @Override
     public OPFMarker addMarker(@NonNull final OPFMarkerOptions options) {
         final OPFBitmapDescriptor opfBitmapDescriptor = options.getIcon();
-        final BitmapDescriptor bitmapDescriptor = opfBitmapDescriptor != null ?
-                (BitmapDescriptor) opfBitmapDescriptor.getDelegate().getBitmapDescriptor()
+        final BitmapDescriptor bitmapDescriptor = opfBitmapDescriptor != null
+                ? (BitmapDescriptor) opfBitmapDescriptor.getDelegate().getBitmapDescriptor()
                 : BitmapDescriptorFactory.defaultMarker();
 
         final Marker marker = ConvertUtils.convertMarkerOptions(map, markersByIds, options);

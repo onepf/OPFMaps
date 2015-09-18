@@ -91,6 +91,7 @@ public final class LatLng implements Parcelable {
         }
     }
 
+    //CHECKSTYLE:OFF
     @Override
     public int hashCode() {
         int result;
@@ -101,6 +102,7 @@ public final class LatLng implements Parcelable {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
+    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

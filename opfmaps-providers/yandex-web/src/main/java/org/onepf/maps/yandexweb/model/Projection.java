@@ -62,13 +62,14 @@ public final class Projection {
         this.offsetY = offsetY - (halfMapSize - screenRect.bottom / 2);
     }
 
+    //CHECKSTYLE:OFF
     @NonNull
     public LatLng fromScreenLocation(@NonNull final Point point) {
         final double mapSize = getMapSize();
         double x = clipWithInterval(point.x - offsetX, 0, mapSize - 1, mapSize);
         double y = clipWithInterval(point.y - offsetY, 0, mapSize - 1, mapSize);
 
-        x = (clip(x, 0, mapSize - 1) / mapSize) - 0.5;
+        x = clip(x, 0, mapSize - 1) / mapSize - 0.5;
         y = 0.5 - (clip(y, 0, mapSize - 1) / mapSize);
 
         final double latitude = 90 - 360 * Math.atan(Math.exp(-y * 2 * Math.PI)) / Math.PI;
@@ -102,6 +103,7 @@ public final class Projection {
         point.y = (int) (y + offsetY);
         return point;
     }
+    //CHECKSTYLE:ON
 
     @NonNull
     public VisibleRegion getVisibleRegion() {
@@ -128,7 +130,7 @@ public final class Projection {
      */
     public void setOffsetX(final double offsetX) {
         final float halfMapSize = getMapSize() / 2;
-        this.offsetX = (float) offsetX - (halfMapSize - screenRect.right / 2);
+        this.offsetX = (float) offsetX -  halfMapSize + screenRect.right / 2;
     }
 
     /**
@@ -138,7 +140,7 @@ public final class Projection {
      */
     public void setOffsetY(final double offsetY) {
         final float halfMapSize = getMapSize() / 2;
-        this.offsetY = (float) offsetY - (halfMapSize - screenRect.bottom / 2);
+        this.offsetY = (float) offsetY - halfMapSize + screenRect.bottom / 2;
     }
 
     private float getMapSize() {

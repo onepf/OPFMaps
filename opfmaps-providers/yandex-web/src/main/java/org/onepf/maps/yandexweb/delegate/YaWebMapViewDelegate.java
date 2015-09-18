@@ -16,6 +16,7 @@
 
 package org.onepf.maps.yandexweb.delegate;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -67,6 +68,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 
 /**
  * @author Roman Savin
@@ -123,6 +125,7 @@ public class YaWebMapViewDelegate extends WebView
         }
     }
 
+    @SuppressLint("AddJavascriptInterface")
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         this.savedInstanceState = savedInstanceState;
@@ -176,6 +179,7 @@ public class YaWebMapViewDelegate extends WebView
         //nothing
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onMapReady(final double offsetX, final double offsetY) {
         if (onMapReadyCallback != null) {
@@ -377,6 +381,7 @@ public class YaWebMapViewDelegate extends WebView
         JSYandexMapProxy.setZoomGesturesEnabled(this, isZoomGesturesEnabled);
     }
 
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     private void loadMap() {
         initMapState();
 
@@ -387,9 +392,14 @@ public class YaWebMapViewDelegate extends WebView
         settings.setJavaScriptEnabled(true);
         settings.setUseWideViewPort(false);
         settings.setDefaultTextEncodingName("UTF-8");
-        loadData(JSMapStateInjector.injectMapState(getDataString(), mapState), "text/html", "UTF-8");
+
+        final String dataString = getDataString();
+        if (dataString != null) {
+            loadData(JSMapStateInjector.injectMapState(dataString, mapState), "text/html", "UTF-8");
+        }
     }
 
+    @SuppressWarnings("PMD.NPathComplexity")
     private void initMapState() {
         if (savedInstanceState != null) {
             final MapState savedMapState = savedInstanceState.getParcelable(MAP_STATE_BUNDLE_KEY);
@@ -415,6 +425,7 @@ public class YaWebMapViewDelegate extends WebView
         }
     }
 
+    @Nullable
     private String getDataString() {
         try {
             final InputStream inputStream = getResources().getAssets().open(MAP_HTML_FILE_NAME);
@@ -422,7 +433,8 @@ public class YaWebMapViewDelegate extends WebView
             inputStream.close();
             return dataString;
         } catch (IOException e) {
-            throw new RuntimeException("unable to load asset " + MAP_HTML_FILE_NAME);
+            OPFLog.w(e.getMessage());
+            return null;
         }
     }
 
@@ -439,7 +451,7 @@ public class YaWebMapViewDelegate extends WebView
 
     public static final class MapState implements Parcelable {
 
-        public static Creator<MapState> CREATOR = new Creator<MapState>() {
+        public static final Creator<MapState> CREATOR = new Creator<MapState>() {
             @Override
             public MapState createFromParcel(final Parcel source) {
                 return new MapState(source);
@@ -524,6 +536,7 @@ public class YaWebMapViewDelegate extends WebView
             return 0;
         }
 
+        @SuppressWarnings("PMD.NPathComplexity")
         @Override
         public void writeToParcel(final Parcel dest, final int flags) {
             dest.writeInt(mapType.getId());
@@ -591,14 +604,14 @@ public class YaWebMapViewDelegate extends WebView
             try {
                 final Uri uri = Uri.parse(url);
                 final Intent intent;
-                if (url.toLowerCase().startsWith("intent")) {
+                if (url.startsWith("intent")) {
                     intent = Intent.parseUri(url, 0);
                 } else {
                     intent = new Intent(Intent.ACTION_VIEW, uri);
                 }
                 getContext().startActivity(intent);
-            } catch (Exception e) {
-                OPFLog.d(e.getMessage());
+            } catch (URISyntaxException e) {
+                OPFLog.w(e.getMessage());
             }
             return true;
         }

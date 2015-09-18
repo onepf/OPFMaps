@@ -32,7 +32,7 @@ import static org.onepf.opfmaps.model.OPFMapType.NORMAL;
  */
 public final class YaWebMapOptions implements Parcelable {
 
-    public Creator<YaWebMapOptions> CREATOR = new Creator<YaWebMapOptions>() {
+    public static final Creator<YaWebMapOptions> CREATOR = new Creator<YaWebMapOptions>() {
         @Override
         public YaWebMapOptions createFromParcel(final Parcel source) {
             return new YaWebMapOptions(source);

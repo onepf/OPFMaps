@@ -190,10 +190,12 @@ public final class ConvertUtils {
         );
     }
 
+    //CHECKSTYLE:OFF
     @NonNull
     public static String convertColor(final int color) {
-        return String.format("#%06X", (0xFFFFFF & color));
+        return String.format("#%06X", 0xFFFFFF & color);
     }
+    //CHECKSTYLE:ON
 
     @NonNull
     public static String convertMapTypeToJs(@NonNull final OPFMapType type) {

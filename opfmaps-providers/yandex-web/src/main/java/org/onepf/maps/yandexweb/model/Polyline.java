@@ -37,7 +37,7 @@ import static org.onepf.maps.yandexweb.jsi.JSYandexMapProxy.Z_INDEX_OPTION;
 public final class Polyline {
 
     @Nullable
-    private WebView webView;
+    private final WebView webView;
     @NonNull
     private final String id;
     @NonNull

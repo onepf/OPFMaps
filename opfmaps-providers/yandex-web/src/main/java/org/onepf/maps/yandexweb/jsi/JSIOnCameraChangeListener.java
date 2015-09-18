@@ -30,7 +30,7 @@ import org.onepf.maps.yandexweb.model.LatLng;
  */
 public final class JSIOnCameraChangeListener {
 
-    public final static String JS_INTERFACE_NAME = "OnCameraChangeListener";
+    public static final String JS_INTERFACE_NAME = "OnCameraChangeListener";
 
     @NonNull
     private final OnCameraChangeListener listener;

@@ -153,7 +153,7 @@ public final class Marker {
 
     public void setDraggable(final boolean draggable) {
         this.isDraggable = draggable;
-        if (webView != null){
+        if (webView != null) {
             JSYandexMapProxy.setGeoObjectOption(webView, id, DRAGGABLE_OPTION, draggable);
         }
     }

@@ -51,6 +51,7 @@ public final class Polygon {
     private float zIndex;
     private boolean isVisible;
 
+    //CHECKSTYLE:OFF
     public Polygon(@SuppressWarnings("NullableProblems") @NonNull final WebView webView,
                    @NonNull final List<LatLng> points,
                    @Nullable final List<List<LatLng>> holes,
@@ -69,6 +70,7 @@ public final class Polygon {
         this.zIndex = zIndex;
         this.isVisible = isVisible;
     }
+    //CHECKSTYLE:ON
 
     @NonNull
     public String getId() {

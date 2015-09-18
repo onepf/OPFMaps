@@ -111,6 +111,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         mapView.onDestroy();
     }*/
 
+    //CHECKSTYLE:OFF
     public void onButtonClick(final View view) {
         polygon.setPoints(Arrays.asList(new OPFLatLng(56.7597311265849, 37.71333884100602),
                 new OPFLatLng(56.70860754839525, 37.69927662137808),
@@ -140,7 +141,6 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         opfMap.setTrafficEnabled(!opfMap.isTrafficEnabled());
     }
 
-    //CHECKSTYLE:OFF
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
     public void onMapReady(@NonNull final OPFMap opfMap) {
