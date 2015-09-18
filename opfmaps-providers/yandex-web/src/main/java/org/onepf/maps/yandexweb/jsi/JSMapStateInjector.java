@@ -21,6 +21,8 @@ import org.onepf.maps.yandexweb.delegate.YaWebMapViewDelegate;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.utils.ConvertUtils;
 
+import java.util.Locale;
+
 /**
  * @author Roman Savin
  * @since 04.09.2015
@@ -31,6 +33,7 @@ public final class JSMapStateInjector {
     public static final String JS_MAP_TYPE_SATELLITE = "yandex#satellite";
     public static final String JS_MAP_TYPE_HYBRID = "yandex#hybrid";
 
+    private static final String LOCALIZATION_STUB = "LOCALIZATION_STUB";
     private static final String MAP_TYPE_STUB = "MAP_TYPE_STUB";
     private static final String CENTER_LAT_STUB = "CENTER_LAT_STUB";
     private static final String CENTER_LNG_STUB = "CENTER_LNG_STUB";
@@ -57,7 +60,8 @@ public final class JSMapStateInjector {
                                         @NonNull final YaWebMapViewDelegate.MapState mapState) {
         final LatLng center = mapState.getCenter();
 
-        return html.replaceAll(MAP_TYPE_STUB, ConvertUtils.convertMapTypeToJs(mapState.getMapType()))
+        return html.replaceAll(LOCALIZATION_STUB, Locale.getDefault().toString())
+                .replaceAll(MAP_TYPE_STUB, ConvertUtils.convertMapTypeToJs(mapState.getMapType()))
                 .replaceAll(CENTER_LAT_STUB, Double.toString(center.getLat()))
                 .replaceAll(CENTER_LNG_STUB, Double.toString(center.getLng()))
                 .replaceAll(ZOOM_STUB, Float.toString(mapState.getZoomLevel()))
