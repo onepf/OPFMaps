@@ -17,8 +17,10 @@
 package org.onepf.maps.yandexweb.delegate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -379,7 +381,7 @@ public class YaWebMapViewDelegate extends WebView
         initMapState();
 
         addJavascriptInterface(new JSIOnMapReadyCallback(this), JSIOnMapReadyCallback.JS_INTERFACE_NAME);
-        setWebViewClient(new WebViewClient());
+        setWebViewClient(new YaWebViewClient());
 
         final WebSettings settings = getSettings();
         settings.setJavaScriptEnabled(true);
@@ -567,7 +569,7 @@ public class YaWebMapViewDelegate extends WebView
         }
     }
 
-    private final class OnLongPressGestureListener extends GestureDetector.SimpleOnGestureListener{
+    private final class OnLongPressGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
         public boolean onDown(final MotionEvent e) {
@@ -579,6 +581,26 @@ public class YaWebMapViewDelegate extends WebView
             if (yaWebMapDelegate != null) {
                 yaWebMapDelegate.onLongPress(new Point((int) e.getX(), (int) e.getY()));
             }
+        }
+    }
+
+    private final class YaWebViewClient extends WebViewClient {
+
+        @Override
+        public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
+            try {
+                final Uri uri = Uri.parse(url);
+                final Intent intent;
+                if (url.toLowerCase().startsWith("intent")) {
+                    intent = Intent.parseUri(url, 0);
+                } else {
+                    intent = new Intent(Intent.ACTION_VIEW, uri);
+                }
+                getContext().startActivity(intent);
+            } catch (Exception e) {
+                OPFLog.d(e.getMessage());
+            }
+            return true;
         }
     }
 }
