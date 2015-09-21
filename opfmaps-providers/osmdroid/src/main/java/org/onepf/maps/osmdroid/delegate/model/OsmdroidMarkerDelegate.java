@@ -16,10 +16,9 @@
 
 package org.onepf.maps.osmdroid.delegate.model;
 
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
+import org.onepf.maps.osmdroid.model.BitmapDescriptor;
 import org.onepf.opfmaps.delegate.model.MarkerDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -71,13 +70,13 @@ public final class OsmdroidMarkerDelegate implements MarkerDelegate {
         return marker.getRotation();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getSnippet() {
         return marker.getSnippet();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getTitle() {
         return marker.getTitle();
@@ -112,63 +111,97 @@ public final class OsmdroidMarkerDelegate implements MarkerDelegate {
     public void remove() {
         if (mapView != null) {
             marker.remove(mapView);
+            mapView.invalidate();
             mapView = null;
         }
     }
 
     @Override
     public void setAlpha(final float alpha) {
-        marker.setAlpha(alpha);
+        if (mapView != null) {
+            marker.setAlpha(alpha);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setAnchor(final float anchorU, final float anchorV) {
-        marker.setAnchor(anchorU, anchorV);
+        if (mapView != null) {
+            marker.setAnchor(anchorU, anchorV);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setDraggable(final boolean draggable) {
-        marker.setDraggable(draggable);
+        if (mapView != null) {
+            marker.setDraggable(draggable);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setFlat(final boolean flat) {
-        marker.setFlat(flat);
+        if (mapView != null) {
+            marker.setFlat(flat);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setIcon(@NonNull final OPFBitmapDescriptor icon) {
-        marker.setIcon((Drawable) icon.getDelegate().getBitmapDescriptor());
+        if (mapView != null) {
+            marker.setIcon(((BitmapDescriptor) icon.getDelegate().getBitmapDescriptor()).createDrawable(mapView.getContext()));
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setInfoWindowAnchor(final float anchorU, final float anchorV) {
-        marker.setInfoWindowAnchor(anchorU, anchorV);
+        if (mapView != null) {
+            marker.setInfoWindowAnchor(anchorU, anchorV);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setPosition(@NonNull final OPFLatLng latLng) {
-        marker.setPosition(new GeoPoint(latLng.getLat(), latLng.getLng()));
+        if (mapView != null) {
+            marker.setPosition(new GeoPoint(latLng.getLat(), latLng.getLng()));
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setRotation(final float rotation) {
-        marker.setRotation(rotation);
+        if (mapView != null) {
+            marker.setRotation(rotation);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setSnippet(@NonNull final String snippet) {
-        marker.setSnippet(snippet);
+        if (mapView != null) {
+            marker.setSnippet(snippet);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setTitle(@NonNull final String title) {
-        marker.setTitle(title);
+        if (mapView != null) {
+            marker.setTitle(title);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setVisible(final boolean visible) {
-        marker.setEnabled(visible);
+        if (mapView != null) {
+            marker.setEnabled(visible);
+            mapView.invalidate();
+        }
     }
 
     @Override

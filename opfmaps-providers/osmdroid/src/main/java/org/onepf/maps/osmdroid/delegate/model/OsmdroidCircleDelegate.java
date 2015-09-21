@@ -116,50 +116,52 @@ public final class OsmdroidCircleDelegate implements CircleDelegate {
 
     @Override
     public void setCenter(@NonNull final OPFLatLng center) {
-        if (mapView == null) {
-            return;
+        if (mapView != null) {
+            this.center = new GeoPoint(center.getLat(), center.getLng());
+            polygon.setPoints(Polygon.pointsAsCircle(this.center, radius));
+            mapView.invalidate();
         }
-
-        final Polygon oldCircle = polygon;
-        polygon = new Polygon(mapView.getContext());
-
-        this.center = new GeoPoint(center.getLat(), center.getLng());
-        polygon.setPoints(Polygon.pointsAsCircle(this.center, radius));
-        copyCircleFields(oldCircle);
     }
 
     @Override
     public void setFillColor(final int color) {
-        polygon.setFillColor(color);
+        if (mapView != null) {
+            polygon.setFillColor(color);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setRadius(final double radius) {
-        if (mapView == null) {
-            return;
+        if (mapView != null) {
+            this.radius = radius;
+            polygon.setPoints(Polygon.pointsAsCircle(center, this.radius));
+            mapView.invalidate();
         }
-
-        final Polygon oldCircle = polygon;
-        polygon = new Polygon(mapView.getContext());
-
-        this.radius = radius;
-        polygon.setPoints(Polygon.pointsAsCircle(center, this.radius));
-        copyCircleFields(oldCircle);
     }
 
     @Override
     public void setStrokeColor(final int color) {
-        polygon.setStrokeColor(color);
+        if (mapView != null) {
+            polygon.setStrokeColor(color);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setStrokeWidth(final float width) {
-        polygon.setStrokeWidth(width);
+        if (mapView != null) {
+            polygon.setStrokeWidth(width);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setVisible(final boolean visible) {
-        polygon.setVisible(visible);
+        if (mapView != null) {
+            polygon.setVisible(visible);
+            mapView.invalidate();
+        }
     }
 
     @Override
@@ -182,18 +184,5 @@ public final class OsmdroidCircleDelegate implements CircleDelegate {
     @Override
     public String toString() {
         return polygon.toString();
-    }
-
-    private void copyCircleFields(@NonNull final Polygon oldCircle) {
-        polygon.setFillColor(oldCircle.getFillColor());
-        polygon.setHoles(oldCircle.getHoles());
-        polygon.setStrokeColor(oldCircle.getStrokeColor());
-        polygon.setStrokeWidth(oldCircle.getStrokeWidth());
-        polygon.setVisible(oldCircle.isVisible());
-        polygon.setInfoWindow(oldCircle.getInfoWindow());
-        polygon.setRelatedObject(oldCircle.getRelatedObject());
-        polygon.setSnippet(oldCircle.getSnippet());
-        polygon.setSubDescription(oldCircle.getSubDescription());
-        polygon.setTitle(oldCircle.getTitle());
     }
 }

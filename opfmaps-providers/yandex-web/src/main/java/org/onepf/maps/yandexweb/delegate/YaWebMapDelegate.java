@@ -40,7 +40,6 @@ import org.onepf.maps.yandexweb.model.BitmapDescriptorFactory;
 import org.onepf.maps.yandexweb.model.CameraPosition;
 import org.onepf.maps.yandexweb.model.CameraUpdate;
 import org.onepf.maps.yandexweb.model.Circle;
-import org.onepf.maps.yandexweb.model.GroundOverlay;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.Marker;
 import org.onepf.maps.yandexweb.model.Polygon;
@@ -139,7 +138,7 @@ public class YaWebMapDelegate implements MapDelegate {
     @Override
     public OPFGroundOverlay addGroundOverlay(@NonNull final OPFGroundOverlayOptions options) {
         OPFLog.logStubCall(options);
-        return new OPFGroundOverlay(new YaWebGroundOverlayDelegate(new GroundOverlay()));
+        return new OPFGroundOverlay(new YaWebGroundOverlayDelegate());
     }
 
     @NonNull

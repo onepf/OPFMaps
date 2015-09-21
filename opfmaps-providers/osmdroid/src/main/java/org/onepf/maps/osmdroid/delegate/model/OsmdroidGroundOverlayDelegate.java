@@ -16,10 +16,10 @@
 
 package org.onepf.maps.osmdroid.delegate.model;
 
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.onepf.maps.osmdroid.model.BitmapDescriptor;
 import org.onepf.opfmaps.delegate.model.GroundOverlayDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
@@ -110,42 +110,66 @@ public final class OsmdroidGroundOverlayDelegate implements GroundOverlayDelegat
 
     @Override
     public void setBearing(final float bearing) {
-        groundOverlay.setBearing(bearing);
+        if (mapView != null) {
+            groundOverlay.setBearing(bearing);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setDimensions(final float width) {
-        groundOverlay.setDimensions(width);
+        if (mapView != null) {
+            groundOverlay.setDimensions(width);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setDimensions(final float width, final float height) {
-        groundOverlay.setDimensions(width, height);
+        if (mapView != null) {
+            groundOverlay.setDimensions(width, height);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setImage(@NonNull final OPFBitmapDescriptor image) {
-        groundOverlay.setImage((Drawable) image.getDelegate().getBitmapDescriptor());
+        if (mapView != null) {
+            groundOverlay.setImage(((BitmapDescriptor) image.getDelegate().getBitmapDescriptor()).createDrawable(mapView.getContext()));
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setPosition(@NonNull final OPFLatLng latLng) {
-        groundOverlay.setPosition(new GeoPoint(latLng.getLat(), latLng.getLng()));
+        if (mapView != null) {
+            groundOverlay.setPosition(new GeoPoint(latLng.getLat(), latLng.getLng()));
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setPositionFromBounds(@NonNull final OPFLatLngBounds bounds) {
-        groundOverlay.setPosition(new GeoPoint(bounds.getCenter().getLat(), bounds.getCenter().getLng()));
+        if (mapView != null) {
+            groundOverlay.setPosition(new GeoPoint(bounds.getCenter().getLat(), bounds.getCenter().getLng()));
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setTransparency(final float transparency) {
-        groundOverlay.setTransparency(transparency);
+        if (mapView != null) {
+            groundOverlay.setTransparency(transparency);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setVisible(final boolean visible) {
-        groundOverlay.setEnabled(visible);
+        if (mapView != null) {
+            groundOverlay.setEnabled(visible);
+            mapView.invalidate();
+        }
     }
 
     @Override

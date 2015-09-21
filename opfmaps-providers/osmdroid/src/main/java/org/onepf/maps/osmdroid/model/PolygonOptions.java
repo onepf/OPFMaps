@@ -19,6 +19,7 @@ package org.onepf.maps.osmdroid.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import org.onepf.opfutils.OPFLog;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
@@ -53,8 +54,6 @@ public final class PolygonOptions implements Parcelable {
     private int fillColor;
     private int strokeColor = DEFAULT_STROKE_COLOR;
     private float strokeWidth = 10.0F;
-    private float zIndex;
-    private boolean isGeodesic;
     private boolean isVisible = true;
 
     public PolygonOptions() {
@@ -67,8 +66,6 @@ public final class PolygonOptions implements Parcelable {
         this.fillColor = source.readInt();
         this.strokeColor = source.readInt();
         this.strokeWidth = source.readFloat();
-        this.zIndex = source.readFloat();
-        this.isGeodesic = source.readByte() != 0;
         this.isVisible = source.readByte() != 0;
     }
 
@@ -113,7 +110,7 @@ public final class PolygonOptions implements Parcelable {
 
     @NonNull
     public PolygonOptions geodesic(final boolean geodesic) {
-        this.isGeodesic = geodesic;
+        OPFLog.logStubCall(geodesic);
         return this;
     }
 
@@ -140,11 +137,11 @@ public final class PolygonOptions implements Parcelable {
     }
 
     public float getZIndex() {
-        return zIndex;
+        return 0.0f;
     }
 
     public boolean isGeodesic() {
-        return isGeodesic;
+        return false;
     }
 
     public boolean isVisible() {
@@ -171,7 +168,7 @@ public final class PolygonOptions implements Parcelable {
 
     @NonNull
     public PolygonOptions zIndex(final float zIndex) {
-        this.zIndex = zIndex;
+        OPFLog.logStubCall(zIndex);
         return this;
     }
 
@@ -186,8 +183,6 @@ public final class PolygonOptions implements Parcelable {
             return this.fillColor == other.fillColor
                     && this.strokeColor == other.strokeColor
                     && this.strokeWidth == other.strokeWidth
-                    && this.zIndex == other.zIndex
-                    && this.isGeodesic == other.isGeodesic
                     && this.isVisible == other.isVisible
                     && this.holes.equals(other.holes)
                     && this.points.equals(other.points);
@@ -202,8 +197,6 @@ public final class PolygonOptions implements Parcelable {
         result = 31 * result + fillColor;
         result = 31 * result + strokeColor;
         result = 31 * result + (strokeWidth != +0.0f ? Float.floatToIntBits(strokeWidth) : 0);
-        result = 31 * result + (zIndex != +0.0f ? Float.floatToIntBits(zIndex) : 0);
-        result = 31 * result + (isGeodesic ? 1 : 0);
         result = 31 * result + (isVisible ? 1 : 0);
         return result;
     }
@@ -220,8 +213,6 @@ public final class PolygonOptions implements Parcelable {
         out.writeList(this.points);
         out.writeInt(this.strokeColor);
         out.writeFloat(this.strokeWidth);
-        out.writeFloat(this.zIndex);
-        out.writeByte((byte) (this.isGeodesic ? 1 : 0));
         out.writeByte((byte) (this.isVisible ? 1 : 0));
     }
 }

@@ -128,42 +128,6 @@ public final class ConvertUtils {
         return options;
     }
 
-    public static GroundOverlayOptions convertGroundOverlayOptions(@NonNull final OPFGroundOverlayOptions opfOptions) {
-        final GroundOverlayOptions options = new GroundOverlayOptions()
-                .anchor(opfOptions.getAnchorU(), opfOptions.getAnchorV())
-                .bearing(opfOptions.getBearing())
-                .transparency(opfOptions.getTransparency())
-                .visible(opfOptions.isVisible())
-                .zIndex(opfOptions.getZIndex());
-
-        final OPFBitmapDescriptor image = opfOptions.getImage();
-        if (image != null) {
-            options.image((BitmapDescriptor) image.getDelegate().getBitmapDescriptor());
-        }
-
-        final OPFLatLng opfLocation = opfOptions.getLocation();
-        if (opfLocation != null) {
-            final LatLng location = new LatLng(opfLocation.getLat(), opfLocation.getLng());
-            final float height = opfOptions.getHeight();
-            final float width = opfOptions.getWidth();
-            if (height != 0) {
-                options.position(location, width, height);
-            } else {
-                options.position(location, width);
-            }
-        }
-
-        final OPFLatLngBounds opfLatLngBounds = opfOptions.getBounds();
-        if (opfLatLngBounds != null) {
-            options.positionFromBounds(new LatLngBounds(
-                    new LatLng(opfLatLngBounds.getSouthwest().getLat(), opfLatLngBounds.getSouthwest().getLng()),
-                    new LatLng(opfLatLngBounds.getNortheast().getLat(), opfLatLngBounds.getNortheast().getLng())
-            ));
-        }
-
-        return options;
-    }
-
     public static MarkerOptions convertMarkerOptions(@NonNull final OPFMarkerOptions opfOptions) {
         final MarkerOptions options = new MarkerOptions()
                 .alpha(opfOptions.getAlpha())
@@ -173,7 +137,8 @@ public final class ConvertUtils {
                 .infoWindowAnchor(opfOptions.getInfoWindowAnchorU(), opfOptions.getInfoWindowAnchorV())
                 .rotation(opfOptions.getRotation())
                 .snippet(opfOptions.getSnippet())
-                .title(opfOptions.getTitle());
+                .title(opfOptions.getTitle())
+                .visible(opfOptions.isVisible());
 
         final OPFBitmapDescriptor icon = opfOptions.getIcon();
         if (icon != null) {

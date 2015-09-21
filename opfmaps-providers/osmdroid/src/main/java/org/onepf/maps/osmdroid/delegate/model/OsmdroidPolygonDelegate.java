@@ -129,7 +129,10 @@ public final class OsmdroidPolygonDelegate implements PolygonDelegate {
 
     @Override
     public void setFillColor(final int color) {
-        polygon.setFillColor(color);
+        if (mapView != null) {
+            polygon.setFillColor(color);
+            mapView.invalidate();
+        }
     }
 
     @Override
@@ -139,41 +142,56 @@ public final class OsmdroidPolygonDelegate implements PolygonDelegate {
 
     @Override
     public void setHoles(@NonNull final List<? extends List<OPFLatLng>> holes) {
-        final List<List<GeoPoint>> osmdroidHoles = new ArrayList<>(holes.size());
-        for (List<OPFLatLng> hole : holes) {
-            final List<GeoPoint> osmdroidHole = new ArrayList<>(hole.size());
-            for (OPFLatLng point : hole) {
-                osmdroidHole.add(new GeoPoint(point.getLat(), point.getLng()));
+        if (mapView != null) {
+            final List<List<GeoPoint>> osmdroidHoles = new ArrayList<>(holes.size());
+            for (List<OPFLatLng> hole : holes) {
+                final List<GeoPoint> osmdroidHole = new ArrayList<>(hole.size());
+                for (OPFLatLng point : hole) {
+                    osmdroidHole.add(new GeoPoint(point.getLat(), point.getLng()));
+                }
+                osmdroidHoles.add(osmdroidHole);
             }
-            osmdroidHoles.add(osmdroidHole);
-        }
 
-        polygon.setHoles(osmdroidHoles);
+            polygon.setHoles(osmdroidHoles);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setPoints(@NonNull final List<OPFLatLng> points) {
-        final List<GeoPoint> osmdroidPoints = new ArrayList<>(points.size());
-        for (OPFLatLng point : points) {
-            osmdroidPoints.add(new GeoPoint(point.getLat(), point.getLng()));
-        }
+        if (mapView != null) {
+            final List<GeoPoint> osmdroidPoints = new ArrayList<>(points.size());
+            for (OPFLatLng point : points) {
+                osmdroidPoints.add(new GeoPoint(point.getLat(), point.getLng()));
+            }
 
-        polygon.setPoints(osmdroidPoints);
+            polygon.setPoints(osmdroidPoints);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setStrokeColor(final int color) {
-        polygon.setStrokeColor(color);
+        if (mapView != null) {
+            polygon.setStrokeColor(color);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setStrokeWidth(final float width) {
-        polygon.setStrokeWidth(width);
+        if (mapView != null) {
+            polygon.setStrokeWidth(width);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setVisible(final boolean visible) {
-        polygon.setVisible(visible);
+        if (mapView != null) {
+            polygon.setVisible(visible);
+            mapView.invalidate();
+        }
     }
 
     @Override

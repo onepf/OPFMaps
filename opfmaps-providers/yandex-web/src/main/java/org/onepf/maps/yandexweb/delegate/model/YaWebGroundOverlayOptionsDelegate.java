@@ -19,15 +19,11 @@ package org.onepf.maps.yandexweb.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import org.onepf.maps.yandexweb.model.BitmapDescriptor;
-import org.onepf.maps.yandexweb.model.GroundOverlayOptions;
-import org.onepf.maps.yandexweb.model.LatLng;
-import org.onepf.maps.yandexweb.model.LatLngBounds;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -38,7 +34,7 @@ public final class YaWebGroundOverlayOptionsDelegate implements GroundOverlayOpt
     public static final Creator<YaWebGroundOverlayOptionsDelegate> CREATOR = new Creator<YaWebGroundOverlayOptionsDelegate>() {
         @Override
         public YaWebGroundOverlayOptionsDelegate createFromParcel(final Parcel source) {
-            return new YaWebGroundOverlayOptionsDelegate(source);
+            return new YaWebGroundOverlayOptionsDelegate();
         }
 
         @Override
@@ -48,178 +44,135 @@ public final class YaWebGroundOverlayOptionsDelegate implements GroundOverlayOpt
     };
 
     @NonNull
-    private final GroundOverlayOptions groundOverlayOptions;
-
-    public YaWebGroundOverlayOptionsDelegate() {
-        this.groundOverlayOptions = new GroundOverlayOptions();
-    }
-
-    private YaWebGroundOverlayOptionsDelegate(@NonNull final Parcel parcel) {
-        this.groundOverlayOptions = parcel.readParcelable(GroundOverlayOptions.class.getClassLoader());
-    }
-
-    @NonNull
     @Override
     public YaWebGroundOverlayOptionsDelegate anchor(final float u, final float v) {
-        groundOverlayOptions.anchor(u, v);
+        OPFLog.logStubCall(u, v);
         return this;
     }
 
     @NonNull
     @Override
     public YaWebGroundOverlayOptionsDelegate bearing(final float bearing) {
-        groundOverlayOptions.bearing(bearing);
+        OPFLog.logStubCall(bearing);
         return this;
     }
 
     @Override
     public float getAnchorU() {
-        return groundOverlayOptions.getAnchorU();
+        return 0.0f;
     }
 
     @Override
     public float getAnchorV() {
-        return groundOverlayOptions.getAnchorV();
+        return 0.0f;
     }
 
     @Override
     public float getBearing() {
-        return groundOverlayOptions.getBearing();
+        return 0.0f;
     }
 
     @Nullable
     @Override
     public OPFLatLngBounds getBounds() {
-        final LatLngBounds bounds = groundOverlayOptions.getBounds();
-        if (bounds != null) {
-            return new OPFLatLngBounds(new YaWebLatLngBoundsDelegate(bounds));
-        }
         return null;
     }
 
     @Override
     public float getHeight() {
-        return groundOverlayOptions.getHeight();
+        return 0.0f;
     }
 
     @Nullable
     @Override
     public OPFBitmapDescriptor getImage() {
-        final BitmapDescriptor image = groundOverlayOptions.getImage();
-        if (image != null) {
-            return new OPFBitmapDescriptor(new YaWebBitmapDescriptorDelegate(image));
-        }
         return null;
     }
 
     @Nullable
     @Override
     public OPFLatLng getLocation() {
-        final LatLng location = groundOverlayOptions.getLocation();
-        if (location != null) {
-            return new OPFLatLng(new YaWebLatLngDelegate(location));
-        }
         return null;
     }
 
     @Override
     public float getTransparency() {
-        return groundOverlayOptions.getTransparency();
+        return 0.0f;
     }
 
     @Override
     public float getWidth() {
-        return groundOverlayOptions.getWidth();
+        return 0.0f;
     }
 
     @Override
     public float getZIndex() {
-        return groundOverlayOptions.getZIndex();
+        return 0.0f;
     }
 
     @NonNull
     @Override
     public YaWebGroundOverlayOptionsDelegate image(@NonNull final OPFBitmapDescriptor image) {
-        groundOverlayOptions.image((BitmapDescriptor) image.getDelegate().getBitmapDescriptor());
+        OPFLog.logStubCall(image);
         return this;
     }
 
     @Override
     public boolean isVisible() {
-        return groundOverlayOptions.isVisible();
+        return false;
     }
 
     @NonNull
     @Override
     public YaWebGroundOverlayOptionsDelegate position(@NonNull final OPFLatLng location,
-                                                       final float width,
-                                                       final float height) {
-        groundOverlayOptions.position(new LatLng(location.getLat(), location.getLng()), width, height);
+                                                      final float width,
+                                                      final float height) {
+        OPFLog.logStubCall(location, width, height);
         return this;
     }
 
     @NonNull
     @Override
     public YaWebGroundOverlayOptionsDelegate position(@NonNull final OPFLatLng location, final float width) {
-        groundOverlayOptions.position(new LatLng(location.getLat(), location.getLng()), width);
+        OPFLog.logStubCall(location, width);
         return this;
     }
 
     @NonNull
     @Override
     public YaWebGroundOverlayOptionsDelegate positionFromBounds(@NonNull final OPFLatLngBounds bounds) {
-        groundOverlayOptions.positionFromBounds(new LatLngBounds(
-                new LatLng(bounds.getSouthwest().getLat(), bounds.getNortheast().getLng()),
-                new LatLng(bounds.getNortheast().getLat(), bounds.getNortheast().getLng())
-        ));
+        OPFLog.logStubCall(bounds);
         return this;
     }
 
     @NonNull
     @Override
     public YaWebGroundOverlayOptionsDelegate transparency(final float transparency) {
-        groundOverlayOptions.transparency(transparency);
+        OPFLog.logStubCall(transparency);
         return this;
     }
 
     @NonNull
     @Override
     public YaWebGroundOverlayOptionsDelegate visible(final boolean visible) {
-        groundOverlayOptions.visible(visible);
+        OPFLog.logStubCall(visible);
         return this;
     }
 
     @NonNull
     @Override
     public YaWebGroundOverlayOptionsDelegate zIndex(final float zIndex) {
-        groundOverlayOptions.zIndex(zIndex);
+        OPFLog.logStubCall(zIndex);
         return this;
     }
 
     @Override
     public int describeContents() {
-        return groundOverlayOptions.describeContents();
+        return 0;
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(groundOverlayOptions, flags);
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return other != null
-                && (other == this || other instanceof YaWebGroundOverlayOptionsDelegate
-                && groundOverlayOptions.equals(((YaWebGroundOverlayOptionsDelegate) other).groundOverlayOptions));
-    }
-
-    @Override
-    public int hashCode() {
-        return groundOverlayOptions.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return groundOverlayOptions.toString();
+        //nothing
     }
 }

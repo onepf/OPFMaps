@@ -17,6 +17,7 @@
 package org.onepf.opfmaps.delegate.model;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
 
@@ -36,10 +37,10 @@ public interface MarkerDelegate {
 
     float getRotation();
 
-    @NonNull
+    @Nullable
     String getSnippet();
 
-    @NonNull
+    @Nullable
     String getTitle();
 
     void hideInfoWindow();

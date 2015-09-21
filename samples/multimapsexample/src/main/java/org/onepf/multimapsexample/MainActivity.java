@@ -246,31 +246,33 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         opfMap.setInfoWindowAdapter(new OPFInfoWindowAdapter() {
             @Override
             public View getInfoWindow(@NonNull final OPFMarker marker) {
-                if (!marker.getSnippet().equals("snippet #2")) {
+                final String snippet = marker.getSnippet();
+                if (snippet != null && !snippet.equals("snippet #2")) {
                     return null;
                 }
 
                 //noinspection InflateParams
                 final View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.info_window, null);
-                final TextView title = (TextView) inflate.findViewById(R.id.title);
-                title.setText(marker.getTitle());
-                final TextView snippet = (TextView) inflate.findViewById(R.id.snippet);
-                snippet.setText(marker.getSnippet());
+                final TextView titleTextView = (TextView) inflate.findViewById(R.id.title);
+                titleTextView.setText(marker.getTitle());
+                final TextView snippetTextView = (TextView) inflate.findViewById(R.id.snippet);
+                snippetTextView.setText(marker.getSnippet());
                 return inflate;
             }
 
             @Override
             public View getInfoContents(@NonNull final OPFMarker marker) {
-                if (!marker.getSnippet().equals("snippet #1")) {
+                final String snippet = marker.getSnippet();
+                if (snippet != null && !snippet.equals("snippet #1")) {
                     return null;
                 }
 
                 //noinspection InflateParams
                 final View inflate = LayoutInflater.from(MainActivity.this).inflate(R.layout.info_window, null);
-                final TextView title = (TextView) inflate.findViewById(R.id.title);
-                title.setText(marker.getTitle());
-                final TextView snippet = (TextView) inflate.findViewById(R.id.snippet);
-                snippet.setText(marker.getSnippet());
+                final TextView titleTextView = (TextView) inflate.findViewById(R.id.title);
+                titleTextView.setText(marker.getTitle());
+                final TextView snippetTextView = (TextView) inflate.findViewById(R.id.snippet);
+                snippetTextView.setText(marker.getSnippet());
                 return inflate;
             }
         });
@@ -292,22 +294,22 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
         polygon = opfMap.addPolygon(new OPFPolygonOptions()
                         .add(
-                                new OPFLatLng(55.7597311265849, 37.71333884100602),
-                                new OPFLatLng(55.70860754839525, 37.69927662137808),
-                                new OPFLatLng(55.75862834496016, 37.513138401618356)
+                                new OPFLatLng(37.773975, -122.40205),
+                                new OPFLatLng(55.752004, -122.40205),
+                                new OPFLatLng(55.752004, 37.617017)
                         ).addHole(
                                 Arrays.asList(
-                                        new OPFLatLng(55.739139488175816, 37.586989729090135),
-                                        new OPFLatLng(55.726197236786376, 37.7097639987773),
-                                        new OPFLatLng(55.70969983952349, 37.70240624420652)
+                                        new OPFLatLng(52.83153846941036, -104.87376610724503),
+                                        new OPFLatLng(44.760517600395474, -105.87971035044585),
+                                        new OPFLatLng(54.35459330167125, -84.07064501079975)
                                 )
                         ).addHole(
                                 Arrays.asList(
-                                        new OPFLatLng(55.7522606417405, 37.645697095053656),
-                                        new OPFLatLng(55.75133838313202, 37.66817936044419),
-                                        new OPFLatLng(55.74298813628395, 37.6541842601019)
+                                        new OPFLatLng(51.29171452642614, -71.25262498180511),
+                                        new OPFLatLng(50.836485416038634, -69.86148826228197),
+                                        new OPFLatLng(52.71736429812524, -64.15429716201099)
                                 )
-                        ).fillColor(Color.RED).strokeColor(Color.GREEN).strokeWidth(1.0f).zIndex(1.0f)
+                        ).fillColor(Color.RED).strokeColor(Color.GREEN).strokeWidth(5)
         );
 
         polyline = opfMap.addPolyline(new OPFPolylineOptions().add(

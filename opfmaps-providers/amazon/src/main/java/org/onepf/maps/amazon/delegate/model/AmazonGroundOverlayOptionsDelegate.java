@@ -19,16 +19,11 @@ package org.onepf.maps.amazon.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import com.amazon.geo.mapsv2.model.BitmapDescriptor;
-import com.amazon.geo.mapsv2.model.GroundOverlayOptions;
-import com.amazon.geo.mapsv2.model.LatLng;
-import com.amazon.geo.mapsv2.model.LatLngBounds;
-
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -39,7 +34,7 @@ public final class AmazonGroundOverlayOptionsDelegate implements GroundOverlayOp
     public static final Creator<AmazonGroundOverlayOptionsDelegate> CREATOR = new Creator<AmazonGroundOverlayOptionsDelegate>() {
         @Override
         public AmazonGroundOverlayOptionsDelegate createFromParcel(final Parcel source) {
-            return new AmazonGroundOverlayOptionsDelegate(source);
+            return new AmazonGroundOverlayOptionsDelegate();
         }
 
         @Override
@@ -49,105 +44,82 @@ public final class AmazonGroundOverlayOptionsDelegate implements GroundOverlayOp
     };
 
     @NonNull
-    private final GroundOverlayOptions groundOverlayOptions;
-
-    public AmazonGroundOverlayOptionsDelegate() {
-        this.groundOverlayOptions = new GroundOverlayOptions();
-    }
-
-    private AmazonGroundOverlayOptionsDelegate(@NonNull final Parcel parcel) {
-        this.groundOverlayOptions = parcel.readParcelable(GroundOverlayOptions.class.getClassLoader());
-    }
-
-    @NonNull
     @Override
     public AmazonGroundOverlayOptionsDelegate anchor(final float u, final float v) {
-        groundOverlayOptions.anchor(u, v);
+        OPFLog.logStubCall(u, v);
         return this;
     }
 
     @NonNull
     @Override
     public AmazonGroundOverlayOptionsDelegate bearing(final float bearing) {
-        groundOverlayOptions.bearing(bearing);
+        OPFLog.logStubCall(bearing);
         return this;
     }
 
     @Override
     public float getAnchorU() {
-        return groundOverlayOptions.getAnchorU();
+        return 0.0f;
     }
 
     @Override
     public float getAnchorV() {
-        return groundOverlayOptions.getAnchorV();
+        return 0.0f;
     }
 
     @Override
     public float getBearing() {
-        return groundOverlayOptions.getBearing();
+        return 0.0f;
     }
 
     @Nullable
     @Override
     public OPFLatLngBounds getBounds() {
-        final LatLngBounds bounds = groundOverlayOptions.getBounds();
-        if (bounds != null) {
-            return new OPFLatLngBounds(new AmazonLatLngBoundsDelegate(bounds));
-        }
         return null;
     }
 
     @Override
     public float getHeight() {
-        return groundOverlayOptions.getHeight();
+        return 0.0f;
     }
 
     @Nullable
     @Override
     public OPFBitmapDescriptor getImage() {
-        final BitmapDescriptor image = groundOverlayOptions.getImage();
-        if (image != null) {
-            return new OPFBitmapDescriptor(new AmazonBitmapDescriptorDelegate(image));
-        }
         return null;
     }
 
     @Nullable
     @Override
     public OPFLatLng getLocation() {
-        final LatLng location = groundOverlayOptions.getLocation();
-        if (location != null) {
-            return new OPFLatLng(new AmazonLatLngDelegate(location));
-        }
         return null;
     }
 
     @Override
     public float getTransparency() {
-        return groundOverlayOptions.getTransparency();
+        return 0.0f;
     }
 
     @Override
     public float getWidth() {
-        return groundOverlayOptions.getWidth();
+        return 0.0f;
     }
 
     @Override
     public float getZIndex() {
-        return groundOverlayOptions.getZIndex();
+        return 0.0f;
     }
 
     @NonNull
     @Override
     public AmazonGroundOverlayOptionsDelegate image(@NonNull final OPFBitmapDescriptor image) {
-        groundOverlayOptions.image((BitmapDescriptor) image.getDelegate().getBitmapDescriptor());
+        OPFLog.logStubCall(image);
         return this;
     }
 
     @Override
     public boolean isVisible() {
-        return groundOverlayOptions.isVisible();
+        return false;
     }
 
     @NonNull
@@ -155,72 +127,52 @@ public final class AmazonGroundOverlayOptionsDelegate implements GroundOverlayOp
     public AmazonGroundOverlayOptionsDelegate position(@NonNull final OPFLatLng location,
                                                        final float width,
                                                        final float height) {
-        groundOverlayOptions.position(new LatLng(location.getLat(), location.getLng()), width, height);
+        OPFLog.logStubCall(location, width, height);
         return this;
     }
 
     @NonNull
     @Override
     public AmazonGroundOverlayOptionsDelegate position(@NonNull final OPFLatLng location, final float width) {
-        groundOverlayOptions.position(new LatLng(location.getLat(), location.getLng()), width);
+        OPFLog.logStubCall(location, width);
         return this;
     }
 
     @NonNull
     @Override
     public AmazonGroundOverlayOptionsDelegate positionFromBounds(@NonNull final OPFLatLngBounds bounds) {
-        groundOverlayOptions.positionFromBounds(new LatLngBounds(
-                new LatLng(bounds.getSouthwest().getLat(), bounds.getNortheast().getLng()),
-                new LatLng(bounds.getNortheast().getLat(), bounds.getNortheast().getLng())
-        ));
+        OPFLog.logStubCall(bounds);
         return this;
     }
 
     @NonNull
     @Override
     public AmazonGroundOverlayOptionsDelegate transparency(final float transparency) {
-        groundOverlayOptions.transparency(transparency);
+        OPFLog.logStubCall(transparency);
         return this;
     }
 
     @NonNull
     @Override
     public AmazonGroundOverlayOptionsDelegate visible(final boolean visible) {
-        groundOverlayOptions.visible(visible);
+        OPFLog.logStubCall(visible);
         return this;
     }
 
     @NonNull
     @Override
     public AmazonGroundOverlayOptionsDelegate zIndex(final float zIndex) {
-        groundOverlayOptions.zIndex(zIndex);
+        OPFLog.logStubCall(zIndex);
         return this;
     }
 
     @Override
     public int describeContents() {
-        return groundOverlayOptions.describeContents();
+        return 0;
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(groundOverlayOptions, flags);
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return other != null
-                && (other == this || other instanceof AmazonGroundOverlayOptionsDelegate
-                && groundOverlayOptions.equals(((AmazonGroundOverlayOptionsDelegate) other).groundOverlayOptions));
-    }
-
-    @Override
-    public int hashCode() {
-        return groundOverlayOptions.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return groundOverlayOptions.toString();
+        //nothing
     }
 }

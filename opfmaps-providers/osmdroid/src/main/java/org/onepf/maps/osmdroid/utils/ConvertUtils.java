@@ -31,6 +31,7 @@ import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfmaps.model.OPFLatLngBounds;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
@@ -111,7 +112,7 @@ public final class ConvertUtils {
                                                               @NonNull final OPFCircleOptions options) {
         final OPFLatLng opfCenter = options.getCenter();
         if (opfCenter == null) {
-            throw new IllegalArgumentException("Center is not specified");
+            throw new IllegalArgumentException("no center in circle options");
         }
 
         final OsmdroidCircleDelegate circleDelegate = new OsmdroidCircleDelegate(
@@ -136,23 +137,39 @@ public final class ConvertUtils {
         groundOverlay.setBearing(options.getBearing());
         groundOverlay.setTransparency(options.getTransparency());
 
-        final OPFBitmapDescriptor opfBitmapDescriptor = options.getImage();
-        if (opfBitmapDescriptor != null) {
-            groundOverlay.setImage(((BitmapDescriptor) options.getImage()
-                    .getDelegate().getBitmapDescriptor()).createDrawable(context));
-        }
-
+        final OPFLatLngBounds bounds = options.getBounds();
         final OPFLatLng location = options.getLocation();
+
         if (location != null) {
             groundOverlay.setPosition(new GeoPoint(location.getLat(), location.getLng()));
+        } else if (bounds != null) {
+            final OPFLatLng boundsCenter = bounds.getCenter();
+            groundOverlay.setPosition(new GeoPoint(boundsCenter.getLat(), boundsCenter.getLng()));
+        } else {
+            throw new IllegalArgumentException("no position in ground overlay options");
         }
+        groundOverlay.setDimensions(options.getWidth(), options.getHeight());
+        groundOverlay.setEnabled(options.isVisible());
+
+        final OPFBitmapDescriptor opfBitmapDescriptor = options.getImage();
+        if (opfBitmapDescriptor == null) {
+            throw new IllegalArgumentException("no image in ground overlay options");
+        }
+        groundOverlay.setImage(((BitmapDescriptor) options.getImage()
+                .getDelegate().getBitmapDescriptor()).createDrawable(context));
 
         return groundOverlay;
     }
 
     @NonNull
     public static Marker convertMarkerOptions(@NonNull final MapView map, @NonNull final OPFMarkerOptions options) {
+        final OPFLatLng position = options.getPosition();
+        if (position == null) {
+            throw new IllegalArgumentException("no position in marker options");
+        }
+
         final Marker marker = new Marker(map);
+        marker.setPosition(new GeoPoint(position.getLat(), position.getLng()));
         marker.setAlpha(options.getAlpha());
         marker.setAnchor(options.getAnchorU(), options.getAnchorV());
         marker.setDraggable(options.isDraggable());
@@ -161,16 +178,12 @@ public final class ConvertUtils {
         marker.setRotation(options.getRotation());
         marker.setSnippet(options.getSnippet());
         marker.setTitle(options.getTitle());
+        marker.setEnabled(options.isVisible());
 
         final OPFBitmapDescriptor opfBitmapDescriptor = options.getIcon();
         if (opfBitmapDescriptor != null) {
             marker.setIcon(((BitmapDescriptor) options.getIcon()
                     .getDelegate().getBitmapDescriptor()).createDrawable(map.getContext()));
-        }
-
-        final OPFLatLng position = options.getPosition();
-        if (position != null) {
-            marker.setPosition(new GeoPoint(position.getLat(), position.getLng()));
         }
 
         return marker;

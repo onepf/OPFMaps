@@ -18,6 +18,7 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import com.amazon.geo.mapsv2.model.BitmapDescriptor;
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.Marker;
@@ -25,6 +26,7 @@ import com.amazon.geo.mapsv2.model.Marker;
 import org.onepf.opfmaps.delegate.model.MarkerDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -61,13 +63,13 @@ public final class AmazonMarkerDelegate implements MarkerDelegate {
         return marker.getRotation();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getSnippet() {
         return marker.getSnippet();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getTitle() {
         return marker.getTitle();
@@ -80,12 +82,12 @@ public final class AmazonMarkerDelegate implements MarkerDelegate {
 
     @Override
     public boolean isDraggable() {
-        return marker.isDraggable();
+        return false;
     }
 
     @Override
     public boolean isFlat() {
-        return marker.isFlat();
+        return false;
     }
 
     @Override
@@ -115,12 +117,12 @@ public final class AmazonMarkerDelegate implements MarkerDelegate {
 
     @Override
     public void setDraggable(final boolean draggable) {
-        marker.setDraggable(draggable);
+        OPFLog.logStubCall(draggable);
     }
 
     @Override
     public void setFlat(final boolean flat) {
-        marker.setFlat(flat);
+        OPFLog.logStubCall(flat);
     }
 
     @Override

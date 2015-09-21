@@ -16,6 +16,7 @@
 
 package org.onepf.maps.yandexweb.utils;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.webkit.WebView;
@@ -104,7 +105,7 @@ public final class ConvertUtils {
     public static Circle convertCircleOptions(@NonNull final WebView webView, @NonNull final OPFCircleOptions options) {
         final OPFLatLng center = options.getCenter();
         if (center == null) {
-            throw new IllegalArgumentException("Circle center can't be null");
+            throw new IllegalArgumentException("no center in circle options");
         }
 
         return new Circle(
@@ -125,7 +126,7 @@ public final class ConvertUtils {
                                               @NonNull final OPFMarkerOptions options) {
         final OPFLatLng position = options.getPosition();
         if (position == null) {
-            throw new IllegalArgumentException("Marker position can't be null");
+            throw new IllegalArgumentException("no position in marker options");
         }
 
         return new Marker(
@@ -193,6 +194,9 @@ public final class ConvertUtils {
     //CHECKSTYLE:OFF
     @NonNull
     public static String convertColor(final int color) {
+        if (color == Color.TRANSPARENT) {
+            return "#00000000";
+        }
         return String.format("#%06X", 0xFFFFFF & color);
     }
     //CHECKSTYLE:ON

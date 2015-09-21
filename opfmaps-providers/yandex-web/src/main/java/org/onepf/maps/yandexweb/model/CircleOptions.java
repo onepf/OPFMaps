@@ -16,6 +16,7 @@
 
 package org.onepf.maps.yandexweb.model;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -42,11 +43,12 @@ public final class CircleOptions implements Parcelable {
         }
     };
 
-    private static final int DEFAULT_STROKE_COLOR = -16777216;
+    private static final int DEFAULT_FILL_COLOR = Color.TRANSPARENT;
+    private static final int DEFAULT_STROKE_COLOR = Color.BLACK;
 
     @Nullable
     private LatLng center;
-    private int fillColor;
+    private int fillColor = DEFAULT_FILL_COLOR;
     private double radius;
     private int strokeColor = DEFAULT_STROKE_COLOR;
     private float strokeWidth = 10.0F;

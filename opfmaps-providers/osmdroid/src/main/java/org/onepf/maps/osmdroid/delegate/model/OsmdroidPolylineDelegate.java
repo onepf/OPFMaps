@@ -109,32 +109,47 @@ public final class OsmdroidPolylineDelegate implements PolylineDelegate {
 
     @Override
     public void setColor(final int color) {
-        polyline.setColor(color);
+        if (mapView != null) {
+            polyline.setColor(color);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setGeodesic(final boolean geodesic) {
-        polyline.setGeodesic(geodesic);
+        if (mapView != null) {
+            polyline.setGeodesic(geodesic);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setPoints(@NonNull final List<OPFLatLng> points) {
-        final List<GeoPoint> osmdroidPoints = new ArrayList<>(points.size());
-        for (OPFLatLng point : points) {
-            osmdroidPoints.add(new GeoPoint(point.getLat(), point.getLng()));
-        }
+        if (mapView != null) {
+            final List<GeoPoint> osmdroidPoints = new ArrayList<>(points.size());
+            for (OPFLatLng point : points) {
+                osmdroidPoints.add(new GeoPoint(point.getLat(), point.getLng()));
+            }
 
-        polyline.setPoints(osmdroidPoints);
+            polyline.setPoints(osmdroidPoints);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setVisible(final boolean visible) {
-        polyline.setVisible(visible);
+        if (mapView != null) {
+            polyline.setVisible(visible);
+            mapView.invalidate();
+        }
     }
 
     @Override
     public void setWidth(final float width) {
-        polyline.setWidth(width);
+        if (mapView != null) {
+            polyline.setWidth(width);
+            mapView.invalidate();
+        }
     }
 
     @Override

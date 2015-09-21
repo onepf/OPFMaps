@@ -20,20 +20,17 @@ import android.graphics.Bitmap;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.view.View;
-
 import com.amazon.geo.mapsv2.AmazonMap;
 import com.amazon.geo.mapsv2.CameraUpdate;
 import com.amazon.geo.mapsv2.LocationSource;
 import com.amazon.geo.mapsv2.model.CameraPosition;
 import com.amazon.geo.mapsv2.model.Circle;
-import com.amazon.geo.mapsv2.model.GroundOverlay;
 import com.amazon.geo.mapsv2.model.IndoorBuilding;
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.Marker;
 import com.amazon.geo.mapsv2.model.Polygon;
 import com.amazon.geo.mapsv2.model.Polyline;
 import com.amazon.geo.mapsv2.model.TileOverlay;
-
 import org.onepf.maps.amazon.delegate.model.AmazonCameraPositionDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonCircleDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonGroundOverlayDelegate;
@@ -106,8 +103,8 @@ public class AmazonMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFGroundOverlay addGroundOverlay(@NonNull final OPFGroundOverlayOptions options) {
-        final GroundOverlay groundOverlay = map.addGroundOverlay(ConvertUtils.convertGroundOverlayOptions(options));
-        return new OPFGroundOverlay(new AmazonGroundOverlayDelegate(groundOverlay));
+        OPFLog.logStubCall(options);
+        return new OPFGroundOverlay(new AmazonGroundOverlayDelegate());
     }
 
     @NonNull

@@ -18,6 +18,7 @@ package org.onepf.maps.yandexweb.delegate.model;
 
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import org.onepf.maps.yandexweb.model.BitmapDescriptor;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.Marker;
@@ -60,13 +61,13 @@ public final class YaWebMarkerDelegate implements MarkerDelegate {
         return marker.getRotation();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getSnippet() {
         return marker.getSnippet();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getTitle() {
         return marker.getTitle();

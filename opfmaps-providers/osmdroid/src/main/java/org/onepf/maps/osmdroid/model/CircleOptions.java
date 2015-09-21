@@ -21,6 +21,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfutils.OPFLog;
 import org.osmdroid.util.GeoPoint;
 
 import static org.onepf.maps.osmdroid.utils.CompareUtils.isEquals;
@@ -51,7 +52,6 @@ public final class CircleOptions implements Parcelable {
     private double radius;
     private int strokeColor = DEFAULT_STROKE_COLOR;
     private float strokeWidth = 10.0F;
-    private float zIndex;
     private boolean isVisible = true;
 
     public CircleOptions() {
@@ -64,7 +64,6 @@ public final class CircleOptions implements Parcelable {
         this.radius = parcel.readDouble();
         this.strokeColor = parcel.readInt();
         this.strokeWidth = parcel.readFloat();
-        this.zIndex = parcel.readFloat();
         this.isVisible = parcel.readByte() != 0;
     }
 
@@ -102,7 +101,7 @@ public final class CircleOptions implements Parcelable {
     }
 
     public float getZIndex() {
-        return zIndex;
+        return 0.0f;
     }
 
     public boolean isVisible() {
@@ -135,7 +134,7 @@ public final class CircleOptions implements Parcelable {
 
     @NonNull
     public CircleOptions zIndex(final float zIndex) {
-        this.zIndex = zIndex;
+        OPFLog.logStubCall(zIndex);
         return this;
     }
 
@@ -151,7 +150,6 @@ public final class CircleOptions implements Parcelable {
         dest.writeDouble(radius);
         dest.writeInt(strokeColor);
         dest.writeFloat(strokeWidth);
-        dest.writeFloat(zIndex);
         dest.writeByte((byte) (isVisible ? 1 : 0));
     }
 
@@ -169,7 +167,6 @@ public final class CircleOptions implements Parcelable {
                     && this.radius == other.radius
                     && this.strokeColor == other.strokeColor
                     && this.strokeWidth == other.strokeWidth
-                    && this.zIndex == other.zIndex
                     && this.isVisible == other.isVisible;
         }
     }
@@ -187,7 +184,6 @@ public final class CircleOptions implements Parcelable {
         //CHECKSTYLE:ON
         result = 31 * result + strokeColor;
         result = 31 * result + (strokeWidth != +0.0f ? Float.floatToIntBits(strokeWidth) : 0);
-        result = 31 * result + (zIndex != +0.0f ? Float.floatToIntBits(zIndex) : 0);
         result = 31 * result + (isVisible ? 1 : 0);
         return result;
     }

@@ -173,7 +173,8 @@ public final class ConvertUtils {
                 .infoWindowAnchor(opfOptions.getInfoWindowAnchorU(), opfOptions.getInfoWindowAnchorV())
                 .rotation(opfOptions.getRotation())
                 .snippet(opfOptions.getSnippet())
-                .title(opfOptions.getTitle());
+                .title(opfOptions.getTitle())
+                .visible(opfOptions.isVisible());
 
         final OPFBitmapDescriptor icon = opfOptions.getIcon();
         if (icon != null) {

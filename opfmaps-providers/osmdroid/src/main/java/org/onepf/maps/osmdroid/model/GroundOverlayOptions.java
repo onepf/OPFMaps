@@ -21,6 +21,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.onepf.opfutils.OPFLog;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 
@@ -50,15 +51,12 @@ public final class GroundOverlayOptions implements Parcelable {
     private BoundingBoxE6 bounds;
     @Nullable
     private GeoPoint location;
-    @NonNull
-    private BitmapDescriptor image = BitmapDescriptorFactory.defaultMarker();
-    private float anchorU;
-    private float anchorV;
+    @Nullable
+    private BitmapDescriptor image;
     private float bearing;
     private float height = -1.0F;
     private float transparency;
     private float width = 10.0F;
-    private float zIndex;
     private boolean isVisible = true;
 
 
@@ -70,20 +68,16 @@ public final class GroundOverlayOptions implements Parcelable {
         this.bounds = parcel.readParcelable(BoundingBoxE6.class.getClassLoader());
         this.location = parcel.readParcelable(GeoPoint.class.getClassLoader());
         this.image = parcel.readParcelable(BitmapDescriptor.class.getClassLoader());
-        this.anchorU = parcel.readFloat();
-        this.anchorV = parcel.readFloat();
         this.bearing = parcel.readFloat();
         this.height = parcel.readFloat();
         this.transparency = parcel.readFloat();
         this.width = parcel.readFloat();
-        this.zIndex = parcel.readFloat();
         this.isVisible = parcel.readByte() != 0;
     }
 
     @NonNull
     public GroundOverlayOptions anchor(final float u, final float v) {
-        this.anchorU = u;
-        this.anchorV = v;
+        OPFLog.logStubCall(u, v);
         return this;
     }
 
@@ -100,11 +94,11 @@ public final class GroundOverlayOptions implements Parcelable {
     }
 
     public float getAnchorU() {
-        return this.anchorU;
+        return 0.0f;
     }
 
     public float getAnchorV() {
-        return this.anchorV;
+        return 0.0f;
     }
 
     public float getBearing() {
@@ -120,7 +114,7 @@ public final class GroundOverlayOptions implements Parcelable {
         return this.height;
     }
 
-    @NonNull
+    @Nullable
     public BitmapDescriptor getImage() {
         return this.image;
     }
@@ -139,7 +133,7 @@ public final class GroundOverlayOptions implements Parcelable {
     }
 
     public float getZIndex() {
-        return this.zIndex;
+        return 0.0f;
     }
 
     @NonNull
@@ -208,7 +202,7 @@ public final class GroundOverlayOptions implements Parcelable {
 
     @NonNull
     public GroundOverlayOptions zIndex(float zIndex) {
-        this.zIndex = zIndex;
+        OPFLog.logStubCall(zIndex);
         return this;
     }
 
@@ -228,13 +222,10 @@ public final class GroundOverlayOptions implements Parcelable {
         dest.writeParcelable(bounds, flags);
         dest.writeParcelable(location, flags);
         dest.writeParcelable(image, flags);
-        dest.writeFloat(anchorU);
-        dest.writeFloat(anchorV);
         dest.writeFloat(bearing);
         dest.writeFloat(height);
         dest.writeFloat(transparency);
         dest.writeFloat(width);
-        dest.writeFloat(zIndex);
         dest.writeByte((byte) (isVisible ? 1 : 0));
     }
 
@@ -250,13 +241,10 @@ public final class GroundOverlayOptions implements Parcelable {
             return isEquals(this.bounds, other.bounds)
                     && isEquals(this.location, other.location)
                     && isEquals(this.image, other.image)
-                    && this.anchorU == other.anchorU
-                    && this.anchorV == other.anchorV
                     && this.bearing == other.bearing
                     && this.height == other.height
                     && this.transparency == other.transparency
                     && this.width == other.width
-                    && this.zIndex == other.zIndex
                     && this.isVisible == other.isVisible;
         }
     }
@@ -266,14 +254,11 @@ public final class GroundOverlayOptions implements Parcelable {
     public int hashCode() {
         int result = bounds != null ? bounds.hashCode() : 0;
         result = 31 * result + (location != null ? location.hashCode() : 0);
-        result = 31 * result + image.hashCode();
-        result = 31 * result + (anchorU != +0.0f ? Float.floatToIntBits(anchorU) : 0);
-        result = 31 * result + (anchorV != +0.0f ? Float.floatToIntBits(anchorV) : 0);
+        result = 31 * result + (image != null ? image.hashCode() : 0);
         result = 31 * result + (bearing != +0.0f ? Float.floatToIntBits(bearing) : 0);
         result = 31 * result + (height != +0.0f ? Float.floatToIntBits(height) : 0);
         result = 31 * result + (transparency != +0.0f ? Float.floatToIntBits(transparency) : 0);
         result = 31 * result + (width != +0.0f ? Float.floatToIntBits(width) : 0);
-        result = 31 * result + (zIndex != +0.0f ? Float.floatToIntBits(zIndex) : 0);
         result = 31 * result + (isVisible ? 1 : 0);
         return result;
     }

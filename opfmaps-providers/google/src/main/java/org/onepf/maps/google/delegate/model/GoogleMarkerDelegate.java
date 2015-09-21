@@ -18,6 +18,7 @@ package org.onepf.maps.google.delegate.model;
 
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -61,13 +62,13 @@ public final class GoogleMarkerDelegate implements MarkerDelegate {
         return marker.getRotation();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getSnippet() {
         return marker.getSnippet();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getTitle() {
         return marker.getTitle();

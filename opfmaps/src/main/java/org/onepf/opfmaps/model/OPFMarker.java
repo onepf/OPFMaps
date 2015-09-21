@@ -18,6 +18,7 @@ package org.onepf.opfmaps.model;
 
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import org.onepf.opfmaps.delegate.model.MarkerDelegate;
 
 /**
@@ -54,13 +55,13 @@ public final class OPFMarker implements MarkerDelegate {
         return delegate.getRotation();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getSnippet() {
         return delegate.getSnippet();
     }
 
-    @NonNull
+    @Nullable
     @Override
     public String getTitle() {
         return delegate.getTitle();
