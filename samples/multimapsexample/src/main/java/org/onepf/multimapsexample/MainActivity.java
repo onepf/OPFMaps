@@ -39,6 +39,8 @@ import org.onepf.opfmaps.model.OPFBitmapDescriptorFactory;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCircle;
 import org.onepf.opfmaps.model.OPFCircleOptions;
+import org.onepf.opfmaps.model.OPFGroundOverlay;
+import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFMarker;
@@ -59,6 +61,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
     private OPFCircle circle;
     private OPFPolyline polyline;
     private OPFMap opfMap;
+    private OPFGroundOverlay groundOverlay;
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -139,6 +142,8 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         polyline.setColor(Color.YELLOW);
 
         opfMap.setTrafficEnabled(!opfMap.isTrafficEnabled());
+
+        groundOverlay.setBearing(90);
     }
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
@@ -317,6 +322,12 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 new OPFLatLng(55.08224581388055, 38.05120657972254),
                 new OPFLatLng(55.830126194643654, 38.90446672723731)
         ).color(Color.BLACK).width(3.0f).zIndex(1.0f));
+
+        opfMap.addMarker(new OPFMarkerOptions().position(new OPFLatLng(0, 37.617017)).draggable(true).icon(OPFBitmapDescriptorFactory.defaultMarker(OPFBitmapDescriptorFactory.HUE_ORANGE)));
+        opfMap.addMarker(new OPFMarkerOptions().position(new OPFLatLng(37.773975, 0)).draggable(true).icon(OPFBitmapDescriptorFactory.defaultMarker(OPFBitmapDescriptorFactory.HUE_VIOLET)));
+        groundOverlay = opfMap.addGroundOverlay(new OPFGroundOverlayOptions()
+                .image(OPFBitmapDescriptorFactory.fromAsset("doge.png"))
+                .position(new OPFLatLng(55.752004, 37.617017), 5000000, 5000000));
     }
     //CHECKSTYLE:ON
 }
