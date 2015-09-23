@@ -19,14 +19,9 @@ package org.onepf.maps.amazon.delegate.model;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import com.amazon.geo.mapsv2.model.Tile;
-import com.amazon.geo.mapsv2.model.TileOverlayOptions;
-import com.amazon.geo.mapsv2.model.TileProvider;
-
 import org.onepf.opfmaps.delegate.model.TileOverlayOptionsDelegate;
-import org.onepf.opfmaps.model.OPFTile;
 import org.onepf.opfmaps.model.OPFTileProvider;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -37,7 +32,7 @@ public final class AmazonTileOverlayOptionsDelegate implements TileOverlayOption
     public static final Creator<AmazonTileOverlayOptionsDelegate> CREATOR = new Creator<AmazonTileOverlayOptionsDelegate>() {
         @Override
         public AmazonTileOverlayOptionsDelegate createFromParcel(final Parcel source) {
-            return new AmazonTileOverlayOptionsDelegate(source);
+            return new AmazonTileOverlayOptionsDelegate();
         }
 
         @Override
@@ -46,115 +41,63 @@ public final class AmazonTileOverlayOptionsDelegate implements TileOverlayOption
         }
     };
 
-    @NonNull
-    private final TileOverlayOptions tileOverlayOptions;
-
-    public AmazonTileOverlayOptionsDelegate() {
-        this.tileOverlayOptions = new TileOverlayOptions();
-    }
-
-    private AmazonTileOverlayOptionsDelegate(@NonNull final Parcel parcel) {
-        this.tileOverlayOptions = parcel.readParcelable(TileOverlayOptions.class.getClassLoader());
-    }
-
     @SuppressWarnings("PMD.BooleanGetMethodName")
     @Override
     public boolean getFadeIn() {
-        return tileOverlayOptions.getFadeIn();
+        return false;
     }
 
     @Nullable
     @Override
     public OPFTileProvider getTileProvider() {
-        final TileProvider tileProvider = tileOverlayOptions.getTileProvider();
-        if (tileProvider == null) {
-            return null;
-        }
-        return new OPFTileProvider() {
-            @Nullable
-            @Override
-            public OPFTile getTile(final int x, final int y, final int zoom) {
-                final Tile tile = tileProvider.getTile(x, y, zoom);
-                if (tile == null) {
-                    return null;
-                }
-
-                return new OPFTile(new AmazonTileDelegate(tile));
-            }
-        };
+        return null;
     }
 
     @Override
     public float getZIndex() {
-        return tileOverlayOptions.getZIndex();
+        return 0.0f;
     }
 
     @Override
     public boolean isVisible() {
-        return tileOverlayOptions.isVisible();
+        return false;
     }
 
     @NonNull
     @Override
     public AmazonTileOverlayOptionsDelegate fadeIn(final boolean fadeIn) {
-        tileOverlayOptions.fadeIn(fadeIn);
+        OPFLog.logStubCall(fadeIn);
         return this;
     }
 
     @NonNull
     @Override
     public AmazonTileOverlayOptionsDelegate tileProvider(@NonNull final OPFTileProvider tileProvider) {
-        tileOverlayOptions.tileProvider(new TileProvider() {
-            @Override
-            public Tile getTile(final int x, final int y, final int zoom) {
-                final OPFTile opfTile = tileProvider.getTile(x, y, zoom);
-                if (opfTile == null) {
-                    return null;
-                }
-                return new Tile(opfTile.getWidth(), opfTile.getHeight(), opfTile.getData());
-            }
-        });
+        OPFLog.logStubCall(tileProvider);
         return this;
     }
 
     @NonNull
     @Override
     public AmazonTileOverlayOptionsDelegate visible(final boolean visible) {
-        tileOverlayOptions.visible(visible);
+        OPFLog.logStubCall(visible);
         return this;
     }
 
     @NonNull
     @Override
     public AmazonTileOverlayOptionsDelegate zIndex(final float zIndex) {
-        tileOverlayOptions.zIndex(zIndex);
+        OPFLog.logStubCall(zIndex);
         return this;
     }
 
     @Override
     public int describeContents() {
-        return tileOverlayOptions.describeContents();
+        return 0;
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(tileOverlayOptions, flags);
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return other != null
-                && (other == this || other instanceof AmazonTileOverlayOptionsDelegate
-                && tileOverlayOptions.equals(((AmazonTileOverlayOptionsDelegate) other).tileOverlayOptions));
-    }
-
-    @Override
-    public int hashCode() {
-        return tileOverlayOptions.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return tileOverlayOptions.toString();
+        //nothing
     }
 }

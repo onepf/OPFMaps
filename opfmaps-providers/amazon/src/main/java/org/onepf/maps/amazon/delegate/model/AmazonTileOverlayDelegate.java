@@ -17,10 +17,8 @@
 package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
-
-import com.amazon.geo.mapsv2.model.TileOverlay;
-
 import org.onepf.opfmaps.delegate.model.TileOverlayDelegate;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -28,74 +26,50 @@ import org.onepf.opfmaps.delegate.model.TileOverlayDelegate;
  */
 public final class AmazonTileOverlayDelegate implements TileOverlayDelegate {
 
-    @NonNull
-    private final TileOverlay tileOverlay;
-
-    public AmazonTileOverlayDelegate(@NonNull final TileOverlay tileOverlay) {
-        this.tileOverlay = tileOverlay;
-    }
-
     @Override
     public void clearTileCache() {
-        tileOverlay.clearTileCache();
+        OPFLog.logStubCall();
     }
 
     @SuppressWarnings("PMD.BooleanGetMethodName")
     @Override
     public boolean getFadeIn() {
-        return tileOverlay.getFadeIn();
+        return false;
     }
 
     @NonNull
     @Override
     public String getId() {
-        return tileOverlay.getId();
+        return "";
     }
 
     @Override
     public float getZIndex() {
-        return tileOverlay.getZIndex();
+        return 0.0f;
     }
 
     @Override
     public boolean isVisible() {
-        return tileOverlay.isVisible();
+        return false;
     }
 
     @Override
     public void remove() {
-        tileOverlay.remove();
+        OPFLog.logStubCall();
     }
 
     @Override
     public void setFadeIn(final boolean fadeIn) {
-        tileOverlay.setFadeIn(fadeIn);
+        OPFLog.logStubCall(fadeIn);
     }
 
     @Override
     public void setVisible(final boolean visible) {
-        tileOverlay.setVisible(visible);
+        OPFLog.logStubCall(visible);
     }
 
     @Override
     public void setZIndex(final float zIndex) {
-        tileOverlay.setZIndex(zIndex);
-    }
-
-    @Override
-    public int hashCode() {
-        return tileOverlay.hashCode();
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return other != null
-                && (other == this || other instanceof AmazonTileOverlayDelegate
-                && tileOverlay.equals(((AmazonTileOverlayDelegate) other).tileOverlay));
-    }
-
-    @Override
-    public String toString() {
-        return tileOverlay.toString();
+        OPFLog.logStubCall(zIndex);
     }
 }

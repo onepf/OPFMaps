@@ -21,29 +21,19 @@ import com.amazon.geo.mapsv2.AmazonMapOptions;
 import com.amazon.geo.mapsv2.model.BitmapDescriptor;
 import com.amazon.geo.mapsv2.model.CameraPosition;
 import com.amazon.geo.mapsv2.model.CircleOptions;
-import com.amazon.geo.mapsv2.model.GroundOverlayOptions;
 import com.amazon.geo.mapsv2.model.LatLng;
-import com.amazon.geo.mapsv2.model.LatLngBounds;
 import com.amazon.geo.mapsv2.model.MarkerOptions;
 import com.amazon.geo.mapsv2.model.PolygonOptions;
 import com.amazon.geo.mapsv2.model.PolylineOptions;
-import com.amazon.geo.mapsv2.model.Tile;
-import com.amazon.geo.mapsv2.model.TileOverlayOptions;
-import com.amazon.geo.mapsv2.model.TileProvider;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCircleOptions;
-import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFLatLng;
-import org.onepf.opfmaps.model.OPFLatLngBounds;
 import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
-import org.onepf.opfmaps.model.OPFTile;
-import org.onepf.opfmaps.model.OPFTileOverlayOptions;
-import org.onepf.opfmaps.model.OPFTileProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -200,29 +190,6 @@ public final class ConvertUtils {
                 points.add(new LatLng(opfPoint.getLat(), opfPoint.getLng()));
             }
             options.addAll(points);
-        }
-
-        return options;
-    }
-
-    public static TileOverlayOptions convertTileOverlayOptions(@NonNull final OPFTileOverlayOptions opfOptions) {
-        final TileOverlayOptions options = new TileOverlayOptions()
-                .fadeIn(opfOptions.getFadeIn())
-                .visible(opfOptions.isVisible())
-                .zIndex(opfOptions.getZIndex());
-
-        final OPFTileProvider opfTileProvider = opfOptions.getTileProvider();
-        if (opfTileProvider != null) {
-            options.tileProvider(new TileProvider() {
-                @Override
-                public Tile getTile(final int x, final int y, final int zoom) {
-                    final OPFTile opfTile = opfTileProvider.getTile(x, y, zoom);
-                    if (opfTile != null) {
-                        return new Tile(opfTile.getWidth(), opfTile.getHeight(), opfTile.getData());
-                    }
-                    return null;
-                }
-            });
         }
 
         return options;

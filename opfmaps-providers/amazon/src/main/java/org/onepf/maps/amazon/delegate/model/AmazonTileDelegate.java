@@ -41,61 +41,41 @@ public final class AmazonTileDelegate implements TileDelegate {
         }
     };
 
-    @NonNull
-    private final Tile tile;
-
     public AmazonTileDelegate(final int width, final int height, @NonNull final byte[] data) {
-        this.tile = new Tile(width, height, data);
+        //stub
     }
 
     public AmazonTileDelegate(@NonNull final Tile tile) {
-        this.tile = tile;
+        //stub
     }
 
     private AmazonTileDelegate(@NonNull final Parcel parcel) {
-        this.tile = parcel.readParcelable(Tile.class.getClassLoader());
+        //stub
     }
 
     @NonNull
     @Override
     public byte[] getData() {
-        return tile.data;
+        return new byte[0];
     }
 
     @Override
     public int getHeight() {
-        return tile.height;
+        return 0;
     }
 
     @Override
     public int getWidth() {
-        return tile.width;
+        return 0;
     }
 
     @Override
     public int describeContents() {
-        return tile.describeContents();
+        return 0;
     }
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeParcelable(tile, flags);
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return other != null
-                && (other == this || other instanceof AmazonTileDelegate
-                && tile.equals(((AmazonTileDelegate) other).tile));
-    }
-
-    @Override
-    public int hashCode() {
-        return tile.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return tile.toString();
+        //nothing
     }
 }

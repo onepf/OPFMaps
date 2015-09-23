@@ -19,22 +19,20 @@ package org.onepf.maps.amazon.delegate;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import com.amazon.geo.mapsv2.AmazonMap;
 import com.amazon.geo.mapsv2.CameraUpdate;
 import com.amazon.geo.mapsv2.LocationSource;
 import com.amazon.geo.mapsv2.model.CameraPosition;
 import com.amazon.geo.mapsv2.model.Circle;
-import com.amazon.geo.mapsv2.model.IndoorBuilding;
 import com.amazon.geo.mapsv2.model.LatLng;
 import com.amazon.geo.mapsv2.model.Marker;
 import com.amazon.geo.mapsv2.model.Polygon;
 import com.amazon.geo.mapsv2.model.Polyline;
-import com.amazon.geo.mapsv2.model.TileOverlay;
 import org.onepf.maps.amazon.delegate.model.AmazonCameraPositionDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonCircleDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonGroundOverlayDelegate;
-import org.onepf.maps.amazon.delegate.model.AmazonIndoorBuildingDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonLatLngDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonMarkerDelegate;
 import org.onepf.maps.amazon.delegate.model.AmazonPolygonDelegate;
@@ -131,8 +129,7 @@ public class AmazonMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFTileOverlay addTileOverlay(@NonNull final OPFTileOverlayOptions options) {
-        final TileOverlay tileOverlay = map.addTileOverlay(ConvertUtils.convertTileOverlayOptions(options));
-        return new OPFTileOverlay(new AmazonTileOverlayDelegate(tileOverlay));
+        return new OPFTileOverlay(new AmazonTileOverlayDelegate());
     }
 
     @Override
@@ -190,10 +187,11 @@ public class AmazonMapDelegate implements MapDelegate {
         return new OPFCameraPosition(new AmazonCameraPositionDelegate(map.getCameraPosition()));
     }
 
-    @NonNull
+    @Nullable
     @Override
     public OPFIndoorBuilding getFocusedBuilding() {
-        return new OPFIndoorBuilding(new AmazonIndoorBuildingDelegate(map.getFocusedBuilding()));
+        OPFLog.logStubCall();
+        return null;
     }
 
     @NonNull
@@ -226,12 +224,12 @@ public class AmazonMapDelegate implements MapDelegate {
 
     @Override
     public boolean isBuildingsEnabled() {
-        return map.isBuildingsEnabled();
+        return false;
     }
 
     @Override
     public boolean isIndoorEnabled() {
-        return map.isIndoorEnabled();
+        return false;
     }
 
     @Override
@@ -251,7 +249,7 @@ public class AmazonMapDelegate implements MapDelegate {
 
     @Override
     public void setBuildingsEnabled(final boolean enabled) {
-        map.setBuildingsEnabled(enabled);
+        OPFLog.logStubCall(enabled);
     }
 
     @Override
@@ -261,7 +259,8 @@ public class AmazonMapDelegate implements MapDelegate {
 
     @Override
     public boolean setIndoorEnabled(final boolean enabled) {
-        return map.setIndoorEnabled(enabled);
+        OPFLog.logStubCall(enabled);
+        return false;
     }
 
     @Override
@@ -321,17 +320,7 @@ public class AmazonMapDelegate implements MapDelegate {
 
     @Override
     public void setOnIndoorStateChangeListener(@NonNull final OPFOnIndoorStateChangeListener listener) {
-        map.setOnIndoorStateChangeListener(new AmazonMap.OnIndoorStateChangeListener() {
-            @Override
-            public void onIndoorBuildingsFocused() {
-                listener.onIndoorBuildingFocused();
-            }
-
-            @Override
-            public void onIndoorLevelActivated(final IndoorBuilding indoorBuilding) {
-                listener.onIndoorLevelActivated(new OPFIndoorBuilding(new AmazonIndoorBuildingDelegate(indoorBuilding)));
-            }
-        });
+        OPFLog.logStubCall(listener);
     }
 
     @Override
@@ -386,36 +375,7 @@ public class AmazonMapDelegate implements MapDelegate {
 
     @Override
     public void setOnMarkerDragListener(@NonNull final OPFOnMarkerDragListener listener) {
-        map.setOnMarkerDragListener(new AmazonMap.OnMarkerDragListener() {
-
-            private OPFMarker opfMarker;
-
-            @Override
-            public void onMarkerDrag(final Marker marker) {
-                updateOPFMarker(marker);
-                listener.onMarkerDrag(opfMarker);
-            }
-
-            @Override
-            public void onMarkerDragEnd(final Marker marker) {
-                updateOPFMarker(marker);
-                listener.onMarkerDragEnd(opfMarker);
-            }
-
-            @Override
-            public void onMarkerDragStart(final Marker marker) {
-                updateOPFMarker(marker);
-                listener.onMarkerDragStart(opfMarker);
-            }
-
-            private void updateOPFMarker(@NonNull final Marker marker) {
-                if (opfMarker == null) {
-                    opfMarker = new OPFMarker(new AmazonMarkerDelegate(marker));
-                } else {
-                    opfMarker.setPosition(new OPFLatLng(new AmazonLatLngDelegate(marker.getPosition())));
-                }
-            }
-        });
+        OPFLog.logStubCall(listener);
     }
 
     @Override

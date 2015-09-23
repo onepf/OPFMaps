@@ -18,10 +18,6 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import com.amazon.geo.mapsv2.model.Tile;
-import com.amazon.geo.mapsv2.model.UrlTileProvider;
-
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
 import org.onepf.opfmaps.model.OPFTile;
 import org.onepf.opfmaps.model.OPFUrlTileProvider.TileUrlProvider;
@@ -34,53 +30,23 @@ import java.net.URL;
  */
 public class AmazonUrlTileProviderDelegate implements UrlTileProviderDelegate {
 
-    @NonNull
-    private final UrlTileProvider urlTileProvider;
-
     public AmazonUrlTileProviderDelegate(
             final int width,
             final int height,
             @NonNull final TileUrlProvider tileUrlProvider
     ) {
-        this.urlTileProvider = new UrlTileProvider(width, height) {
-
-            @Override
-            public URL getTileUrl(final int x, final int y, final int zoom) {
-                return tileUrlProvider.getTileUrl(x, y, zoom);
-            }
-        };
+        //stub
     }
 
     @Nullable
     @Override
     public URL getTileUrl(final int x, final int y, final int zoom) {
-        return urlTileProvider.getTileUrl(x, y, zoom);
+        return null;
     }
 
     @Nullable
     @Override
     public OPFTile getTile(final int x, final int y, final int zoom) {
-        final Tile tile = urlTileProvider.getTile(x, y, zoom);
-        if (tile != null) {
-            return new OPFTile(new AmazonTileDelegate(tile));
-        }
         return null;
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return other != null
-                && (other == this || other instanceof AmazonUrlTileProviderDelegate
-                && urlTileProvider.equals(((AmazonUrlTileProviderDelegate) other).urlTileProvider));
-    }
-
-    @Override
-    public int hashCode() {
-        return urlTileProvider.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return urlTileProvider.toString();
     }
 }

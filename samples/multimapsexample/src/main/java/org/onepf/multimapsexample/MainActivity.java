@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -49,8 +50,14 @@ import org.onepf.opfmaps.model.OPFPolygon;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolyline;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
+import org.onepf.opfmaps.model.OPFTile;
+import org.onepf.opfmaps.model.OPFTileOverlayOptions;
+import org.onepf.opfmaps.model.OPFTileProvider;
 import org.onepf.opfutils.OPFLog;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 public class MainActivity extends Activity implements OPFOnMapReadyCallback {
@@ -314,7 +321,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                                         new OPFLatLng(50.836485416038634, -69.86148826228197),
                                         new OPFLatLng(52.71736429812524, -64.15429716201099)
                                 )
-                        ).fillColor(Color.RED).strokeColor(Color.GREEN).strokeWidth(5)
+                        ).fillColor(Color.RED).strokeColor(Color.GREEN).strokeWidth(5).zIndex(3)
         );
 
         polyline = opfMap.addPolyline(new OPFPolylineOptions().add(
@@ -328,6 +335,58 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         groundOverlay = opfMap.addGroundOverlay(new OPFGroundOverlayOptions()
                 .image(OPFBitmapDescriptorFactory.fromAsset("doge.png"))
                 .position(new OPFLatLng(55.752004, 37.617017), 5000000, 5000000));
+
+
+        //addTileOverlay();
     }
     //CHECKSTYLE:ON
+
+    private void addTileOverlay() {
+        opfMap.addTileOverlay(new OPFTileOverlayOptions().tileProvider(new OPFTileProvider() {
+                    @Nullable
+                    @Override
+                    public OPFTile getTile(final int x, final int y, final int zoom) {
+                        try {
+                            final InputStream inputStream = getAssets().open("doge.png");
+                            final OPFTile opfTile = new OPFTile(100, 100, readInputStream(inputStream));
+                            inputStream.close();
+                            return opfTile;
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        return null;
+                    }
+                })
+                        .zIndex(4)
+                        .fadeIn(false)
+                //  .visible(false)
+        /*.tileProvider(new OPFUrlTileProvider(100, 100, new OPFUrlTileProvider.TileUrlProvider() {
+            @Nullable
+            @Override
+            public URL getTileUrl(final int x, final int y, final int zoom) {
+                try {
+                    return new URL("http://cs10232.userapi.com/u10520745/140967277/w_81f4aa52.jpg");
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }))*/);
+    }
+
+    private byte[] readInputStream(@NonNull final InputStream inputStream) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        int nRead;
+        byte[] data = new byte[16384];
+
+        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+
+        buffer.flush();
+
+        return buffer.toByteArray();
+    }
 }
