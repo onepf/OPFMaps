@@ -18,6 +18,7 @@ package org.onepf.opfmaps.delegate;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import org.onepf.opfmaps.listener.OPFCancelableCallback;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
 import org.onepf.opfmaps.listener.OPFOnIndoorStateChangeListener;
@@ -87,7 +88,7 @@ public interface MapDelegate {
     @NonNull
     OPFCameraPosition getCameraPosition();
 
-    @NonNull
+    @Nullable
     OPFIndoorBuilding getFocusedBuilding();
 
     @NonNull
