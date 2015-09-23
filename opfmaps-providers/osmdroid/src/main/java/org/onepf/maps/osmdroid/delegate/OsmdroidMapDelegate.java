@@ -23,10 +23,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.View;
-
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidCircleDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidGroundOverlayDelegate;
-import org.onepf.maps.osmdroid.delegate.model.OsmdroidIndoorBuildingDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidMarkerDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidPolygonDelegate;
 import org.onepf.maps.osmdroid.delegate.model.OsmdroidPolylineDelegate;
@@ -79,6 +77,7 @@ import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.Overlay;
 
 import java.util.List;
@@ -219,6 +218,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
         switch (cameraUpdate.getCameraUpdateSource()) {
             case CAMERA_POSITION:
+                controller.setZoom((int) cameraUpdate.getZoom());
                 controller.animateTo(cameraUpdate.getCenter());
                 map.setMapOrientation(cameraUpdate.getBearing());
                 break;
@@ -269,11 +269,11 @@ public class OsmdroidMapDelegate implements MapDelegate {
         return OPFCameraPosition.fromLatLngZoom(new OPFLatLng(center.getLatitude(), center.getLongitude()), zoom);
     }
 
-    @NonNull
+    @Nullable
     @Override
     public OPFIndoorBuilding getFocusedBuilding() {
         OPFLog.logStubCall();
-        return new OPFIndoorBuilding(new OsmdroidIndoorBuildingDelegate());
+        return null;
     }
 
     @NonNull
@@ -331,6 +331,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
         switch (cameraUpdate.getCameraUpdateSource()) {
             case CAMERA_POSITION:
+                controller.setZoom((int) cameraUpdate.getZoom());
                 controller.setCenter(cameraUpdate.getCenter());
                 map.setMapOrientation(cameraUpdate.getBearing());
                 break;
@@ -374,7 +375,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setContentDescription(@NonNull final String description) {
-        map.setContentDescription(description);
+        OPFLog.logStubCall(description);
     }
 
     @Override
@@ -503,21 +504,12 @@ public class OsmdroidMapDelegate implements MapDelegate {
         if (focus == null) {
             return;
         }
-
+        final Projection projection = map.getProjection();
         final IMapController controller = map.getController();
-        final int zoomAmount = Math.abs((int) cameraUpdate.getZoom());
-        final boolean isZoomIn = cameraUpdate.getZoom() > 0;
 
-        //noinspection ConstantConditions
-        final int x = focus.x;
-        final int y = focus.y;
-        for (int i = 0; i < zoomAmount; ++i) {
-            if (isZoomIn) {
-                controller.zoomInFixing(x, y);
-            } else {
-                controller.zoomOutFixing(x, y);
-            }
-        }
+        final IGeoPoint center = projection.fromPixels(focus.x, focus.y);
+        controller.setZoom((int) (map.getZoomLevel() + cameraUpdate.getZoom()));
+        controller.setCenter(center);
     }
 
     private void zoomBy(@NonNull final CameraUpdate cameraUpdate) {

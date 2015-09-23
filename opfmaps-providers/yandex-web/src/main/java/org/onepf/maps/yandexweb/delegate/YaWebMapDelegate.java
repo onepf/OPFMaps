@@ -214,11 +214,11 @@ public class YaWebMapDelegate implements MapDelegate {
         ));
     }
 
-    @NonNull
+    @Nullable
     @Override
     public OPFIndoorBuilding getFocusedBuilding() {
         OPFLog.logStubCall();
-        return new OPFIndoorBuilding(new YaWebIndoorBuildingDelegate());
+        return null;
     }
 
     @NonNull
@@ -278,7 +278,6 @@ public class YaWebMapDelegate implements MapDelegate {
         final CameraUpdate cameraUpdate = (CameraUpdate) update.getDelegate().getCameraUpdate();
 
         switch (cameraUpdate.getCameraUpdateSource()) {
-            case CAMERA_POSITION:
             case GEOPOINT:
                 if (cameraUpdate.getCenter() != null) {
                     map.setCenter(cameraUpdate.getCenter());
@@ -290,6 +289,7 @@ public class YaWebMapDelegate implements MapDelegate {
                     map.setCenter(cameraUpdate.getBounds().getCenter());
                 }
                 break;
+            case CAMERA_POSITION:
             case GEOPOINT_ZOOM:
                 map.setZoomLevel(cameraUpdate.getZoom());
                 if (cameraUpdate.getCenter() != null) {
@@ -324,7 +324,7 @@ public class YaWebMapDelegate implements MapDelegate {
 
     @Override
     public void setContentDescription(@NonNull final String description) {
-        map.setContentDescription(description);
+        OPFLog.logStubCall(description);
     }
 
     @Override
