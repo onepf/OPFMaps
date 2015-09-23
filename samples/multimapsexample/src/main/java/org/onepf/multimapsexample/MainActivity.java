@@ -289,14 +289,6 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
             }
         });
 
-        opfMap.setOnMyLocationButtonClickListener(new OPFOnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
-                Toast.makeText(MainActivity.this, "My location button click", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
         opfMap.setOnCameraChangeListener(new OPFOnCameraChangeListener() {
             @Override
             public void onCameraChange(@NonNull final OPFCameraPosition position) {
