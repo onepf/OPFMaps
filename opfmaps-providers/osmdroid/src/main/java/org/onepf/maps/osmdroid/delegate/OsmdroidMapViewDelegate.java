@@ -415,7 +415,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         setCompassEnabled(getBoolean(options.getCompassEnabled(), true));
         setRotateGesturesEnabled(getBoolean(options.getRotateGesturesEnabled(), true));
         setMultiTouchControls(getBoolean(options.getZoomGesturesEnabled(), true));
-        setBuiltInZoomControls(getBoolean(options.getZoomControlsEnabled(), true));
+        setBuiltInZoomControls(getBoolean(options.getZoomControlsEnabled(), false));
         setScrollGesturesEnabled(getBoolean(options.getScrollGesturesEnabled(), true));
     }
 

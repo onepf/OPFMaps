@@ -73,7 +73,7 @@ public final class OPFMapOptions implements MapOptionsDelegate {
             options.tiltGesturesEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiTiltGestures, true));
         }
         if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_uiZoomControls)) {
-            options.zoomControlsEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiZoomControls, true));
+            options.zoomControlsEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiZoomControls, false));
         }
         if (typedArray.hasValue(R.styleable.OPFMapAttrs_opf_uiZoomGestures)) {
             options.zoomGesturesEnabled(typedArray.getBoolean(R.styleable.OPFMapAttrs_opf_uiZoomGestures, true));

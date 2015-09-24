@@ -419,7 +419,7 @@ public class YaWebMapViewDelegate extends WebView
                 mapState.setZoomLevel(zoom);
             }
 
-            mapState.setIsZoomControlsEnabled(options.getZoomControlsEnabled() == null ? true : options.getZoomControlsEnabled());
+            mapState.setIsZoomControlsEnabled(options.getZoomControlsEnabled() == null ? false : options.getZoomControlsEnabled());
             mapState.setIsZoomGesturesEnabled(options.getZoomGesturesEnabled() == null ? true : options.getZoomGesturesEnabled());
             mapState.setIsScrollGesturesEnabled(options.getScrollGesturesEnabled() == null ? true : options.getScrollGesturesEnabled());
         }
@@ -480,7 +480,7 @@ public class YaWebMapViewDelegate extends WebView
             this.mapType = OPFMapType.NORMAL;
             this.center = new LatLng(0.0, 0.0);
             this.zoomLevel = MIN_ZOOM_LEVEL;
-            this.isZoomControlsEnabled = true;
+            this.isZoomControlsEnabled = false;
             this.isZoomGesturesEnabled = true;
             this.isScrollGesturesEnabled = true;
             this.isMyLocationEnabled = false;
