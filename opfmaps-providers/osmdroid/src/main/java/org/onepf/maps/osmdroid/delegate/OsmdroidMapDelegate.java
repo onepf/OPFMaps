@@ -459,7 +459,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void setPadding(final int left, final int top, final int right, final int bottom) {
-        map.setPadding(left, top, right, bottom);
+        OPFLog.logStubCall(left, top, right, bottom);
     }
 
     @Override
