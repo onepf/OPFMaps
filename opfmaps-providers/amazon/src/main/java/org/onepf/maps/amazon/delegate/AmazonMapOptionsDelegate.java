@@ -29,6 +29,7 @@ import org.onepf.maps.amazon.utils.ConvertUtils;
 import org.onepf.opfmaps.delegate.MapOptionsDelegate;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFMapType;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -137,7 +138,7 @@ public final class AmazonMapOptionsDelegate implements MapOptionsDelegate {
     @NonNull
     @Override
     public AmazonMapOptionsDelegate liteMode(final boolean enabled) {
-        mapOptions.liteMode(enabled);
+        OPFLog.logStubCall(enabled);
         return this;
     }
 
