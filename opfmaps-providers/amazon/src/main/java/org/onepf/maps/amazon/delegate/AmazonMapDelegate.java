@@ -87,8 +87,12 @@ public class AmazonMapDelegate implements MapDelegate {
     @NonNull
     private final AmazonMap map;
 
+    @NonNull
+    private final OPFUiSettings opfUiSettings;
+
     public AmazonMapDelegate(@NonNull final AmazonMap map) {
         this.map = map;
+        this.opfUiSettings = new OPFUiSettings(new AmazonUiSettingsDelegate(map.getUiSettings()));
     }
 
     @NonNull
@@ -219,7 +223,7 @@ public class AmazonMapDelegate implements MapDelegate {
     @NonNull
     @Override
     public OPFUiSettings getUiSettings() {
-        return new OPFUiSettings(new AmazonUiSettingsDelegate(map.getUiSettings()));
+        return opfUiSettings;
     }
 
     @Override

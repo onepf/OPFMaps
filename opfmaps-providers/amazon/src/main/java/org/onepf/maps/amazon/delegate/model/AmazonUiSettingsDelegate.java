@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import com.amazon.geo.mapsv2.UiSettings;
 
 import org.onepf.opfmaps.delegate.model.UiSettingsDelegate;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * @author Roman Savin
@@ -31,8 +32,11 @@ public final class AmazonUiSettingsDelegate implements UiSettingsDelegate {
     @NonNull
     private final UiSettings uiSettings;
 
+    private boolean isZoomGesturesEnabled;
+
     public AmazonUiSettingsDelegate(@NonNull final UiSettings uiSettings) {
         this.uiSettings = uiSettings;
+        this.isZoomGesturesEnabled = uiSettings.isZoomGesturesEnabled();
     }
 
     @Override
@@ -52,7 +56,7 @@ public final class AmazonUiSettingsDelegate implements UiSettingsDelegate {
 
     @Override
     public void setIndoorLevelPickerEnabled(final boolean enabled) {
-        uiSettings.setIndoorLevelPickerEnabled(enabled);
+        OPFLog.logStubCall(enabled);
     }
 
     @Override
@@ -63,6 +67,7 @@ public final class AmazonUiSettingsDelegate implements UiSettingsDelegate {
     @Override
     public void setZoomGesturesEnabled(final boolean enabled) {
         uiSettings.setZoomGesturesEnabled(enabled);
+        isZoomGesturesEnabled = enabled;
     }
 
     @Override
@@ -102,7 +107,7 @@ public final class AmazonUiSettingsDelegate implements UiSettingsDelegate {
 
     @Override
     public boolean isIndoorLevelPickerEnabled() {
-        return uiSettings.isIndoorLevelPickerEnabled();
+        return false;
     }
 
     @Override
@@ -112,7 +117,7 @@ public final class AmazonUiSettingsDelegate implements UiSettingsDelegate {
 
     @Override
     public boolean isZoomGesturesEnabled() {
-        return uiSettings.isZoomGesturesEnabled();
+        return isZoomGesturesEnabled;
     }
 
     @Override
