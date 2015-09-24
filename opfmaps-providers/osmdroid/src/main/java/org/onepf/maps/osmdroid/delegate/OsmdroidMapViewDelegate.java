@@ -225,7 +225,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     @Override
     public void setBuiltInZoomControls(final boolean isZoomControllersEnabled) {
         super.setBuiltInZoomControls(isZoomControllersEnabled);
-        this.isZoomControlsEnabled = true;
+        this.isZoomControlsEnabled = isZoomControllersEnabled;
     }
 
     @Override
