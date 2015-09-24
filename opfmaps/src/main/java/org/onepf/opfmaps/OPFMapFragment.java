@@ -49,12 +49,12 @@ public class OPFMapFragment extends Fragment implements MapFragmentDelegate {
     @NonNull
     private final List<OPFOnMapReadyCallback> pendingCallbacks = new ArrayList<>();
 
-    public static OPFSupportMapFragment newInstance() {
-        return new OPFSupportMapFragment();
+    public static OPFMapFragment newInstance() {
+        return new OPFMapFragment();
     }
 
-    public static OPFSupportMapFragment newInstance(@NonNull final OPFMapOptions options) {
-        final OPFSupportMapFragment fragment = new OPFSupportMapFragment();
+    public static OPFMapFragment newInstance(@NonNull final OPFMapOptions options) {
+        final OPFMapFragment fragment = new OPFMapFragment();
         final Bundle arguments = new Bundle();
 
         arguments.putParcelable(MAP_OPTIONS_BUNDLE_KEY, options);
