@@ -80,6 +80,7 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.Overlay;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -135,6 +136,7 @@ public class OsmdroidMapDelegate implements MapDelegate {
         marker.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(final Marker marker, final MapView mapView) {
+                initMarkerInfoWindows(marker, opfMarker);
                 marker.showInfoWindow();
                 mapView.getController().animateTo(marker.getPosition());
 
@@ -167,8 +169,6 @@ public class OsmdroidMapDelegate implements MapDelegate {
                 }
             }
         });
-
-        initMarkerInfoWindows(marker, opfMarker);
 
         return opfMarker;
     }
@@ -257,7 +257,17 @@ public class OsmdroidMapDelegate implements MapDelegate {
 
     @Override
     public void clear() {
-        map.getOverlays().clear();
+        final List<Overlay> overlays = map.getOverlays();
+
+        for (Iterator<Overlay> it = overlays.iterator(); it.hasNext();) {
+            final Overlay overlay = it.next();
+            if (overlay instanceof Marker
+                    || overlay instanceof Polygon
+                    || overlay instanceof GroundOverlay
+                    || overlay instanceof Polyline) {
+                it.remove();
+            }
+        }
         map.invalidate();
     }
 
