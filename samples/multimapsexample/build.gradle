@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
+plugins {
+    id "com.github.rsavin.gradle.microwave" version "1.0.0" //todo remove
+}
+
 apply plugin: 'com.android.application'
 apply from: urlCache.get('https://raw.githubusercontent.com/onepf/OPF-mvn-repo/master/opf-commons.gradle')
-apply plugin: 'microwave' // todo remove
 
 android {
     compileSdkVersion 23
