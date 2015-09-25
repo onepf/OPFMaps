@@ -402,14 +402,6 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         }
         setMinZoomLevel(MIN_ZOOM_LEVEL);
 
-        final IMapController controller = getController();
-        final CameraPosition cameraPosition = options.getCamera();
-        if (cameraPosition != null) {
-            controller.setCenter(cameraPosition.getTarget());
-            controller.setZoom((int) cameraPosition.getZoom());
-            setMapOrientation(cameraPosition.getBearing());
-        }
-
         setMapType(options.getMapType());
 
         setCompassEnabled(getBoolean(options.getCompassEnabled(), true));
@@ -417,6 +409,14 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         setMultiTouchControls(getBoolean(options.getZoomGesturesEnabled(), true));
         setBuiltInZoomControls(getBoolean(options.getZoomControlsEnabled(), false));
         setScrollGesturesEnabled(getBoolean(options.getScrollGesturesEnabled(), true));
+
+        final IMapController controller = getController();
+        final CameraPosition cameraPosition = options.getCamera();
+        if (cameraPosition != null) {
+            controller.setCenter(cameraPosition.getTarget());
+            controller.setZoom((int) cameraPosition.getZoom());
+            setMapOrientation(cameraPosition.getBearing());
+        }
     }
 
     private boolean getBoolean(@Nullable final Boolean value, final boolean defValue) {
