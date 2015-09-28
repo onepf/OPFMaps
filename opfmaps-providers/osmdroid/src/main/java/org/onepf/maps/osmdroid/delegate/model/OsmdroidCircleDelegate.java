@@ -36,7 +36,7 @@ public final class OsmdroidCircleDelegate implements CircleDelegate {
     private MapView mapView;
 
     @NonNull
-    private Polygon polygon;
+    private final Polygon polygon;
 
     @NonNull
     private final String id;

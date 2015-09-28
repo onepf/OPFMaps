@@ -102,11 +102,7 @@ public final class OsmdroidMarkerOptionsDelegate implements MarkerOptionsDelegat
     @Nullable
     @Override
     public OPFBitmapDescriptor getIcon() {
-        final BitmapDescriptor icon = markerOptions.getIcon();
-        if (icon != null) {
-            return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(icon));
-        }
-        return null;
+        return new OPFBitmapDescriptor(new OsmdroidBitmapDescriptorDelegate(markerOptions.getIcon()));
     }
 
     @Override

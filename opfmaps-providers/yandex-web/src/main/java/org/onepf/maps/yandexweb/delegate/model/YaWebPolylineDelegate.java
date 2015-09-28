@@ -55,9 +55,6 @@ public final class YaWebPolylineDelegate implements PolylineDelegate {
     @Override
     public List<OPFLatLng> getPoints() {
         final List<LatLng> yaWebPoints = polyline.getPoints();
-        if (yaWebPoints == null) {
-            return null;
-        }
 
         final List<OPFLatLng> points = new ArrayList<>(yaWebPoints.size());
         for (LatLng yaWebPoint : yaWebPoints) {

@@ -18,9 +18,6 @@ package org.onepf.maps.amazon.delegate.model;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-
-import com.amazon.geo.mapsv2.model.Tile;
-
 import org.onepf.opfmaps.delegate.model.TileDelegate;
 
 /**
@@ -32,7 +29,7 @@ public final class AmazonTileDelegate implements TileDelegate {
     public static final Creator<AmazonTileDelegate> CREATOR = new Creator<AmazonTileDelegate>() {
         @Override
         public AmazonTileDelegate createFromParcel(final Parcel source) {
-            return new AmazonTileDelegate(source);
+            return new AmazonTileDelegate();
         }
 
         @Override
@@ -40,18 +37,6 @@ public final class AmazonTileDelegate implements TileDelegate {
             return new AmazonTileDelegate[size];
         }
     };
-
-    public AmazonTileDelegate(final int width, final int height, @NonNull final byte[] data) {
-        //stub
-    }
-
-    public AmazonTileDelegate(@NonNull final Tile tile) {
-        //stub
-    }
-
-    private AmazonTileDelegate(@NonNull final Parcel parcel) {
-        //stub
-    }
 
     @NonNull
     @Override

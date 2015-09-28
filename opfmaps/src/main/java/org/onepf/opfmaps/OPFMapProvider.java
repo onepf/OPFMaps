@@ -22,7 +22,8 @@ import android.support.annotation.Nullable;
 import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 
 /**
- * Created by akarimova on 23.06.15.
+ * @author Anastasiia Karimova
+ * @since 23.06.2015
  */
 public interface OPFMapProvider {
     @NonNull

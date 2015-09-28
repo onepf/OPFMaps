@@ -16,11 +16,9 @@
 
 package org.onepf.maps.amazon.delegate.model;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import org.onepf.opfmaps.delegate.model.UrlTileProviderDelegate;
 import org.onepf.opfmaps.model.OPFTile;
-import org.onepf.opfmaps.model.OPFUrlTileProvider.TileUrlProvider;
 
 import java.net.URL;
 
@@ -29,14 +27,6 @@ import java.net.URL;
  * @since 03.08.2015
  */
 public class AmazonUrlTileProviderDelegate implements UrlTileProviderDelegate {
-
-    public AmazonUrlTileProviderDelegate(
-            final int width,
-            final int height,
-            @NonNull final TileUrlProvider tileUrlProvider
-    ) {
-        //stub
-    }
 
     @Nullable
     @Override

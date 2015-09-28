@@ -26,7 +26,8 @@ import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 import org.onepf.opfutils.OPFLog;
 
 /**
- * Created by akarimova on 24.06.15.
+ * @author Anastasiia Karimova
+ * @since 24.06.2015
  */
 public class AmazonMapProvider extends BaseOPFMapProvider {
 

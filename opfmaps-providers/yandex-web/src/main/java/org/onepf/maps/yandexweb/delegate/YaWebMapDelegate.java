@@ -26,7 +26,6 @@ import android.util.TypedValue;
 import org.onepf.maps.yandexweb.delegate.model.YaWebCameraPositionDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebCircleDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebGroundOverlayDelegate;
-import org.onepf.maps.yandexweb.delegate.model.YaWebIndoorBuildingDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebLatLngDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebMarkerDelegate;
 import org.onepf.maps.yandexweb.delegate.model.YaWebPolygonDelegate;

@@ -20,7 +20,8 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 /**
- * Created by akarimova on 15.06.15.
+ * @author Anastasiia Karimova
+ * @since 15.06.2015
  */
 public interface OPFInfoWindowAdapter {
 

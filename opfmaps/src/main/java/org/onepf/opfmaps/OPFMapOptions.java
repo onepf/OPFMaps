@@ -103,10 +103,6 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createMapOptionsDelegate();
     }
 
-    private OPFMapOptions(@NonNull final MapOptionsDelegate delegate) {
-        this.delegate = delegate;
-    }
-
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private OPFMapOptions(@NonNull final Parcel parcel) {
         try {

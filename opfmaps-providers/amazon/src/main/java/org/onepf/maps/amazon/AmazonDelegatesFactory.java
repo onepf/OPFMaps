@@ -137,7 +137,7 @@ public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
     @NonNull
     @Override
     public TileDelegate createTileDelegate(final int width, final int height, @NonNull final byte[] data) {
-        return new AmazonTileDelegate(width, height, data);
+        return new AmazonTileDelegate();
     }
 
     @NonNull
@@ -153,7 +153,7 @@ public final class AmazonDelegatesFactory implements DelegatesAbstractFactory {
             final int height,
             @NonNull final TileUrlProvider tileUrlProvider
     ) {
-        return new AmazonUrlTileProviderDelegate(width, height, tileUrlProvider);
+        return new AmazonUrlTileProviderDelegate();
     }
 
     @NonNull

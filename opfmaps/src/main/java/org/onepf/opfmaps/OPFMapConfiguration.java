@@ -28,7 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by akarimova on 11.06.15.
+ * @author Anastasiia Karimova
+ * @since 11.06.2015
  */
 @SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
 public final class OPFMapConfiguration {

@@ -102,11 +102,7 @@ public final class YaWebMarkerOptionsDelegate implements MarkerOptionsDelegate {
     @Nullable
     @Override
     public OPFBitmapDescriptor getIcon() {
-        final BitmapDescriptor icon = markerOptions.getIcon();
-        if (icon != null) {
-            return new OPFBitmapDescriptor(new YaWebBitmapDescriptorDelegate(icon));
-        }
-        return null;
+        return new OPFBitmapDescriptor(new YaWebBitmapDescriptorDelegate(markerOptions.getIcon()));
     }
 
     @Override

@@ -22,7 +22,8 @@ import android.support.annotation.Nullable;
 import org.onepf.opfmaps.delegate.model.MarkerDelegate;
 
 /**
- * Created by akarimova on 09.06.15.
+ * @author Anastasiia Karimova
+ * @since 09.06.2015
  */
 public final class OPFMarker implements MarkerDelegate {
 

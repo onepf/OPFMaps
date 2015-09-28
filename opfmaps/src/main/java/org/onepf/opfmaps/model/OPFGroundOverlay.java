@@ -21,7 +21,8 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.delegate.model.GroundOverlayDelegate;
 
 /**
- * Created by akarimova on 15.06.15.
+ * @author Anastasiia Karimova
+ * @since 15.06.2015
  */
 public final class OPFGroundOverlay implements GroundOverlayDelegate {
 

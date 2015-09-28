@@ -23,7 +23,8 @@ import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.LatLngDelegate;
 
 /**
- * Created by akarimova on 09.06.15.
+ * @author Anastasiia Karimova
+ * @since 09.06.2015
  */
 public final class OPFLatLng implements LatLngDelegate {
 

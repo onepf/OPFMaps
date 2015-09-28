@@ -24,7 +24,8 @@ import org.onepf.opfmaps.delegate.model.PolylineDelegate;
 import java.util.List;
 
 /**
- * Created by akarimova on 09.06.15.
+ * @author Anastasiia Karimova
+ * @since 09.06.2015
  */
 public final class OPFPolyline implements PolylineDelegate {
 

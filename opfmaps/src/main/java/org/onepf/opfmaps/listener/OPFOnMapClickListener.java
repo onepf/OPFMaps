@@ -20,7 +20,8 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.model.OPFLatLng;
 
 /**
- * Created by akarimova on 02.07.15.
+ * @author Anastasiia Karimova
+ * @since 02.07.2015
  */
 public interface OPFOnMapClickListener {
     void onMapClick(@NonNull final OPFLatLng latLng);
