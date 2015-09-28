@@ -35,7 +35,7 @@ android {
 dependencies {
     compile project(':opfmaps') //todo remove later
 
-    provided 'org.onepf:opfutils:0.1.25'
+    provided 'org.onepf:opfutils:0.1.26'
 
     compile 'org.osmdroid:osmdroid-android:4.3'
     compile 'org.osmdroid:bonuspack:5.3'

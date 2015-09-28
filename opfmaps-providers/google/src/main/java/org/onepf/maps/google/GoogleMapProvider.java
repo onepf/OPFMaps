@@ -22,7 +22,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import org.onepf.opfmaps.BaseOPFMapProvider;
 import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
-import org.onepf.opfmaps.utils.MetaDataChecker;
+import org.onepf.opfutils.OPFChecks;
 import org.onepf.opfutils.OPFLog;
 
 /**
@@ -57,6 +57,6 @@ public class GoogleMapProvider extends BaseOPFMapProvider {
 
     @Override
     public boolean isKeyPresented(@NonNull final Context context) {
-        return MetaDataChecker.dataPresented(context, "com.google.android.maps.v2.API_KEY");
+        return OPFChecks.hasMetadata(context, "com.google.android.maps.v2.API_KEY");
     }
 }

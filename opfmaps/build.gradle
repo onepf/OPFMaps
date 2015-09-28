@@ -37,6 +37,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:23.0.0'
-    provided 'org.onepf:opfutils:0.1.25'
+    compile 'com.android.support:support-v4:23.0.1'
+    provided 'org.onepf:opfutils:0.1.26'
 }
