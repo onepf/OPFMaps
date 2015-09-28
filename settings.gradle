@@ -19,7 +19,6 @@ include ':opfmaps',
         ':google',
         ':osmdroid',
         ':yandex-web',
-        ':amazonexample',
         ':mapstestapp',
         ':multimapsexample'
 
@@ -28,6 +27,5 @@ project(':amazon').projectDir = new File('opfmaps-providers/amazon')
 project(':google').projectDir = new File('opfmaps-providers/google')
 project(':yandex-web').projectDir = new File('opfmaps-providers/yandex-web')
 project(':osmdroid').projectDir = new File('opfmaps-providers/osmdroid')
-project(':amazonexample').projectDir = new File('samples/amazonexample')
 project(':mapstestapp').projectDir = new File('samples/mapstestapp')
 project(':multimapsexample').projectDir = new File('samples/multimapsexample')
