@@ -14,39 +14,16 @@
   ~ limitations under the License.
   -->
 
-<merge
+<fragment
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         tools:ignore="MissingPrefix"
+        android:id="@+id/map"
+        android:name="org.onepf.opfmaps.OPFMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <fragment
-            android:id="@+id/map"
-            android:name="org.onepf.opfmaps.OPFMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            map:opf_cameraTargetLat="37.7"
-            map:opf_cameraTargetLng="-122.4"
-            map:opf_mapType="hybrid"
-            tools:context=".MainActivity"/>
-
-    <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:onClick="onButtonClick"
-            android:text="@string/click"/>
-
-    <!--<org.onepf.opfmaps.OPFMapView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/map_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            map:opf_mapType="hybrid"
-            map:opf_cameraTargetLat="37.7"
-            map:opf_cameraTargetLng="-122.4"/>-->
-</merge>
+        android:layout_height="match_parent"
+        map:opf_cameraTargetLat="37.7"
+        map:opf_cameraTargetLng="-122.4"
+        map:opf_mapType="hybrid"
+        tools:context=".MainActivity"/>

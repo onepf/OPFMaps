@@ -17,3 +17,5 @@
 #}
 -dontwarn org.apache.http.**
 -dontwarn org.osmdroid.views.overlay.**
+
+-dontwarn android.support.v4.app.**
