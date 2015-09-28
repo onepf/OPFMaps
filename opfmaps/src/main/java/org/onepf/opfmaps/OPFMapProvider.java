@@ -18,6 +18,7 @@ package org.onepf.opfmaps;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 
 /**
@@ -30,14 +31,10 @@ public interface OPFMapProvider {
     @NonNull
     DelegatesAbstractFactory getDelegatesFactory();
 
-    @NonNull
+    @Nullable
     String getHostAppPackage();
 
-    boolean hasRequiredPermissions(Context context);
+    boolean isAvailable(@NonNull final Context context);
 
-    boolean isAvailable(Context context);
-
-    boolean isKeyPresented(Context context);
-
-    boolean hasRequestedFeatures(Context context);
+    boolean isKeyPresented(@NonNull final Context context);
 }

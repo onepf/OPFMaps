@@ -20,8 +20,9 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * Created by akarimova on 26.06.15.
@@ -30,14 +31,7 @@ public final class MetaDataChecker {
     private MetaDataChecker() {
     }
 
-    public static boolean dataPresented(Context context, String key) {
-        return MetaDataChecker.dataPresented(context, key, null);
-    }
-
-
-    @SuppressWarnings("PMD.EmptyIfStmt") //TODO: remove after fixing
-    //todo process the pattern
-    private static boolean dataPresented(Context context, String key, String pattern) {
+    public static boolean dataPresented(@NonNull final Context context, @NonNull final String key) {
         if (TextUtils.isEmpty(key)) {
             throw new IllegalArgumentException("Meta data key can't be null or empty.");
         }
@@ -45,19 +39,14 @@ public final class MetaDataChecker {
         try {
             final PackageInfo info = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-            Bundle metaData = info.applicationInfo.metaData;
-            if (metaData != null) {
-                Object metaObject = metaData.get(key);
-                if (metaObject != null) {
-                    if (pattern != null) {
-                      //todo
-                    } else {
-                        return true;
-                    }
-                }
+            final Bundle metaData = info.applicationInfo.metaData;
+            if (metaData != null && metaData.get(key) != null) {
+                return true;
+            } else {
+                OPFLog.d("Meta data by key : %s is not presented.", key);
             }
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(MetaDataChecker.class.getName(), e.getMessage());
+            OPFLog.w(e.getMessage());
         }
         return false;
     }

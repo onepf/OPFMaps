@@ -15,7 +15,14 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.onepf.maps.google">
+          package="org.onepf.maps.google">
 
-    <application />
+    <uses-feature android:glEsVersion="0x00020000"
+                  android:required="true"/>
+
+    <application>
+        <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version"/>
+    </application>
 </manifest>

@@ -16,9 +16,7 @@
 
 package org.onepf.maps.yandexweb;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-
 import org.onepf.opfmaps.BaseOPFMapProvider;
 import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 
@@ -28,40 +26,13 @@ import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
  */
 public final class YaWebMapProvider extends BaseOPFMapProvider {
 
+    public YaWebMapProvider() {
+        super(YaWebMapProvider.class.getSimpleName(), null);
+    }
+
     @NonNull
     @Override
     public DelegatesAbstractFactory getDelegatesFactory() {
         return new YaWebDelegatesFactory();
-    }
-
-    @NonNull
-    @Override
-    public String getHostAppPackage() {
-        //todo return package
-        return "";
-    }
-
-    @Override
-    public boolean hasRequiredPermissions(final Context context) {
-        //todo add checks
-        return true;
-    }
-
-    @Override
-    public boolean isAvailable(final Context context) {
-        //todo add checks
-        return true;
-    }
-
-    @Override
-    public boolean isKeyPresented(final Context context) {
-        //todo add checks
-        return true;
-    }
-
-    @Override
-    public boolean hasRequestedFeatures(final Context context) {
-        //todo add checks
-        return true;
     }
 }

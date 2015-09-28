@@ -178,7 +178,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 .strokeColor(Color.BLUE).zIndex(1.0f));
 
         //markers
-        opfMap.addMarker(new OPFMarkerOptions()
+        final OPFMarker marker1 = opfMap.addMarker(new OPFMarkerOptions()
                 .visible(true)
                 .position(new OPFLatLng(37.773975, -122.40205))
                 .title("marker #1")
@@ -186,7 +186,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 .icon(OPFBitmapDescriptorFactory.defaultMarker(OPFBitmapDescriptorFactory.HUE_AZURE))
                 .draggable(true));
 
-        opfMap.addMarker(new OPFMarkerOptions()
+        final OPFMarker marker3 = opfMap.addMarker(new OPFMarkerOptions()
                 .visible(true)
                 .position(new OPFLatLng(55.752004, -122.40205))
                 .title("marker #3")
@@ -194,7 +194,7 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 .icon(OPFBitmapDescriptorFactory.defaultMarker(OPFBitmapDescriptorFactory.HUE_YELLOW))
                 .draggable(true));
 
-        opfMap.addMarker(new OPFMarkerOptions()
+        final OPFMarker marker2 = opfMap.addMarker(new OPFMarkerOptions()
                 .visible(true)
                 .position(new OPFLatLng(55.752004, 37.617017))
                 .title("marker #2")
@@ -235,6 +235,9 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 Toast.makeText(MainActivity.this, "Map click position : " + latLng, Toast.LENGTH_SHORT).show();
                 final Point point = opfMap.getProjection().toScreenLocation(latLng);
                 OPFLog.d("clickX = %s, clickY = %s", point.x, point.y);
+                marker1.setSnippet(marker1.getSnippet() + "!");
+                marker2.setSnippet(marker2.getSnippet() + "!");
+                marker3.setSnippet(marker3.getSnippet() + "!");
             }
         });
 
@@ -258,8 +261,8 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         opfMap.setInfoWindowAdapter(new OPFInfoWindowAdapter() {
             @Override
             public View getInfoWindow(@NonNull final OPFMarker marker) {
-                final String snippet = marker.getSnippet();
-                if (snippet != null && !snippet.equals("snippet #2")) {
+                final String id = marker.getId();
+                if (!id.equals(marker2.getId())) {
                     return null;
                 }
 
@@ -274,8 +277,8 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
 
             @Override
             public View getInfoContents(@NonNull final OPFMarker marker) {
-                final String snippet = marker.getSnippet();
-                if (snippet != null && !snippet.equals("snippet #1")) {
+                final String id = marker.getId();
+                if (!id.equals(marker1.getId())) {
                     return null;
                 }
 

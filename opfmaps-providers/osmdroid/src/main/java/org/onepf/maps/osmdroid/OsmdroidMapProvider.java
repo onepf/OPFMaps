@@ -16,7 +16,6 @@
 
 package org.onepf.maps.osmdroid;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import org.onepf.opfmaps.BaseOPFMapProvider;
 import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
@@ -41,14 +40,14 @@ public final class OsmdroidMapProvider extends BaseOPFMapProvider {
     }
 
     public OsmdroidMapProvider(@NonNull final OPFMapType mapType, @NonNull final ITileSource tileSource) {
-        super();
+        super(OsmdroidMapProvider.class.getSimpleName(), null);
         final Map<OPFMapType, ITileSource> tileSourceMap = createDefaultTileSourceMap();
         tileSourceMap.put(mapType, tileSource);
         this.tileSourceMap = tileSourceMap;
     }
 
     public OsmdroidMapProvider(@NonNull final Map<OPFMapType, ITileSource> tileSourceMap) {
-        super();
+        super(OsmdroidMapProvider.class.getSimpleName(), null);
         this.tileSourceMap = tileSourceMap;
     }
 
@@ -56,37 +55,6 @@ public final class OsmdroidMapProvider extends BaseOPFMapProvider {
     @Override
     public DelegatesAbstractFactory getDelegatesFactory() {
         return new OsmdroidDelegatesFactory();
-    }
-
-    @NonNull
-    @Override
-    public String getHostAppPackage() {
-        //todo return package
-        return "";
-    }
-
-    @Override
-    public boolean hasRequiredPermissions(final Context context) {
-        //todo add checks
-        return true;
-    }
-
-    @Override
-    public boolean isAvailable(final Context context) {
-        //todo add checks
-        return true;
-    }
-
-    @Override
-    public boolean isKeyPresented(final Context context) {
-        //todo add checks
-        return true;
-    }
-
-    @Override
-    public boolean hasRequestedFeatures(final Context context) {
-        //todo add checks
-        return true;
     }
 
     @NonNull

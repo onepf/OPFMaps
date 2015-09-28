@@ -17,27 +17,25 @@
 package org.onepf.maps.amazon;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
 import com.amazon.geo.mapsv2.util.AmazonMapsRuntimeUtil;
 import com.amazon.geo.mapsv2.util.ConnectionResult;
-
 import org.onepf.opfmaps.BaseOPFMapProvider;
 import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
-import org.onepf.opfmaps.utils.PermissionChecker;
-
-import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.ACCESS_NETWORK_STATE;
-import static android.Manifest.permission.INTERNET;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * Created by akarimova on 24.06.15.
  */
 public class AmazonMapProvider extends BaseOPFMapProvider {
-    private static final String TAG = AmazonMapProvider.class.getSimpleName();
+
+    private static final String HOST_APP_PACKAGE = "com.amazon.venezia";
+    private static final String AMAZON_MANUFACTURER = "Amazon";
+
+    public AmazonMapProvider() {
+        super(AmazonMapProvider.class.getSimpleName(), HOST_APP_PACKAGE);
+    }
 
     @NonNull
     @Override
@@ -45,45 +43,16 @@ public class AmazonMapProvider extends BaseOPFMapProvider {
         return new AmazonDelegatesFactory();
     }
 
-    @NonNull
     @Override
-    public String getHostAppPackage() {
-        //todo return host app package
-        return "";
-    }
-
-    @Override
-    public boolean hasRequiredPermissions(Context context) {
-        return
-                PermissionChecker.permissionRequested(context, INTERNET)
-                        && PermissionChecker.permissionRequested(context, ACCESS_NETWORK_STATE)
-                        && PermissionChecker.permissionRequested(context, WRITE_EXTERNAL_STORAGE)
-                        && PermissionChecker.permissionRequested(context, ACCESS_COARSE_LOCATION)
-                        && PermissionChecker.permissionRequested(context, ACCESS_FINE_LOCATION);
-    }
-
-    @Override
-    public boolean isAvailable(Context context) {
-        int amazonMapsRuntimeAvailable = AmazonMapsRuntimeUtil
-                .isAmazonMapsRuntimeAvailable(context);
-        if (amazonMapsRuntimeAvailable == ConnectionResult.SUCCESS) {
-            Log.d(TAG, "Amazon maps are available");
-            return true;
-        } else {
-            Log.w(TAG, "Connection result = " + amazonMapsRuntimeAvailable);
-            return false;
+    public boolean isAvailable(@NonNull final Context context) {
+        if (super.isAvailable(context)) {
+            int availabilityResult = AmazonMapsRuntimeUtil.isAmazonMapsRuntimeAvailable(context);
+            if (availabilityResult == ConnectionResult.SUCCESS) {
+                return Build.MANUFACTURER.equals(AMAZON_MANUFACTURER);
+            } else {
+                OPFLog.d(AmazonMapsRuntimeUtil.getErrorString(availabilityResult));
+            }
         }
-    }
-
-    @Override
-    public boolean isKeyPresented(Context context) {
-        //always true
-        return true;
-    }
-
-    @Override
-    public boolean hasRequestedFeatures(Context context) {
-        //always true
-        return true;
+        return false;
     }
 }

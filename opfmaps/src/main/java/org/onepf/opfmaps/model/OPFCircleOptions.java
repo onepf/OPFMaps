@@ -53,7 +53,6 @@ public final class OPFCircleOptions implements CircleOptionsDelegate {
         try {
             delegate = parcel.readParcelable(Class.forName(parcel.readString()).getClassLoader());
         } catch (ClassNotFoundException e) {
-            //todo maybe fix
             throw new RuntimeException(e);
         }
     }

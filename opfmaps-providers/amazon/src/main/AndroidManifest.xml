@@ -15,7 +15,9 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.onepf.maps.amazon">
+          package="org.onepf.maps.amazon">
 
-    <application />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-amzn-sdk android:minSdkVersion="3"/>
 </manifest>

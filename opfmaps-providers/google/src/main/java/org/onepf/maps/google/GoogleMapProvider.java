@@ -22,35 +22,18 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import org.onepf.opfmaps.BaseOPFMapProvider;
 import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
-import org.onepf.opfmaps.utils.FeatureChecker;
 import org.onepf.opfmaps.utils.MetaDataChecker;
-import org.onepf.opfmaps.utils.PermissionChecker;
-
-import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.ACCESS_NETWORK_STATE;
-import static android.Manifest.permission.INTERNET;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import org.onepf.opfutils.OPFLog;
 
 /**
  * Created by akarimova on 24.06.15.
  */
 public class GoogleMapProvider extends BaseOPFMapProvider {
-    @Override
-    public boolean hasRequiredPermissions(Context context) {
-        return
-                PermissionChecker.permissionRequested(context, INTERNET)
-                        && PermissionChecker.permissionRequested(context, ACCESS_NETWORK_STATE)
-                        && PermissionChecker.permissionRequested(context, WRITE_EXTERNAL_STORAGE)
-                        && (PermissionChecker.permissionRequested(context, ACCESS_COARSE_LOCATION)
-                        || PermissionChecker.permissionRequested(context, ACCESS_FINE_LOCATION));
-    }
 
-    @Override
-    public boolean isAvailable(Context context) {
-        //todo to prevent sdk kits check for a permission in the manifest
-        int googlePlayServicesAvailable = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
-        return googlePlayServicesAvailable == ConnectionResult.SUCCESS; //todo think about other codes
+    private static final String HOST_APP_PACKAGE = "com.android.vending";
+
+    public GoogleMapProvider() {
+        super(GoogleMapProvider.class.getSimpleName(), HOST_APP_PACKAGE);
     }
 
     @NonNull
@@ -59,24 +42,21 @@ public class GoogleMapProvider extends BaseOPFMapProvider {
         return new GoogleDelegatesFactory();
     }
 
-    @NonNull
     @Override
-    public String getHostAppPackage() {
-        //todo return host app package
-        return "";
+    public boolean isAvailable(@NonNull final Context context) {
+        if (super.isAvailable(context)) {
+            final int conResult = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
+            if (conResult == ConnectionResult.SUCCESS) {
+                return true;
+            } else {
+                OPFLog.d("Google Play Services not available. Reason: '%s'.", GooglePlayServicesUtil.getErrorString(conResult));
+            }
+        }
+        return false;
     }
 
     @Override
-    public boolean isKeyPresented(Context context) {
-        //todo look for a constant
+    public boolean isKeyPresented(@NonNull final Context context) {
         return MetaDataChecker.dataPresented(context, "com.google.android.maps.v2.API_KEY");
     }
-
-    @Override
-    public boolean hasRequestedFeatures(Context context) {
-        //CHECKSTYLE:OFF
-        return FeatureChecker.hasRequestedFeature(context, "tbd", 0x00020000);
-        //CHECKSTYLE:ON
-    }
-
 }

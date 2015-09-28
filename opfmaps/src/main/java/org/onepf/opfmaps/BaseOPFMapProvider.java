@@ -16,7 +16,11 @@
 
 package org.onepf.opfmaps;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import org.onepf.opfutils.OPFLog;
+import org.onepf.opfutils.OPFUtils;
 
 /**
  * Created by akarimova on 24.06.15.
@@ -24,9 +28,43 @@ import android.support.annotation.NonNull;
 public abstract class BaseOPFMapProvider implements OPFMapProvider {
 
     @NonNull
-    @Override
-    public String getName() {
-        return getClass().getSimpleName();
+    private final String name;
+
+    @Nullable
+    private final String hostAppPackage;
+
+    protected BaseOPFMapProvider(@NonNull final String name,
+                                 @Nullable final String hostAppPackage) {
+        this.name = name;
+        this.hostAppPackage = hostAppPackage;
     }
 
+    @Override
+    public boolean isAvailable(@NonNull final Context context) {
+        if (hostAppPackage != null) {
+            final boolean isInstalled = OPFUtils.isInstalled(context, hostAppPackage);
+            if (!isInstalled) {
+                OPFLog.d("Host app package : %s of provider %s isn't installed", hostAppPackage, name);
+            }
+            return isInstalled;
+        }
+        return true;
+    }
+
+    @NonNull
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Nullable
+    @Override
+    public String getHostAppPackage() {
+        return hostAppPackage;
+    }
+
+    @Override
+    public boolean isKeyPresented(@NonNull final Context context) {
+        return true;
+    }
 }

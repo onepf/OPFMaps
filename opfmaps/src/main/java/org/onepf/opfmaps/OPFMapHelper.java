@@ -17,10 +17,14 @@
 package org.onepf.opfmaps;
 
 import android.content.Context;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
+import org.onepf.opfutils.OPFChecks;
+import org.onepf.opfutils.OPFLog;
 import org.onepf.opfutils.OPFUtils;
+import org.onepf.opfutils.exception.InitException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,49 +53,58 @@ public final class OPFMapHelper {
     }
 
     @SuppressWarnings("PMD.NPathComplexity")
+    @MainThread
     public void init(@NonNull final Context context,
                      @NonNull final OPFMapConfiguration configuration) {
-        //todo call only from main thread
+        OPFChecks.checkThread(true);
 
         final List<OPFMapProvider> providers = new ArrayList<>(configuration.getProviders());
-        //todo if there aren't available provider, choose first
+        if (providers.isEmpty()) {
+            throw new IllegalArgumentException("Providers list can't be empty");
+        }
+
         if (configuration.isSelectSystemPreferred()) {
             Collections.sort(providers, new Comparator<OPFMapProvider>() {
                 @Override
                 public int compare(final OPFMapProvider leftProvider, final OPFMapProvider rightProvider) {
-                    final int leftWeight = OPFUtils.isSystemApp(context, leftProvider.getHostAppPackage()) ? 1 : 0;
-                    final int rightWeight = OPFUtils.isSystemApp(context, rightProvider.getHostAppPackage()) ? 1 : 0;
+                    final String leftProviderHostAppPackage = leftProvider.getHostAppPackage();
+                    final String rightProviderHostAppPackage = rightProvider.getHostAppPackage();
+
+                    final int leftWeight = leftProviderHostAppPackage != null && OPFUtils.isSystemApp(context, leftProviderHostAppPackage) ? 1 : 0;
+                    final int rightWeight = rightProviderHostAppPackage != null && OPFUtils.isSystemApp(context, rightProviderHostAppPackage) ? 1 : 0;
                     return rightWeight - leftWeight;
                 }
             });
         }
 
+        OPFMapProvider availableProvider = null;
         //get first available provider
         for (OPFMapProvider provider : providers) {
-            if (provider.isAvailable(context) && provider.hasRequiredPermissions(context)
-                    && provider.isKeyPresented(context) && provider.hasRequestedFeatures(context)) {
-                currentProvider = provider;
+            if (!provider.isAvailable(context)) {
+                OPFLog.d("Provider %s is no available.", provider.getName());
+            } else if (!provider.isKeyPresented(context)) {
+                OPFLog.w("Key isn't presented for provider %s", provider.getName());
+            } else {
+                availableProvider = provider;
                 break;
             }
         }
 
-        //todo check
-        if (currentProvider == null) {
-            currentProvider = providers.get(0);
-        }
+        currentProvider = availableProvider != null ? availableProvider : providers.get(0);
     }
 
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes") //todo remove
+    @MainThread
     @NonNull
     public OPFMapProvider getCurrentProvider() {
+        OPFChecks.checkThread(true);
         if (currentProvider == null) {
-            //todo throw init exception
-            throw new RuntimeException("Init");
+            throw new InitException(false);
         }
 
         return currentProvider;
     }
 
+    @MainThread
     @NonNull
     public DelegatesAbstractFactory getDelegatesFactory() {
         return getCurrentProvider().getDelegatesFactory();
