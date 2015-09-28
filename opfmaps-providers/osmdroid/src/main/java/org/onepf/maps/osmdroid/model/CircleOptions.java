@@ -21,10 +21,9 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfmaps.utils.CompareUtils;
 import org.onepf.opfutils.OPFLog;
 import org.osmdroid.util.GeoPoint;
-
-import static org.onepf.maps.osmdroid.utils.CompareUtils.isEquals;
 
 /**
  * @author Roman Savin
@@ -162,7 +161,7 @@ public final class CircleOptions implements Parcelable {
         } else {
             final CircleOptions other = (CircleOptions) obj;
 
-            return isEquals(this.center, other.center)
+            return CompareUtils.isEquals(this.center, other.center)
                     && this.fillColor == other.fillColor
                     && this.radius == other.radius
                     && this.strokeColor == other.strokeColor

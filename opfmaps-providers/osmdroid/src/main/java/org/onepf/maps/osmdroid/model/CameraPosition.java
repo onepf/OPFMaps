@@ -21,7 +21,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.onepf.maps.osmdroid.utils.CompareUtils;
+import org.onepf.opfmaps.utils.CompareUtils;
 import org.osmdroid.util.GeoPoint;
 
 /**

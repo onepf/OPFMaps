@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.onepf.maps.osmdroid.utils;
+package org.onepf.opfmaps.utils;
 
 import android.support.annotation.Nullable;
 
 /**
  * @author Roman Savin
- * @since 17.08.2015
+ * @since 02.09.2015
  */
 public final class CompareUtils {
 

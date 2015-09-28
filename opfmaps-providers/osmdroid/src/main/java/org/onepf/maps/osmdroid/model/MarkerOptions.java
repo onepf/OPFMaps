@@ -20,9 +20,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import org.onepf.opfmaps.utils.CompareUtils;
 import org.osmdroid.util.GeoPoint;
-
-import static org.onepf.maps.osmdroid.utils.CompareUtils.isEquals;
 
 /**
  * @author Roman Savin
@@ -237,10 +236,10 @@ public final class MarkerOptions implements Parcelable {
         } else {
             final MarkerOptions other = (MarkerOptions) obj;
 
-            return isEquals(this.position, other.position)
-                    && isEquals(this.title, other.title)
-                    && isEquals(this.icon, other.title)
-                    && isEquals(this.snippet, other.snippet)
+            return CompareUtils.isEquals(this.position, other.position)
+                    && CompareUtils.isEquals(this.title, other.title)
+                    && CompareUtils.isEquals(this.icon, other.title)
+                    && CompareUtils.isEquals(this.snippet, other.snippet)
                     && this.alpha == other.alpha
                     && this.anchorU == other.anchorU
                     && this.anchorV == other.anchorV

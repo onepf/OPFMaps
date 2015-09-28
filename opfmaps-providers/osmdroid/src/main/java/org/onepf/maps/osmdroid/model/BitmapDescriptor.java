@@ -30,7 +30,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 
 import org.onepf.maps.osmdroid.R;
-import org.onepf.maps.osmdroid.utils.CompareUtils;
+import org.onepf.opfmaps.utils.CompareUtils;
 import org.onepf.opfutils.OPFLog;
 
 import java.io.IOException;

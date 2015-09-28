@@ -22,8 +22,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.onepf.maps.yandexweb.utils.CompareUtils;
 import org.onepf.opfmaps.model.OPFLatLng;
+import org.onepf.opfmaps.utils.CompareUtils;
 
 /**
  * @author Roman Savin

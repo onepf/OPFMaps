@@ -21,11 +21,10 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.onepf.opfmaps.utils.CompareUtils;
 import org.onepf.opfutils.OPFLog;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
-
-import static org.onepf.maps.osmdroid.utils.CompareUtils.isEquals;
 
 /**
  * @author Roman Savin
@@ -238,9 +237,9 @@ public final class GroundOverlayOptions implements Parcelable {
         } else {
             final GroundOverlayOptions other = (GroundOverlayOptions) obj;
 
-            return isEquals(this.bounds, other.bounds)
-                    && isEquals(this.location, other.location)
-                    && isEquals(this.image, other.image)
+            return CompareUtils.isEquals(this.bounds, other.bounds)
+                    && CompareUtils.isEquals(this.location, other.location)
+                    && CompareUtils.isEquals(this.image, other.image)
                     && this.bearing == other.bearing
                     && this.height == other.height
                     && this.transparency == other.transparency
