@@ -20,10 +20,18 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.model.OPFMarker;
 
 /**
+ * Interface definition for a callback to be invoked when a marker is clicked.
+ *
  * @author Anastasiia Karimova
  * @since 02.07.2015
  */
 public interface OPFOnMarkerClickListener {
 
+    /**
+     * Called when a marker has been clicked.
+     *
+     * @param marker The marker that was clicked.
+     * @return {@code true} if the listener has consumed the event, {@code false} otherwise.
+     */
     boolean onMarkerClick(@NonNull final OPFMarker marker);
 }

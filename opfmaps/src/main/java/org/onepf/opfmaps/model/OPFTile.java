@@ -23,6 +23,8 @@ import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.TileDelegate;
 
 /**
+ * Contains information about a tile that is returned by a {@link OPFTileProvider}.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
@@ -43,6 +45,13 @@ public final class OPFTile implements TileDelegate {
     @NonNull
     private final TileDelegate delegate;
 
+    /**
+     * Constructs a {@link OPFTile}.
+     *
+     * @param width  The width of the image in pixels.
+     * @param height The height of the image in pixels.
+     * @param data   The byte array containing the image data.
+     */
     public OPFTile(final int width, final int height, @NonNull final byte[] data) {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createTileDelegate(width, height, data);
     }
@@ -60,17 +69,32 @@ public final class OPFTile implements TileDelegate {
         }
     }
 
+    /**
+     * Returns a byte array containing the image data.
+     *
+     * @return The byte array containing the image data.
+     */
     @Override
     @NonNull
     public byte[] getData() {
         return delegate.getData();
     }
 
+    /**
+     * Returns the height of the image encoded by data in pixels.
+     *
+     * @return The height of the image in pixels.
+     */
     @Override
     public int getHeight() {
         return delegate.getHeight();
     }
 
+    /**
+     * Returns the width of the image encoded by data in pixels.
+     *
+     * @return The width of the image in pixels.
+     */
     @Override
     public int getWidth() {
         return delegate.getWidth();

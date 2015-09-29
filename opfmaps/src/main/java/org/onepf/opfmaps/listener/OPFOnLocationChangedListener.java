@@ -20,10 +20,17 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 
 /**
+ * Interface definition for a callback to be invoked when a location is changed.
+ *
  * @author Roman Savin
  * @since 06.08.2015
  */
 public interface OPFOnLocationChangedListener {
 
+    /**
+     * Called when a new user location is known.
+     *
+     * @param location New location.
+     */
     void onLocationChanged(@NonNull final Location location);
 }

@@ -21,6 +21,8 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.delegate.model.CameraUpdateDelegate;
 
 /**
+ * Defines a camera move. To obtain a camera update use the factory class {@link OPFCameraUpdateFactory}.
+ *
  * @author Roman Savin
  * @since 06.08.2015
  */

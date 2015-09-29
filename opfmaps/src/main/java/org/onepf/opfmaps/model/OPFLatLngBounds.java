@@ -23,6 +23,8 @@ import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.LatLngBoundsDelegate;
 
 /**
+ * An immutable class representing a latitude/longitude aligned rectangle.
+ *
  * @author Roman Savin
  * @since 29.07.2015
  */
@@ -40,6 +42,11 @@ public final class OPFLatLngBounds implements LatLngBoundsDelegate {
         }
     };
 
+    /**
+     * Creates a new builder.
+     *
+     * @return The {@link org.onepf.opfmaps.model.OPFLatLngBounds.Builder} instance.
+     */
     public static Builder builder() {
         return new Builder(OPFMapHelper.getInstance().getDelegatesFactory().createLatLngBoundsBuilderDelegate());
     }
@@ -47,6 +54,12 @@ public final class OPFLatLngBounds implements LatLngBoundsDelegate {
     @NonNull
     private final LatLngBoundsDelegate delegate;
 
+    /**
+     * Creates a new bounds based on a southwest and a northeast corner.
+     *
+     * @param southwest The southwest corner.
+     * @param northeast The northeast corner.
+     */
     public OPFLatLngBounds(@NonNull final OPFLatLng southwest, @NonNull final OPFLatLng northeast) {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createLatLngBoundsDelegate(southwest, northeast);
     }
@@ -64,26 +77,54 @@ public final class OPFLatLngBounds implements LatLngBoundsDelegate {
         }
     }
 
+    /**
+     * Returns whether this contains the given {@link OPFLatLng}.
+     *
+     * @param point The {@link OPFLatLng} to test.
+     * @return {@code true} if this contains the given point, {@code false} otherwise.
+     */
     public boolean contains(@NonNull final OPFLatLng point) {
         return delegate.contains(point);
     }
 
+    /**
+     * Returns the center of this LatLngBounds.
+     *
+     * @return An {@link OPFLatLngBounds} that is the center of the {@link OPFLatLngBounds}.
+     */
     @NonNull
     public OPFLatLng getCenter() {
         return delegate.getCenter();
     }
 
+    /**
+     * Returns a new {@link OPFLatLngBounds} that extends this {@link OPFLatLngBounds} to include the given {@link OPFLatLng}.
+     * This will return the smallest {@link OPFLatLngBounds} that contains both this and the extra point.
+     *
+     * @param point An {@link OPFLatLng} to be included in the new bounds.
+     * @return A new {@link OPFLatLngBounds} that contains this and the extra point.
+     */
     @NonNull
     public OPFLatLngBounds including(@NonNull final OPFLatLng point) {
         return new OPFLatLngBounds(delegate.including(point));
     }
 
+    /**
+     * Returns northeast corner of the bound.
+     *
+     * @return The northeast corner of the bound.
+     */
     @NonNull
     @Override
     public OPFLatLng getNortheast() {
         return delegate.getNortheast();
     }
 
+    /**
+     * Returns southwest corner of the bound.
+     *
+     * @return The southwest corner of the bound.
+     */
     @NonNull
     @Override
     public OPFLatLng getSouthwest() {

@@ -17,10 +17,17 @@
 package org.onepf.opfmaps.listener;
 
 /**
+ * Interface definition for a callback to be invoked when the My Location button is clicked.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
 public interface OPFOnMyLocationButtonClickListener {
 
+    /**
+     * Called when the my location button has been clicked.
+     *
+     * @return {@code true} if the listener has consumed the event, {@code false} otherwise.
+     */
     boolean onMyLocationButtonClick();
 }

@@ -141,37 +141,45 @@ public class GoogleMapDelegate implements MapDelegate {
     @Override
     public void animateCamera(@NonNull final OPFCameraUpdate update,
                               final int durationMs,
-                              @NonNull final OPFCancelableCallback callback) {
+                              @Nullable final OPFCancelableCallback callback) {
         map.animateCamera(
                 (CameraUpdate) update.getDelegate().getCameraUpdate(),
                 durationMs,
                 new GoogleMap.CancelableCallback() {
                     @Override
                     public void onFinish() {
-                        callback.onFinish();
+                        if (callback != null) {
+                            callback.onFinish();
+                        }
                     }
 
                     @Override
                     public void onCancel() {
-                        callback.onCancel();
+                        if (callback != null) {
+                            callback.onCancel();
+                        }
                     }
                 }
         );
     }
 
     @Override
-    public void animateCamera(@NonNull final OPFCameraUpdate update, @NonNull final OPFCancelableCallback callback) {
+    public void animateCamera(@NonNull final OPFCameraUpdate update, @Nullable final OPFCancelableCallback callback) {
         map.animateCamera(
                 (CameraUpdate) update.getDelegate().getCameraUpdate(),
                 new GoogleMap.CancelableCallback() {
                     @Override
                     public void onFinish() {
-                        callback.onFinish();
+                        if (callback != null) {
+                            callback.onFinish();
+                        }
                     }
 
                     @Override
                     public void onCancel() {
-                        callback.onCancel();
+                        if (callback != null) {
+                            callback.onCancel();
+                        }
                     }
                 }
         );
@@ -317,123 +325,159 @@ public class GoogleMapDelegate implements MapDelegate {
     }
 
     @Override
-    public void setOnCameraChangeListener(@NonNull final OPFOnCameraChangeListener listener) {
-        map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(final CameraPosition cameraPosition) {
-                listener.onCameraChange(new OPFCameraPosition(new GoogleCameraPositionDelegate(cameraPosition)));
-            }
-        });
-    }
-
-    @Override
-    public void setOnIndoorStateChangeListener(@NonNull final OPFOnIndoorStateChangeListener listener) {
-        map.setOnIndoorStateChangeListener(new GoogleMap.OnIndoorStateChangeListener() {
-
-            @Override
-            public void onIndoorBuildingFocused() {
-                listener.onIndoorBuildingFocused();
-            }
-
-            @Override
-            public void onIndoorLevelActivated(final IndoorBuilding indoorBuilding) {
-                listener.onIndoorLevelActivated(new OPFIndoorBuilding(new GoogleIndoorBuildingDelegate(indoorBuilding)));
-            }
-        });
-    }
-
-    @Override
-    public void setOnInfoWindowClickListener(@NonNull final OPFOnInfoWindowClickListener listener) {
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(final Marker marker) {
-                listener.onInfoWindowClick(new OPFMarker(new GoogleMarkerDelegate(marker)));
-            }
-        });
-    }
-
-    @Override
-    public void setOnMapClickListener(@NonNull final OPFOnMapClickListener listener) {
-        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(final LatLng latLng) {
-                listener.onMapClick(new OPFLatLng(new GoogleLatLngDelegate(latLng)));
-            }
-        });
-    }
-
-    @Override
-    public void setOnMapLoadedCallback(@NonNull final OPFOnMapLoadedCallback callback) {
-        map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                callback.onMapLoaded();
-            }
-        });
-    }
-
-    @Override
-    public void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener listener) {
-        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(final LatLng latLng) {
-                listener.onMapLongClick(new OPFLatLng(new GoogleLatLngDelegate(latLng)));
-            }
-        });
-    }
-
-    @Override
-    public void setOnMarkerClickListener(@NonNull final OPFOnMarkerClickListener listener) {
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(final Marker marker) {
-                return listener.onMarkerClick(new OPFMarker(new GoogleMarkerDelegate(marker)));
-            }
-        });
-    }
-
-    @Override
-    public void setOnMarkerDragListener(@NonNull final OPFOnMarkerDragListener listener) {
-        map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-
-            private OPFMarker opfMarker;
-
-            @Override
-            public void onMarkerDrag(final Marker marker) {
-                updateOPFMarker(marker);
-                listener.onMarkerDrag(opfMarker);
-            }
-
-            @Override
-            public void onMarkerDragEnd(final Marker marker) {
-                updateOPFMarker(marker);
-                listener.onMarkerDragEnd(opfMarker);
-            }
-
-            @Override
-            public void onMarkerDragStart(final Marker marker) {
-                updateOPFMarker(marker);
-                listener.onMarkerDragStart(opfMarker);
-            }
-
-            private void updateOPFMarker(@NonNull final Marker marker) {
-                if (opfMarker == null) {
-                    opfMarker = new OPFMarker(new GoogleMarkerDelegate(marker));
-                } else {
-                    opfMarker.setPosition(new OPFLatLng(new GoogleLatLngDelegate(marker.getPosition())));
+    public void setOnCameraChangeListener(@Nullable final OPFOnCameraChangeListener listener) {
+        if (listener != null) {
+            map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                @Override
+                public void onCameraChange(final CameraPosition cameraPosition) {
+                    listener.onCameraChange(new OPFCameraPosition(new GoogleCameraPositionDelegate(cameraPosition)));
                 }
-            }
-        });
+            });
+        } else {
+            map.setOnCameraChangeListener(null);
+        }
     }
 
     @Override
-    public void setOnMyLocationButtonClickListener(@NonNull final OPFOnMyLocationButtonClickListener listener) {
-        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
-                return listener.onMyLocationButtonClick();
-            }
-        });
+    public void setOnIndoorStateChangeListener(@Nullable final OPFOnIndoorStateChangeListener listener) {
+        if (listener != null) {
+            map.setOnIndoorStateChangeListener(new GoogleMap.OnIndoorStateChangeListener() {
+
+                @Override
+                public void onIndoorBuildingFocused() {
+                    listener.onIndoorBuildingFocused();
+                }
+
+                @Override
+                public void onIndoorLevelActivated(final IndoorBuilding indoorBuilding) {
+                    listener.onIndoorLevelActivated(new OPFIndoorBuilding(new GoogleIndoorBuildingDelegate(indoorBuilding)));
+                }
+            });
+        } else {
+            map.setOnIndoorStateChangeListener(null);
+        }
+    }
+
+    @Override
+    public void setOnInfoWindowClickListener(@Nullable final OPFOnInfoWindowClickListener listener) {
+        if (listener != null) {
+            map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(final Marker marker) {
+                    listener.onInfoWindowClick(new OPFMarker(new GoogleMarkerDelegate(marker)));
+                }
+            });
+        } else {
+            map.setOnInfoWindowClickListener(null);
+        }
+    }
+
+    @Override
+    public void setOnMapClickListener(@Nullable final OPFOnMapClickListener listener) {
+        if (listener != null) {
+            map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(final LatLng latLng) {
+                    listener.onMapClick(new OPFLatLng(new GoogleLatLngDelegate(latLng)));
+                }
+            });
+        } else {
+            map.setOnMapClickListener(null);
+        }
+    }
+
+    @Override
+    public void setOnMapLoadedCallback(@Nullable final OPFOnMapLoadedCallback callback) {
+        if (callback != null) {
+            map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                @Override
+                public void onMapLoaded() {
+                    callback.onMapLoaded();
+                }
+            });
+        } else {
+            map.setOnMapLoadedCallback(null);
+        }
+    }
+
+    @Override
+    public void setOnMapLongClickListener(@Nullable final OPFOnMapLongClickListener listener) {
+        if (listener != null) {
+            map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                @Override
+                public void onMapLongClick(final LatLng latLng) {
+                    listener.onMapLongClick(new OPFLatLng(new GoogleLatLngDelegate(latLng)));
+                }
+            });
+        } else {
+            map.setOnMapLongClickListener(null);
+        }
+    }
+
+    @Override
+    public void setOnMarkerClickListener(@Nullable final OPFOnMarkerClickListener listener) {
+        if (listener != null) {
+            map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(final Marker marker) {
+                    return listener.onMarkerClick(new OPFMarker(new GoogleMarkerDelegate(marker)));
+                }
+            });
+        } else {
+            map.setOnMarkerClickListener(null);
+        }
+    }
+
+    @Override
+    public void setOnMarkerDragListener(@Nullable final OPFOnMarkerDragListener listener) {
+        if (listener != null) {
+            map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+
+                private OPFMarker opfMarker;
+
+                @Override
+                public void onMarkerDrag(final Marker marker) {
+                    updateOPFMarker(marker);
+                    listener.onMarkerDrag(opfMarker);
+                }
+
+                @Override
+                public void onMarkerDragEnd(final Marker marker) {
+                    updateOPFMarker(marker);
+                    listener.onMarkerDragEnd(opfMarker);
+                }
+
+                @Override
+                public void onMarkerDragStart(final Marker marker) {
+                    updateOPFMarker(marker);
+                    listener.onMarkerDragStart(opfMarker);
+                }
+
+                private void updateOPFMarker(@NonNull final Marker marker) {
+                    if (opfMarker == null) {
+                        opfMarker = new OPFMarker(new GoogleMarkerDelegate(marker));
+                    } else {
+                        opfMarker.setPosition(new OPFLatLng(new GoogleLatLngDelegate(marker.getPosition())));
+                    }
+                }
+            });
+        } else {
+            map.setOnMarkerDragListener(null);
+        }
+    }
+
+    @Override
+    public void setOnMyLocationButtonClickListener(@Nullable final OPFOnMyLocationButtonClickListener listener) {
+        if (listener != null) {
+            map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    return listener.onMyLocationButtonClick();
+                }
+            });
+        } else {
+            map.setOnMyLocationButtonClickListener(null);
+        }
     }
 
     @Override

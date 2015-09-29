@@ -20,9 +20,17 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.model.OPFLatLng;
 
 /**
+ * Interface definition for a callback to be invoked when the map is clicked.
+ *
  * @author Anastasiia Karimova
  * @since 02.07.2015
  */
 public interface OPFOnMapClickListener {
+
+    /**
+     * Called when the map has been clicked. Called only if none of the overlays of the map handled the gesture.
+     *
+     * @param latLng The point on the ground (projected from the screen point) that was tapped.
+     */
     void onMapClick(@NonNull final OPFLatLng latLng);
 }

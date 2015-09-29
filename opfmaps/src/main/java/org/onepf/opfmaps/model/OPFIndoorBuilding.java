@@ -24,6 +24,8 @@ import org.onepf.opfmaps.delegate.model.IndoorBuildingDelegate;
 import java.util.List;
 
 /**
+ * Represents a building.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
@@ -36,22 +38,45 @@ public final class OPFIndoorBuilding implements IndoorBuildingDelegate {
         this.delegate = delegate;
     }
 
+    /**
+     * Gets the index in the list returned by {@link #getLevels()} of the level that is currently active in this
+     * building (default if no active level was previously set).
+     *
+     * @return The active level index value.
+     */
     @Override
     public int getActiveLevelIndex() {
         return delegate.getActiveLevelIndex();
     }
 
+    /**
+     * Gets the index in the list returned by {@link #getLevels()} of the default level for this building.
+     *
+     * @return The default level index value.
+     */
     @Override
     public int getDefaultLevelIndex() {
         return delegate.getDefaultLevelIndex();
     }
 
+    /**
+     * Gets the levels in the building. While a level is usually enclosed by a single building,
+     * a level might be enclosed by several buildings (e.g., a carpark level might span multiple buildings).
+     * The levels are in 'display order' from top to bottom.
+     *
+     * @return The list of indoor levels.
+     */
     @Nullable
     @Override
     public List<OPFIndoorLevel> getLevels() {
         return delegate.getLevels();
     }
 
+    /**
+     * Returns {@code true} if the building is entirely underground.
+     *
+     * @return {@code true} if the building is entirely underground, {@code false} otherwise.
+     */
     @Override
     public boolean isUnderground() {
         return delegate.isUnderground();

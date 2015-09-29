@@ -23,6 +23,8 @@ import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.LatLngDelegate;
 
 /**
+ * An immutable class representing a pair of latitude and longitude coordinates, stored as degrees.
+ *
  * @author Anastasiia Karimova
  * @since 09.06.2015
  */
@@ -43,6 +45,12 @@ public final class OPFLatLng implements LatLngDelegate {
     @NonNull
     private final LatLngDelegate delegate;
 
+    /**
+     * Constructs an {@link OPFLatLng} with the given latitude and longitude, measured in degrees.
+     *
+     * @param latitude  The point's latitude. This will be clamped to between -90 degrees and +90 degrees inclusive.
+     * @param longitude The point's longitude. This will be normalized to be within -180 degrees inclusive and +180 degrees exclusive.
+     */
     public OPFLatLng(final double latitude, final double longitude) {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createLatLngDelegate(latitude, longitude);
     }
@@ -60,11 +68,21 @@ public final class OPFLatLng implements LatLngDelegate {
         }
     }
 
+    /**
+     * Returns latitude, in degrees.
+     *
+     * @return The latitude, in degrees. This value is in the range [-90, 90].
+     */
     @Override
     public double getLat() {
         return delegate.getLat();
     }
 
+    /**
+     * Returns longitude, in degrees.
+     *
+     * @return The longitude, in degrees. This value is in the range [-180, 180).
+     */
     @Override
     public double getLng() {
         return delegate.getLng();

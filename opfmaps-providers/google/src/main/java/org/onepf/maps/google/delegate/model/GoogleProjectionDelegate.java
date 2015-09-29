@@ -19,6 +19,7 @@ package org.onepf.maps.google.delegate.model;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -39,10 +40,14 @@ public final class GoogleProjectionDelegate implements ProjectionDelegate {
         this.projection = projection;
     }
 
-    @NonNull
+    @Nullable
     @Override
     public OPFLatLng fromScreenLocation(@NonNull final Point point) {
-        return new OPFLatLng(new GoogleLatLngDelegate(projection.fromScreenLocation(point)));
+        final LatLng latLng = projection.fromScreenLocation(point);
+        if (latLng != null) {
+            return new OPFLatLng(new GoogleLatLngDelegate(latLng));
+        }
+        return null;
     }
 
     @NonNull

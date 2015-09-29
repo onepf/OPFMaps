@@ -69,11 +69,11 @@ public class ClickListenerOverlay extends Overlay {
         return false;
     }
 
-    public void setOnMapClickListener(@NonNull final OPFOnMapClickListener onMapClickListener) {
+    public void setOnMapClickListener(@Nullable final OPFOnMapClickListener onMapClickListener) {
         this.onMapClickListener = onMapClickListener;
     }
 
-    public void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener onMapLongClickListener) {
+    public void setOnMapLongClickListener(@Nullable final OPFOnMapLongClickListener onMapLongClickListener) {
         this.onMapLongClickListener = onMapLongClickListener;
     }
 

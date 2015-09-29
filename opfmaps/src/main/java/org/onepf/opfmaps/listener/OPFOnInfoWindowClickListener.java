@@ -20,10 +20,17 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.model.OPFMarker;
 
 /**
+ * Interface definition for a callback to be invoked when a info window is clicked.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
 public interface OPFOnInfoWindowClickListener {
 
+    /**
+     * Called when a info window has been clicked.
+     *
+     * @param marker The marker of the info window that was clicked.
+     */
     void onInfoWindowClick(@NonNull final OPFMarker marker);
 }

@@ -200,15 +200,19 @@ public class OsmdroidMapDelegate implements MapDelegate {
     @Override
     public void animateCamera(@NonNull final OPFCameraUpdate update,
                               final int durationMs,
-                              @NonNull final OPFCancelableCallback callback) {
+                              @Nullable final OPFCancelableCallback callback) {
         animateCamera(update);
-        callback.onFinish();
+        if (callback != null) {
+            callback.onFinish();
+        }
     }
 
     @Override
-    public void animateCamera(@NonNull final OPFCameraUpdate update, @NonNull final OPFCancelableCallback callback) {
+    public void animateCamera(@NonNull final OPFCameraUpdate update, @Nullable final OPFCancelableCallback callback) {
         animateCamera(update);
-        callback.onFinish();
+        if (callback != null) {
+            callback.onFinish();
+        }
     }
 
     @Override
@@ -423,47 +427,50 @@ public class OsmdroidMapDelegate implements MapDelegate {
     }
 
     @Override
-    public void setOnCameraChangeListener(@NonNull final OPFOnCameraChangeListener listener) {
+    public void setOnCameraChangeListener(@Nullable final OPFOnCameraChangeListener listener) {
         OPFLog.logStubCall(listener);
     }
 
     @Override
-    public void setOnIndoorStateChangeListener(@NonNull final OPFOnIndoorStateChangeListener listener) {
+    public void setOnIndoorStateChangeListener(@Nullable final OPFOnIndoorStateChangeListener listener) {
         OPFLog.logStubCall(listener);
     }
 
     @Override
-    public void setOnInfoWindowClickListener(@NonNull final OPFOnInfoWindowClickListener listener) {
+    public void setOnInfoWindowClickListener(@Nullable final OPFOnInfoWindowClickListener listener) {
         this.opfOnInfoWindowClickListener = listener;
     }
 
     @Override
-    public void setOnMapClickListener(@NonNull final OPFOnMapClickListener listener) {
+    public void setOnMapClickListener(@Nullable final OPFOnMapClickListener listener) {
         map.setOnMapClickListener(listener);
     }
 
     @Override
-    public void setOnMapLoadedCallback(@NonNull final OPFOnMapLoadedCallback callback) {
-        callback.onMapLoaded();
+    public void setOnMapLoadedCallback(@Nullable final OPFOnMapLoadedCallback callback) {
+        OPFLog.logStubCall(callback);
+        if (callback != null) {
+            callback.onMapLoaded();
+        }
     }
 
     @Override
-    public void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener listener) {
+    public void setOnMapLongClickListener(@Nullable final OPFOnMapLongClickListener listener) {
         map.setOnMapLongClickListener(listener);
     }
 
     @Override
-    public void setOnMarkerClickListener(@NonNull final OPFOnMarkerClickListener listener) {
+    public void setOnMarkerClickListener(@Nullable final OPFOnMarkerClickListener listener) {
         this.opfOnMarkerClickListener = listener;
     }
 
     @Override
-    public void setOnMarkerDragListener(@NonNull final OPFOnMarkerDragListener listener) {
+    public void setOnMarkerDragListener(@Nullable final OPFOnMarkerDragListener listener) {
         this.opfOnMarkerDragListener = listener;
     }
 
     @Override
-    public void setOnMyLocationButtonClickListener(@NonNull final OPFOnMyLocationButtonClickListener listener) {
+    public void setOnMyLocationButtonClickListener(@Nullable final OPFOnMyLocationButtonClickListener listener) {
         map.setOnMyLocationButtonClickListener(listener);
     }
 

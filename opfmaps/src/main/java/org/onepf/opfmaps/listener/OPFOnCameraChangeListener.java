@@ -21,10 +21,17 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.model.OPFCameraPosition;
 
 /**
+ * Interface definition for a callback to be invoked when the camera state changes (position, zoom, tilt or bearing).
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
 public interface OPFOnCameraChangeListener {
 
+    /**
+     * Called after the camera position has changed. It is always called for the final position in the animation.
+     *
+     * @param position The {@link OPFCameraPosition} at the end of the last camera change.
+     */
     void onCameraChange(@NonNull OPFCameraPosition position);
 }

@@ -20,14 +20,31 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.model.OPFMarker;
 
 /**
+ * Interface definition for a callback to be invoked when a drag event occurs.
+ *
  * @author Anastasiia Karimova
  * @since 02.07.2015
  */
 public interface OPFOnMarkerDragListener {
 
+    /**
+     * Called when a marker starts being dragged.
+     *
+     * @param marker The marker being dragged.
+     */
     void onMarkerDragStart(@NonNull final OPFMarker marker);
 
+    /**
+     * Called repeatedly while a marker is being dragged.
+     *
+     * @param marker The marker being dragged.
+     */
     void onMarkerDrag(@NonNull final OPFMarker marker);
 
+    /**
+     * Called when a marker has finished being dragged.
+     *
+     * @param marker The marker that was dragged.
+     */
     void onMarkerDragEnd(@NonNull final OPFMarker marker);
 }

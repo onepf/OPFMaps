@@ -17,10 +17,16 @@
 package org.onepf.opfmaps.listener;
 
 /**
+ * Interface definition for a callback to be invoked when the map has finished rendering.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
 public interface OPFOnMapLoadedCallback {
 
+    /**
+     * Called when the map has finished rendering. This will only be called once.
+     * You must request another callback if you want to be notified again.
+     */
     void onMapLoaded();
 }

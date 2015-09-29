@@ -273,7 +273,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         scrollGesturesOverlay.setScrollGesturesEnabled(isScrollGesturesEnabled);
     }
 
-    public void setOnMapClickListener(@NonNull final OPFOnMapClickListener onMapClickListener) {
+    public void setOnMapClickListener(@Nullable final OPFOnMapClickListener onMapClickListener) {
         if (clickListenerOverlay == null) {
             return;
         }
@@ -281,7 +281,7 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
         clickListenerOverlay.setOnMapClickListener(onMapClickListener);
     }
 
-    public void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener onMapLongClickListener) {
+    public void setOnMapLongClickListener(@Nullable final OPFOnMapLongClickListener onMapLongClickListener) {
         if (clickListenerOverlay == null) {
             return;
         }

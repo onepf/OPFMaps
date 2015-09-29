@@ -25,6 +25,8 @@ import org.onepf.opfmaps.delegate.model.PolygonOptionsDelegate;
 import java.util.List;
 
 /**
+ * Defines options for a polygon.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
@@ -45,6 +47,9 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
     @NonNull
     private final PolygonOptionsDelegate delegate;
 
+    /**
+     * Creates polygon options.
+     */
     public OPFPolygonOptions() {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createPolygonOptionsDelegate();
     }
@@ -58,6 +63,12 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         }
     }
 
+    /**
+     * Adds a vertex to the outline of the polygon being built.
+     *
+     * @param point The added point.
+     * @return This {@link OPFPolygonOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolygonOptions add(@NonNull final OPFLatLng point) {
@@ -65,6 +76,12 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         return this;
     }
 
+    /**
+     * Adds vertices to the outline of the polygon being built.
+     *
+     * @param points The added points.
+     * @return This {@link OPFPolygonOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolygonOptions add(@NonNull final OPFLatLng... points) {
@@ -72,6 +89,12 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         return this;
     }
 
+    /**
+     * Adds vertices to the outline of the polygon being built.
+     *
+     * @param points The added points.
+     * @return This {@link OPFPolygonOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolygonOptions addAll(@NonNull final Iterable<OPFLatLng> points) {
@@ -79,6 +102,12 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         return this;
     }
 
+    /**
+     * Adds a hole to the polygon being built.
+     *
+     * @param points The added hole.
+     * @return This {@link OPFPolygonOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolygonOptions addHole(@NonNull final Iterable<OPFLatLng> points) {
@@ -86,6 +115,12 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies the polygon's fill color, as 32-bit ARGB. The default color is black ({@code 0xff000000}).
+     *
+     * @param color The polygon's fill color.
+     * @return This {@link OPFPolygonOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolygonOptions fillColor(final int color) {
@@ -93,6 +128,12 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies whether to draw each segment of this polygon as a geodesic. The default setting is {@code false}.
+     *
+     * @param geodesic The geodesic value.
+     * @return This {@link OPFPolygonOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolygonOptions geodesic(final boolean geodesic) {
@@ -100,48 +141,94 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         return this;
     }
 
+    /**
+     * Gets the fill color set for this Options object.
+     *
+     * @return The fill color of the polygon in screen pixels.
+     */
     @Override
     public int getFillColor() {
         return delegate.getFillColor();
     }
 
+    /**
+     * Gets the holes set for this options object.
+     *
+     * @return The list of lists specifying the holes of the polygon.
+     */
     @NonNull
     @Override
     public List<List<OPFLatLng>> getHoles() {
         return delegate.getHoles();
     }
 
+    /**
+     * Gets the outline set for this options object.
+     *
+     * @return the list of {@link OPFLatLng} objects specifying the vertices of the outline of the polygon.
+     */
     @NonNull
     @Override
     public List<OPFLatLng> getPoints() {
         return delegate.getPoints();
     }
 
+    /**
+     * Gets the stroke color set for this options object.
+     *
+     * @return The stroke color of the polygon in screen pixels.
+     */
     @Override
     public int getStrokeColor() {
         return delegate.getStrokeColor();
     }
 
+    /**
+     * Gets the stroke width set for this options object.
+     *
+     * @return The stroke width of the polygon in screen pixels.
+     */
     @Override
     public float getStrokeWidth() {
         return delegate.getStrokeWidth();
     }
 
+    /**
+     * Gets the zIndex set for this options object.
+     *
+     * @return The zIndex of the polygon.
+     */
     @Override
     public float getZIndex() {
         return delegate.getZIndex();
     }
 
+    /**
+     * Gets the geodesic setting for this options object.
+     *
+     * @return {@code true} if the polygon segments should be geodesics, {@code false} otherwise.
+     */
     @Override
     public boolean isGeodesic() {
         return delegate.isGeodesic();
     }
 
+    /**
+     * Gets the visibility setting for this options object.
+     *
+     * @return {@code true} if the polygon is to be visible, {@code false} otherwise.
+     */
     @Override
     public boolean isVisible() {
         return delegate.isVisible();
     }
 
+    /**
+     * Specifies the polygon's stroke color, as 32-bit ARGB. The default color is black ({@code 0xff000000}).
+     *
+     * @param color The stroke color of the polygon.
+     * @return This {@link OPFPolygonOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolygonOptions strokeColor(final int color) {
@@ -149,6 +236,12 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies the polygon's stroke width, in display pixels. The default width is 10.
+     *
+     * @param width The stroke width of the polygon.
+     * @return This {@link OPFPolygonOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolygonOptions strokeWidth(final float width) {
@@ -156,6 +249,12 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies the visibility for the polygon. The default visibility is {@code true}.
+     *
+     * @param visible {@code false} to make this polygon invisible, {@code true} otherwise.
+     * @return This {@link OPFPolygonOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolygonOptions visible(final boolean visible) {
@@ -163,6 +262,12 @@ public final class OPFPolygonOptions implements PolygonOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies the polygon's zIndex, i.e., the order in which it will be drawn.
+     *
+     * @param zIndex The zIndex value.
+     * @return This {@link OPFPolygonOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolygonOptions zIndex(final float zIndex) {

@@ -28,6 +28,8 @@ import org.onepf.opfmaps.R;
 import org.onepf.opfmaps.delegate.model.CameraPositionDelegate;
 
 /**
+ * An immutable class that aggregates all camera position parameters.
+ *
  * @author Roman Savin
  * @since 06.08.2015
  */
@@ -45,16 +47,34 @@ public final class OPFCameraPosition implements CameraPositionDelegate {
         }
     };
 
+    /**
+     * Creates a builder for a camera position.
+     *
+     * @return The {@link org.onepf.opfmaps.model.OPFCameraPosition.Builder} instance.
+     */
     @NonNull
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * Creates a builder for a camera position, initialized to a given position.
+     *
+     * @param camera The given position.
+     * @return The {@link org.onepf.opfmaps.model.OPFCameraPosition.Builder} instance.
+     */
     @NonNull
     public static Builder builder(@NonNull final OPFCameraPosition camera) {
         return new Builder(camera);
     }
 
+    /**
+     * Creates a camera position from the attribute set.
+     *
+     * @param context The {@link Context} instance.
+     * @param attrs   The attribute set.
+     * @return Created camera position.
+     */
     @Nullable
     public static OPFCameraPosition createFromAttributes(@NonNull final Context context,
                                                          @Nullable final AttributeSet attrs) {
@@ -92,6 +112,15 @@ public final class OPFCameraPosition implements CameraPositionDelegate {
         return builder.build();
     }
 
+    /**
+     * Constructs a camera position pointed for a particular target and zoom level.
+     * The resultant bearing is North, and the viewing angle is perpendicular to the Earth's surface. i.e.,
+     * directly facing the Earth's surface, with the top of the screen pointing North.
+     *
+     * @param target The target location to align with the center of the screen.
+     * @param zoom   Zoom level at target.
+     * @return Created camera position.
+     */
     @NonNull
     public static OPFCameraPosition fromLatLngZoom(@NonNull final OPFLatLng target, final float zoom) {
         return new OPFCameraPosition(OPFMapHelper.getInstance().getDelegatesFactory()
@@ -101,6 +130,15 @@ public final class OPFCameraPosition implements CameraPositionDelegate {
     @NonNull
     private final CameraPositionDelegate delegate;
 
+    /**
+     * Constructs a OPFCameraPosition.
+     *
+     * @param target  The target location to align with the center of the screen.
+     * @param zoom    Zoom level at target.
+     * @param tilt    The camera angle, in degrees, from the nadir (directly down).
+     * @param bearing Direction that the camera is pointing in, in degrees clockwise from north.
+     *                This value will be normalized to be within 0 degrees inclusive and 360 degrees exclusive.
+     */
     public OPFCameraPosition(@NonNull final OPFLatLng target,
                              final float zoom,
                              final float tilt,
@@ -122,22 +160,42 @@ public final class OPFCameraPosition implements CameraPositionDelegate {
         }
     }
 
+    /**
+     * Returns the direction that the camera is pointing in, in degrees clockwise from north.
+     *
+     * @return The direction that the camera is pointing in, in degrees clockwise from north.
+     */
     @Override
     public float getBearing() {
         return delegate.getBearing();
     }
 
+    /**
+     * Returns the location that the camera is pointing at.
+     *
+     * @return The location that the camera is pointing at.
+     */
     @Override
     @NonNull
     public OPFLatLng getTarget() {
         return delegate.getTarget();
     }
 
+    /**
+     * Returns the angle, in degrees, of the camera angle from the nadir (directly facing the Earth).
+     *
+     * @return The angle, in degrees, of the camera angle from the nadir (directly facing the Earth).
+     */
     @Override
     public float getTilt() {
         return delegate.getTilt();
     }
 
+    /**
+     * Returns zoom level near the center of the screen.
+     *
+     * @return Zoom level near the center of the screen.
+     */
     @Override
     public float getZoom() {
         return delegate.getZoom();

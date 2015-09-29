@@ -17,6 +17,7 @@
 package org.onepf.opfmaps;
 
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,9 @@ import java.util.List;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
+ * A Map component in an app. This fragment is the simplest way to place a map in an application.
+ * It's a wrapper around a view of a map to automatically handle the necessary life cycle needs.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
@@ -47,10 +51,21 @@ public class OPFSupportMapFragment extends Fragment implements MapFragmentDelega
     @NonNull
     private final List<OPFOnMapReadyCallback> pendingCallbacks = new ArrayList<>();
 
+    /**
+     * Creates a map fragment, using default options.
+     *
+     * @return The created {@link OPFSupportMapFragment} instance.
+     */
     public static OPFSupportMapFragment newInstance() {
         return new OPFSupportMapFragment();
     }
 
+    /**
+     * Creates a map fragment with the given options.
+     *
+     * @param options The {@link OPFMapOptions} instance.
+     * @return The created {@link OPFSupportMapFragment} instance.
+     */
     public static OPFSupportMapFragment newInstance(@NonNull final OPFMapOptions options) {
         final OPFSupportMapFragment fragment = new OPFSupportMapFragment();
         final Bundle arguments = new Bundle();
@@ -113,6 +128,12 @@ public class OPFSupportMapFragment extends Fragment implements MapFragmentDelega
         super.onLowMemory();
     }
 
+    /**
+     * Sets a callback object which will be triggered when the {@link OPFMap} instance is ready to be used.
+     *
+     * @param callback The callback object that will be triggered when the map is ready to be used.
+     */
+    @MainThread
     @Override
     public void getMapAsync(@NonNull final OPFOnMapReadyCallback callback) {
         OPFLog.logMethod(callback);

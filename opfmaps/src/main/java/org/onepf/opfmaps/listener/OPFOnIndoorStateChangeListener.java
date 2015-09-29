@@ -20,12 +20,26 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.model.OPFIndoorBuilding;
 
 /**
+ * Interface definition for a callback to be invoked when the indoor state changes.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
 public interface OPFOnIndoorStateChangeListener {
 
+    /**
+     * This callback is called when the focused building changes.
+     */
     void onIndoorBuildingFocused();
 
+    /**
+     * The map keeps track of the active level for each building which has been visited or otherwise had a level selected.
+     * When that level changes, this callback will be triggered regardless of whether the building is focused or not.
+     * This callback is also called when the default level first becomes available.
+     * </p>
+     * This method will only be called after the building data has become available.
+     *
+     * @param building The building for which the active level has changed.
+     */
     void onIndoorLevelActivated(@NonNull final OPFIndoorBuilding building);
 }

@@ -19,6 +19,7 @@ package org.onepf.maps.yandexweb.delegate.model;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import org.onepf.maps.yandexweb.model.LatLng;
 import org.onepf.maps.yandexweb.model.Projection;
 import org.onepf.opfmaps.delegate.model.ProjectionDelegate;
@@ -38,7 +39,7 @@ public final class YaWebProjectionDelegate implements ProjectionDelegate {
         this.projection = projection;
     }
 
-    @NonNull
+    @Nullable
     @Override
     public OPFLatLng fromScreenLocation(@NonNull final Point point) {
         return new OPFLatLng(new YaWebLatLngDelegate(projection.fromScreenLocation(point)));

@@ -18,12 +18,19 @@ package org.onepf.opfmaps.listener;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
+ * Interface definition for a callback to be invoked when the snapshot has been taken.
+ *
  * @author Roman Savin
  * @since 06.08.2015
  */
 public interface OPFSnapshotReadyCallback {
 
-    void onSnapshotReady(@NonNull final Bitmap snapshot);
+    /**
+     * Invoked when the snapshot has been taken.
+     * @param snapshot A bitmap containing the map as it is currently rendered, or null if the snapshot could not be taken.
+     */
+    void onSnapshotReady(@Nullable final Bitmap snapshot);
 }

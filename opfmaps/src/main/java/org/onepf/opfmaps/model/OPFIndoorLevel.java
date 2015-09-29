@@ -22,6 +22,8 @@ import android.support.annotation.Nullable;
 import org.onepf.opfmaps.delegate.model.IndoorLevelDelegate;
 
 /**
+ * Represents a level in a building.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
@@ -34,17 +36,31 @@ public final class OPFIndoorLevel implements IndoorLevelDelegate {
         this.delegate = delegate;
     }
 
+    /**
+     * Sets this level as the visible level in its building. If a level is enclosed in several buildings,
+     * then all those buildings will have this level set as active.
+     */
     @Override
     public void activate() {
         delegate.activate();
     }
 
+    /**
+     * Localized display name for the level, e.g. "Ground floor". Returns an empty string if no name is defined.
+     *
+     * @return The name of the level.
+     */
     @Override
     @Nullable
     public String getName() {
         return delegate.getName();
     }
 
+    /**
+     * Localized short display name for the level, e.g. "1". Returns an empty string if no shortName is defined.
+     *
+     * @return The short name of the level.
+     */
     @Override
     @Nullable
     public String getShortName() {

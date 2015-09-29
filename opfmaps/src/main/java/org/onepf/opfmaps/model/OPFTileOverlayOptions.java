@@ -24,6 +24,8 @@ import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.TileOverlayOptionsDelegate;
 
 /**
+ * Defines options for a TileOverlay.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
@@ -44,6 +46,9 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
     @NonNull
     private final TileOverlayOptionsDelegate delegate;
 
+    /**
+     * Creates a new set of tile overlay options.
+     */
     public OPFTileOverlayOptions() {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createTileOverlayOptionDelegate();
     }
@@ -57,6 +62,12 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
         }
     }
 
+    /**
+     * Specifies whether the tiles should fade in. The default is {@code true}.
+     *
+     * @param fadeIn The fadeIn value.
+     * @return This {@link OPFTileOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFTileOverlayOptions fadeIn(final boolean fadeIn) {
@@ -64,28 +75,54 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
         return this;
     }
 
+    /**
+     * Gets whether the tiles should fade in.
+     *
+     * @return {@code true} if the tiles are to fade in, {@code false} otherwise.
+     */
     @SuppressWarnings("PMD.BooleanGetMethodName")
     @Override
     public boolean getFadeIn() {
         return delegate.getFadeIn();
     }
 
+    /**
+     * Gets the tile provider set for this {@link OPFTileOverlayOptions} object.
+     *
+     * @return The {@link OPFTileProvider} of the tile overlay.
+     */
     @Nullable
     @Override
     public OPFTileProvider getTileProvider() {
         return delegate.getTileProvider();
     }
 
+    /**
+     * Gets the zIndex set for this {@link OPFTileOverlayOptions} object.
+     *
+     * @return The zIndex of the tile overlay.
+     */
     @Override
     public float getZIndex() {
         return delegate.getZIndex();
     }
 
+    /**
+     * Gets the visibility setting for this {@link OPFTileOverlayOptions} object.
+     *
+     * @return {@code true} if the tile overlay is to be visible, {@code false} otherwise.
+     */
     @Override
     public boolean isVisible() {
         return delegate.isVisible();
     }
 
+    /**
+     * Specifies the tile provider to use for this tile overlay.
+     *
+     * @param tileProvider The {@link OPFTileProvider} to use for this tile overlay.
+     * @return This {@link OPFTileOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFTileOverlayOptions tileProvider(@NonNull final OPFTileProvider tileProvider) {
@@ -93,6 +130,12 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies the visibility for the tile overlay. The default visibility is {@code true}.
+     *
+     * @param visible {@code false} to make the tile overlay invisible, {@code true} otherwise.
+     * @return This {@link OPFTileOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFTileOverlayOptions visible(final boolean visible) {
@@ -100,6 +143,13 @@ public final class OPFTileOverlayOptions implements TileOverlayOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies the tile overlay's zIndex, i.e., the order in which it will be drawn where overlays with
+     * larger values are drawn above those with lower values.
+     *
+     * @param zIndex The zIndex value.
+     * @return This {@link OPFTileOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFTileOverlayOptions zIndex(final float zIndex) {

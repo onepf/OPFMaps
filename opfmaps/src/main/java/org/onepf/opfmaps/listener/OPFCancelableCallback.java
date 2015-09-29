@@ -17,12 +17,20 @@
 package org.onepf.opfmaps.listener;
 
 /**
+ * A callback interface for reporting when a task is complete or cancelled.
+ *
  * @author Roman Savin
  * @since 06.08.2015
  */
 public interface OPFCancelableCallback {
 
+    /**
+     * Invoked when a task is cancelled.
+     */
     void onCancel();
 
+    /**
+     * Invoked when a task is completed.
+     */
     void onFinish();
 }

@@ -18,6 +18,7 @@ package org.onepf.opfmaps.delegate.model;
 
 import android.graphics.Point;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFVisibleRegion;
 
@@ -27,7 +28,7 @@ import org.onepf.opfmaps.model.OPFVisibleRegion;
  */
 public interface ProjectionDelegate {
 
-    @NonNull
+    @Nullable
     OPFLatLng fromScreenLocation(@NonNull final Point point);
 
     @NonNull

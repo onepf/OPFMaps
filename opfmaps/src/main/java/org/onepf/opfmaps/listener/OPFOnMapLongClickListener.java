@@ -20,10 +20,17 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.model.OPFLatLng;
 
 /**
+ * Interface definition for a callback to be invoked when the map has been clicked and held.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
 public interface OPFOnMapLongClickListener {
 
+    /**
+     * Called when the map has been clicked and held.
+     *
+     * @param point The point on the ground (projected from the screen point) that was pressed.
+     */
     void onMapLongClick(@NonNull final OPFLatLng point);
 }

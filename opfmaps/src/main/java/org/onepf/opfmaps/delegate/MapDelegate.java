@@ -77,9 +77,9 @@ public interface MapDelegate {
 
     void animateCamera(@NonNull final OPFCameraUpdate update,
                        final int durationMs,
-                       @NonNull final OPFCancelableCallback callback);
+                       @Nullable final OPFCancelableCallback callback);
 
-    void animateCamera(@NonNull final OPFCameraUpdate update, @NonNull final OPFCancelableCallback callback);
+    void animateCamera(@NonNull final OPFCameraUpdate update, @Nullable final OPFCancelableCallback callback);
 
     void animateCamera(@NonNull final OPFCameraUpdate update);
 
@@ -128,23 +128,23 @@ public interface MapDelegate {
 
     void setMyLocationEnabled(final boolean enabled);
 
-    void setOnCameraChangeListener(@NonNull final OPFOnCameraChangeListener listener);
+    void setOnCameraChangeListener(@Nullable final OPFOnCameraChangeListener listener);
 
-    void setOnIndoorStateChangeListener(@NonNull final OPFOnIndoorStateChangeListener listener);
+    void setOnIndoorStateChangeListener(@Nullable final OPFOnIndoorStateChangeListener listener);
 
-    void setOnInfoWindowClickListener(@NonNull final OPFOnInfoWindowClickListener listener);
+    void setOnInfoWindowClickListener(@Nullable final OPFOnInfoWindowClickListener listener);
 
-    void setOnMapClickListener(@NonNull final OPFOnMapClickListener listener);
+    void setOnMapClickListener(@Nullable final OPFOnMapClickListener listener);
 
-    void setOnMapLoadedCallback(@NonNull final OPFOnMapLoadedCallback callback);
+    void setOnMapLoadedCallback(@Nullable final OPFOnMapLoadedCallback callback);
 
-    void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener listener);
+    void setOnMapLongClickListener(@Nullable final OPFOnMapLongClickListener listener);
 
-    void setOnMarkerClickListener(@NonNull final OPFOnMarkerClickListener listener);
+    void setOnMarkerClickListener(@Nullable final OPFOnMarkerClickListener listener);
 
-    void setOnMarkerDragListener(@NonNull final OPFOnMarkerDragListener listener);
+    void setOnMarkerDragListener(@Nullable final OPFOnMarkerDragListener listener);
 
-    void setOnMyLocationButtonClickListener(@NonNull final OPFOnMyLocationButtonClickListener listener);
+    void setOnMyLocationButtonClickListener(@Nullable final OPFOnMyLocationButtonClickListener listener);
 
     void setPadding(final int left, final int top, final int right, final int bottom);
 

@@ -20,10 +20,18 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.OPFMap;
 
 /**
+ * Interface definition for a callback to be invoked when the map is ready to be used.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
 public interface OPFOnMapReadyCallback {
 
+    /**
+     * Called when the map is ready to be used.
+     *
+     * @param opfMap A non-null instance of a {@link OPFMap} associated with the {@link org.onepf.opfmaps.OPFMapFragment}
+     *               or {@link org.onepf.opfmaps.OPFMapView} that defines the callback.
+     */
     void onMapReady(@NonNull final OPFMap opfMap);
 }

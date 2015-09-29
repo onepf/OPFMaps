@@ -24,10 +24,29 @@ import android.support.annotation.NonNull;
  */
 public enum OPFMapType {
 
+    /**
+     * No base map tiles.
+     */
     NONE(0),
+
+    /**
+     * Basic maps.
+     */
     NORMAL(1),
+
+    /**
+     * Satellite maps with no labels.
+     */
     SATELLITE(2),
+
+    /**
+     * Terrain maps.
+     */
     TERRAIN(3),
+
+    /**
+     * Satellite maps with a transparent layer of major streets.
+     */
     HYBRID(4);
 
     private final int id;

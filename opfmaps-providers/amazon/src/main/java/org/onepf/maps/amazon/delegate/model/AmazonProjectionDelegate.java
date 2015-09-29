@@ -19,6 +19,7 @@ package org.onepf.maps.amazon.delegate.model;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 
+import android.support.annotation.Nullable;
 import com.amazon.geo.mapsv2.Projection;
 import com.amazon.geo.mapsv2.model.LatLng;
 
@@ -39,10 +40,14 @@ public final class AmazonProjectionDelegate implements ProjectionDelegate {
         this.projection = projection;
     }
 
-    @NonNull
+    @Nullable
     @Override
     public OPFLatLng fromScreenLocation(@NonNull final Point point) {
-        return new OPFLatLng(new AmazonLatLngDelegate(projection.fromScreenLocation(point)));
+        final LatLng latLng = projection.fromScreenLocation(point);
+        if (latLng != null) {
+            return new OPFLatLng(new AmazonLatLngDelegate(latLng));
+        }
+        return null;
     }
 
     @NonNull

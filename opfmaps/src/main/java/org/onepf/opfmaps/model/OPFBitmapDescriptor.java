@@ -21,6 +21,10 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.delegate.model.BitmapDescriptorDelegate;
 
 /**
+ * Defines an image. For a marker, it can be used to set the image of the marker icon. For a ground overlay,
+ * it can be used to set the image to place on the surface of the earth.
+ * To obtain a {@link OPFBitmapDescriptor} use the factory class {@link OPFBitmapDescriptorFactory}.
+ *
  * @author Roman Savin
  * @since 29.07.2015
  */

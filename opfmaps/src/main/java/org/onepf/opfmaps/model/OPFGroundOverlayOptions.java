@@ -24,6 +24,8 @@ import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 
 /**
+ * Defines options for a ground overlay.
+ *
  * @author Roman Savin
  * @since 29.07.2015
  */
@@ -44,6 +46,9 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
     @NonNull
     private final GroundOverlayOptionsDelegate delegate;
 
+    /**
+     * Creates a new set of ground overlay options.
+     */
     public OPFGroundOverlayOptions() {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createGroundOverlayOptionsDelegate();
     }
@@ -57,6 +62,15 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         }
     }
 
+    /**
+     * Specifies the anchor. The anchor aligns with the ground overlay's location.
+     * The anchor point is specified in 2D continuous space where (0,0), (1,0), (0,1) and (1,1) denote the top-left,
+     * top-right, bottom-left and bottom-right corners respectively.
+     *
+     * @param u The u-coordinate of the anchor.
+     * @param v The v-coordinate of the anchor.
+     * @return This {@link OPFGroundOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFGroundOverlayOptions anchor(final float u, final float v) {
@@ -64,6 +78,13 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         return this;
     }
 
+    /**
+     * Specifies the bearing of the ground overlay in degrees clockwise from north.
+     * The rotation is performed about the anchor point. If not specified, the default is 0 (i.e., up on the image points north).
+     *
+     * @param bearing The bearing in degrees clockwise from north. Values outside the range [0, 360) will be normalized.
+     * @return This {@link OPFGroundOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFGroundOverlayOptions bearing(final float bearing) {
@@ -71,57 +92,117 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         return this;
     }
 
+    /**
+     * Horizontal relative anchor; 0.0 and 1.0 denote left and right edges respectively.
+     * Other anchor values are interpolated accordingly.
+     *
+     * @return The horizontal edge-relative anchor location.
+     */
     @Override
     public float getAnchorU() {
         return delegate.getAnchorU();
     }
 
+    /**
+     * Vertical relative anchor; 0.0 and 1.0 denote top and bottom edges respectively.
+     * Other anchor values are interpolated accordingly.
+     *
+     * @return The vertical edge-relative anchor location.
+     */
     @Override
     public float getAnchorV() {
         return delegate.getAnchorV();
     }
 
+    /**
+     * Gets the bearing set for this options object.
+     *
+     * @return The bearing of the ground overlay.
+     */
     @Override
     public float getBearing() {
         return delegate.getBearing();
     }
 
+    /**
+     * Gets the bounds set for this options object.
+     *
+     * @return The bounds of the ground overlay. This will be {@code null} if the position was set using
+     * {@link #position(OPFLatLng, float)} or {@link #position(OPFLatLng, float, float)}.
+     */
     @Nullable
     @Override
     public OPFLatLngBounds getBounds() {
         return delegate.getBounds();
     }
 
+    /**
+     * Gets the height set for this options object.
+     *
+     * @return The height of the ground overlay.
+     */
     @Override
     public float getHeight() {
         return delegate.getHeight();
     }
 
+    /**
+     * Gets the image set for this options object.
+     *
+     * @return The image of the ground overlay.
+     */
     @Override
     public OPFBitmapDescriptor getImage() {
         return delegate.getImage();
     }
 
+    /**
+     * Gets the location set for this options object.
+     *
+     * @return The location to place the anchor of the ground overlay. This will be null if the position was set
+     * using {@link #positionFromBounds(OPFLatLngBounds)}.
+     */
     @Override
     public OPFLatLng getLocation() {
         return delegate.getLocation();
     }
 
+    /**
+     * Gets the transparency set for this options object.
+     *
+     * @return The transparency of the ground overlay.
+     */
     @Override
     public float getTransparency() {
         return delegate.getTransparency();
     }
 
+    /**
+     * Gets the width set for this options object.
+     *
+     * @return The width of the ground overlay.
+     */
     @Override
     public float getWidth() {
         return delegate.getWidth();
     }
 
+    /**
+     * Gets the zIndex set for this options object.
+     *
+     * @return The zIndex of the ground overlay.
+     */
     @Override
     public float getZIndex() {
         return delegate.getZIndex();
     }
 
+    /**
+     * Specifies the image for this ground overlay.
+     *
+     * @param image The {@link OPFBitmapDescriptor} to use for this ground overlay.
+     * @return This {@link OPFGroundOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFGroundOverlayOptions image(@NonNull final OPFBitmapDescriptor image) {
@@ -129,11 +210,27 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         return this;
     }
 
+    /**
+     * Gets the visibility setting for this options object.
+     *
+     * @return {@code true} if the ground overlay is to be visible; {@code false} if it is not.
+     */
     @Override
     public boolean isVisible() {
         return delegate.isVisible();
     }
 
+    /**
+     * Specifies the position for this ground overlay using an anchor point (a {@link OPFLatLng}),
+     * width and height (both in meters). When rendered, the image will be scaled to fit the dimensions specified.
+     *
+     * @param location The location on the map {@link OPFLatLng} to which the anchor point in the given image will remain fixed.
+     *                 The anchor will remain fixed to the position on the ground when transformations
+     *                 are applied (e.g., setDimensions, setBearing, etc.).
+     * @param width    The width of the overlay (in meters).
+     * @param height   The height of the overlay (in meters)
+     * @return This {@link OPFGroundOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFGroundOverlayOptions position(@NonNull final OPFLatLng location, final float width, final float height) {
@@ -141,6 +238,16 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         return this;
     }
 
+    /**
+     * Specifies the position for this ground overlay using an anchor point (a {@link OPFLatLng}) and the width (in meters).
+     * The height will be adapted accordingly to preserve aspect ratio.
+     *
+     * @param location The location on the map {@link OPFLatLng} to which the anchor point in the given image will remain fixed.
+     *                 The anchor will remain fixed to the position on the ground when transformations
+     *                 are applied (e.g., setDimensions, setBearing, etc.).
+     * @param width    The width of the overlay (in meters). The height will be determined automatically based on the image aspect ratio.
+     * @return This {@link OPFGroundOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFGroundOverlayOptions position(@NonNull final OPFLatLng location, final float width) {
@@ -148,6 +255,12 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         return this;
     }
 
+    /**
+     * Specifies the position for this ground overlay.
+     *
+     * @param bounds An {@link OPFLatLngBounds} in which to place the ground overlay
+     * @return This {@link OPFGroundOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFGroundOverlayOptions positionFromBounds(@NonNull final OPFLatLngBounds bounds) {
@@ -155,6 +268,13 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         return this;
     }
 
+    /**
+     * Specifies the transparency of the ground overlay. The default transparency is {@code 0} (opaque).
+     *
+     * @param transparency A float in the range [0..1] where 0 means that the ground overlay is opaque and 1 means
+     *                     that the ground overlay is transparent.
+     * @return This {@link OPFGroundOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFGroundOverlayOptions transparency(final float transparency) {
@@ -162,6 +282,12 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         return this;
     }
 
+    /**
+     * Specifies the visibility for the ground overlay. The default visibility is {@code true}.
+     *
+     * @param visible {@code false} to make this circle invisible, {@code true} otherwise.
+     * @return This {@link OPFGroundOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFGroundOverlayOptions visible(final boolean visible) {
@@ -169,6 +295,12 @@ public final class OPFGroundOverlayOptions implements GroundOverlayOptionsDelega
         return this;
     }
 
+    /**
+     * Specifies the ground overlay's zIndex, i.e., the order in which it will be drawn.
+     *
+     * @param zIndex zIndex value.
+     * @return This {@link OPFGroundOverlayOptions} object.
+     */
     @NonNull
     @Override
     public OPFGroundOverlayOptions zIndex(final float zIndex) {

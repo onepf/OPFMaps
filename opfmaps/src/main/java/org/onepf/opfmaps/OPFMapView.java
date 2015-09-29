@@ -18,6 +18,7 @@ package org.onepf.opfmaps;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -30,6 +31,19 @@ import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
+ * Represents a {@link View} for displaying a map.
+ * Life cycle events of the parent {@link android.app.Activity} or {@link android.app.Fragment}
+ * must be forwarded to the {@code View} by calling the corresponding methods in this class:
+ * <p/>
+ * 1. {@link #onCreate(Bundle)}
+ * 2. {@link #onResume()}
+ * 3. {@link #onPause()}
+ * 4. {@link #onDestroy()}
+ * 5. {@link #onSaveInstanceState(Bundle)}
+ * 6. {@link #onLowMemory()}
+ * <p/>
+ * For automatic life cycle management, use a {@link OPFMapFragment} or {@link OPFSupportMapFragment} instead.
+ *
  * @author Roman Savin
  * @since 07.08.2015
  */
@@ -62,6 +76,12 @@ public class OPFMapView extends FrameLayout implements MapViewDelegate {
         addView((View) delegate, MATCH_PARENT, MATCH_PARENT);
     }
 
+    /**
+     * Get an {@link OPFMap} asynchronously with a callback after it is ready to be used.
+     * This method must be called from the main thread. The callback will be invoked on the main thread.
+     * @param callback The callback to invoke when the map is ready to use.
+     */
+    @MainThread
     @Override
     public void getMapAsync(@NonNull final OPFOnMapReadyCallback callback) {
         delegate.getMapAsync(callback);

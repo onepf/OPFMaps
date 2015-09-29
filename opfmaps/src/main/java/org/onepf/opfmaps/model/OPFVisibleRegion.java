@@ -23,6 +23,11 @@ import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.delegate.model.VisibleRegionDelegate;
 
 /**
+ * Contains the four points defining the four-sided polygon that is visible in a map's camera.
+ * This polygon can be a trapezoid instead of a rectangle, because a camera can have tilt.
+ * If the camera is directly over the center of the camera, the shape is rectangular, but if the camera is tilted,
+ * the shape will appear to be a trapezoid whose smallest side is closest to the point of view.
+ *
  * @author Roman Savin
  * @since 06.08.2015
  */
@@ -65,30 +70,55 @@ public class OPFVisibleRegion implements VisibleRegionDelegate {
         }
     }
 
+    /**
+     * Returns the {@link OPFLatLng} object that defines the far left corner of the camera.
+     *
+     * @return The {@link OPFLatLng} object that defines the far left corner of the camera.
+     */
     @Override
     @NonNull
     public OPFLatLng getFarLeft() {
         return delegate.getFarLeft();
     }
 
+    /**
+     * Returns the {@link OPFLatLng} object that defines the far right corner of the camera.
+     *
+     * @return The {@link OPFLatLng} object that defines the far right corner of the camera.
+     */
     @Override
     @NonNull
     public OPFLatLng getFarRight() {
         return delegate.getFarRight();
     }
 
+    /**
+     * Returns the smallest bounding box that includes the visible region defined in this class.
+     *
+     * @return The smallest bounding box that includes the visible region defined in this class.
+     */
     @Override
     @NonNull
     public OPFLatLngBounds getLatLngBounds() {
         return delegate.getLatLngBounds();
     }
 
+    /**
+     * Returns the {@link OPFLatLng} object that defines the bottom left corner of the camera.
+     *
+     * @return The {@link OPFLatLng} object that defines the bottom left corner of the camera.
+     */
     @Override
     @NonNull
     public OPFLatLng getNearLeft() {
         return delegate.getNearLeft();
     }
 
+    /**
+     * Returns the {@link OPFLatLng} object that defines the bottom right corner of the camera.
+     *
+     * @return The {@link OPFLatLng} object that defines the bottom right corner of the camera.
+     */
     @Override
     @NonNull
     public OPFLatLng getNearRight() {

@@ -20,12 +20,23 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.listener.OPFOnLocationChangedListener;
 
 /**
+ * Defines an interface for providing location data, typically to a {@link org.onepf.opfmaps.OPFMap} object.
+ *
  * @author Roman Savin
  * @since 06.08.2015
  */
 public interface OPFLocationSource {
 
+    /**
+     * Activates this provider. This provider will notify the supplied listener periodically,
+     * until you call {@link #deactivate()}. Notifications will be broadcast on the main thread.
+     *
+     * @param listener The listener that's called when a new location is available.
+     */
     void activate(@NonNull final OPFOnLocationChangedListener listener);
 
+    /**
+     * Deactivates this provider. The previously-registered callback is not notified of any further updates.
+     */
     void deactivate();
 }

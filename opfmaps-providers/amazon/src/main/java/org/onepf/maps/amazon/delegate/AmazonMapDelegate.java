@@ -139,37 +139,45 @@ public class AmazonMapDelegate implements MapDelegate {
     @Override
     public void animateCamera(@NonNull final OPFCameraUpdate update,
                               final int durationMs,
-                              @NonNull final OPFCancelableCallback callback) {
+                              @Nullable final OPFCancelableCallback callback) {
         map.animateCamera(
                 (CameraUpdate) update.getDelegate().getCameraUpdate(),
                 durationMs,
                 new AmazonMap.CancelableCallback() {
                     @Override
                     public void onCancel() {
-                        callback.onCancel();
+                        if (callback != null) {
+                            callback.onCancel();
+                        }
                     }
 
                     @Override
                     public void onFinish() {
-                        callback.onFinish();
+                        if (callback != null) {
+                            callback.onFinish();
+                        }
                     }
                 }
         );
     }
 
     @Override
-    public void animateCamera(@NonNull final OPFCameraUpdate update, @NonNull final OPFCancelableCallback callback) {
+    public void animateCamera(@NonNull final OPFCameraUpdate update, @Nullable final OPFCancelableCallback callback) {
         map.animateCamera(
                 (CameraUpdate) update.getDelegate().getCameraUpdate(),
                 new AmazonMap.CancelableCallback() {
                     @Override
                     public void onCancel() {
-                        callback.onCancel();
+                        if (callback != null) {
+                            callback.onCancel();
+                        }
                     }
 
                     @Override
                     public void onFinish() {
-                        callback.onFinish();
+                        if (callback != null) {
+                            callback.onFinish();
+                        }
                     }
                 }
         );
@@ -313,83 +321,111 @@ public class AmazonMapDelegate implements MapDelegate {
     }
 
     @Override
-    public void setOnCameraChangeListener(@NonNull final OPFOnCameraChangeListener listener) {
-        map.setOnCameraChangeListener(new AmazonMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(final CameraPosition cameraPosition) {
-                listener.onCameraChange(new OPFCameraPosition(new AmazonCameraPositionDelegate(cameraPosition)));
-            }
-        });
+    public void setOnCameraChangeListener(@Nullable final OPFOnCameraChangeListener listener) {
+        if (listener != null) {
+            map.setOnCameraChangeListener(new AmazonMap.OnCameraChangeListener() {
+                @Override
+                public void onCameraChange(final CameraPosition cameraPosition) {
+                    listener.onCameraChange(new OPFCameraPosition(new AmazonCameraPositionDelegate(cameraPosition)));
+                }
+            });
+        } else {
+            map.setOnCameraChangeListener(null);
+        }
     }
 
     @Override
-    public void setOnIndoorStateChangeListener(@NonNull final OPFOnIndoorStateChangeListener listener) {
+    public void setOnIndoorStateChangeListener(@Nullable final OPFOnIndoorStateChangeListener listener) {
         OPFLog.logStubCall(listener);
     }
 
     @Override
-    public void setOnInfoWindowClickListener(@NonNull final OPFOnInfoWindowClickListener listener) {
-        map.setOnInfoWindowClickListener(new AmazonMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(final Marker marker) {
-                listener.onInfoWindowClick(new OPFMarker(new AmazonMarkerDelegate(marker)));
-            }
-        });
+    public void setOnInfoWindowClickListener(@Nullable final OPFOnInfoWindowClickListener listener) {
+        if (listener != null) {
+            map.setOnInfoWindowClickListener(new AmazonMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(final Marker marker) {
+                    listener.onInfoWindowClick(new OPFMarker(new AmazonMarkerDelegate(marker)));
+                }
+            });
+        } else {
+            map.setOnInfoWindowClickListener(null);
+        }
     }
 
     @Override
-    public void setOnMapClickListener(@NonNull final OPFOnMapClickListener listener) {
-        map.setOnMapClickListener(new AmazonMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(final LatLng latLng) {
-                listener.onMapClick(new OPFLatLng(new AmazonLatLngDelegate(latLng)));
-            }
-        });
+    public void setOnMapClickListener(@Nullable final OPFOnMapClickListener listener) {
+        if (listener != null) {
+            map.setOnMapClickListener(new AmazonMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(final LatLng latLng) {
+                    listener.onMapClick(new OPFLatLng(new AmazonLatLngDelegate(latLng)));
+                }
+            });
+        } else {
+            map.setOnMapClickListener(null);
+        }
     }
 
     @Override
-    public void setOnMapLoadedCallback(@NonNull final OPFOnMapLoadedCallback callback) {
-        map.setOnMapLoadedCallback(new AmazonMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                callback.onMapLoaded();
-            }
-        });
+    public void setOnMapLoadedCallback(@Nullable final OPFOnMapLoadedCallback callback) {
+        if (callback != null) {
+            map.setOnMapLoadedCallback(new AmazonMap.OnMapLoadedCallback() {
+                @Override
+                public void onMapLoaded() {
+                    callback.onMapLoaded();
+                }
+            });
+        } else {
+            map.setOnMapLoadedCallback(null);
+        }
     }
 
     @Override
-    public void setOnMapLongClickListener(@NonNull final OPFOnMapLongClickListener listener) {
-        map.setOnMapLongClickListener(new AmazonMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(final LatLng latLng) {
-                listener.onMapLongClick(new OPFLatLng(new AmazonLatLngDelegate(latLng)));
-            }
-        });
+    public void setOnMapLongClickListener(@Nullable final OPFOnMapLongClickListener listener) {
+        if (listener != null) {
+            map.setOnMapLongClickListener(new AmazonMap.OnMapLongClickListener() {
+                @Override
+                public void onMapLongClick(final LatLng latLng) {
+                    listener.onMapLongClick(new OPFLatLng(new AmazonLatLngDelegate(latLng)));
+                }
+            });
+        } else {
+            map.setOnMapLongClickListener(null);
+        }
     }
 
     @Override
-    public void setOnMarkerClickListener(@NonNull final OPFOnMarkerClickListener listener) {
-        map.setOnMarkerClickListener(new AmazonMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(final Marker marker) {
-                return listener.onMarkerClick(new OPFMarker(new AmazonMarkerDelegate(marker)));
-            }
-        });
+    public void setOnMarkerClickListener(@Nullable final OPFOnMarkerClickListener listener) {
+        if (listener != null) {
+            map.setOnMarkerClickListener(new AmazonMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(final Marker marker) {
+                    return listener.onMarkerClick(new OPFMarker(new AmazonMarkerDelegate(marker)));
+                }
+            });
+        } else {
+            map.setOnMarkerClickListener(null);
+        }
     }
 
     @Override
-    public void setOnMarkerDragListener(@NonNull final OPFOnMarkerDragListener listener) {
+    public void setOnMarkerDragListener(@Nullable final OPFOnMarkerDragListener listener) {
         OPFLog.logStubCall(listener);
     }
 
     @Override
-    public void setOnMyLocationButtonClickListener(@NonNull final OPFOnMyLocationButtonClickListener listener) {
-        map.setOnMyLocationButtonClickListener(new AmazonMap.OnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
-                return listener.onMyLocationButtonClick();
-            }
-        });
+    public void setOnMyLocationButtonClickListener(@Nullable final OPFOnMyLocationButtonClickListener listener) {
+        if (listener != null) {
+            map.setOnMyLocationButtonClickListener(new AmazonMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    return listener.onMyLocationButtonClick();
+                }
+            });
+        } else {
+            map.setOnMyLocationButtonClickListener(null);
+        }
     }
 
     @Override

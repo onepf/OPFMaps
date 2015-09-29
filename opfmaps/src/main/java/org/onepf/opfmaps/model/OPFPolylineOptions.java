@@ -25,6 +25,8 @@ import org.onepf.opfmaps.delegate.model.PolylineOptionsDelegate;
 import java.util.List;
 
 /**
+ * Defines options for a polyline.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
@@ -45,6 +47,9 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
     @NonNull
     private final PolylineOptionsDelegate delegate;
 
+    /**
+     * Creates polyline options.
+     */
     public OPFPolylineOptions() {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createPolylineOptionsDelegate();
     }
@@ -58,6 +63,12 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
         }
     }
 
+    /**
+     * Adds a vertex to the end of the polyline being built.
+     *
+     * @param point The added point.
+     * @return This {@link OPFPolylineOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolylineOptions add(@NonNull final OPFLatLng point) {
@@ -65,6 +76,12 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
         return this;
     }
 
+    /**
+     * Adds vertices to the end of the polyline being built.
+     *
+     * @param points The added points.
+     * @return This {@link OPFPolylineOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolylineOptions add(@NonNull final OPFLatLng... points) {
@@ -72,6 +89,12 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
         return this;
     }
 
+    /**
+     * Adds vertices to the end of the polyline being built.
+     *
+     * @param points The added points.
+     * @return This {@link OPFPolylineOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolylineOptions addAll(@NonNull final Iterable<OPFLatLng> points) {
@@ -79,6 +102,12 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
         return this;
     }
 
+    /**
+     * Sets the color of the polyline as a 32-bit ARGB color. The default color is black ({@code 0xff000000}).
+     *
+     * @param color The polyline's color.
+     * @return This {@link OPFPolylineOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolylineOptions color(final int color) {
@@ -86,6 +115,12 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies whether to draw each segment of this polyline as a geodesic. The default value is {@code false}.
+     *
+     * @param geodesic The geodesic value.
+     * @return This {@link OPFPolylineOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolylineOptions geodesic(final boolean geodesic) {
@@ -93,37 +128,73 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
         return this;
     }
 
+    /**
+     * Gets the color set for this options object.
+     *
+     * @return The color of the polyline in ARGB format.
+     */
     @Override
     public int getColor() {
         return delegate.getColor();
     }
 
+    /**
+     * Gets the points set for this options object.
+     *
+     * @return The list of {@link OPFLatLng} objects specifying the vertices of the polyline.
+     */
     @NonNull
     @Override
     public List<OPFLatLng> getPoints() {
         return delegate.getPoints();
     }
 
+    /**
+     * Gets the width set for this options object.
+     *
+     * @return The width of the polyline in screen pixels.
+     */
     @Override
     public float getWidth() {
         return delegate.getWidth();
     }
 
+    /**
+     * Gets the zIndex set for this options object.
+     *
+     * @return The zIndex of the polyline.
+     */
     @Override
     public float getZIndex() {
         return delegate.getZIndex();
     }
 
+    /**
+     * Gets the geodesic setting for this options object.
+     *
+     * @return {@code true} if the polyline segments should be geodesics, {@code false} otherwise.
+     */
     @Override
     public boolean isGeodesic() {
         return delegate.isGeodesic();
     }
 
+    /**
+     * Gets the visibility setting for this options object.
+     *
+     * @return {@code true} if the polyline is to be visible, {@code false} otherwise.
+     */
     @Override
     public boolean isVisible() {
         return delegate.isVisible();
     }
 
+    /**
+     * Specifies the visibility for the polyline. The default visibility is {@code true}.
+     *
+     * @param visible {@code false} to make this polyline invisible, {@code true} otherwise.
+     * @return This {@link OPFPolylineOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolylineOptions visible(final boolean visible) {
@@ -131,6 +202,12 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
         return this;
     }
 
+    /**
+     * Sets the width of the polyline in screen pixels. The default is 10.
+     *
+     * @param width The width of the polyline.
+     * @return This {@link OPFPolylineOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolylineOptions width(final float width) {
@@ -138,6 +215,12 @@ public final class OPFPolylineOptions implements PolylineOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies the polyline's zIndex, i.e., the order in which it will be drawn.
+     *
+     * @param zIndex The zIndex value.
+     * @return This {@link OPFPolylineOptions} object.
+     */
     @NonNull
     @Override
     public OPFPolylineOptions zIndex(final float zIndex) {
