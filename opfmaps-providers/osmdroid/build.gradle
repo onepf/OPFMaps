@@ -33,15 +33,14 @@ android {
 }
 
 dependencies {
-    compile project(':opfmaps') //todo remove later
-
+    compile 'org.onepf:opfmaps:0.1.0-SNAPSHOT@aar'
     provided 'org.onepf:opfutils:0.1.26'
 
     compile 'org.osmdroid:osmdroid-android:4.3'
     compile 'org.osmdroid:bonuspack:5.3'
 
     compile 'org.slf4j:slf4j-android:1.7.12'
-    provided 'com.android.support:support-annotations:23.0.1'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.google.code.gson:gson:2.3.1'
+    provided 'com.android.support:support-v4:23.0.1'
 }
