@@ -15,7 +15,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.onepf.maps.google">
+          package="org.onepf.opfmaps.google">
 
     <uses-feature android:glEsVersion="0x00020000"
                   android:required="true"/>

@@ -20,10 +20,10 @@ import android.app.Application;
 
 import com.squareup.leakcanary.LeakCanary;
 
-import org.onepf.maps.amazon.AmazonMapProvider;
-import org.onepf.maps.google.GoogleMapProvider;
-import org.onepf.maps.osmdroid.OsmdroidMapProvider;
-import org.onepf.maps.yandexweb.YaWebMapProvider;
+import org.onepf.opfmaps.amazon.AmazonMapProvider;
+import org.onepf.opfmaps.google.GoogleMapProvider;
+import org.onepf.opfmaps.osmdroid.OsmdroidMapProvider;
+import org.onepf.opfmaps.yandexweb.YaWebMapProvider;
 import org.onepf.opfmaps.OPFMapConfiguration;
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfutils.OPFLog;
