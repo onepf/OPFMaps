@@ -101,7 +101,8 @@ public class OPFUrlTileProvider implements UrlTileProviderDelegate {
          * @param x    The x coordinate of the tile. This will be in the range [0, 2zoom - 1] inclusive.
          * @param y    The y coordinate of the tile. This will be in the range [0, 2zoom - 1] inclusive.
          * @param zoom The zoom level of the tile.
-         * @return The {@link URL} that points to the image to be used for this tile. If you do not wish to provide an image for this tile coordinate, return null.
+         * @return The {@link URL} that points to the image to be used for this tile.
+         * If you do not wish to provide an image for this tile coordinate, return null.
          */
         @Nullable
         URL getTileUrl(final int x, final int y, final int zoom);

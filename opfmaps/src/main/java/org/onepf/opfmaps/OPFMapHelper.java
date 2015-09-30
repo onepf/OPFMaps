@@ -32,6 +32,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * The helper class to initialize the library before using.
+ *
  * @author Roman Savin
  * @since 30.07.2015
  */
@@ -52,6 +54,17 @@ public final class OPFMapHelper {
         return Holder.INSTANCE;
     }
 
+    /**
+     * Initializes the OPF Map objects. Sets the current map provider, to which will be delegated all Map methods calls.
+     * <p/>
+     * The first available provider from the {@link OPFMapConfiguration#getProviders()} list will be chosen as the current provider.
+     * If you set {@code true} value to the {@link org.onepf.opfmaps.OPFMapConfiguration.Builder#setSelectSystemPreferred(boolean)} method)
+     * the system provider will be chosen (if it is available).
+     * If there is no an available provider, the first provider from the list will be chosen as the current provider.
+     *
+     * @param context       The {@link Context} instance.
+     * @param configuration The {@link OPFMapConfiguration} object, which will be used to select the current map provider.
+     */
     @SuppressWarnings("PMD.NPathComplexity")
     @MainThread
     public void init(@NonNull final Context context,
@@ -93,6 +106,16 @@ public final class OPFMapHelper {
         currentProvider = availableProvider != null ? availableProvider : providers.get(0);
     }
 
+    /**
+     * Returns the current map provider. The current map provider is the first available provider among the providers list
+     * which was contained by {@link OPFMapConfiguration} object (or system provider if you set {@code true} value to the
+     * {@link org.onepf.opfmaps.OPFMapConfiguration.Builder#setSelectSystemPreferred(boolean)} method).
+     * If there is no an available provider the first provider from the list will be chosen.
+     * <p/>
+     * NOTE. You must call {@link #init(Context, OPFMapConfiguration)} first. You must call this method in the main thread.
+     *
+     * @return The current map provider.
+     */
     @MainThread
     @NonNull
     public OPFMapProvider getCurrentProvider() {
@@ -104,6 +127,11 @@ public final class OPFMapHelper {
         return currentProvider;
     }
 
+    /**
+     * Intended for the internal use, should never be called directly.
+     *
+     * @return The {@link DelegatesAbstractFactory} instance.
+     */
     @MainThread
     @NonNull
     public DelegatesAbstractFactory getDelegatesFactory() {

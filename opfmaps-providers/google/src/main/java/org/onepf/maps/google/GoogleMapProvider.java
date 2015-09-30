@@ -26,6 +26,8 @@ import org.onepf.opfutils.OPFChecks;
 import org.onepf.opfutils.OPFLog;
 
 /**
+ * Google Map Provider.
+ *
  * @author Anastasiia Karimova
  * @since 24.06.2015
  */

@@ -28,6 +28,14 @@ import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFMapType;
 
 /**
+ * Defines configuration {@link OPFMapOptions} for a {@link OPFMap}.
+ * These options can be used when adding a map to your application programmatically (as opposed to via XML).
+ * If you are using a {@link OPFMapFragment} or {@link OPFSupportMapFragment}, you can pass these options in using
+ * the static factory method {@code newInstance(OPFMapOptions)}. If you are using a {@link OPFMapView},
+ * you can pass these options in using the constructor {@link OPFMapView(Context, OPFMapOptions)}.
+ * <p/>
+ * If you add a map using XML, then you can apply these options using custom XML tags.
+ *
  * @author Roman Savin
  * @since 06.08.2015
  */
@@ -46,6 +54,13 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         }
     };
 
+    /**
+     * Creates a {@link OPFMapOptions} from the attribute set.
+     *
+     * @param context The {@link Context} instance.
+     * @param attrs   The attributes set.
+     * @return The created {@link OPFMapOptions} object.
+     */
     @Nullable
     public static OPFMapOptions createFromAttributes(@NonNull final Context context,
                                                      @Nullable final AttributeSet attrs) {
@@ -99,6 +114,9 @@ public final class OPFMapOptions implements MapOptionsDelegate {
     @NonNull
     private final MapOptionsDelegate delegate;
 
+    /**
+     * Creates a new {@link OPFMapOptions} object.
+     */
     public OPFMapOptions() {
         this.delegate = OPFMapHelper.getInstance().getDelegatesFactory().createMapOptionsDelegate();
     }
@@ -112,6 +130,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         }
     }
 
+    /**
+     * Specifies a the initial camera position for the map.
+     *
+     * @param camera The {@link OPFCameraPosition} instance.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions camera(@NonNull final OPFCameraPosition camera) {
@@ -119,6 +143,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies whether the compass should be enabled. The default value is {@code true}.
+     *
+     * @param enabled {@code true} to enable compass, {@code false} otherwise.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions compassEnabled(final boolean enabled) {
@@ -126,78 +156,147 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * Returns the camera option, or null if unspecified.
+     *
+     * @return The camera option, or null if unspecified.
+     */
     @Override
     @Nullable
     public OPFCameraPosition getCamera() {
         return delegate.getCamera();
     }
 
+    /**
+     * Returns the compassEnabled option, or null if unspecified.
+     *
+     * @return The compassEnabled option, or null if unspecified.
+     */
     @Override
     @Nullable
     public Boolean getCompassEnabled() {
         return delegate.getCompassEnabled();
     }
 
+    /**
+     * Returns the liteMode option, or null if unspecified.
+     *
+     * @return The liteMode option, or null if unspecified.
+     */
     @Override
     @Nullable
     public Boolean getLiteMode() {
         return delegate.getLiteMode();
     }
 
+    /**
+     * Returns the mapToolbarEnabled option, or null if unspecified.
+     *
+     * @return The mapToolbarEnabled option, or null if unspecified.
+     */
     @Override
     @Nullable
     public Boolean getMapToolbarEnabled() {
         return delegate.getMapToolbarEnabled();
     }
 
+    /**
+     * Returns the map type options. The default value is {@link OPFMapType#NORMAL}.
+     *
+     * @return The map type.
+     */
     @Override
     @NonNull
     public OPFMapType getMapType() {
         return delegate.getMapType();
     }
 
+    /**
+     * Returns the rotateGesturesEnabled option, or null if unspecified.
+     *
+     * @return The rotateGesturesEnabled option, or null if unspecified.
+     */
     @Override
     @Nullable
     public Boolean getRotateGesturesEnabled() {
         return delegate.getRotateGesturesEnabled();
     }
 
+    /**
+     * Returns the scrollGesturesEnabled option, or null if unspecified.
+     *
+     * @return The scrollGesturesEnabled option, or null if unspecified.
+     */
     @Override
     @Nullable
     public Boolean getScrollGesturesEnabled() {
         return delegate.getScrollGesturesEnabled();
     }
 
+    /**
+     * Returns the tiltGesturesEnabled option, or null if unspecified.
+     *
+     * @return The tiltGesturesEnabled option, or null if unspecified.
+     */
     @Override
     @Nullable
     public Boolean getTiltGesturesEnabled() {
         return delegate.getTiltGesturesEnabled();
     }
 
+    /**
+     * Returns the useViewLifecycleInFragment option, or null if unspecified.
+     *
+     * @return The useViewLifecycleInFragment option, or null if unspecified.
+     */
     @Override
     @Nullable
     public Boolean getUseViewLifecycleInFragment() {
         return delegate.getUseViewLifecycleInFragment();
     }
 
+    /**
+     * Returns the zOrderOnTop option, or null if unspecified.
+     *
+     * @return The zOrderOnTop option, or null if unspecified.
+     */
     @Override
     @Nullable
     public Boolean getZOrderOnTop() {
         return delegate.getZOrderOnTop();
     }
 
+    /**
+     * Returns the zoomGesturesEnabled option, or null if unspecified.
+     *
+     * @return The zoomGesturesEnabled option, or null if unspecified.
+     */
     @Override
     @Nullable
     public Boolean getZoomControlsEnabled() {
         return delegate.getZoomControlsEnabled();
     }
 
+    /**
+     * Returns the zoomGesturesEnabled option, or null if unspecified.
+     *
+     * @return The zoomGesturesEnabled option, or null if unspecified.
+     */
     @Override
     @Nullable
     public Boolean getZoomGesturesEnabled() {
         return delegate.getZoomGesturesEnabled();
     }
 
+    /**
+     * Specifies whether the map should be created in lite mode. The default value is {@code false}.
+     * If lite mode is enabled, maps will load as static images. This improves performance in the case where a lot
+     * of maps need to be displayed at the same time, for example in a scrolling list, however lite-mode maps cannot
+     * be panned or zoomed by the user, or tilted or rotated at all.
+     *
+     * @param enabled {@code true} to enable liteMode, {@code false} otherwise.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions liteMode(final boolean enabled) {
@@ -205,6 +304,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies whether the mapToolbar should be enabled. The default value is {@code true}.
+     *
+     * @param enabled {@code true} to enable mapToolbar, {@code false} otherwise.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions mapToolbarEnabled(final boolean enabled) {
@@ -212,6 +317,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies a change to the initial map type.
+     *
+     * @param mapType The {@link OPFMapType} value.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions mapType(@NonNull final OPFMapType mapType) {
@@ -219,6 +330,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies whether rotate gestures should be enabled. The default value is {@code true}.
+     *
+     * @param enabled {@code true} to enable rotate gestures, {@code false} otherwise.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions rotateGesturesEnabled(final boolean enabled) {
@@ -226,6 +343,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies whether scroll gestures should be enabled. The default value is {@code true}.
+     *
+     * @param enabled {@code true} to enable scroll gestures, {@code false} otherwise.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions scrollGesturesEnabled(final boolean enabled) {
@@ -233,6 +356,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies whether tilt gestures should be enabled. The default value is {@code true}.
+     *
+     * @param enabled {@code true} to enable tilt gestures, {@code false} otherwise.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions tiltGesturesEnabled(final boolean enabled) {
@@ -240,6 +369,14 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * When using a {@link OPFMapFragment} or {@link OPFSupportMapFragment},
+     * this flag specifies whether the lifecycle of the map should be tied to the fragment's view or the fragment itself.
+     * The default value is {@code false}, tying the lifecycle of the map to the fragment.
+     *
+     * @param useViewLifecycleInFragment {@code true} to use lifecycle in fragment, {@code false} otherwise.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions useViewLifecycleInFragment(final boolean useViewLifecycleInFragment) {
@@ -247,6 +384,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * Control whether the map view's surface is placed on top of its window.
+     *
+     * @param zOrderOnTop {@code true} to enable zOrderOnTop, {@code false} otherwise.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions zOrderOnTop(final boolean zOrderOnTop) {
@@ -254,6 +397,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies whether the zoom controls should be enabled. The default value is {@code true}.
+     *
+     * @param enabled {@code true} to enable zoom controls, {@code false} otherwise.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions zoomControlsEnabled(final boolean enabled) {
@@ -261,6 +410,12 @@ public final class OPFMapOptions implements MapOptionsDelegate {
         return this;
     }
 
+    /**
+     * Specifies whether zoom gestures should be enabled. The default value is {@code true}.
+     *
+     * @param enabled {@code true} to enable zoom gestures, {@code false} otherwise.
+     * @return This {@link OPFMapOptions} object.
+     */
     @Override
     @NonNull
     public OPFMapOptions zoomGesturesEnabled(final boolean enabled) {

@@ -95,7 +95,8 @@ public final class OPFPolyline implements PolylineDelegate {
     /**
      * Gets whether each segment of the line is drawn as a geodesic or not.
      *
-     * @return {@code true} if each segment is drawn as a geodesic; {@code false} if each segment is drawn as a straight line on the Mercator projection.
+     * @return {@code true} if each segment is drawn as a geodesic;
+     * {@code false} if each segment is drawn as a straight line on the Mercator projection.
      */
     @Override
     public boolean isGeodesic() {

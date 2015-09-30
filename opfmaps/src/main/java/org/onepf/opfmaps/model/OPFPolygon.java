@@ -120,7 +120,8 @@ public final class OPFPolygon implements PolygonDelegate {
     /**
      * Gets whether each segment of the line is drawn as a geodesic or not.
      *
-     * @return {@code true} if each segment is drawn as a geodesic; {@code false} if each segment is drawn as a straight line on the Mercator projection.
+     * @return {@code true} if each segment is drawn as a geodesic;
+     * {@code false} if each segment is drawn as a straight line on the Mercator projection.
      */
     @Override
     public boolean isGeodesic() {
@@ -158,7 +159,8 @@ public final class OPFPolygon implements PolygonDelegate {
     /**
      * Sets whether to draw each segment of the line as a geodesic or not.
      *
-     * @param geodesic If {@code true}, then each segment is drawn as a geodesic; if {@code false}, each segment is drawn as a straight line on the Mercator projection.
+     * @param geodesic If {@code true}, then each segment is drawn as a geodesic;
+     *                 if {@code false}, each segment is drawn as a straight line on the Mercator projection.
      */
     @Override
     public void setGeodesic(final boolean geodesic) {

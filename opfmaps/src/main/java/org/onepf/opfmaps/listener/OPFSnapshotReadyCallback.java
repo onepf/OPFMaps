@@ -17,7 +17,6 @@
 package org.onepf.opfmaps.listener;
 
 import android.graphics.Bitmap;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**

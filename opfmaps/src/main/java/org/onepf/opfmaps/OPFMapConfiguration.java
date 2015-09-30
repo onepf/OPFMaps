@@ -16,6 +16,7 @@
 
 package org.onepf.opfmaps;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -28,6 +29,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * The instance of this class is used as an argument of the {@link OPFMapHelper#init(Context, OPFMapConfiguration)}
+ * method for configuring the {@link OPFMapHelper}.
+ *
  * @author Anastasiia Karimova
  * @since 11.06.2015
  */
@@ -45,15 +49,28 @@ public final class OPFMapConfiguration {
         this.isSelectSystemPreferred = isSelectSystemPreferred;
     }
 
+    /**
+     * Returns all added map providers.
+     *
+     * @return All added map providers.
+     */
     @NonNull
     public List<OPFMapProvider> getProviders() {
         return providers;
     }
 
+    /**
+     * Returns {@code true} if the system map provider is referred, false otherwise.
+     *
+     * @return {@code true} if the system map provider is referred, false otherwise.
+     */
     public boolean isSelectSystemPreferred() {
         return isSelectSystemPreferred;
     }
 
+    /**
+     * The builder class that creates an instance of the {@link OPFMapConfiguration} class.
+     */
     public static class Builder {
 
         @Nullable
@@ -61,10 +78,23 @@ public final class OPFMapConfiguration {
 
         private boolean isSelectSystemPreferred;
 
+        /**
+         * See {@link #addProviders(List)})}
+         *
+         * @param providers Added providers.
+         * @return This {@link org.onepf.opfmaps.OPFMapConfiguration.Builder} object.
+         */
         public Builder addProviders(@NonNull final OPFMapProvider... providers) {
             return addProviders(Arrays.asList(providers));
         }
 
+        /**
+         * Add push providers to the configuration. The priority of the providers corresponds to the order in which they
+         * were added.
+         *
+         * @param providers Added providers.
+         * @return This {@link org.onepf.opfmaps.OPFMapConfiguration.Builder} object.
+         */
         public Builder addProviders(@NonNull final List<? extends OPFMapProvider> providers) {
             if (providers.isEmpty()) {
                 return this;
@@ -87,11 +117,26 @@ public final class OPFMapConfiguration {
             return this;
         }
 
+        /**
+         * If you set {@code true}, the system push provider will get the highest priority.
+         * For Google devices with preinstalled Google Play app the system provider is Google Maps.
+         * For Kindle devices - Amazon Maps.
+         * Default value is {@code false}.
+         *
+         * @param isSelectSystemPreferred {@code true} if the system provider is preferred, {@code false} otherwise.
+         * @return This {@link org.onepf.opfmaps.OPFMapConfiguration.Builder} object.
+         */
         public Builder setSelectSystemPreferred(final boolean isSelectSystemPreferred) {
             this.isSelectSystemPreferred = isSelectSystemPreferred;
             return this;
         }
 
+        /**
+         * Creates the instance of the {@link OPFMapConfiguration} class.
+         *
+         * @return The new {@link OPFMapConfiguration} object.
+         * @throws IllegalArgumentException If there are no any added providers.
+         */
         @SuppressWarnings("PMD.AccessorClassGeneration")
         public OPFMapConfiguration build() {
             if (providersMap == null) {
