@@ -7,7 +7,7 @@ Currently OPFMaps supports the following maps: [Google Maps][google-maps], [Amaz
 
 **Add dependencies**
 
-The main dependencies are the `opfmaps` module and the `opfutils` lib:
+The main dependencies are the `opfmaps` module and the [OPFUtils][opfutils] library:
 
 ```gradle
 compile 'org.onepf:opfmaps:0.1.0@aar'
@@ -71,7 +71,7 @@ public class MyApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
-    OPFLog.setEnabled(BuildConfig.DEBUG, true); //Optional. It enables debug logs of the OPFMaps library.
+    OPFLog.setEnabled(BuildConfig.DEBUG, true); //Optional. It enables debug logs of the OPFMaps library in the debug build of your apk.
     
     final OPFMapConfiguration configuration = new OPFMapConfiguration.Builder()
                 .addProviders(new YaWebMapProvider(), new OsmdroidMapProvider(), new GoogleMapProvider(), new AmazonMapProvider()) //Add all providers. The priority of the providers corresponds to the order in which they were added.
@@ -155,3 +155,4 @@ The OPFMaps library provides all methods which are provided by Google Maps. Not 
 [yandex-web-maps]: https://tech.yandex.ru/maps/jsapi
 [google-api-key]: https://developers.google.com/maps/documentation/android-api/signup
 [google-instructions]: https://developers.google.com/maps/documentation/android-api/intro
+[opfutils]: https://github.com/onepf/OPFUtils
