@@ -16,20 +16,28 @@
 
 package org.onepf.multimapsexample;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.onepf.opfmaps.OPFMap;
+import org.onepf.opfmaps.OPFMapConfiguration;
 import org.onepf.opfmaps.OPFMapFragment;
+import org.onepf.opfmaps.OPFMapHelper;
+import org.onepf.opfmaps.OPFMapOptions;
+import org.onepf.opfmaps.OPFMapProvider;
+import org.onepf.opfmaps.amazon.AmazonMapProvider;
+import org.onepf.opfmaps.google.GoogleMapProvider;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
 import org.onepf.opfmaps.listener.OPFOnInfoWindowClickListener;
-import org.onepf.opfmaps.listener.OPFOnLocationChangedListener;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapLongClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
@@ -42,16 +50,20 @@ import org.onepf.opfmaps.model.OPFCircleOptions;
 import org.onepf.opfmaps.model.OPFGroundOverlayOptions;
 import org.onepf.opfmaps.model.OPFInfoWindowAdapter;
 import org.onepf.opfmaps.model.OPFLatLng;
-import org.onepf.opfmaps.model.OPFLocationSource;
+import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.model.OPFMarker;
 import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
+import org.onepf.opfmaps.osmdroid.OsmdroidMapProvider;
+import org.onepf.opfmaps.yandexweb.YaWebMapProvider;
 import org.onepf.opfutils.OPFLog;
 
 import java.util.Arrays;
 
-public class MainActivity extends Activity implements OPFOnMapReadyCallback {
+import static java.util.Locale.US;
+
+public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCallback {
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -60,8 +72,46 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
         setContentView(R.layout.activity_main);
         OPFLog.logMethod(savedInstanceState);
 
-        final OPFMapFragment mapFragment = (OPFMapFragment) getFragmentManager().findFragmentById(R.id.map);
+        final OPFMapFragment mapFragment;
+        if (savedInstanceState == null) {
+            mapFragment = OPFMapFragment.newInstance(
+                    new OPFMapOptions()
+                            .camera(OPFCameraPosition.fromLatLngZoom(new OPFLatLng(37.7, -122.4), 0))
+                            .mapType(OPFMapType.HYBRID)
+            );
+            getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
+        } else {
+            mapFragment = (OPFMapFragment) getFragmentManager().findFragmentById(R.id.map);
+        }
         mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        final MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.amazon:
+                changeMapProvider(new AmazonMapProvider());
+                return true;
+            case R.id.google:
+                changeMapProvider(new GoogleMapProvider());
+                return true;
+            case R.id.osmdroid:
+                changeMapProvider(new OsmdroidMapProvider());
+                return true;
+            case R.id.yandex_web:
+                changeMapProvider(new YaWebMapProvider());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -249,5 +299,26 @@ public class MainActivity extends Activity implements OPFOnMapReadyCallback {
                 .radius(100000.0)
                 .fillColor(Color.CYAN)
                 .strokeColor(Color.BLUE).zIndex(1.0f));
+    }
+
+    private void changeMapProvider(@NonNull final OPFMapProvider provider) {
+        final OPFMapHelper helper = OPFMapHelper.getInstance();
+
+        if (provider.getName().equals(helper.getCurrentProvider().getName())) {
+            Toast.makeText(this, String.format(US, "Provider %s already selected", provider.getName()), Toast.LENGTH_SHORT).show();
+        } else if (provider.isAvailable(this)) {
+            OPFMapHelper.getInstance().init(this, new OPFMapConfiguration.Builder().addProviders(provider).build());
+            final OPFMapFragment newMapFragment = OPFMapFragment.newInstance(
+                    new OPFMapOptions()
+                            .camera(OPFCameraPosition.fromLatLngZoom(new OPFLatLng(37.7, -122.4), 0))
+                            .mapType(OPFMapType.HYBRID)
+            );
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.map, newMapFragment)
+                    .commit();
+            newMapFragment.getMapAsync(this);
+        } else {
+            Toast.makeText(this, String.format(US, "Provider %s is not available on this device", provider.getName()), Toast.LENGTH_SHORT).show();
+        }
     }
 }

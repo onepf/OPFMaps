@@ -16,4 +16,8 @@
 
 <resources>
     <string name="app_name">MultiMapsExample</string>
+    <string name="amazon_menu_item">Amazon</string>
+    <string name="google_menu_item">Google</string>
+    <string name="osmdroid_menu_item">Osmdroid</string>
+    <string name="yandex_web_menu_item">Yandex Web</string>
 </resources>
