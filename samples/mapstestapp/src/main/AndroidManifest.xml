@@ -16,7 +16,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.onepf.maps.testapp" >
+    package="org.onepf.opfmaps.testapp" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -42,7 +42,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".GoogleMapsActivity"
+            android:name="org.onepf.opfmaps.testapp.GoogleMapsActivity"
             android:label="@string/title_activity_google_maps" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

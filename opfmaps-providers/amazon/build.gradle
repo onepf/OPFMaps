@@ -21,13 +21,12 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionName "1.0"
+        versionName "0.1.0-SNAPSHOT"
     }
 }
 
 dependencies {
-    compile project(':opfmaps')//todo remove later
-
+    compile 'org.onepf:opfmaps:0.1.0-SNAPSHOT@aar'
     provided 'org.onepf:opfutils:0.1.26'
     compile 'com.amazon:amazon-maps-api:2.0'
     provided 'com.android.support:support-annotations:23.0.1'
