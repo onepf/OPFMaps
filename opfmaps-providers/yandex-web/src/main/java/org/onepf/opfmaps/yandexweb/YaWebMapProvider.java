@@ -146,8 +146,10 @@ import org.onepf.opfmaps.model.OPFUiSettings;
  */
 public final class YaWebMapProvider extends BaseOPFMapProvider {
 
+    private static final String NAME = "YaWebMapProvider";
+
     public YaWebMapProvider() {
-        super(YaWebMapProvider.class.getSimpleName(), null);
+        super(NAME, null);
     }
 
     @NonNull

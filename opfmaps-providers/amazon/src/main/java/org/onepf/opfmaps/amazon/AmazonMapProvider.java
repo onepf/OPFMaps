@@ -85,8 +85,10 @@ public class AmazonMapProvider extends BaseOPFMapProvider {
     private static final String HOST_APP_PACKAGE = "com.amazon.venezia";
     private static final String AMAZON_MANUFACTURER = "Amazon";
 
+    private static final String NAME = "AmazonMapProvider";
+
     public AmazonMapProvider() {
-        super(AmazonMapProvider.class.getSimpleName(), HOST_APP_PACKAGE);
+        super(NAME, HOST_APP_PACKAGE);
     }
 
     @NonNull

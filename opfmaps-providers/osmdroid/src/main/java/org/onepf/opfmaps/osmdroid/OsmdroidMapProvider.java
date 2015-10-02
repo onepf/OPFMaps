@@ -111,6 +111,8 @@ import java.util.Map;
  */
 public final class OsmdroidMapProvider extends BaseOPFMapProvider {
 
+    private static final String NAME = "OsmdroidMapProvider";
+
     @NonNull
     private final Map<OPFMapType, ITileSource> tileSourceMap;
 
@@ -119,14 +121,14 @@ public final class OsmdroidMapProvider extends BaseOPFMapProvider {
     }
 
     public OsmdroidMapProvider(@NonNull final OPFMapType mapType, @NonNull final ITileSource tileSource) {
-        super(OsmdroidMapProvider.class.getSimpleName(), null);
+        super(NAME, null);
         final Map<OPFMapType, ITileSource> tileSourceMap = createDefaultTileSourceMap();
         tileSourceMap.put(mapType, tileSource);
         this.tileSourceMap = tileSourceMap;
     }
 
     public OsmdroidMapProvider(@NonNull final Map<OPFMapType, ITileSource> tileSourceMap) {
-        super(OsmdroidMapProvider.class.getSimpleName(), null);
+        super(NAME, null);
         this.tileSourceMap = tileSourceMap;
     }
 

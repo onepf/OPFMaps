@@ -35,8 +35,10 @@ public class GoogleMapProvider extends BaseOPFMapProvider {
 
     private static final String HOST_APP_PACKAGE = "com.android.vending";
 
+    private static final String NAME = "GoogleMapProvider";
+
     public GoogleMapProvider() {
-        super(GoogleMapProvider.class.getSimpleName(), HOST_APP_PACKAGE);
+        super(NAME, HOST_APP_PACKAGE);
     }
 
     @NonNull
