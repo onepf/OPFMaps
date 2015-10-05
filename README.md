@@ -1,5 +1,5 @@
 # OPFMaps
-OPFMaps is an open source library which provides an easy way for developers to integrate android maps into their apps.
+OPFMaps is an open source library which provides an easy way for developers to integrate different android maps into their apps.
 
 Currently OPFMaps supports the following maps: [Google Maps][google-maps], [Amazon Maps][amazon-maps], [Osmdroid][osmdroid], [Yandex Maps JavaScript API][yandex-web-maps].
 
@@ -63,7 +63,7 @@ compile 'org.onepf:opfmaps-yandex-web:0.1.0@aar'
 
 **Initialization**
 
-You must init `OPFMapsHelper` before using of OPFMaps. You must do it in the `Main Thread`. `Application.onCreate()` method is the best place for this.
+You must init `OPFMapsHelper` before using OPFMaps. You must do it in the `Main Thread`. `Application.onCreate()` method is the best place for this.
 
 ```java
 public class MyApplication extends Application {

@@ -26,7 +26,7 @@ import org.onepf.opfmaps.delegate.model.MarkerDelegate;
  * screen rather than the map's surface; i.e., it will not necessarily change orientation due to map rotations, tilting,
  * or zooming.
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 09.06.2015
  */
 public final class OPFMarker implements MarkerDelegate {

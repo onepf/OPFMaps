@@ -23,7 +23,7 @@ import org.onepf.opfutils.OPFLog;
 import org.onepf.opfutils.OPFUtils;
 
 /**
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 24.06.2015
  */
 public abstract class BaseOPFMapProvider implements OPFMapProvider {

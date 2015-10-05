@@ -23,7 +23,7 @@ import org.onepf.opfmaps.delegate.model.GroundOverlayDelegate;
 /**
  * A ground overlay is an image that is fixed to a map.
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 15.06.2015
  */
 public final class OPFGroundOverlay implements GroundOverlayDelegate {

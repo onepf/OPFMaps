@@ -22,7 +22,7 @@ import android.view.View;
 /**
  * Provides views for customized rendering of info windows.
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 15.06.2015
  */
 public interface OPFInfoWindowAdapter {

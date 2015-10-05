@@ -22,7 +22,7 @@ import org.onepf.opfmaps.model.OPFMarker;
 /**
  * Interface definition for a callback to be invoked when a marker is clicked.
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 02.07.2015
  */
 public interface OPFOnMarkerClickListener {

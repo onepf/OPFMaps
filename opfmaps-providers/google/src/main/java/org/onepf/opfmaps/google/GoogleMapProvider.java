@@ -28,7 +28,7 @@ import org.onepf.opfutils.OPFLog;
 /**
  * Google Map Provider.
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 24.06.2015
  */
 public class GoogleMapProvider extends BaseOPFMapProvider {

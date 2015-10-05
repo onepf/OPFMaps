@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * A polyline is a list of points, where line segments are drawn between consecutive points.
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 09.06.2015
  */
 public final class OPFPolyline implements PolylineDelegate {

@@ -27,7 +27,7 @@ import java.util.List;
  * A polygon on the earth's surface. A polygon can be convex or concave,
  * it may span the 180 meridian and it can have holes that are not filled in.
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 15.06.2015
  */
 public final class OPFPolygon implements PolygonDelegate {

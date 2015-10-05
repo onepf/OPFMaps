@@ -32,7 +32,7 @@ import java.util.Map;
  * The instance of this class is used as an argument of the {@link OPFMapHelper#init(Context, OPFMapConfiguration)}
  * method for configuring the {@link OPFMapHelper}.
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 11.06.2015
  */
 @SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")

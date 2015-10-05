@@ -25,7 +25,7 @@ import org.onepf.opfmaps.delegate.model.LatLngDelegate;
 /**
  * An immutable class representing a pair of latitude and longitude coordinates, stored as degrees.
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 09.06.2015
  */
 public final class OPFLatLng implements LatLngDelegate {

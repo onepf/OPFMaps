@@ -77,7 +77,7 @@ import org.onepf.opfutils.OPFLog;
  * <p/>
  * </ul>
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 24.06.2015
  */
 public class AmazonMapProvider extends BaseOPFMapProvider {

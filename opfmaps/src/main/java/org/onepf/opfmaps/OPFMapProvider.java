@@ -24,7 +24,7 @@ import org.onepf.opfmaps.factory.DelegatesAbstractFactory;
 /**
  * An interface which represents the provider of the map.
  *
- * @author Anastasiia Karimova
+ * @author Roman Savin
  * @since 23.06.2015
  */
 public interface OPFMapProvider {
