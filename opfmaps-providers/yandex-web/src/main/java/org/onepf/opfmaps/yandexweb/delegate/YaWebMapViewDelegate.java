@@ -29,10 +29,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import org.onepf.opfmaps.OPFMap;
+import org.onepf.opfmaps.delegate.MapViewDelegate;
+import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
+import org.onepf.opfmaps.model.OPFMapType;
 import org.onepf.opfmaps.yandexweb.jsi.JSIOnCameraChangeListener;
 import org.onepf.opfmaps.yandexweb.jsi.JSIOnInfoWindowChangeListener;
 import org.onepf.opfmaps.yandexweb.jsi.JSIOnMapClickListener;
@@ -56,12 +59,6 @@ import org.onepf.opfmaps.yandexweb.listener.OnTrafficVisibilityChangeListener;
 import org.onepf.opfmaps.yandexweb.model.CameraPosition;
 import org.onepf.opfmaps.yandexweb.model.LatLng;
 import org.onepf.opfmaps.yandexweb.model.YaWebMapOptions;
-import org.onepf.opfmaps.OPFMap;
-import org.onepf.opfmaps.delegate.MapViewDelegate;
-import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
-import org.onepf.opfmaps.model.OPFLatLng;
-import org.onepf.opfmaps.model.OPFMapType;
-import org.onepf.opfmaps.model.OPFProjection;
 import org.onepf.opfutils.OPFLog;
 
 import java.io.BufferedReader;
@@ -189,21 +186,6 @@ public class YaWebMapViewDelegate extends WebView
 
             removeJavascriptInterface(JSIOnMapReadyCallback.JS_INTERFACE_NAME);
             onMapReadyCallback = null;
-
-            //TODO: remove after fixing Projection on big zoom levels.
-            setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(final View v, final MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        final OPFProjection projection = yaWebMapDelegate.getProjection();
-                        final int x = (int) event.getX();
-                        final int y = (int) event.getY();
-                        final OPFLatLng latLng = projection.fromScreenLocation(new Point(x, y));
-                        OPFLog.d("x = %s, y = %s, lat = %s, lng = %s", x, y, latLng.getLat(), latLng.getLng());
-                    }
-                    return false;
-                }
-            });
         }
     }
 
