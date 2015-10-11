@@ -1,4 +1,7 @@
 # OPFMaps
+
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-OPFMaps-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2622)
+
 OPFMaps is an open source library which provides an easy way for developers to integrate different android maps into their apps.
 
 Currently OPFMaps supports the following maps: [Google Maps][google-maps], [Amazon Maps][amazon-maps], [Osmdroid][osmdroid], [Yandex Maps JavaScript API][yandex-web-maps].
