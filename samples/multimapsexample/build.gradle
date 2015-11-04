@@ -59,11 +59,11 @@ check {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
 
-    compile 'org.onepf:opfmaps:0.1.0@aar'
-    compile 'org.onepf:opfmaps-amazon:0.1.0@aar'
-    compile 'org.onepf:opfmaps-google:0.1.0@aar'
-    compile 'org.onepf:opfmaps-osmdroid:0.1.0@aar'
-    compile 'org.onepf:opfmaps-yandex-web:0.1.0@aar'
+    compile 'org.onepf:opfmaps:0.1.1@aar'
+    compile 'org.onepf:opfmaps-amazon:0.1.1@aar'
+    compile 'org.onepf:opfmaps-google:0.1.1@aar'
+    compile 'org.onepf:opfmaps-osmdroid:0.1.1@aar'
+    compile 'org.onepf:opfmaps-yandex-web:0.1.1@aar'
 
     compile 'org.onepf:opfutils:0.1.26'
 
