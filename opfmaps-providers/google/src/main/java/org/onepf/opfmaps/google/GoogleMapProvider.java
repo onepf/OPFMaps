@@ -62,7 +62,7 @@ public class GoogleMapProvider extends BaseOPFMapProvider {
 
     @Override
     public boolean isKeyPresented(@NonNull final Context context) {
-        return OPFChecks.hasMetadata(context, "com.google.android.maps.v2.API_KEY") ||
-               OPFChecks.hasMetadata(context, "com.google.android.geo.API_KEY");
+        return OPFChecks.hasMetadata(context, "com.google.android.maps.v2.API_KEY")
+                || OPFChecks.hasMetadata(context, "com.google.android.geo.API_KEY");
     }
 }
