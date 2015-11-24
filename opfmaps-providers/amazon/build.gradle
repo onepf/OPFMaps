@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-    compile 'org.onepf:opfmaps:0.1.0@aar'
+    compile 'org.onepf:opfmaps:0.1.1@aar'
     provided 'org.onepf:opfutils:0.1.26'
     compile 'com.amazon:amazon-maps-api:2.0'
     provided 'com.android.support:support-annotations:23.1.0'

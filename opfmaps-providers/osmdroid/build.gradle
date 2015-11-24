@@ -33,12 +33,14 @@ android {
 }
 
 dependencies {
-    compile 'org.onepf:opfmaps:0.1.0@aar'
+    compile 'org.onepf:opfmaps:0.1.1@aar'
     provided 'org.onepf:opfutils:0.1.26'
 
-    compile 'org.osmdroid:osmdroid-android:4.3'
     compile 'org.osmdroid:bonuspack:5.3'
+    //noinspection NewerVersionAvailable
+    compile 'org.osmdroid:osmdroid-android:4.3'
 
+    //noinspection NewerVersionAvailable
     compile 'org.slf4j:slf4j-android:1.7.12'
     compile 'org.apache.commons:commons-lang3:3.4'
     //noinspection NewerVersionAvailable
