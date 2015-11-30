@@ -17,6 +17,7 @@
 package org.onepf.opfmaps.yandexweb.delegate;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -32,6 +33,7 @@ import android.view.MotionEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.delegate.MapViewDelegate;
 import org.onepf.opfmaps.listener.OPFOnMapReadyCallback;
@@ -584,15 +586,21 @@ public class YaWebMapViewDelegate extends WebView
         @Override
         public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
             try {
+                final Context context = getContext();
                 final Uri uri = Uri.parse(url);
-                final Intent intent;
+
+                Intent intent;
                 if (url.startsWith("intent")) {
                     intent = Intent.parseUri(url, 0);
+                    if (intent.resolveActivity(context.getPackageManager()) == null) {
+                        intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + intent.getPackage()));
+                    }
                 } else {
                     intent = new Intent(Intent.ACTION_VIEW, uri);
                 }
-                getContext().startActivity(intent);
-            } catch (URISyntaxException e) {
+
+                context.startActivity(intent);
+            } catch (URISyntaxException | ActivityNotFoundException e) {
                 OPFLog.w(e.getMessage());
             }
             return true;
