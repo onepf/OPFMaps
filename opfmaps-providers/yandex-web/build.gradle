@@ -32,7 +32,8 @@ android {
 }
 
 dependencies {
-    compile 'org.onepf:opfmaps:0.1.2-SNAPSHOT@aar'
+    //compile 'org.onepf:opfmaps:0.1.2-SNAPSHOT@aar'
+    compile project(':opfmaps')
     provided 'org.onepf:opfutils:0.1.26'
     provided 'com.android.support:support-annotations:23.1.1'
 }

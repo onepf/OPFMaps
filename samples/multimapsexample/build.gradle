@@ -48,7 +48,7 @@ android {
         warningsAsErrors true
         disable 'AllowBackup', 'ContentDescription', 'InvalidPackage', 'SelectableText', 'IconExpectedSize',
                 'IconDensities', 'AlwaysShowAction', 'RtlEnabled', 'Overdraw', 'UnusedIds', 'RtlHardcoded',
-                'GradleDynamicVersion', 'NewerVersionAvailable', 'PrivateResource'
+                'GradleDynamicVersion', 'NewerVersionAvailable', 'PrivateResource', 'GoogleAppIndexingWarning'
     }
 }
 
@@ -59,11 +59,17 @@ check {
 dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
 
-    compile 'org.onepf:opfmaps:0.1.2-SNAPSHOT@aar'
-    compile 'org.onepf:opfmaps-amazon:0.1.2-SNAPSHOT@aar'
+    //compile 'org.onepf:opfmaps:0.1.2-SNAPSHOT@aar'
+    /*compile 'org.onepf:opfmaps-amazon:0.1.2-SNAPSHOT@aar'
     compile 'org.onepf:opfmaps-google:0.1.2-SNAPSHOT@aar'
     compile 'org.onepf:opfmaps-osmdroid:0.1.2-SNAPSHOT@aar'
-    compile 'org.onepf:opfmaps-yandex-web:0.1.2-SNAPSHOT@aar'
+    compile 'org.onepf:opfmaps-yandex-web:0.1.2-SNAPSHOT@aar'*/
+
+    compile project(':opfmaps')
+    compile project(':amazon')
+    compile project(':google')
+    compile project(':osmdroid')
+    compile project(':yandex-web')
 
     compile 'org.onepf:opfutils:0.1.26'
 
@@ -71,14 +77,14 @@ dependencies {
     compile 'com.amazon:amazon-maps-api:2.0'
 
     //for opfmaps-google
-    compile 'com.google.android.gms:play-services-maps:8.3.0'
+    compile 'com.google.android.gms:play-services-maps:8.4.0'
 
     //for opfmaps-osmdroid
     compile 'org.osmdroid:osmdroid-android:4.3'
     compile 'org.osmdroid:bonuspack:5.3'
     compile 'org.slf4j:slf4j-android:1.7.12'
     compile 'org.apache.commons:commons-lang3:3.4'
-    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.google.code.gson:gson:2.4'
 
     //leakcanary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
