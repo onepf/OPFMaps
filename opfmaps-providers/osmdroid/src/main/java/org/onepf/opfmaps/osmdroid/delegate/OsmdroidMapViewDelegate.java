@@ -103,7 +103,8 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     }
 
     public OsmdroidMapViewDelegate(final Context context, @Nullable final OsmdroidMapOptions options) {
-        super(context, context.getResources().getInteger(R.integer.default_tile_size_pixels));
+//        super(context, context.getResources().getInteger(R.integer.default_tile_size_pixels));
+        super(context);
         this.options = options;
     }
 

@@ -22,9 +22,9 @@ import android.support.annotation.Nullable;
 import org.onepf.opfmaps.delegate.model.PolygonDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfutils.OPFLog;
-import org.osmdroid.bonuspack.overlays.Polygon;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Polygon;
 
 import java.util.ArrayList;
 import java.util.List;

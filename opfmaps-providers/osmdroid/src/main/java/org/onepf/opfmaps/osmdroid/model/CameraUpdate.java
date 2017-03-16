@@ -21,7 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.onepf.opfmaps.utils.CompareUtils;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 
 /**
@@ -50,7 +50,7 @@ public final class CameraUpdate {
     @Nullable
     private final GeoPoint center;
     @Nullable
-    private final BoundingBoxE6 bounds;
+    private final BoundingBox bounds;
     @Nullable
     private final Point focus;
     private final float zoom;
@@ -65,7 +65,7 @@ public final class CameraUpdate {
     @SuppressWarnings("PMD.ExcessiveParameterList")
     private CameraUpdate(@NonNull final CameraUpdateSource cameraUpdateSource,
                          @Nullable final GeoPoint center,
-                         @Nullable final BoundingBoxE6 bounds,
+                         @Nullable final BoundingBox bounds,
                          @Nullable final Point focus,
                          final float zoom,
                          final float bearing,
@@ -99,7 +99,7 @@ public final class CameraUpdate {
     }
 
     @Nullable
-    public BoundingBoxE6 getBounds() {
+    public BoundingBox getBounds() {
         return bounds;
     }
 
@@ -185,7 +185,7 @@ public final class CameraUpdate {
         @Nullable
         private GeoPoint center;
         @Nullable
-        private BoundingBoxE6 bounds;
+        private BoundingBox bounds;
         @Nullable
         private Point focus;
         private float zoom;
@@ -207,7 +207,7 @@ public final class CameraUpdate {
         }
 
         @NonNull
-        Builder setBounds(@NonNull final BoundingBoxE6 bounds) {
+        Builder setBounds(@NonNull final BoundingBox bounds) {
             this.bounds = bounds;
             return this;
         }

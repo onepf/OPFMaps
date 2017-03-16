@@ -58,7 +58,7 @@ import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
 import org.onepf.opfmaps.model.OPFUrlTileProvider.TileUrlProvider;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 
 /**
@@ -102,7 +102,7 @@ public final class OsmdroidDelegatesFactory implements DelegatesAbstractFactory 
     @Override
     public LatLngBoundsDelegate createLatLngBoundsDelegate(@NonNull final OPFLatLng southwest,
                                                            @NonNull final OPFLatLng northeast) {
-        return new OsmdroidLatLngBoundsDelegate(new BoundingBoxE6(
+        return new OsmdroidLatLngBoundsDelegate(new BoundingBox(
                 northeast.getLat(),
                 northeast.getLng(),
                 southwest.getLat(),

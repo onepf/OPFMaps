@@ -21,7 +21,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import org.onepf.opfmaps.utils.CompareUtils;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 
 /**
@@ -51,13 +51,13 @@ public final class VisibleRegion implements Parcelable {
     @NonNull
     private final GeoPoint farRight;
     @NonNull
-    private final BoundingBoxE6 latLngBounds;
+    private final BoundingBox latLngBounds;
 
     public VisibleRegion(@NonNull final GeoPoint nearLeft,
                          @NonNull final GeoPoint nearRight,
                          @NonNull final GeoPoint farLeft,
                          @NonNull final GeoPoint farRight,
-                         @NonNull final BoundingBoxE6 bounds) {
+                         @NonNull final BoundingBox bounds) {
         this.nearLeft = nearLeft;
         this.nearRight = nearRight;
         this.farLeft = farLeft;
@@ -70,7 +70,7 @@ public final class VisibleRegion implements Parcelable {
         this.nearRight = parcel.readParcelable(GeoPoint.class.getClassLoader());
         this.farLeft = parcel.readParcelable(GeoPoint.class.getClassLoader());
         this.farRight = parcel.readParcelable(GeoPoint.class.getClassLoader());
-        this.latLngBounds = parcel.readParcelable(BoundingBoxE6.class.getClassLoader());
+        this.latLngBounds = parcel.readParcelable(BoundingBox.class.getClassLoader());
     }
 
     @NonNull
@@ -94,7 +94,7 @@ public final class VisibleRegion implements Parcelable {
     }
 
     @NonNull
-    public BoundingBoxE6 getLatLngBounds() {
+    public BoundingBox getLatLngBounds() {
         return latLngBounds;
     }
 

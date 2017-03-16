@@ -20,7 +20,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
-import org.osmdroid.ResourceProxy;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Overlay;
 
@@ -36,9 +35,9 @@ public final class ScrollGesturesOverlay extends Overlay {
         super(ctx);
     }
 
-    public ScrollGesturesOverlay(final ResourceProxy pResourceProxy) {
+    /*public ScrollGesturesOverlay(final ResourceProxy pResourceProxy) {
         super(pResourceProxy);
-    }
+    }*/
 
     public void setScrollGesturesEnabled(final boolean enabled) {
         this.isScrollGesturesEnabled = enabled;
@@ -58,7 +57,7 @@ public final class ScrollGesturesOverlay extends Overlay {
     }
 
     @Override
-    protected void draw(final Canvas c, final MapView osmv, final boolean shadow) {
+    public void draw(final Canvas c, final MapView osmv, final boolean shadow) {
         //nothing
     }
 }
