@@ -35,6 +35,7 @@ import org.onepf.opfmaps.OPFMapFragment;
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.OPFMapProvider;
+import org.onepf.opfmaps.google.GoogleMapProvider;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
 import org.onepf.opfmaps.listener.OPFOnInfoWindowClickListener;
 import org.onepf.opfmaps.listener.OPFOnMapClickListener;
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCall
 //                changeMapProvider(new AmazonMapProvider());
                 return true;
             case R.id.google:
-//                changeMapProvider(new GoogleMapProvider());
+                changeMapProvider(new GoogleMapProvider());
                 return true;
             case R.id.osmdroid:
                 changeMapProvider(new OsmdroidMapProvider());

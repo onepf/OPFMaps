@@ -74,7 +74,8 @@ dependencies {
 //    compile 'com.amazon:amazon-maps-api:2.0'
 
 //    compile 'org.onepf:opfmaps-google:0.1.1@aar'
-//    compile 'com.google.android.gms:play-services-maps:8.1.0'
+    compile(name: 'google-debug', ext: 'aar')
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
 
 //    compile 'org.onepf:opfmaps-osmdroid:0.1.1@aar'
     compile(name: 'osmdroid-debug', ext: 'aar')
