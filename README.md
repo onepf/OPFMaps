@@ -21,8 +21,8 @@ Then you have to add at least one map provider dependency.
 *Google Maps Provider*:
 
 ```gradle
-compile 'org.onepf:opfmaps-google:0.1.1@aar'
-compile 'com.google.android.gms:play-services-maps:8.1.0'
+compile 'org.onepf:opfmaps-google:0.1.2@aar'
+compile 'com.google.android.gms:play-services-maps:10.0.1'
 ```
 
 *NOTE:* Also for Google Maps you must add [Maps API Key][google-api-key] to the AndroidManifest.xml file.
