@@ -27,6 +27,7 @@ import org.onepf.opfmaps.yandexweb.YaWebMapProvider;
 import org.onepf.opfmaps.OPFMapConfiguration;
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfutils.OPFLog;
+import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 
 /**
  * @author Roman Savin
@@ -37,11 +38,14 @@ public class MultimapsExampleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         LeakCanary.install(this);
+
+        OpenStreetMapTileProviderConstants.setUserAgentValue(BuildConfig.APPLICATION_ID);
 
         OPFLog.setEnabled(BuildConfig.DEBUG, true);
         final OPFMapConfiguration configuration = new OPFMapConfiguration.Builder()
-                .addProviders(new YaWebMapProvider(), new OsmdroidMapProvider(), new GoogleMapProvider(), new AmazonMapProvider())
+                .addProviders(/*new YaWebMapProvider(), */new OsmdroidMapProvider(), new GoogleMapProvider()/*, new AmazonMapProvider()*/)
                 .setSelectSystemPreferred(true)
                 .build();
         OPFMapHelper.getInstance().init(this, configuration);

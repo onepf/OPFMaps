@@ -21,8 +21,6 @@ import android.support.annotation.NonNull;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.ResourceProxy;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.IOrientationProvider;
@@ -43,17 +41,16 @@ public class ClickableCompassOverlay extends CompassOverlay {
         this(context, new InternalCompassOrientationProvider(context), mapView);
     }
 
-    public ClickableCompassOverlay(@NonNull final Context context,
+    /*public ClickableCompassOverlay(@NonNull final Context context,
                                    @NonNull final IOrientationProvider orientationProvider,
                                    @NonNull final MapView mapView) {
         this(context, orientationProvider, mapView, new DefaultResourceProxyImpl(context));
-    }
+    }*/
 
     public ClickableCompassOverlay(@NonNull final Context context,
                                    @NonNull final IOrientationProvider orientationProvider,
-                                   @NonNull final MapView mapView,
-                                   @NonNull final ResourceProxy resourceProxy) {
-        super(context, orientationProvider, mapView, resourceProxy);
+                                   @NonNull final MapView mapView) {
+        super(context, orientationProvider, mapView);
         setCompassCenter(COMPASS_CENTER_X, COMPASS_CENTER_Y);
 
         final WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

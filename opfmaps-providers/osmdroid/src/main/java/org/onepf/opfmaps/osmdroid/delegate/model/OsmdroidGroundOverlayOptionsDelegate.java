@@ -26,7 +26,7 @@ import org.onepf.opfmaps.delegate.model.GroundOverlayOptionsDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 
 /**
@@ -90,7 +90,7 @@ public final class OsmdroidGroundOverlayOptionsDelegate implements GroundOverlay
     @Nullable
     @Override
     public OPFLatLngBounds getBounds() {
-        final BoundingBoxE6 bounds = groundOverlayOptions.getBounds();
+        final BoundingBox bounds = groundOverlayOptions.getBounds();
         if (bounds != null) {
             return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(bounds));
         }
@@ -168,7 +168,7 @@ public final class OsmdroidGroundOverlayOptionsDelegate implements GroundOverlay
     @NonNull
     @Override
     public OsmdroidGroundOverlayOptionsDelegate positionFromBounds(@NonNull final OPFLatLngBounds bounds) {
-        groundOverlayOptions.positionFromBounds(new BoundingBoxE6(
+        groundOverlayOptions.positionFromBounds(new BoundingBox(
                 bounds.getNortheast().getLat(),
                 bounds.getNortheast().getLng(),
                 bounds.getSouthwest().getLat(),

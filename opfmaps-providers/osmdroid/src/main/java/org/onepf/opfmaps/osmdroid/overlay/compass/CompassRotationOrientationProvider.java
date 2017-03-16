@@ -64,6 +64,11 @@ public final class CompassRotationOrientationProvider implements IOrientationPro
     }
 
     @Override
+    public void destroy() {
+
+    }
+
+    @Override
     public void onRotate(final float degrees) {
         orientation = degrees % CIRCLE_DEGREES + ROTATION_COEFFICIENT * screenRotation;
         if (orientationConsumer != null) {

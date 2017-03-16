@@ -16,6 +16,7 @@
 
 package org.onepf.multimapsexample;
 
+import android.Manifest;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -61,9 +62,22 @@ import org.onepf.opfutils.OPFLog;
 
 import java.util.Arrays;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 import static java.util.Locale.US;
 
 public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCallback {
+
+    private static final int REQUIRED_PERMISSION = 1001;
+    String[] permissions = new String[]{
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.WRITE_CALENDAR,
+            Manifest.permission.READ_CALENDAR
+    };
+    private boolean hasRequiredPermission;
 
     @SuppressWarnings("PMD.ExcessiveMethodLength")
     @Override
@@ -311,7 +325,7 @@ public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCall
             final OPFMapFragment newMapFragment = OPFMapFragment.newInstance(
                     new OPFMapOptions()
                             .camera(OPFCameraPosition.fromLatLngZoom(new OPFLatLng(37.7, -122.4), 0))
-                            .mapType(OPFMapType.HYBRID)
+                            .mapType(OPFMapType.NORMAL)
             );
             getFragmentManager().beginTransaction()
                     .replace(R.id.map, newMapFragment)
@@ -320,5 +334,26 @@ public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCall
         } else {
             Toast.makeText(this, String.format(US, "Provider %s is not available on this device", provider.getName()), Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @AfterPermissionGranted(REQUIRED_PERMISSION)
+    private boolean checkPermissions() {
+
+        if (EasyPermissions.hasPermissions(getApplicationContext(), permissions)) {
+            hasRequiredPermission = true;
+
+        } else {
+            hasRequiredPermission = false;
+            EasyPermissions.requestPermissions(this, getApplication().getResources().getString(R.string.permission_info), REQUIRED_PERMISSION, permissions);
+        }
+        return hasRequiredPermission;
     }
 }

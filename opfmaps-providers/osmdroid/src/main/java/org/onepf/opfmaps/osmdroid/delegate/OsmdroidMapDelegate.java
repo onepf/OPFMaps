@@ -72,13 +72,13 @@ import org.onepf.opfutils.OPFLog;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.GroundOverlay;
-import org.osmdroid.bonuspack.overlays.InfoWindow;
-import org.osmdroid.bonuspack.overlays.Marker;
-import org.osmdroid.bonuspack.overlays.Polygon;
-import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.Projection;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.Polygon;
+import org.osmdroid.views.overlay.Polyline;
+import org.osmdroid.views.overlay.infowindow.InfoWindow;
 
 import java.util.Iterator;
 import java.util.List;

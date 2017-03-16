@@ -51,7 +51,7 @@ public class RotationGestureOverlay extends Overlay implements IOverlayMenuProvi
     }
 
     @Override
-    protected void draw(final Canvas c, final MapView osmv, final boolean shadow) {
+    public void draw(final Canvas c, final MapView osmv, final boolean shadow) {
         // No drawing necessary
     }
 

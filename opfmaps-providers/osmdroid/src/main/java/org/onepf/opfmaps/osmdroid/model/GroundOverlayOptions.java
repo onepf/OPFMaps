@@ -23,7 +23,7 @@ import android.support.annotation.Nullable;
 
 import org.onepf.opfmaps.utils.CompareUtils;
 import org.onepf.opfutils.OPFLog;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 
 /**
@@ -47,7 +47,7 @@ public final class GroundOverlayOptions implements Parcelable {
     private static final float CIRCLE_DEGREES = 360F;
 
     @Nullable
-    private BoundingBoxE6 bounds;
+    private BoundingBox bounds;
     @Nullable
     private GeoPoint location;
     @Nullable
@@ -64,7 +64,7 @@ public final class GroundOverlayOptions implements Parcelable {
     }
 
     private GroundOverlayOptions(@NonNull final Parcel parcel) {
-        this.bounds = parcel.readParcelable(BoundingBoxE6.class.getClassLoader());
+        this.bounds = parcel.readParcelable(BoundingBox.class.getClassLoader());
         this.location = parcel.readParcelable(GeoPoint.class.getClassLoader());
         this.image = parcel.readParcelable(BitmapDescriptor.class.getClassLoader());
         this.bearing = parcel.readFloat();
@@ -105,7 +105,7 @@ public final class GroundOverlayOptions implements Parcelable {
     }
 
     @Nullable
-    public BoundingBoxE6 getBounds() {
+    public BoundingBox getBounds() {
         return this.bounds;
     }
 
@@ -180,7 +180,7 @@ public final class GroundOverlayOptions implements Parcelable {
     }
 
     @NonNull
-    public GroundOverlayOptions positionFromBounds(@Nullable final BoundingBoxE6 bounds) {
+    public GroundOverlayOptions positionFromBounds(@Nullable final BoundingBox bounds) {
         if (this.location != null) {
             throw new IllegalStateException("Position has already been set using position: " + this.location);
         } else {

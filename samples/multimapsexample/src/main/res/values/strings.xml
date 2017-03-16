@@ -20,4 +20,5 @@
     <string name="google_menu_item">Google</string>
     <string name="osmdroid_menu_item">Osmdroid</string>
     <string name="yandex_web_menu_item">Yandex Web</string>
+    <string name="permission_info">Some permissions is required to work app</string>
 </resources>

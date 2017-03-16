@@ -22,7 +22,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.onepf.opfmaps.osmdroid.OsmdroidMapProvider;
-import org.onepf.opfmaps.osmdroid.R;
 import org.onepf.opfmaps.osmdroid.model.CameraPosition;
 import org.onepf.opfmaps.osmdroid.model.OsmdroidMapOptions;
 import org.onepf.opfmaps.osmdroid.overlay.ClickListenerOverlay;
@@ -103,7 +102,9 @@ public class OsmdroidMapViewDelegate extends MapView implements MapViewDelegate 
     }
 
     public OsmdroidMapViewDelegate(final Context context, @Nullable final OsmdroidMapOptions options) {
-        super(context, context.getResources().getInteger(R.integer.default_tile_size_pixels));
+//        super(context, context.getResources().getInteger(R.integer.default_tile_size_pixels));
+        super(context);
+
         this.options = options;
     }
 

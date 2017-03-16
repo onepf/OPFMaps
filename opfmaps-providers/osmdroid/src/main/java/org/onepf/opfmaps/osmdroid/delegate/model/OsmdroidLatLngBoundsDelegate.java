@@ -22,7 +22,7 @@ import android.support.annotation.NonNull;
 import org.onepf.opfmaps.delegate.model.LatLngBoundsDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
@@ -47,14 +47,14 @@ public final class OsmdroidLatLngBoundsDelegate implements LatLngBoundsDelegate 
     };
 
     @NonNull
-    private final BoundingBoxE6 bounds;
+    private final BoundingBox bounds;
 
-    public OsmdroidLatLngBoundsDelegate(@NonNull final BoundingBoxE6 bounds) {
+    public OsmdroidLatLngBoundsDelegate(@NonNull final BoundingBox bounds) {
         this.bounds = bounds;
     }
 
     private OsmdroidLatLngBoundsDelegate(@NonNull final Parcel parcel) {
-        this.bounds = parcel.readParcelable(BoundingBoxE6.class.getClassLoader());
+        this.bounds = parcel.readParcelable(BoundingBox.class.getClassLoader());
     }
 
     @Override
@@ -72,22 +72,22 @@ public final class OsmdroidLatLngBoundsDelegate implements LatLngBoundsDelegate 
     @Override
     public OPFLatLngBounds including(@NonNull final OPFLatLng point) {
         final ArrayList<GeoPoint> geoPoints = new ArrayList<>(3);
-        geoPoints.add(new GeoPoint(bounds.getLatNorthE6(), bounds.getLonEastE6()));
-        geoPoints.add(new GeoPoint(bounds.getLatSouthE6(), bounds.getLonWestE6()));
+        geoPoints.add(new GeoPoint(bounds.getLatNorth(), bounds.getLonEast()));
+        geoPoints.add(new GeoPoint(bounds.getLatSouth(), bounds.getLonWest()));
         geoPoints.add(new GeoPoint(point.getLat(), point.getLng()));
-        return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(BoundingBoxE6.fromGeoPoints(geoPoints)));
+        return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(BoundingBox.fromGeoPoints(geoPoints)));
     }
 
     @NonNull
     @Override
     public OPFLatLng getNortheast() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(new GeoPoint(bounds.getLatNorthE6(), bounds.getLonEastE6())));
+        return new OPFLatLng(new OsmdroidLatLngDelegate(new GeoPoint(bounds.getLatNorth(), bounds.getLonEast())));
     }
 
     @NonNull
     @Override
     public OPFLatLng getSouthwest() {
-        return new OPFLatLng(new OsmdroidLatLngDelegate(new GeoPoint(bounds.getLatSouthE6(), bounds.getLonWestE6())));
+        return new OPFLatLng(new OsmdroidLatLngDelegate(new GeoPoint(bounds.getLatSouth(), bounds.getLonWest())));
     }
 
     @Override
@@ -133,7 +133,7 @@ public final class OsmdroidLatLngBoundsDelegate implements LatLngBoundsDelegate 
         @NonNull
         @Override
         public OPFLatLngBounds build() {
-            return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(BoundingBoxE6.fromGeoPoints(
+            return new OPFLatLngBounds(new OsmdroidLatLngBoundsDelegate(BoundingBox.fromGeoPoints(
                     new ArrayList<>(geoPoints)
             )));
         }

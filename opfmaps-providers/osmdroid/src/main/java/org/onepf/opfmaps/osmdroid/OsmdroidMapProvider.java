@@ -147,9 +147,9 @@ public final class OsmdroidMapProvider extends BaseOPFMapProvider {
         final Map<OPFMapType, ITileSource> tileSourceMap = new HashMap<>();
         tileSourceMap.put(OPFMapType.NONE, TileSourceFactory.MAPNIK);
         tileSourceMap.put(OPFMapType.NORMAL, TileSourceFactory.MAPNIK);
-        tileSourceMap.put(OPFMapType.SATELLITE, TileSourceFactory.MAPQUESTAERIAL);
-        tileSourceMap.put(OPFMapType.TERRAIN, TileSourceFactory.MAPQUESTOSM);
-        tileSourceMap.put(OPFMapType.HYBRID, TileSourceFactory.MAPQUESTOSM);
+//        tileSourceMap.put(OPFMapType.SATELLITE, TileSourceFactory.MAPQUESTAERIAL);
+//        tileSourceMap.put(OPFMapType.TERRAIN, TileSourceFactory.MAPQUESTOSM);
+//        tileSourceMap.put(OPFMapType.HYBRID, TileSourceFactory.MAPQUESTOSM);
         return tileSourceMap;
     }
 }

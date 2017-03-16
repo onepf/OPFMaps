@@ -22,9 +22,9 @@ import org.onepf.opfmaps.osmdroid.model.BitmapDescriptor;
 import org.onepf.opfmaps.delegate.model.MarkerDelegate;
 import org.onepf.opfmaps.model.OPFBitmapDescriptor;
 import org.onepf.opfmaps.model.OPFLatLng;
-import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 
 /**
  * @author Roman Savin
