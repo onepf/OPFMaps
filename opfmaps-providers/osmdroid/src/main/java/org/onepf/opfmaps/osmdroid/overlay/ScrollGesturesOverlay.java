@@ -35,6 +35,10 @@ public final class ScrollGesturesOverlay extends Overlay {
         super(ctx);
     }
 
+    /*public ScrollGesturesOverlay(final ResourceProxy pResourceProxy) {
+        super(pResourceProxy);
+    }*/
+
     public void setScrollGesturesEnabled(final boolean enabled) {
         this.isScrollGesturesEnabled = enabled;
     }

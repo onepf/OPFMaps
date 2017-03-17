@@ -21,13 +21,11 @@ buildscript {
 
     dependencies {
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
-		classpath 'com.github.dcendents:android-maven-plugin:1.2'
     }
 }
 
 apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
 apply from: urlCache.get('https://raw.githubusercontent.com/onepf/OPF-mvn-repo/master/opf-commons.gradle')
 
 android {
@@ -35,6 +33,11 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionName "0.1.2"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+        }
     }
 }
 

@@ -18,8 +18,8 @@ apply plugin: 'com.android.application'
 apply from: urlCache.get('https://raw.githubusercontent.com/onepf/OPF-mvn-repo/master/opf-commons.gradle')
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "org.onepf.multimapsexample"
@@ -56,38 +56,35 @@ check {
     abortOnError false
 }
 
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:appcompat-v7:23.1.0'
 
-    //OPFMaps
-    compile 'com.github.siekierskip.OPFMaps:opfmaps:v0.1.2'
-    compile 'org.onepf:opfutils:0.1.26'
+//    compile 'org.onepf:opfmaps:0.1.1@aar'
+    compile(name: 'opfmaps-debug', ext: 'aar')
 
-    //== OPFMaps Providers==\\
-    //Amazon
-    compile 'org.onepf:opfmaps-amazon:0.1.1@aar'
-    compile 'com.amazon:amazon-maps-api:2.0'
+//    compile 'org.onepf:opfmaps-amazon:0.1.1@aar'
+//    compile 'com.amazon:amazon-maps-api:2.0'
 
-    //GoogleMaps
-    compile 'org.onepf:opfmaps-google:0.1.1@aar'
-    compile 'com.google.android.gms:play-services-maps:8.1.0'
+//    compile 'org.onepf:opfmaps-google:0.1.1@aar'
+    compile(name: 'google-debug', ext: 'aar')
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
 
-    //OpenStreetMaps
-    compile 'org.onepf:opfmaps-osmdroid:0.1.1@aar'
-    compile 'com.github.MKergall:osmbonuspack:6.2'
+//    compile 'org.onepf:opfmaps-osmdroid:0.1.1@aar'
+    compile(name: 'osmdroid-debug', ext: 'aar')
     compile 'org.osmdroid:osmdroid-android:5.6.4'
+    compile 'com.github.MKergall:osmbonuspack:6.3'
 
-    //Yandex
-    compile 'org.onepf:opfmaps-yandex-web:0.1.1@aar'
+//    compile 'org.onepf:opfmaps-yandex-web:0.1.1@aar'
 
-
-    //for opfmaps-amazon
-
-
-    //for opfmaps-google
-
-
-
+    compile 'org.onepf:opfutils:0.1.26'
 
     compile 'org.slf4j:slf4j-android:1.7.12'
     compile 'org.apache.commons:commons-lang3:3.4'
@@ -96,7 +93,4 @@ dependencies {
     //leakcanary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
-
-    //EasyPermissions
-    compile 'pub.devrel:easypermissions:0.3.0'
 }

@@ -23,6 +23,10 @@ android {
         targetSdkVersion 23
         versionName "0.1.1"
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
