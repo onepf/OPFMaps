@@ -44,7 +44,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.siekierskip.OPFMaps:opfmaps:v0.1.4'
+    provided 'com.github.siekierskip.OPFMaps:opfmaps:v0.1.4'
     provided 'org.onepf:opfutils:0.1.26'
 
     compile 'org.osmdroid:osmdroid-android:5.6.4'
