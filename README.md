@@ -13,7 +13,7 @@ Currently OPFMaps supports the following maps: [Google Maps][google-maps], [Amaz
 The main dependencies are the `opfmaps` module and the [OPFUtils][opfutils] library:
 
 ```gradle
-compile 'org.onepf:opfmaps:0.1.3@aar'
+compile 'com.github.siekierskip.OPFMaps:opfmaps:v0.1.6'
 compile 'org.onepf:opfutils:0.1.26'
 ```
 Then you have to add at least one map provider dependency.
@@ -21,7 +21,7 @@ Then you have to add at least one map provider dependency.
 *Google Maps Provider*:
 
 ```gradle
-compile 'org.onepf:opfmaps-google:0.1.3@aar'
+compile 'com.github.siekierskip.OPFMaps:google:v0.1.6'
 compile 'com.google.android.gms:play-services-maps:10.0.1'
 ```
 
@@ -30,14 +30,14 @@ compile 'com.google.android.gms:play-services-maps:10.0.1'
 *Amazon Maps Provider*:
 
 ```gradle
-compile 'org.onepf:opfmaps-amazon:0.1.3@aar'
+compile 'com.github.siekierskip.OPFMaps:amazon:v0.1.6'
 compile 'com.amazon:amazon-maps-api:2.0'
 ```
 
 *Osmdroid Provider*:
 
 ```gradle
-compile 'org.onepf:opfmaps-osmdroid:0.1.3@aar'
+compile 'com.github.siekierskip.OPFMaps:osmdroid:v0.1.6'
 compile 'org.osmdroid:osmdroid-android:5.6.4'
 compile 'com.github.MKergall:osmbonuspack:6.3'
 compile 'org.slf4j:slf4j-android:1.7.12'
@@ -61,7 +61,7 @@ allprojects {
 *Yandex Maps Provider*:
 
 ```gradle
-compile 'org.onepf:opfmaps-yandex-web:0.1.3@aar'
+compile 'com.github.siekierskip.OPFMaps:yandex:v0.1.6'
 ```
 
 
