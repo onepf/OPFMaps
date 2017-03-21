@@ -19,7 +19,7 @@ package org.onepf.opfmaps.osmdroid.model;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 
 import static org.onepf.opfmaps.osmdroid.model.CameraUpdate.CameraUpdateSource.BOUNDS_PADDING;
@@ -59,7 +59,7 @@ public final class CameraUpdateFactory {
     }
 
     @NonNull
-    public static CameraUpdate newLatLngBounds(@NonNull final BoundingBoxE6 bounds,
+    public static CameraUpdate newLatLngBounds(@NonNull final BoundingBox bounds,
                                                final int padding) {
         return new CameraUpdate.Builder(BOUNDS_PADDING)
                 .setBounds(bounds)
@@ -68,7 +68,7 @@ public final class CameraUpdateFactory {
     }
 
     @NonNull
-    public static CameraUpdate newLatLngBounds(@NonNull final BoundingBoxE6 bounds,
+    public static CameraUpdate newLatLngBounds(@NonNull final BoundingBox bounds,
                                                final int width,
                                                final int height,
                                                final int padding) {

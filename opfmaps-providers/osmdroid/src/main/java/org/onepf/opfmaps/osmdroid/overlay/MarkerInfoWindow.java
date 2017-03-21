@@ -21,10 +21,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.onepf.opfmaps.osmdroid.R;
-import org.osmdroid.bonuspack.overlays.InfoWindow;
-import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.infowindow.InfoWindow;
 
 import java.util.List;
 

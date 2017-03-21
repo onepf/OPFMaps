@@ -29,8 +29,6 @@ import android.view.MotionEvent;
 
 import org.onepf.opfmaps.osmdroid.R;
 import org.onepf.opfmaps.listener.OPFOnMyLocationButtonClickListener;
-import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -79,17 +77,16 @@ public class MyLocationOverlayWithButton extends MyLocationNewOverlay {
         this(context, new GpsMyLocationProvider(context), mapView);
     }
 
-    public MyLocationOverlayWithButton(final Context context,
+    /*public MyLocationOverlayWithButton(final Context context,
                                        final IMyLocationProvider myLocationProvider,
                                        final MapView mapView) {
         this(context, myLocationProvider, mapView, new DefaultResourceProxyImpl(context));
-    }
+    }*/
 
     public MyLocationOverlayWithButton(final Context context,
                                        final IMyLocationProvider myLocationProvider,
-                                       final MapView mapView,
-                                       final ResourceProxy resourceProxy) {
-        super(myLocationProvider, mapView, resourceProxy);
+                                       final MapView mapView) {
+        super(myLocationProvider, mapView);
         this.goToMyLocationPicture = BitmapFactory
                 .decodeResource(context.getResources(), R.drawable.ic_my_location);
 
@@ -98,7 +95,7 @@ public class MyLocationOverlayWithButton extends MyLocationNewOverlay {
     }
 
     @Override
-    protected void draw(final Canvas canvas, final MapView mapView, final boolean shadow) {
+    public void draw(final Canvas canvas, final MapView mapView, final boolean shadow) {
         super.draw(canvas, mapView, shadow);
         if (centerX == 0 && centerY == 0) {
             centerX = mapView.getWidth() - CENTER_OFFSET_DP * mScale;

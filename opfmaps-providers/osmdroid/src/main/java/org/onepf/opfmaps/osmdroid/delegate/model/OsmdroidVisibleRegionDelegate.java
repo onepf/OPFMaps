@@ -23,7 +23,7 @@ import org.onepf.opfmaps.osmdroid.model.VisibleRegion;
 import org.onepf.opfmaps.delegate.model.VisibleRegionDelegate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 
 /**
@@ -57,7 +57,7 @@ public final class OsmdroidVisibleRegionDelegate implements VisibleRegionDelegat
                 new GeoPoint(nearRight.getLat(), nearRight.getLng()),
                 new GeoPoint(farLeft.getLat(), farLeft.getLng()),
                 new GeoPoint(farRight.getLat(), farRight.getLng()),
-                new BoundingBoxE6(
+                new BoundingBox(
                         latLngBounds.getNortheast().getLat(),
                         latLngBounds.getNortheast().getLng(),
                         latLngBounds.getSouthwest().getLat(),

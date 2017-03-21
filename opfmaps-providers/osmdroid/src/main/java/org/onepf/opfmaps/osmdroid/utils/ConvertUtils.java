@@ -37,12 +37,12 @@ import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
 import org.osmdroid.bonuspack.overlays.GroundOverlay;
-import org.osmdroid.bonuspack.overlays.Marker;
-import org.osmdroid.bonuspack.overlays.Polygon;
-import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Polygon;
+import org.osmdroid.views.overlay.Polyline;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +117,7 @@ public final class ConvertUtils {
 
         final OsmdroidCircleDelegate circleDelegate = new OsmdroidCircleDelegate(
                 mapView,
-                new Polygon(mapView.getContext()),
+                new Polygon(),
                 new GeoPoint(opfCenter.getLat(), opfCenter.getLng()),
                 options.getRadius()
         );
@@ -133,7 +133,7 @@ public final class ConvertUtils {
     @NonNull
     public static GroundOverlay convertGroundOverlayOptions(@NonNull final Context context,
                                                             @NonNull final OPFGroundOverlayOptions options) {
-        final GroundOverlay groundOverlay = new GroundOverlay(context);
+        final GroundOverlay groundOverlay = new GroundOverlay();
         groundOverlay.setBearing(options.getBearing());
         groundOverlay.setTransparency(options.getTransparency());
 
@@ -225,7 +225,7 @@ public final class ConvertUtils {
     @NonNull
     public static Polyline convertPolylineOptions(@NonNull final Context context,
                                                   @NonNull final OPFPolylineOptions options) {
-        final Polyline polyline = new Polyline(context);
+        final Polyline polyline = new Polyline();
         polyline.setColor(options.getColor());
         polyline.setGeodesic(options.isGeodesic());
         polyline.setVisible(options.isVisible());

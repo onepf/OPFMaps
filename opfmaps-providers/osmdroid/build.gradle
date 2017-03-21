@@ -21,24 +21,24 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionName "0.1.1"
+        versionName "0.1.6"
     }
+}
 
-    lintOptions {
-        abortOnError true
-        checkAllWarnings true
-        warningsAsErrors true
-        disable 'IconDensities'
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+    flatDir {
+        dirs 'libs'
     }
 }
 
 dependencies {
-    compile 'org.onepf:opfmaps:0.1.1@aar'
+    provided 'com.github.siekierskip.OPFMaps:opfmaps:v0.1.5'
     provided 'org.onepf:opfutils:0.1.26'
 
-    compile 'org.osmdroid:bonuspack:5.3'
-    //noinspection NewerVersionAvailable
-    compile 'org.osmdroid:osmdroid-android:4.3'
+    compile 'org.osmdroid:osmdroid-android:5.6.4'
+    compile 'com.github.MKergall:osmbonuspack:6.3'
 
     //noinspection NewerVersionAvailable
     compile 'org.slf4j:slf4j-android:1.7.12'

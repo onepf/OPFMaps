@@ -28,13 +28,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.onepf.opfmaps.OPFMap;
 import org.onepf.opfmaps.OPFMapConfiguration;
 import org.onepf.opfmaps.OPFMapFragment;
 import org.onepf.opfmaps.OPFMapHelper;
 import org.onepf.opfmaps.OPFMapOptions;
 import org.onepf.opfmaps.OPFMapProvider;
-import org.onepf.opfmaps.amazon.AmazonMapProvider;
 import org.onepf.opfmaps.google.GoogleMapProvider;
 import org.onepf.opfmaps.listener.OPFOnCameraChangeListener;
 import org.onepf.opfmaps.listener.OPFOnInfoWindowClickListener;
@@ -56,7 +56,6 @@ import org.onepf.opfmaps.model.OPFMarkerOptions;
 import org.onepf.opfmaps.model.OPFPolygonOptions;
 import org.onepf.opfmaps.model.OPFPolylineOptions;
 import org.onepf.opfmaps.osmdroid.OsmdroidMapProvider;
-import org.onepf.opfmaps.yandexweb.YaWebMapProvider;
 import org.onepf.opfutils.OPFLog;
 
 import java.util.Arrays;
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCall
         if (savedInstanceState == null) {
             mapFragment = OPFMapFragment.newInstance(
                     new OPFMapOptions()
-                            .camera(OPFCameraPosition.fromLatLngZoom(new OPFLatLng(37.7, -122.4), 0))
+                            .camera(OPFCameraPosition.fromLatLngZoom(new OPFLatLng(52.0, 20.0), 0))
                             .mapType(OPFMapType.HYBRID)
             );
             getFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCall
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.amazon:
-                changeMapProvider(new AmazonMapProvider());
+//                changeMapProvider(new AmazonMapProvider());
                 return true;
             case R.id.google:
                 changeMapProvider(new GoogleMapProvider());
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCall
                 changeMapProvider(new OsmdroidMapProvider());
                 return true;
             case R.id.yandex_web:
-                changeMapProvider(new YaWebMapProvider());
+//                changeMapProvider(new YaWebMapProvider());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -130,10 +129,10 @@ public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCall
         });
 
         initMarkers(opfMap);
-        addCircle(opfMap);
-        addPolygon(opfMap);
-        addPolyline(opfMap);
-        addGroundOverlay(opfMap);
+//        addCircle(opfMap);
+//        addPolygon(opfMap);
+//        addPolyline(opfMap);
+//        addGroundOverlay(opfMap);
 
         opfMap.setOnMapClickListener(new OPFOnMapClickListener() {
             @Override
@@ -178,23 +177,23 @@ public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCall
 
     private void addPolygon(@NonNull final OPFMap opfMap) {
         opfMap.addPolygon(new OPFPolygonOptions()
-                        .add(
-                                new OPFLatLng(37.773975, -122.40205),
-                                new OPFLatLng(55.752004, -122.40205),
-                                new OPFLatLng(55.752004, 37.617017)
-                        ).addHole(
-                                Arrays.asList(
-                                        new OPFLatLng(52.83153846941036, -104.87376610724503),
-                                        new OPFLatLng(44.760517600395474, -105.87971035044585),
-                                        new OPFLatLng(54.35459330167125, -84.07064501079975)
-                                )
-                        ).addHole(
-                                Arrays.asList(
-                                        new OPFLatLng(51.29171452642614, -71.25262498180511),
-                                        new OPFLatLng(50.836485416038634, -69.86148826228197),
-                                        new OPFLatLng(52.71736429812524, -64.15429716201099)
-                                )
-                        ).fillColor(Color.RED).strokeColor(Color.GREEN).strokeWidth(5).zIndex(3)
+                .add(
+                        new OPFLatLng(37.773975, -122.40205),
+                        new OPFLatLng(55.752004, -122.40205),
+                        new OPFLatLng(55.752004, 37.617017)
+                ).addHole(
+                        Arrays.asList(
+                                new OPFLatLng(52.83153846941036, -104.87376610724503),
+                                new OPFLatLng(44.760517600395474, -105.87971035044585),
+                                new OPFLatLng(54.35459330167125, -84.07064501079975)
+                        )
+                ).addHole(
+                        Arrays.asList(
+                                new OPFLatLng(51.29171452642614, -71.25262498180511),
+                                new OPFLatLng(50.836485416038634, -69.86148826228197),
+                                new OPFLatLng(52.71736429812524, -64.15429716201099)
+                        )
+                ).fillColor(Color.RED).strokeColor(Color.GREEN).strokeWidth(5).zIndex(3)
         );
     }
 
@@ -310,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements OPFOnMapReadyCall
             OPFMapHelper.getInstance().init(this, new OPFMapConfiguration.Builder().addProviders(provider).build());
             final OPFMapFragment newMapFragment = OPFMapFragment.newInstance(
                     new OPFMapOptions()
-                            .camera(OPFCameraPosition.fromLatLngZoom(new OPFLatLng(37.7, -122.4), 0))
+                            .camera(OPFCameraPosition.fromLatLngZoom(new OPFLatLng(52.0, 20.0), 0))
                             .mapType(OPFMapType.HYBRID)
             );
             getFragmentManager().beginTransaction()

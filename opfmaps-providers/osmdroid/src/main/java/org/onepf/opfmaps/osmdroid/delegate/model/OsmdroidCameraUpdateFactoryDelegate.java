@@ -26,7 +26,7 @@ import org.onepf.opfmaps.model.OPFCameraPosition;
 import org.onepf.opfmaps.model.OPFCameraUpdate;
 import org.onepf.opfmaps.model.OPFLatLng;
 import org.onepf.opfmaps.model.OPFLatLngBounds;
-import org.osmdroid.util.BoundingBoxE6;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 
 /**
@@ -60,7 +60,7 @@ public final class OsmdroidCameraUpdateFactoryDelegate implements CameraUpdateFa
     @Override
     public OPFCameraUpdate newLatLngBounds(@NonNull final OPFLatLngBounds bounds, final int padding) {
         return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newLatLngBounds(
-                new BoundingBoxE6(
+                new BoundingBox(
                         bounds.getNortheast().getLat(),
                         bounds.getNortheast().getLng(),
                         bounds.getSouthwest().getLat(),
@@ -77,7 +77,7 @@ public final class OsmdroidCameraUpdateFactoryDelegate implements CameraUpdateFa
                                            final int height,
                                            final int padding) {
         return new OPFCameraUpdate(new OsmdroidCameraUpdateDelegate(CameraUpdateFactory.newLatLngBounds(
-                new BoundingBoxE6(
+                new BoundingBox(
                         bounds.getNortheast().getLat(),
                         bounds.getNortheast().getLng(),
                         bounds.getSouthwest().getLat(),
